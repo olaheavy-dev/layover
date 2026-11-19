@@ -12,7 +12,7 @@ The repository holds documents only until the design is approved ([0010](../deci
 |---|---|---|---|
 | 05 | #9 | Create the `task` label used by the Task issue form | `noticed` issue, owner-only (repository settings) |
 
-Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[06]` #10, decision 0011 accepted; `[07]` #11, data sources and the earnings decision; `[08]` #14, free APIs chosen for integration; `[09]` #16, simple-english and Floorplan adopted.
+Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[06]` #10, decision 0011 accepted; `[07]` #11, data sources and the earnings decision; `[08]` #14, free APIs chosen for integration; `[09]` #16, simple-english and Floorplan adopted; `[10]` #18, prompt-window rule and rules from homescout.
 
 Next design work (open design questions in [01 §5](../product/01-research-and-direction.md)) gets issues as it starts.
 
