@@ -4,7 +4,7 @@ Status: Accepted (19 Nov 2026)
 
 ## Context
 
-With fewer than ten tools, one agent can handle planning well. Splitting it into several agents adds model calls, delay, cost and lost context between agents, and makes evaluations harder. Booking with payment is a fixed sequence that should not be improvised by a model. The owner still wants to show multi-agent work: "I want a multi agent use case".
+Layover’s planner needs a small set of tools (fares, weather, exchange rates, advice and guide retrieval, airport lookup). The working hypothesis, not yet measured, is that one agent can plan well with a set this small. Splitting it into several agents adds model calls, delay, cost and chances to lose context between agents, and makes evaluations harder. Anthropic’s guidance is to start with the simplest design that works and add complexity only when it improves results (Building effective agents). The planned evaluations (point 4 below) test this hypothesis. Booking with payment is a fixed sequence that should not be improvised by a model. The owner still wants to show multi-agent work: "I want a multi agent use case".
 
 ## Decision
 
@@ -22,7 +22,7 @@ With fewer than ten tools, one agent can handle planning well. Splitting it into
 
 ## Alternatives considered
 
-- **Multi-agent for everything** (flight agent, destination agent, booking agent and a supervisor): more cost and failure points for no quality gain at this tool count.
+- **Multi-agent for everything** (flight agent, destination agent, booking agent and a supervisor): more cost and failure points, with no evidence yet of a quality gain at this tool count. Revisit if the evaluations show the single agent falling short.
 - **Group-trip planner** (one agent per traveller plus a negotiating coordinator): memorable but hard to evaluate, token-heavy and prone to loops. Kept as a possible later idea.
 
 ## Sources
