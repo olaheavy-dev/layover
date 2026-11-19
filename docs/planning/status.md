@@ -10,10 +10,10 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- `docs/accept-0011` (closes #10): decision 0011 accepted by the owner ("Accept all six (Recommended)"); its rules are in `.claude/rules/product-integrity.md` and named in `AGENTS.md`.
-- `docs/data-sources-and-earnings` (closes #11): candidate data sources and the earnings decision; in progress.
+- #13 `docs/data-sources-and-earnings` (closes #11): candidate data sources, the earnings decision, and commission built but switched off. The owner merges it.
+- `docs/free-api-candidates` (closes #14): the free APIs the owner chose to integrate, ideas for later, and sources considered and not used.
 
-Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph: test-first, live-test, IDs, stage gates, backlog, review fallback).
+Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph), #12 (decision 0011 accepted).
 
 ## Next steps
 
