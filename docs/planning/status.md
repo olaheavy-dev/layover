@@ -10,7 +10,7 @@ Design. The repository holds documents and their checks only. The main journey d
 
 ## Open pull requests
 
-None.
+- #29: design foundations (brief, information architecture, tokens and the contrast check), waiting for Codex review.
 
 ## Done on 19 Nov 2026
 
@@ -41,7 +41,7 @@ What the journey design settled (owner answers in prompt windows; details in the
 1. **Merge the design foundations PR** (issue #25): brief, information architecture, tokens and the contrast check in `make check`.
 2. **Boards** (issue #28, PR 2 of the design work): static HTML boards for every screen in the [information architecture](../design/information-architecture.md) and every widget `kind` with its loading, empty, error and "not known" states, at 390 px and 1440 px, in light and dark, built on [tokens.css](../design/tokens.css). It includes the illustration side-by-side test on the welcome screen. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief.
 3. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage, a map snapshot in `docs/floorplan/`.
-4. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests). Then one plan per part, written one at a time.
+4. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests, and the Aspire app host for local orchestration and tracing). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
 
 ## Blockers
 

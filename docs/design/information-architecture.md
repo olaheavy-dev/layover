@@ -155,7 +155,7 @@ The owner chose "Yes, one page (Recommended)":
 |---|---|---|
 | Top bar | Every screen | The shared trip has no "Share trip". "How it works" has no trip name |
 | Canvas and its section index | Working trip, shared trip | Shared: read only, with no Edit, Choose or Add actions |
-| Widgets | Chat (inline or compact), canvas, shared trip | In the chat on a phone, a compact card that opens the Trip tab |
+| Widgets | Chat (inline or compact), canvas, shared trip | On a phone, a widget that is also on the canvas shows in the chat as a compact card that opens it in the Trip tab. A widget that lives only in the chat (a side answer not added to the trip, or `web_results`) shows in full inline, so that it stays readable without the canvas |
 | Source and age label | Every widget | The shared trip adds "as of" with the share date |
 | Chat column | Welcome, working trip | Welcome shows the example prompts |
 | Illustration | Welcome, empty states, errors, link not found | |

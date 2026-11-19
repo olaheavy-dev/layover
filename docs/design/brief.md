@@ -97,7 +97,7 @@ The repository holds documents and their checks only, so no components, tokens o
 The owner chose "1. Chat + trip canvas (Recommended)".
 
 - Desktop: the chat sits in a column on the left, and the trip canvas fills the right.
-- Phone: two tabs, Chat and Trip. When a widget appears in the canvas, the chat shows a compact card that opens it in the Trip tab.
+- Phone: two tabs, Chat and Trip. When a widget appears in the canvas, the chat shows a compact card that opens it in the Trip tab. A widget that lives only in the chat, such as a side answer or web results, shows in full in the chat.
 - Shared trip page: the canvas on its own, without the chat, as a frozen copy with "as of" dates (spec §8, item 2).
 
 ## Component inventory
