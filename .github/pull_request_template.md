@@ -9,6 +9,15 @@ Closes #
 - [ ] `make check` passes locally
 - [ ] Each acceptance criterion maps to a named test
 
+| Acceptance criterion | Test (file and name) or evaluation case ID |
+|---|---|
+| | |
+
+<!-- Numeric code only (test-first skill): the slice table. Delete otherwise.
+| Slice | Test written | Expected failure | Observed failure | Passes after |
+|---|---|---|---|---|
+-->
+
 ## Assumptions made
 
 ## Claims and figures
