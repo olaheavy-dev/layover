@@ -6,7 +6,7 @@ Last updated: 19 Nov 2026, end of session.
 
 ## Stage
 
-Design. The repository holds documents only. The main journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)). The design foundations are approved: the [design brief](../design/brief.md), the [information architecture](../design/information-architecture.md) and the [design tokens](../design/tokens.css) (issue #25). The boards for every screen and widget come next, still in the Design stage, then the Design gate. The FastAPI template layer comes with build plan 1, and the Next.js layer when frontend work starts ([0010](../decisions/0010-repository-and-stages.md), [spec §9](../superpowers/specs/2026-11-19-layover-journey-design.md)).
+Design. The repository holds documents and their checks only. The main journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)). The design foundations are approved: the [design brief](../design/brief.md), the [information architecture](../design/information-architecture.md) and the [design tokens](../design/tokens.css) (issue #25). The boards for every screen and widget come next, still in the Design stage, then the Design gate. The FastAPI template layer comes with build plan 1, and the Next.js layer when frontend work starts ([0010](../decisions/0010-repository-and-stages.md), [spec §9](../superpowers/specs/2026-11-19-layover-journey-design.md)).
 
 ## Open pull requests
 
@@ -39,7 +39,7 @@ What the journey design settled (owner answers in prompt windows; details in the
 ## Next steps
 
 1. **Merge the design foundations PR** (issue #25): brief, information architecture, tokens and the contrast check in `make check`.
-2. **Boards** (a new issue, PR 2 of the design work): static HTML boards for every screen in the [information architecture](../design/information-architecture.md) and every widget `kind` with its loading, empty, error and "not known" states, at 390 px and 1440 px, in light and dark, built on [tokens.css](../design/tokens.css). It includes the illustration side-by-side test on the welcome screen. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief.
+2. **Boards** (issue #28, PR 2 of the design work): static HTML boards for every screen in the [information architecture](../design/information-architecture.md) and every widget `kind` with its loading, empty, error and "not known" states, at 390 px and 1440 px, in light and dark, built on [tokens.css](../design/tokens.css). It includes the illustration side-by-side test on the welcome screen. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief.
 3. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage, a map snapshot in `docs/floorplan/`.
 4. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests). Then one plan per part, written one at a time.
 
@@ -51,6 +51,7 @@ None. Owner decisions still open, needed later:
 - How long a working trip link and a shared trip link last (the working link keeps the chat, so it holds more personal data).
 - The cost-cap figures, after build step 1 measures a trip's cost.
 - The vector database (plan 3), and hosting and the database (plan 6).
+- How the fonts are served (frontend plan): the agent recommends self-hosting, because Google's font servers receive visitors' IP addresses.
 
 ## Owner to-dos
 

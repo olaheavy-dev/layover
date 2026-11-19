@@ -20,13 +20,17 @@ The traveller describes the trip they want in a chat. Layover answers in the cha
 
 ## Aesthetic direction
 
-- Philosophy: warm editorial. The owner chose "C. Warm editorial (Recommended)" after a comparison of three styles drawn on the same trip screen ([comparison page](https://claude.ai/artifact/APobhMdXPJDBYCEYF18CtZ), private to the owner).
+- Philosophy: warm editorial. The owner chose "C. Warm editorial (Recommended)" after a comparison of three styles drawn on the same trip screen. The comparison page was a private working page, so it is not linked here.
 - Tone: warm and inspiring. The owner chose "Warm and inspiring" over "Calm and trustworthy", which the agent recommended.
-- Type: Source Serif 4 for place names and headings, and Source Sans 3 for body text and figures. Both are under the SIL Open Font License. The owner compared three pairings on the trip screen, asked for research on the fonts that the benchmark sites use, and then chose "Source Serif 4 + Source Sans 3". The agent recommended Fraunces and DM Sans. The research found that Airbnb, Google Flights and Skyscanner use their own fonts, Lonely Planet uses paid fonts, Mindtrip uses Inter, and Layla uses the fonts of the device. These were checked on 19 Nov 2026 from each site's HTML and CSS. For Skyscanner, the site refused the request, so the font name comes from its public design-system code on GitHub.
+- Type: Source Serif 4 for place names and headings, and Source Sans 3 for body text and figures. Both are under the SIL Open Font License. The owner compared three pairings on the trip screen and asked for research on the fonts that the benchmark sites use. The owner then chose "Source Serif 4 + Source Sans 3". The agent recommended Fraunces and DM Sans.
+- Font research: the agent observed the fonts in each site's page source on 19 Nov 2026. Airbnb uses its own font, Airbnb Cereal. Google Flights uses Google Sans and Roboto. Lonely Planet uses paid fonts (ABC Arizona Flare, ABC Monument Grotesk and American Grotesk). Mindtrip uses Inter. Layla uses the fonts of the device. Skyscanner refused the request, so its font, Skyscanner Relative, comes from its public design-system code ([backpack-ios](https://github.com/Skyscanner/backpack-ios)).
+- How the fonts are served is open. Google's font servers receive each visitor's IP address, and spec §5c treats an IP address as personal data. The OFL allows self-hosting. The agent recommends self-hosting, and the owner decides in the frontend plan.
 - Colour: the Harbour palette in [tokens.css](tokens.css). It has blue-grey neutrals, one deep harbour blue for actions, one lighter blue for small markers, and one warning colour for problems only. The owner rejected a first round of palettes: "the colros make it look all iver the place and not something that was designed intentionally". The owner then said "Harbour feels like a very good start", saw three refined versions, and chose "Harbour as before". Warmth comes from the photos and the type, not from the interface colours.
 - Source labels: Live and Cached use the normal text colours with different dot shapes. Fallback and Unavailable use the warning colour. Not known uses quiet italic text. Words always name the state, so colour never carries the meaning alone.
+- Unavailable and Not known **(agent's call)**: "Unavailable" is one of the four labels in decision 0011, rule 2. It means that Layover asked the source and the source failed. "Not known" means that no source Layover uses has the value. Both follow rule 4: neither shows a zero or a favourable value.
+- Highlight: the lighter blue is for small markers only. It is never text, and never the only cue. For example, the current section in the index is also bold.
 - Photos: tall destination photos with the place name over them, from Unsplash, with the photographer credited on the photo ([data sources](../references/data-sources.md)). Text over a photo always sits on a dark gradient (a scrim) so that it meets the contrast target.
-- Icons: Lucide. The owner chose "Lucide (Recommended)". The licence is ISC, which allows commercial use when the copyright notice is kept ([licence](https://github.com/lucide-icons/lucide/blob/main/LICENSE), checked 19 Nov 2026).
+- Icons: Lucide. The owner chose "Lucide (Recommended)". The licence is ISC, and the icons that come from the Feather project are under MIT. Both allow commercial use when their notices are kept ([licence](https://github.com/lucide-icons/lucide/blob/main/LICENSE), checked 19 Nov 2026).
 - Illustrations: for the welcome screen, empty states and error states. They must be world class and match warm editorial. The owner said: "Our iluustrations have to be wolrd class and match our choice", then chose "Side-by-side test (Recommended)". In the boards phase, the welcome screen is drawn twice. One version uses an illustration drawn for Layover, and the other uses a recoloured free-library illustration whose licence is checked first. The owner picks from the two.
 - Reference points: the benchmark below.
 - Anti-references: the owner chose these three:
@@ -50,10 +54,10 @@ Each observation cites its source. The agent's research checked all sources on 1
 | Mindtrip (AI planner) | The plan sits beside a map and updates as the traveller picks items ([Afar](https://www.afar.com/magazine/we-tested-ai-travel-planning-apps-here-are-the-3-that-actually-worked), review). The assistant says why each pick fits ([mindtrip.ai](https://mindtrip.ai/)) | Afar found confident errors, for example dates said to be in the past. The home page shows crossed-out prices with a "Price drop" label and no source or age ([mindtrip.ai](https://mindtrip.ai/)) |
 | Layla (AI planner) | It opens with one prompt and preset prompts, including "Not sure where to go yet". Prices say "from" and "p.p." and link to "About this price" ([layla.ai](https://layla.ai/)) | Discount badges such as "-53%" and crossed-out prices ([layla.ai](https://layla.ai/)) |
 | Google AI Mode Canvas (AI planner) | A day-by-day plan in a side panel next to the chat, with flights, hotels and maps beside the plan. It is the closest match to Layover's layout ([engine.com](https://engine.com/blog/inside-googles-travel-ai-upgrade-ai-mode-canvas-conversational-flight-deals-and-review-summaries-in-maps), review). Afar found Gemini's links the most accurate of the tools it tested | The review says it is not clear where each claim comes from. Gemini's answers in Afar's test were text only |
-| Google Flights (search) | Price labels in words (low, typical, high), compared "to prices we've cataloged over the past 12 months" ([Google blog](https://blog.google/products/travel/google-flights-find-deals/)). A price graph and a dates view for flexible travel ([help](https://support.google.com/travel/answer/7664728?hl=en-GB)) | Green text marks the cheapest options. Colour alone fails WCAG 1.4.1. Google does not explain how it sets the "typical" range |
-| Skyscanner (search) | Its partner documentation says that cached prices come from earlier searches, are kept for up to 15 days, and are "a guide to pricing trends" ([partner help](https://skyscannerpartnersupport.zendesk.com/hc/en-us/articles/4686923517981-Why-does-the-Browse-Cache-API-not-match-that-of-the-live-pricing)) | Month-view estimates can look like real fares. The same documentation says that less popular routes can have old data or none |
-| Lonely Planet (editorial guide) | The March 2026 refresh aims to combine "warmth and inspiration with practicality" ([Breaking Travel News](https://www.breakingtravelnews.com/news/article/lonely-planet-unveils-new-app-and-bookable-experiences-as-it-evolves-to-a-d/)). Its city pages look smaller than its country pages, so the order of places is clear ([Dribbble](https://www.dribbble.com/shots/2385119-Lonely-Planet-Cities)) | A 2019 review found practical facts hard to find ([Nomadic Matt](https://www.nomadicmatt.com/travel-blogs/lonely-planet/), from before the refresh) |
-| Airbnb (craft) | It shows the total price with fees, keeps the full breakdown one step away, and sorts results by the total ([Airbnb news](https://news.airbnb.com/total-price-display-is-now-standard-globally)) | For years the nightly price came first and fees came late. The total became standard only after tests ([Airbnb news](https://news.airbnb.com/airbnb-is-introducing-total-price-display-and-updating-guest-checkout)) |
+| Google Flights (search) | It labels current prices in words, "low, typical or high compared to past averages for the same route" ([Google blog](https://blog.google/products/travel/google-flights-find-deals/)) | The sources did not confirm a problem |
+| Skyscanner (search) | Its partner documentation says that cached prices are kept for up to 15 days and "serve as a useful indicator for pricing trends on a given route" ([partner help](https://skyscannerpartnersupport.zendesk.com/hc/en-us/articles/4686923517981-Why-does-the-Browse-Cache-API-not-match-that-of-the-live-pricing)) | The same page says that "for less popular routes the cache can be out of date and may not have any results" |
+| Lonely Planet (editorial guide) | The March 2026 refresh aims to balance inspiration with practical use (paraphrased from [Breaking Travel News](https://www.breakingtravelnews.com/news/article/lonely-planet-unveils-new-app-and-bookable-experiences-as-it-evolves-to-a-d/)) | A 2019 review found practical facts hard to find ([Nomadic Matt](https://www.nomadicmatt.com/travel-blogs/lonely-planet/), from before the refresh) |
+| Airbnb (craft) | It shows the total price, and before booking, "guests can still view a full price breakdown" of fees, discounts and taxes ([Airbnb news](https://news.airbnb.com/airbnb-is-introducing-total-price-display-and-updating-guest-checkout)) | The total price became standard for guests worldwide only on 21 April 2025 ([Airbnb news](https://news.airbnb.com/total-price-display-is-now-standard-globally)). Layover shows the total from the start |
 | Linear (craft) | It makes its light and dark themes from three inputs: base colour, accent and contrast. Before, it set 98 variables by hand. It tests each design choice in every view ([Linear](https://linear.app/now/how-we-redesigned-the-linear-ui)) | Its quiet, dense look suits a work tool. Layover takes the method, not the look **(agent's call)** |
 
 ### The bar for Layover
@@ -69,7 +73,7 @@ The boards and the design review test these rules:
 7. Every fact in the chat or on the canvas has a visible source link. The model never gives opening hours, travel times or entry rules without one.
 8. Chat replies stay short. Detail goes into widgets, and links appear without the traveller asking.
 9. The welcome screen offers a few example prompts, including one for a traveller who is not sure where to go. It has one main action.
-10. A place leads with its photo and name, but its key facts sit on the first screen of the canvas. Place, region and country headings get smaller in that order.
+10. A place leads with its photo and name, but its key facts sit on the first screen of the canvas.
 11. One set of tokens makes both themes, with contrast as a setting. Every widget is checked in both themes and at phone and desktop widths.
 12. Loading states are placeholder shapes in the form of the widget. Motion respects the traveller's reduced-motion setting.
 
@@ -78,13 +82,15 @@ The boards and the design review test these rules:
 The research could not confirm these points:
 
 - The current Lonely Planet destination page. The site refused the request.
+- How Lonely Planet sizes city pages against country pages. The only source found was a designer's Dribbble post from about 2015, which may be a concept, so the brief does not use it.
+- Google Flights' price graph and its use of colour. The help page was not read in full.
 - Airbnb's design system and its motion library. Those pages did not load.
 - The views inside Mindtrip and Layla, because they need an account.
 - Whether Google AI Mode Canvas is available in the UK. The source says US desktop only.
 
 ## Existing patterns
 
-The repository holds documents only, so no components, tokens or fonts exist yet. This brief starts the visual system. The Next.js layer arrives when frontend work starts ([0006](../decisions/0006-nextjs-frontend.md), [0010](../decisions/0010-repository-and-stages.md)).
+The repository holds documents and their checks only, so no components, tokens or fonts existed before this brief. This brief starts the visual system. The Next.js layer arrives when frontend work starts ([0006](../decisions/0006-nextjs-frontend.md), [0010](../decisions/0010-repository-and-stages.md)).
 
 ## Layout
 
@@ -120,7 +126,7 @@ All components are new. "Widget" means a block that shows one tool result, tagge
 
 | `kind` | What it shows |
 |---|---|
-| `brief_summary` | The confirmed brief as chips, with an Edit action |
+| `brief_summary` | The confirmed brief as chips (small labelled tags, one for each field), with an Edit action |
 | `comparison_table` | Three places side by side: photo, fares, weather, cost estimate, "not known" rows, and a Choose action. On a phone, the places are cards that the traveller swipes or scrolls |
 | `fare_card` | A cached fare range, its age, and a link to check the live price on Aviasales |
 | `climate_chart` | Typical temperature and rain for the month |
@@ -171,7 +177,7 @@ The owner chose "WCAG 2.2 AA (Recommended)" ([WCAG 2.2](https://www.w3.org/TR/WC
 
 - Text contrast is at least 4.5:1, or 3:1 for large text ([1.4.3](https://www.w3.org/TR/WCAG22/#contrast-minimum)). The tokens are tested for this in both themes. Text over photos always sits on a scrim.
 - Icons and control borders have a contrast of at least 3:1 ([1.4.11](https://www.w3.org/TR/WCAG22/#non-text-contrast)).
-- Every control works with a keyboard and has a visible focus state that is not hidden by other content ([2.4.11](https://www.w3.org/TR/WCAG22/#focus-not-obscured-minimum)).
+- Every control works with a keyboard and has a visible focus state ([2.4.7](https://www.w3.org/TR/WCAG22/#focus-visible)) that other content does not hide ([2.4.11](https://www.w3.org/TR/WCAG22/#focus-not-obscured-minimum)).
 - Targets are at least 24 by 24 CSS pixels ([2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum)).
 - Streamed chat answers go into a polite live region, so that a screen reader reads new text without interrupting the traveller.
 - Charts have a text or table alternative that gives the same figures.

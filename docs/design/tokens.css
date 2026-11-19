@@ -19,7 +19,7 @@
   /* ---------- Colour: light theme ---------- */
   --color-bg-primary: #F7F6F3;         /* page background */
   --color-bg-secondary: #FFFFFF;       /* cards, widgets, top bar */
-  --color-bg-tertiary: #E9EEF3;        /* chips, wells */
+  --color-bg-tertiary: #E9EEF3;        /* chips (small labelled tags) and inset areas */
   --color-bg-inverse: #17202B;
 
   --color-text-primary: #17202B;
@@ -29,14 +29,15 @@
   --color-text-link: #12436E;
 
   --color-border-primary: #E2E1DC;     /* dividers between content (decorative) */
-  --color-border-control: #8A929B;     /* inputs and secondary buttons */
+  --color-border-control: #7C848D;     /* inputs and secondary buttons */
   --color-border-focus: #12436E;
 
   --color-accent-primary: #12436E;     /* buttons, links, selected states */
   --color-accent-primary-hover: #0E3557;
   --color-accent-primary-active: #0A2842;
   --color-text-on-accent: #FFFFFF;
-  --color-highlight: #6F9CC4;          /* small markers only: index underline, tool-step dot. Never text */
+  --color-highlight: #6F9CC4;          /* small markers only: index underline, tool-step dot. Never text,
+                                          and never the only cue: the current section is also bold */
 
   /* One warning colour for every problem state. Words and shapes tell the states apart */
   --color-status-warning: #9A4A12;     /* Fallback, Unavailable, widget errors */
@@ -52,6 +53,7 @@
   /* Text on a photo sits only where the scrim is at least this opaque, so white text keeps
      4.5:1 even over a white photo. check_contrast.py tests the worst case. */
   --scrim-text-min-opacity: 0.6;
+  /* The gradient repeats --color-scrim (8, 12, 24) and --scrim-text-min-opacity (0.6): change them together. */
   --scrim-photo: linear-gradient(180deg, rgba(8, 12, 24, 0) 40%, rgba(8, 12, 24, 0.6) 65%, rgba(8, 12, 24, 0.8) 100%);
   --aspect-photo-card: 4 / 5;
   --aspect-photo-wide: 16 / 10;
@@ -150,7 +152,7 @@
   --color-text-inverse: #10151B;
   --color-text-link: #9CC3E8;
   --color-border-primary: #29323D;
-  --color-border-control: #6C7783;
+  --color-border-control: #74808C;
   --color-border-focus: #9CC3E8;
   --color-accent-primary: #9CC3E8;
   --color-accent-primary-hover: #B7D4F0;
@@ -183,7 +185,7 @@
     --color-text-inverse: #10151B;
     --color-text-link: #9CC3E8;
     --color-border-primary: #29323D;
-    --color-border-control: #6C7783;
+    --color-border-control: #74808C;
     --color-border-focus: #9CC3E8;
     --color-accent-primary: #9CC3E8;
     --color-accent-primary-hover: #B7D4F0;

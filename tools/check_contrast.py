@@ -3,8 +3,9 @@
 
 Reads docs/design/tokens.css: the first `:root {` block holds the light values, and the two dark
 blocks (`:root[data-theme="dark"]` and the `prefers-color-scheme: dark` block) override them. The
-two dark blocks must hold the same values. Text pairs need 4.5:1 (WCAG 1.4.3) and control and focus
-pairs need 3:1 (WCAG 1.4.11). White text on a photo is tested over a white photo under the scrim at
+two dark blocks must hold the same values. Every --color-text-* and --color-status-* token is tested on
+every page background and needs 4.5:1 (WCAG 1.4.3); control borders and the focus ring need 3:1
+(WCAG 1.4.11). The highlight colour is not tested: it is never text and never the only cue. White text on a photo is tested over a white photo under the scrim at
 its minimum opacity. Formulas: https://www.w3.org/TR/WCAG22/#dfn-contrast-ratio
 """
 
@@ -17,28 +18,37 @@ from pathlib import Path
 TEXT = 4.5
 NON_TEXT = 3.0
 
-# (foreground token, background token, minimum ratio, what it is)
-PAIRS: list[tuple[str, str, float, str]] = [
-    ("color-text-primary", "color-bg-primary", TEXT, "main text on the page"),
-    ("color-text-primary", "color-bg-secondary", TEXT, "main text on cards"),
-    ("color-text-primary", "color-bg-tertiary", TEXT, "text on chips"),
-    ("color-text-secondary", "color-bg-primary", TEXT, "quiet text on the page"),
-    ("color-text-secondary", "color-bg-secondary", TEXT, "quiet text on cards"),
-    ("color-text-link", "color-bg-primary", TEXT, "links on the page"),
-    ("color-text-link", "color-bg-secondary", TEXT, "links on cards"),
+BACKGROUNDS = ("color-bg-primary", "color-bg-secondary", "color-bg-tertiary")
+
+# Text tokens with their own background, or exempt (WCAG 1.4.3 exempts disabled controls).
+SPECIAL_TEXT = {"color-text-on-accent", "color-text-inverse", "color-text-disabled"}
+
+# Pairs that are not "text token on a page background": (foreground, background, minimum, what it is)
+SPECIAL_PAIRS: list[tuple[str, str, float, str]] = [
     ("color-text-on-accent", "color-accent-primary", TEXT, "button text"),
     ("color-text-on-accent", "color-accent-primary-hover", TEXT, "button text, hover"),
     ("color-text-on-accent", "color-accent-primary-active", TEXT, "button text, pressed"),
-    ("color-status-warning", "color-bg-primary", TEXT, "warning text on the page"),
-    ("color-status-warning", "color-bg-secondary", TEXT, "warning text on cards"),
-    ("color-status-live", "color-bg-secondary", TEXT, "Live label"),
-    ("color-status-cached", "color-bg-secondary", TEXT, "Cached label"),
-    ("color-status-not-known", "color-bg-secondary", TEXT, "Not known label"),
-    ("color-status-info", "color-bg-secondary", TEXT, "information text"),
-    ("color-border-control", "color-bg-secondary", NON_TEXT, "input and button borders"),
-    ("color-border-focus", "color-bg-primary", NON_TEXT, "focus ring on the page"),
-    ("color-border-focus", "color-bg-secondary", NON_TEXT, "focus ring on cards"),
+    ("color-text-inverse", "color-bg-inverse", TEXT, "text on an inverse background"),
+    *[("color-border-control", bg, NON_TEXT, "input and button borders") for bg in BACKGROUNDS],
+    *[("color-border-focus", bg, NON_TEXT, "focus ring") for bg in BACKGROUNDS],
 ]
+
+# Tokens every theme must define, so that deleting one fails the check.
+REQUIRED = sorted({"color-text-primary", "color-text-secondary", "color-text-link", "color-status-warning",
+                   *BACKGROUNDS, *(t for pair in SPECIAL_PAIRS for t in pair[:2])})
+
+
+def pairs_for(tokens: dict[str, str]) -> list[tuple[str, str, float, str]]:
+    """Every text and status token on every page background, plus the special pairs.
+
+    The list is built from the tokens themselves, so a colour token added later is checked
+    without a change here.
+    """
+    text = sorted(t for t in tokens
+                  if (t.startswith("color-text-") or t.startswith("color-status-")) and t not in SPECIAL_TEXT)
+    built = [(t, bg, TEXT, "text") for t in text for bg in BACKGROUNDS]
+    return built + SPECIAL_PAIRS
+
 
 DECL = re.compile(r"--([a-z0-9-]+)\s*:\s*([^;]+);")
 HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
@@ -86,9 +96,15 @@ def problems(path: Path) -> list[str]:
     found: list[str] = []
     if manual != system:
         found.append(f"{path}: the two dark blocks differ; keep them identical")
+    for later in re.finditer(r":root\s*\{([^}]*)\}", css[css.index(":root {") + 1:]):
+        if "--color-" in later.group(1):
+            found.append(f"{path}: a later :root block sets colours; keep light colours in the first :root block")
     themes = {"light": light, "dark": {**light, **manual}}
     for theme, tokens in themes.items():
-        for fg, bg, minimum, what in PAIRS:
+        for name in REQUIRED:
+            if name not in tokens:
+                found.append(f"{theme}: missing --{name}")
+        for fg, bg, minimum, what in pairs_for(tokens):
             if fg not in tokens or bg not in tokens:
                 found.append(f"{theme}: missing --{fg} or --{bg} ({what})")
                 continue
