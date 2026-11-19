@@ -10,6 +10,8 @@ Layover is a portfolio project to win AI and agent engineering jobs, built like 
 
 A UK-based traveller who hasn't chosen a destination describes the trip they want in chat. Layover compares three places with real data, the traveller picks one, and Layover produces a trip summary, a day-by-day itinerary and a sandbox booking.
 
+Not every message is that journey. The owner: "users can ask any questions relating to travel as long as we support it, we need to be able to classify intention first". So every message is first classified into a supported intent and routed (§5a).
+
 ## 2. Goals, non-goals and anti-goals
 
 **Goals.** A recruiter who tries Layover comes away convinced of all four (owner chose all four):
@@ -43,7 +45,22 @@ Three ways to build the journey were offered:
 
 Owner chose **"Team of agents"**, then **"Team + single-agent baseline (Recommended)"**, reason **"Show multi-agent skills"**. Recorded in [0012](../../decisions/0012-agent-team.md).
 
-## 5. The journey
+## 5a. Intents: classify first, then route
+
+The supervisor's first step on every message is to classify it into one supported intent, as structured output (a label from a fixed list, so it can be tested), then route it. Owner chose all four intents and "Say so and suggest (Recommended)" for the rest:
+
+| Intent | Example | Route |
+|---|---|---|
+| `plan_trip` | "Somewhere warm in May, about £800 for two, from Manchester" | The full journey below |
+| `destination_facts` | "Do I need a visa for Turkey?", "What's Lisbon like in October?", "How much is £500 in euros?" | One research agent for one place: FCDO advice, climate, money, holidays, time difference, introduction |
+| `itinerary` | "Three days in Porto" | Straight to the itinerary agent, skipping compare |
+| `fares_and_transport` | "Cheapest flights from Bristol to anywhere in March", "How do I get to Gatwick?" | Cached fares (with their age) and TfL |
+| `unsupported_travel` | A travel question none of the above covers | An honest "I can't help with that yet", plus what Layover can do; logged without personal data to guide what to add next |
+| `not_travel` | Anything else | Politely declined |
+
+A conversation can move between intents (a `destination_facts` question in the middle of `plan_trip`); the supervisor keeps the trip state. **(Agent's call)** When the classifier isn't confident, the brief agent asks one clarifying question rather than guessing.
+
+## 5. The journey (`plan_trip`)
 
 1. **Brief (chat).** Owner: **"Chat only"**. The traveller types; the brief agent asks for whatever is missing: departure airport, when (month or dates), length, how many people, total budget in pounds, and the feel ("warm, beach, good food"). **(Agent's call)** Before searching, it restates the brief as one confirmed summary ("Manchester, 5 nights in May, 2 people, £800 total, warm and relaxed") for the traveller to confirm or correct. The confirmed brief is the fixed input the rest of the journey and the evaluations use.
 2. **Compare three places.** Owner: **"let us start with three first"**. The supervisor proposes three destinations that fit the brief; one research agent per destination runs in parallel; a ranking step compares them side by side and checks the budget in code. **(Agent's call)** The traveller can swap a destination for one of their own.
@@ -58,37 +75,52 @@ Owner chose **"Team of agents"**, then **"Team + single-agent baseline (Recommen
 Chat brief ─▶ confirm summary ─▶ compare 3 (parallel) ─▶ pick ─▶ summary ─▶ itinerary ─▶ try booking (approve) ─▶ share link
 ```
 
+## 5b. Budget and costs
+
+Owner chose "Find cost estimates" for what "within budget" means. Flights have real cached fares; stay and daily spending have no free price source yet. Research into free sources for cost estimates is under way; until a source is chosen, the summary shows "Flights from £X of your £800; stay and spending not known" (0011: missing costs are never shown as zero). Any estimate added later is labelled "estimate" with its source and date, and the budget check is tested code.
+
+## 5c. Public use and cost control
+
+Owner: "Live trips but we will set limits or cap based on IP or something". Live trips are open to the public, with a limit per visitor and an overall cap on model spending. **(Agent's call)** An IP address is personal data under UK GDPR, so only a salted one-way hash is stored, for no longer than the limit window; the cap's figures are set by the owner once build step 1 measures a trip's cost (`AGENTS.md` rule 3).
+
 ## 6. The agent team
 
 | Part | Kind | Job | Tools and data |
 |---|---|---|---|
-| Supervisor | Agent | Routes between the parts and owns the shared trip state | None directly |
+| Supervisor | Agent | Classifies each message's intent (§5a), routes between the parts and owns the shared trip state | None directly |
 | Brief agent | Agent | Chat with the traveller; produce the confirmed brief | OurAirports (airport lookup) |
-| Compare | Fan-out of three research agents, then a ranking step | One agent per destination gathers its facts; ranking compares and checks the budget in code | Travelpayouts cached fares, Open-Meteo Historical/Climate and Marine, sunrise-sunset.org, Python `holidays`, Frankfurter, FCDO Content API, Wikipedia |
-| Itinerary agent | Agent | Days built from sourced places around the chosen base | Overpass, Foursquare Open Source Places, Wikivoyage (MediaWiki API), OpenStreetMap hotels, Open-Meteo, IANA time zones |
+| Compare | Fan-out of three research agents, then a ranking step | One agent per destination gathers its facts; ranking compares and checks the budget in code | Travelpayouts cached fares, Open-Meteo Historical/Climate and Marine, sunrise-sunset.org, Python `holidays`, Frankfurter, retrieval over FCDO advice and Wikivoyage ([0008](../../decisions/0008-retrieval-no-knowledge-graph.md)), Wikipedia |
+| Itinerary agent | Agent | Days built from sourced places around the chosen base | Overpass (points of interest and OpenStreetMap hotels), retrieval over Wikivoyage, Open-Meteo, IANA time zones. **(Agent's call)** Foursquare Open Source Places waits unless Overpass proves too slow |
 | Booking | Fixed subgraph, not an agent | Search, price check, approval, then order and test payment | Duffel test mode; Nuitee Connect sandbox |
 | Single-agent baseline | Agent (evaluation only) | The same journey with all tools in one agent | All of the above |
+
+**(Agent's call)** FCDO advice and Wikivoyage are retrieved from an index, as [0008](../../decisions/0008-retrieval-no-knowledge-graph.md) decided, not fetched live per question. A destination's pages are indexed the first time it is needed. The vector store is a new dependency, chosen with the owner's approval in the plan.
 
 Each agent's tools sit behind Layover's own MCP servers from build step 2 ([0009](../../decisions/0009-tools-as-mcp-servers.md)). Totals, conversions and comparisons are tested code (`test-first` skill), never the model.
 
 ## 7. Evaluations
 
-Permanent IDs per area (`AGENTS.md`): `BRIEF-`, `COMPARE-`, `ITIN-`, `BOOK-`, `TRIP-`. **(Agent's call)** First cases:
+Permanent IDs per area (`AGENTS.md`): `INTENT-`, `BRIEF-`, `COMPARE-`, `ITIN-`, `BOOK-`, `TRIP-`. **(Agent's call)** First cases:
 
+- `INTENT-01` each example in §5a is classified to its intent; `INTENT-02` a non-travel request is declined; `INTENT-03` an unsupported travel question gets "not yet" plus suggestions, never an unsourced answer.
 - `BRIEF-01` a vague request ends in a confirmed summary with every field set; `BRIEF-02` a budget or date misread is corrected before searching.
 - `COMPARE-01` all three places stay within the budget in code, or say why not; `COMPARE-02` every figure carries its source and age; `COMPARE-03` no destination is called "safe".
 - `ITIN-01` every stop exists in the source data; `ITIN-02` a gap in data is stated, not filled.
 - `BOOK-01` no order is placed without the approval step; `BOOK-02` the booking is labelled as a sandbox and never uses a Travelpayouts fare.
 - `TRIP-01` the team and the baseline run the same trips; speed, tokens and quality are reported side by side.
 
+**(Agent's call)** Scoring: factual checks (sources, budget, approval, labels) are code; ranking and itinerary quality are scored by a model as judge against a written rubric, with the owner spot-checking a sample. Each evaluation trip has a scripted traveller that answers the brief questions, picks a place and approves or rejects booking. The README states the trip set's size with every score.
+
 ## 8. Open questions
 
 For the owner or before building:
 
-1. **Nuitee Connect terms:** its published terms (last updated January 2025) are booking conditions for travel agents and don't mention the sandbox, demo or portfolio use; whether its sandbox hotels are real or fake isn't stated. Ask Nuitee before building the hotel demo.
-2. **Shareable link expiry:** how long a trip link lasts (a privacy and storage choice).
-3. **Build order:** [01 §4](../../product/01-research-and-direction.md) starts with "a single LangGraph agent"; the plan revises it for the agent team and the baseline.
+1. **Nuitee Connect terms:** its published terms (last updated January 2025) are booking conditions for travel agents and don't mention the sandbox, demo or portfolio use; whether its sandbox hotels are real or fake isn't stated. Ask Nuitee before building the hotel demo. If it says no or doesn't answer, "try booking" ships with Duffel flights only (owner: "Flights-only booking (Recommended)").
+2. **Shareable link expiry:** how long a trip link lasts (a privacy and storage choice). **(Agent's call)** A link reopens a frozen copy of the trip (brief, comparison, summary, itinerary, booking state) with "as of" dates on every fare and advice date; the chat transcript isn't kept.
+3. **Cost estimates:** which free source gives stay and daily-spending estimates (research under way).
+4. **Spending cap figures and hosting:** set by the owner after build step 1 measures a trip's cost; hosting and the database are infrastructure decisions for the owner.
+5. **Build order:** [01 §4](../../product/01-research-and-direction.md) starts with "a single LangGraph agent"; the plan revises it for the agent team and the baseline.
 
 ## 9. Left to the builder
 
-The shared trip-state schema (fixed first in the plan), prompts, the ranking method within the budget rule, caching periods per source within each provider's terms, screen layouts (designed separately), and how the three destinations are proposed within the brief.
+The shared trip-state schema (fixed first in the plan), prompts, the ranking method within the budget rule, caching periods per source within each provider's terms, and how the three destinations are proposed within the brief. **(Agent's call)** The plan covers the backend, the agents and the API (including streamed tool calls and the approval pauses for "pick" and booking); screens are designed separately with the design skills before frontend tasks start.
