@@ -7,19 +7,23 @@ docs/
 ├── README.md            this index
 ├── product/             the main product documents (numbered, read in order)
 ├── decisions/           one record per decision, plus the register
+├── design/              the design brief, information architecture, design tokens and boards
 ├── planning/            the status file, the ordered backlog and working plans
 ├── references/          data sources and official third-party documentation
 ├── reviews/             dated reviews and research
 └── superpowers/         specs and plans written with the Superpowers skills (added when first used)
 ```
 
-Planned folders, added when their stage starts: `docs/specs/` for the specification, `docs/architecture/` for system diagrams, `docs/assets/` with an asset register before any image is committed, `.design/<feature>/` at the repository root for design-skill outputs, and `docs/floorplan/` for the Floorplan map snapshot published at each stage gate.
+Planned folders, added when their stage starts: `docs/specs/` for the specification, `docs/architecture/` for system diagrams, `docs/assets/` with an asset register before any image is committed, and `docs/floorplan/` for the Floorplan map snapshot published at each stage gate.
 
 ## What each document is for
 
 | Document | Owns | Status |
 |---|---|---|
 | [01 Research and direction](product/01-research-and-direction.md) | What Layover is, what it shows, build order, open design questions | Draft |
+| [Design brief](design/brief.md) | Tone, style, benchmark, component inventory, accessibility | Approved |
+| [Information architecture](design/information-architecture.md) | Screens, links, navigation, flows for each intent, interface wording | Approved |
+| [Design tokens](design/tokens.css) | Colours (light and dark), fonts, spacing, shapes, motion; checked for contrast by `make check` | Approved |
 | [Decision register](decisions/README.md) | Every decision's status and record | Current |
 | [Ordered backlog](planning/backlog.md) | Every open issue in order, by stage milestone, and the stage gate | Current |
 | [Status](planning/status.md) | Open pull requests, next steps, blockers and the owner's to-dos; overwritten every session | Current |
