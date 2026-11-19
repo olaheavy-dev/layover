@@ -19,7 +19,7 @@ An AI travel planner for a **UK-based traveller planning a holiday abroad**, bui
 
 ## 3. What the traveller can see for real
 
-Cached fares (Aviasales through Travelpayouts), weather, exchange rates, FCDO entry and safety advice, Wikivoyage guides, and possibly airport transfer prices, eSIM costs and attraction tickets. Booking runs in Duffel's sandbox. Hotels have no data source yet. Details: [data sources](../references/data-sources.md).
+Cached fares (Aviasales through Travelpayouts), weather, exchange rates, FCDO entry and safety advice, Wikivoyage guides, and possibly airport transfer prices, eSIM costs and attraction tickets. Booking runs in Duffel's sandbox. Hotels: real names and locations from OpenStreetMap, a sandbox booking in Nuitee Connect, and stay estimates from Wikivoyage listings ([journey design](../superpowers/specs/2026-11-19-layover-journey-design.md)). Details: [data sources](../references/data-sources.md).
 
 ## 4. Build order (proposed; to be revised by the plan for the agent team in [0012](../decisions/0012-agent-team.md))
 
@@ -28,7 +28,7 @@ Cached fares (Aviasales through Travelpayouts), weather, exchange rates, FCDO en
 3. Retrieval over FCDO and Wikivoyage, with citations, freshness dates and the first evaluations.
 4. Browsing real cached fares from Travelpayouts, labelled with their age, each linking to Aviasales. With commission switched on, the link is a partner link with a SubID naming the feature that produced it; it is built now but switched off, so links are plain ([register](../decisions/README.md#register)).
 5. The Duffel booking subgraph with the approval step.
-6. Compare destinations: parallel research agents, measured against the single agent.
+6. Compare destinations: parallel research agents, measured against the single agent (to be revised: [0012](../decisions/0012-agent-team.md) makes the whole journey a team of agents, measured against a single-agent baseline).
 7. A private earnings dashboard: clicks, bookings and earnings per feature from the booking statistics API, built behind the same switch.
 
 The FastAPI and Next.js template layers are added before step 1 ([0010](../decisions/0010-repository-and-stages.md)).

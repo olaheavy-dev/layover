@@ -28,9 +28,9 @@ Not every message is that journey. The owner: "users can ask any questions relat
 ## 3. Constraints
 
 - Decisions [0004](../../decisions/0004-flight-data-sources.md) (cached real fares to browse, Duffel sandbox to book), [0008](../../decisions/0008-retrieval-no-knowledge-graph.md) (retrieval over FCDO and Wikivoyage), [0009](../../decisions/0009-tools-as-mcp-servers.md) (tools become MCP servers), [0011](../../decisions/0011-product-integrity-rules.md) and [0012](../../decisions/0012-agent-team.md).
-- Layover is non-commercial while commission is switched off, so free non-commercial tiers apply ([data sources](../../references/data-sources.md)).
+- Layover is non-commercial while commission is switched off, so free non-commercial tiers apply ([data sources](../../references/data-sources.md#chosen)).
 - Free-tier limits shape caching: Open-Meteo counts a long history as many calls (a 10-year daily history for one place is about 260 calls), so monthly climate averages are computed once per place and month and cached ([data sources](../../references/data-sources.md#free-apis-chosen-for-integration-14)).
-- Cached fares are 2 to 7 days old ([data sources](../../references/data-sources.md)); every fare shows its age and links to Aviasales to check the live price.
+- Cached fares are 2 to 7 days old ([data sources](../../references/data-sources.md#chosen)); every fare shows its age and links to Aviasales to check the live price.
 - Duffel test mode uses fictional flights and prices, so the booking demo is clearly labelled as a sandbox and never offers to book a Travelpayouts fare ([0004](../../decisions/0004-flight-data-sources.md)).
 
 ## 4. Approaches
@@ -77,17 +77,19 @@ Chat brief ─▶ confirm summary ─▶ compare 3 (parallel) ─▶ pick ─▶
 
 ## 5b. Budget and costs
 
-Owner chose "Find cost estimates" for what "within budget" means, then, from the researched sources, "Nuitee index for stay only":
+Owner chose "Find cost estimates" for what "within budget" means. Offered the researched sources, the owner asked what free sources can cover, then chose "Free now, Nuitee later":
 
 - **Flights:** real cached fares from Travelpayouts, with their age.
-- **Stay:** an estimate from Nuitee Connect's city price index (`GET /prices/city`): the average nightly price per room for each check-in date, in US dollars, converted to pounds in tested code with Frankfurter, and labelled "estimate" with its source and date ([data sources](../../references/data-sources.md#free-apis-chosen-for-integration-14)).
-- **Daily spending:** "not known" (0011: missing costs are never shown as zero).
+- **Stay and meals:** estimates from Wikivoyage listings ("typical double room" under Sleep, "a complete meal for one" under Eat), converted to pounds in tested code with Frankfurter. **(Agent's call)** An estimate is shown only when a city has a minimum number of priced listings (the figure is set in the plan), labelled with the listing count and the page's edit date. Otherwise "not known".
+- **Local transport and activities:** "not known" (0011: missing costs are never shown as zero).
+- **Later, switched off:** Nuitee Connect's city price index for stay (0.02 US dollars a request, cached per city and month), with a monthly cap, built behind a switch that stays off until the owner approves the spend.
+- **Under research:** the owner asked whether Tavily web search could help with prices and unsupported questions; its terms and accuracy are being checked before any decision.
 
-Example line: "Flights from £X and stay about £Y (estimate) of your £800; daily spending not known". The budget check is tested code. **(Agent's call)** Price-index results are cached per city and month to keep requests few; the index costs $0.02 a request (Nuitee's reference page), a spend the owner approved by choosing it.
+Example line: "Flights from £X, stay about £Y and meals about £Z (estimates from 6 Wikivoyage listings, page edited March 2026) of your £800; local transport and activities not known". The budget check is tested code.
 
 ## 5c. Public use and cost control
 
-Owner: "Live trips but we will set limits or cap based on IP or something". Live trips are open to the public, with a limit per visitor and an overall cap on model spending. **(Agent's call)** An IP address is personal data under UK GDPR, so only a salted one-way hash is stored, for no longer than the limit window; the cap's figures are set by the owner once build step 1 measures a trip's cost (`AGENTS.md` rule 3).
+Owner: "Live trips but we will set limits or cap based on IP or something". Live trips are open to the public, with a limit per visitor and an overall cap on model spending. **(Agent's call)** As a precaution, Layover treats an IP address as personal data (the UK GDPR definition includes "an online identifier", [ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/personal-information-what-is-it/what-is-personal-data/what-is-personal-data/)), so only a salted one-way hash is stored, for no longer than the limit window; the cap's figures are set by the owner once build step 1 measures a trip's cost (`AGENTS.md` rule 3).
 
 ## 6. The agent team
 
@@ -123,7 +125,7 @@ For the owner or before building:
 
 1. **Nuitee Connect terms:** its published terms (last updated January 2025) are booking conditions for travel agents and don't mention the sandbox, demo or portfolio use; whether its sandbox hotels are real or fake isn't stated. Ask Nuitee before building the hotel demo. If it says no or doesn't answer, "try booking" ships with Duffel flights only (owner: "Flights-only booking (Recommended)").
 2. **Shareable link expiry:** how long a trip link lasts (a privacy and storage choice). **(Agent's call)** A link reopens a frozen copy of the trip (brief, comparison, summary, itinerary, booking state) with "as of" dates on every fare and advice date; the chat transcript isn't kept.
-3. **Nuitee price index:** it is in beta ("may change in future versions"), its occupancy basis isn't stated, and its terms are unconfirmed (same question as item 1). If it isn't usable, stay becomes "not known" too.
+3. **Nuitee price index (later):** it is in beta ("may change in future versions"), its occupancy basis isn't stated, and its terms are unconfirmed (same question as item 1). The spend needs the owner's approval before the switch is turned on.
 4. **Spending cap figures and hosting:** set by the owner after build step 1 measures a trip's cost; hosting and the database are infrastructure decisions for the owner.
 5. **Build order:** [01 §4](../../product/01-research-and-direction.md) starts with "a single LangGraph agent"; the plan revises it for the agent team and the baseline.
 

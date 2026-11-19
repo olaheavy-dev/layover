@@ -6,13 +6,13 @@ Status: Accepted (19 Nov 2026). Supersedes points 1 and 4 of [0007](0007-agent-d
 
 Decision 0007 chose one planner agent for the traveller conversation and kept multi-agent work to one feature, Compare destinations. Its Context called "one agent is enough" a working hypothesis, not yet measured, and its alternatives said to revisit a fuller multi-agent design if evaluations showed a reason.
 
-On 19 Nov 2026 the owner settled the main journey ([journey design](../superpowers/specs/2026-11-19-layover-journey-design.md)): an undecided traveller describes a trip in chat, Layover compares three places, the traveller picks one, and Layover produces a trip summary, a day-by-day itinerary and a sandbox booking. Offered three ways to build it (one planner agent with a compare tool, recommended; a fixed sequence of steps; a team of agents), the owner chose the team of agents, then chose to keep a single-agent baseline for measurement. The owner's reason, from the prompt window: "Show multi-agent skills".
+On 19 Nov 2026 the owner settled the main journey in prompt windows; the answers are recorded in the [journey design](../superpowers/specs/2026-11-19-layover-journey-design.md), and this decision rests on those answers: an undecided traveller describes a trip in chat, Layover compares three places, the traveller picks one, and Layover produces a trip summary, a day-by-day itinerary and a sandbox booking. Offered three ways to build it (one planner agent with a compare tool, recommended; a fixed sequence of steps; a team of agents), the owner chose the team of agents, then chose to keep a single-agent baseline for measurement. The owner's reason, from the prompt window: "Show multi-agent skills".
 
 ## Decision
 
 1. **A team of agents under a supervisor** runs the journey: a brief agent holds the chat and confirms the brief; a compare step fans out one research agent per destination in parallel (LangGraph `Send`) and ranks the results; an itinerary agent builds the days from sourced places; booking runs as the fixed subgraph from 0007 point 2. The supervisor routes between them and owns the shared trip state.
 2. **A single-agent baseline** with the same tools runs the same evaluation trips, so the team can be measured against it on speed, tokens and answer quality (owner: "Team + single-agent baseline (Recommended)").
-3. 0007 point 2 (booking is a fixed subgraph with an approval step, not an agent) and point 3 (parallel research agents for Compare destinations) stand.
+3. 0007 point 2 (booking is a fixed subgraph with an approval step, not an agent) and point 3 (parallel research agents for Compare destinations) stand. The journey starts by comparing three places (owner: "let us start with three first"); the design proposes that the traveller can swap one for their own.
 
 ## Consequences
 
