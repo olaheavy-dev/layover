@@ -128,6 +128,7 @@ Researched on 19 Nov 2026 and kept for later; the owner chose not to integrate t
 
 | Source | Why not |
 |---|---|
+| [Numbeo API](https://www.numbeo.com/api/doc.jsp) | Cost-of-living and restaurant prices by city, but the API needs a paid subscription, from 260 US dollars a month for 200,000 queries ([API pricing](https://www.numbeo.com/common/api.jsp)), and free use of Numbeo data is for "personal, academic, and journalistic use" with credit ([terms of use](https://www.numbeo.com/common/terms_of_use.jsp)). Checked 19 Nov 2026 |
 | [OpenFlights data](https://openflights.org/data.php) | Stale: airports "as of January 2017", routes not updated since June 2014 |
 | [OSRM demo server](https://github.com/Project-OSRM/osrm-backend/wiki/Api-usage-policy) | "Excessive use is not allowed" and access may be withdrawn at any time; not for production |
 | Transitland, Navitia, OpenRouteService, OpenTripMap, Rail Data Marketplace, IEC World Plugs | Their pages blocked automated reading or showed no terms on 19 Nov 2026; not checked |
