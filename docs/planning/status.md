@@ -10,9 +10,9 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- `docs/simple-english-and-floorplan` (closes #16): `simple-english` for docs and traveller copy; a Floorplan blueprint after the design document; a map snapshot at each stage gate.
+- `docs/prompt-window-rule` (closes #18): `AGENTS.md` rule 8 (decisions in a prompt window) and the rules adopted from homescout (figures and sources, docs and versions, teach as you build, merge safety). Owner-only: it changes the merge rules.
 
-Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph), #12 (decision 0011 accepted), #13 (candidate data sources, the earnings decision, commission built but switched off), #15 (free APIs chosen for integration).
+Merged on 19 Nov 2026: #1, #2, #3, #8, #12, #13, #15 and #17 (simple-english and Floorplan adopted).
 
 ## Next steps
 
@@ -33,4 +33,4 @@ None.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Travelpayouts project: create it once Layover has a site (Travelpayouts asks for a link to a traffic source). The partner links API needs its project ID (`trs`), so it is needed before commission is switched on (not before).
 - Travelpayouts payouts: set up the payout method yourself when earnings start (agents never enter payment details).
-- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices); they are repository-level, not caused by any PR.
+- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices). Under the new merge rule, code PRs wait until each is fixed or dismissed in GitHub with a recorded reason; documentation PRs are not blocked.
