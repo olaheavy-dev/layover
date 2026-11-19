@@ -8,7 +8,7 @@ The project's purpose is AI and agent jobs (decision 0003). The owner's earlier 
 
 ## Decision
 
-1. **Language: Python** (owner chose the recommended option). Most AI and agent job adverts ask for it, and agent, MCP and evaluation examples appear there first.
+1. **Language: Python** (owner chose the recommended option). The recommendation's reasoning, not a measured claim: Python is the language most associated with AI and agent roles, and agent, MCP and evaluation examples tend to appear there first.
 2. **Agent framework: LangGraph.** The owner raised it ("I am looking to use Langgraph") and kept it after the comparison with MAF.
 
 ## Consequences
@@ -28,3 +28,4 @@ The project's purpose is AI and agent jobs (decision 0003). The owner's earlier 
 - LangGraph interrupts: https://docs.langchain.com/oss/python/langgraph/interrupts
 - Microsoft Agent Framework overview: https://learn.microsoft.com/agent-framework/overview/
 - MAF human-in-the-loop: https://learn.microsoft.com/agent-framework/workflows/human-in-the-loop
+- MAF tool approval (`approval_mode="always_require"`), in the handoff orchestration guide: https://learn.microsoft.com/agent-framework/workflows/orchestrations/handoff

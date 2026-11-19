@@ -38,8 +38,9 @@ In order of how much they change what gets built:
 1. **What has the traveller already decided when they open Layover?** A fixed destination and dates needs a planner; "somewhere warm in May, under £800, from Manchester" needs inspiration and comparison, which would make Compare destinations the centrepiece.
 2. **Hotels:** no hotel price data is available through Travelpayouts. Options include search links without prices, or another source.
 3. **Accounts and saved trips:** does the traveller sign in and come back to a trip?
-4. **The public brand:** `layover` is the working name; a brand and domain check comes before launch.
-5. **Product integrity rules** ([0011](../decisions/0011-product-integrity-rules.md)): proposed, awaiting the owner.
+4. **Affiliate links and "non-commercial" data terms:** Open-Meteo's free API is for non-commercial use only and counts promotional activities as commercial. Aviasales links earn commission, so check before launch whether a paid Open-Meteo plan or another weather source is needed ([data sources](../references/data-sources.md)).
+5. **The public brand:** `layover` is the working name; a brand and domain check comes before launch.
+6. **Product integrity rules** ([0011](../decisions/0011-product-integrity-rules.md)): proposed, awaiting the owner.
 
 ## 6. Not doing
 

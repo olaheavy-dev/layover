@@ -4,7 +4,7 @@ Status: Accepted (19 Nov 2026)
 
 ## Context
 
-The owner wants this project set up the way Vestagraph (homescout-platform) was: "I think before all these questions we setup a github project first mirroring what homescout does". The owner also wants the product designed properly before code: "We can defer this creation we need to properly design the application".
+The owner wants this project set up the way their earlier project Vestagraph ([vestagraph-platform](https://github.com/olaheavy-dev/vestagraph-platform), code name HomeScout) was: "I think before all these questions we setup a github project first mirroring what homescout does". The owner also wants the product designed properly before code: "We can defer this creation we need to properly design the application".
 
 ## Decision
 
