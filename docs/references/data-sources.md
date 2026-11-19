@@ -41,7 +41,7 @@ From [Brands that provide access to APIs and data feeds](https://support.travelp
 | GetTransfer | Needs brand approval ([Travelpayouts brands list](https://support.travelpayouts.com/hc/en-us/articles/20384016664594-Brands-that-provide-access-to-APIs-and-data-feeds-for-Travelpayouts-partners)) |
 | Skyscanner partner API | Not checked; assumed to need a partnership. Check before relying on this row |
 | Google Flights | No public flight-price API found as of 19 Nov 2026 |
-| Scraper APIs (Google Flights, Skyscanner scrapers) | They scrape sites; Layover doesn't scrape ([0011](../decisions/0011-product-integrity-rules.md), proposed) |
+| Scraper APIs (Google Flights, Skyscanner scrapers) | They scrape sites; Layover doesn't scrape ([0011](../decisions/0011-product-integrity-rules.md)) |
 | Duffel live mode | Means selling real tickets with real money; not needed for a portfolio |
 
 ## Duffel coverage (for reference)

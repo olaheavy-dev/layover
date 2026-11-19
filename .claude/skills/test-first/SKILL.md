@@ -5,7 +5,7 @@ description: Test-first workflow for Layover's numeric code (budget totals, curr
 
 # Test-first workflow for numbers
 
-Every figure Layover calculates comes from code, and this skill applies to all of it. If [proposed decision 0011](../../../docs/decisions/0011-product-integrity-rules.md) is accepted, its point 3 also rules out the model doing the arithmetic. This skill makes those tests trustworthy. It adds to Superpowers `test-driven-development`; where they differ, this skill wins for numeric code.
+Every figure Layover calculates comes from tested code, never from the model ([decision 0011](../../../docs/decisions/0011-product-integrity-rules.md), point 3), and this skill applies to all of it. This skill makes those tests trustworthy. It adds to Superpowers `test-driven-development`; where they differ, this skill wins for numeric code.
 
 Write the test before the code it proves, in small vertical slices. For each slice:
 
