@@ -21,7 +21,7 @@ An AI travel planner for a **UK-based traveller planning a holiday abroad**, bui
 
 Cached fares (Aviasales through Travelpayouts), weather, exchange rates, FCDO entry and safety advice, Wikivoyage guides, and possibly airport transfer prices, eSIM costs and attraction tickets. Booking runs in Duffel's sandbox. Hotels have no data source yet. Details: [data sources](../references/data-sources.md).
 
-## 4. Build order (proposed)
+## 4. Build order (proposed; to be revised by the plan for the agent team in [0012](../decisions/0012-agent-team.md))
 
 1. A single LangGraph agent with plain-function tools: weather, exchange rates, FCDO advice.
 2. Move those tools into Layover's own MCP servers.
@@ -37,9 +37,9 @@ The FastAPI and Next.js template layers are added before step 1 ([0010](../decis
 
 In order of how much they change what gets built:
 
-1. **What has the traveller already decided when they open Layover?** A fixed destination and dates needs a planner; "somewhere warm in May, under £800, from Manchester" needs inspiration and comparison, which would make Compare destinations the centrepiece.
-2. **Hotels:** no hotel price data is available through Travelpayouts. Options include search links without prices, or another source.
-3. **Accounts and saved trips:** does the traveller sign in and come back to a trip?
+1. **What has the traveller already decided when they open Layover?** Answered: undecided, then plans ([journey design](../superpowers/specs/2026-11-19-layover-journey-design.md), [0012](../decisions/0012-agent-team.md)).
+2. **Hotels:** answered: real hotel locations from OpenStreetMap and a sandbox hotel booking in Nuitee Connect; no real prices ([journey design](../superpowers/specs/2026-11-19-layover-journey-design.md)).
+3. **Accounts and saved trips:** answered: shareable links, no accounts ([journey design](../superpowers/specs/2026-11-19-layover-journey-design.md)).
 4. **Affiliate links and "non-commercial" data terms:** commission is switched off for now, so Layover is non-commercial and free tiers fit. Before switching it on, Layover would likely become commercial under Open-Meteo's terms (the free tier is non-commercial, and "promotional activities" count as commercial), and Nager.Date (sponsorship), REST Countries (paid plan) and Overpass (paid or self-hosted) would change too; weather options are compared in [data sources](../references/data-sources.md#weather-options-for-a-site-that-earns-commission).
 5. **UK rules on labelling affiliate links (CAP Code)** to check before switching commission on.
 6. **The public brand:** `layover` is the working name; a brand and domain check comes before launch.

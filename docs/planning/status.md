@@ -10,15 +10,17 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- `docs/simple-english-and-floorplan` (closes #16): `simple-english` for docs and traveller copy; a Floorplan blueprint after the design document; a map snapshot at each stage gate.
+- #19 `docs/prompt-window-rule` (closes #18): rule 8 (decisions in a prompt window) and rules from homescout. Codex clean, checks green; owner-only merge (merge rules).
+- `docs/journey-design` (closes #20): the main journey design, decision 0012 (a team of agents with a single-agent baseline), and the hotel and saved-trip answers. Waiting for the owner's approval of the design.
 
-Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph), #12 (decision 0011 accepted), #13 (candidate data sources, the earnings decision, commission built but switched off), #15 (free APIs chosen for integration).
+Merged on 19 Nov 2026: #1, #2, #3, #8, #12, #13, #15 and #17.
 
 ## Next steps
 
-1. Answer the first open design question: what the traveller has already decided when they open Layover ([01 §5](../product/01-research-and-direction.md)).
-2. Continue the design (brainstorming), then write the design document and plan; once it is approved, make a Floorplan blueprint from it.
-3. Before switching commission on (it is built but off): choose a weather source that allows commercial use ([options](../references/data-sources.md#weather-options-for-a-site-that-earns-commission)), check the CAP Code and the other sources' commercial terms ([01 §5](../product/01-research-and-direction.md)).
+1. Owner reviews and approves the journey design ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)).
+2. Write the build plan (Superpowers `writing-plans`): data contract first, the revised build order for the agent team and the baseline; then a Floorplan blueprint from the approved design.
+3. Open questions from the design: Nuitee's terms for sandbox use, and how long a shareable trip link lasts.
+4. Before switching commission on (it is built but off): choose a weather source that allows commercial use ([options](../references/data-sources.md#weather-options-for-a-site-that-earns-commission)), check the CAP Code and the other sources' commercial terms ([01 §5](../product/01-research-and-direction.md)).
 
 ## Blockers
 

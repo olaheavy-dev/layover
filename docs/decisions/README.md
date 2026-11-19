@@ -12,11 +12,12 @@ Hard-to-reverse decisions get a numbered record in this folder (template: [0001]
 | [0004](0004-flight-data-sources.md) | Flight data: cached real fares to browse, a sandbox to book | Accepted |
 | [0005](0005-python-and-langgraph.md) | Python backend with LangGraph | Accepted |
 | [0006](0006-nextjs-frontend.md) | Next.js frontend | Accepted |
-| [0007](0007-agent-design.md) | Agent design: one planner agent, a fixed booking flow, and parallel research agents | Accepted |
+| [0007](0007-agent-design.md) | Agent design: one planner agent, a fixed booking flow, and parallel research agents | Superseded in part by 0012 |
 | [0008](0008-retrieval-no-knowledge-graph.md) | Retrieval over official advice and guides; no knowledge graph | Accepted |
 | [0009](0009-tools-as-mcp-servers.md) | Tools become MCP servers from build step 2 | Accepted |
 | [0010](0010-repository-and-stages.md) | Repository: code name Layover, public, design before code | Accepted |
 | [0011](0011-product-integrity-rules.md) | Product integrity rules | Accepted |
+| [0012](0012-agent-team.md) | Agent design: a team of agents, measured against a single-agent baseline | Accepted |
 
 ## Register
 
@@ -38,3 +39,5 @@ Hard-to-reverse decisions get a numbered record in this folder (template: [0001]
 | 2026-11-19 | Floorplan (haydenschmitty/floorplan, MIT) draws a blueprint of Layover from the design document once it is approved, then maps the real code from build step 1 (#16) | Owner chose "Blueprint after the design doc (Recommended)": every screen, endpoint and outside service is visible before code, and its review lists gaps. Each map and question costs model tokens |
 | 2026-11-19 | A Floorplan map snapshot (exported HTML) is published in `docs/floorplan/` at each stage gate, after a check for secrets, personal data, folder paths and private material (#16) | Owner chose "Publish a snapshot per stage" over keeping it local. Enforced by the gate's checklist in `AGENTS.md`, gitleaks in `make check` for secrets, and a local-path check added with the first snapshot |
 | 2026-11-19 | Floorplan is used at a reviewed, pinned version recorded in agent-workflows, not the author's latest (#16) | Owner chose "Pin a reviewed version (Recommended)": a plugin's instructions are followed by agents, so changes come in after review. Tracked in [olaheavy-dev/agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30); not done yet |
+| 2026-11-19 | Shareable trip links, no accounts (#20) | Owner chose "Shareable link, no accounts (Recommended)" when asked whether travellers come back to a trip |
+| 2026-11-19 | Hotels: real hotel names and locations from OpenStreetMap, and a hotel booking demo in the Nuitee Connect sandbox (#20) | Owner asked to "Look for a hotel data source", then chose "Nuitee sandbox + OSM hotels (Recommended)". No source gives real prices without a partner contract. Nuitee's terms don't cover sandbox or portfolio use: ask Nuitee before building the hotel demo |
