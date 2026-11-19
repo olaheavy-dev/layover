@@ -77,7 +77,13 @@ Chat brief ─▶ confirm summary ─▶ compare 3 (parallel) ─▶ pick ─▶
 
 ## 5b. Budget and costs
 
-Owner chose "Find cost estimates" for what "within budget" means. Flights have real cached fares; stay and daily spending have no free price source yet. Research into free sources for cost estimates is under way; until a source is chosen, the summary shows "Flights from £X of your £800; stay and spending not known" (0011: missing costs are never shown as zero). Any estimate added later is labelled "estimate" with its source and date, and the budget check is tested code.
+Owner chose "Find cost estimates" for what "within budget" means, then, from the researched sources, "Nuitee index for stay only":
+
+- **Flights:** real cached fares from Travelpayouts, with their age.
+- **Stay:** an estimate from Nuitee Connect's city price index (`GET /prices/city`): the average nightly price per room for each check-in date, in US dollars, converted to pounds in tested code with Frankfurter, and labelled "estimate" with its source and date ([data sources](../../references/data-sources.md#free-apis-chosen-for-integration-14)).
+- **Daily spending:** "not known" (0011: missing costs are never shown as zero).
+
+Example line: "Flights from £X and stay about £Y (estimate) of your £800; daily spending not known". The budget check is tested code. **(Agent's call)** Price-index results are cached per city and month to keep requests few; the index costs $0.02 a request (Nuitee's reference page), a spend the owner approved by choosing it.
 
 ## 5c. Public use and cost control
 
@@ -117,7 +123,7 @@ For the owner or before building:
 
 1. **Nuitee Connect terms:** its published terms (last updated January 2025) are booking conditions for travel agents and don't mention the sandbox, demo or portfolio use; whether its sandbox hotels are real or fake isn't stated. Ask Nuitee before building the hotel demo. If it says no or doesn't answer, "try booking" ships with Duffel flights only (owner: "Flights-only booking (Recommended)").
 2. **Shareable link expiry:** how long a trip link lasts (a privacy and storage choice). **(Agent's call)** A link reopens a frozen copy of the trip (brief, comparison, summary, itinerary, booking state) with "as of" dates on every fare and advice date; the chat transcript isn't kept.
-3. **Cost estimates:** which free source gives stay and daily-spending estimates (research under way).
+3. **Nuitee price index:** it is in beta ("may change in future versions"), its occupancy basis isn't stated, and its terms are unconfirmed (same question as item 1). If it isn't usable, stay becomes "not known" too.
 4. **Spending cap figures and hosting:** set by the owner after build step 1 measures a trip's cost; hosting and the database are infrastructure decisions for the owner.
 5. **Build order:** [01 §4](../../product/01-research-and-direction.md) starts with "a single LangGraph agent"; the plan revises it for the agent team and the baseline.
 
