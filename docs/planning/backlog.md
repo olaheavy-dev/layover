@@ -2,7 +2,7 @@
 
 Every open issue, in the order it is worked on (AGENTS.md, "How work flows"). Each issue's title starts with its order number (for example `[01]`) and the issue sits in its stage's milestone. When an issue's plan changes, update the issue, not this list; the list changes when an issue opens, closes or moves, in the PR that does it.
 
-Each stage ends with a gate: a whole-repository audit, its findings cleared in a tidy-up PR, `noticed` issues triaged, and no open `review-followup` issue (AGENTS.md, "Review rounds and debt").
+Each stage ends with a gate (`AGENTS.md`, "Review rounds and debt"): a whole-repository audit, its findings cleared in a tidy-up PR, `noticed` issues triaged, no open `review-followup` issue, a Floorplan map snapshot, and evaluations (a coverage table at the Design gate, a score report at build gates once evaluation cases exist).
 
 ## Stage: Design (milestone "Design")
 
