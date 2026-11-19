@@ -10,17 +10,16 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- #21 `docs/journey-design` (closes #20): the main journey design (approved by the owner), decision 0012 (a team of agents with a single-agent baseline), intents, costs, hotels, Tavily, widgets and the design bar. The owner authorised the merge once Codex and the checks are clean.
+- `docs/eval-gates` (closes #22): evaluations at each stage gate (coverage at the Design gate, scores at build gates).
 
-Merged on 19 Nov 2026: #1, #2, #3, #8, #12, #13, #15, #17 and #19 (rule 8 and the rules from homescout).
+Merged on 19 Nov 2026: #1, #2, #3, #8, #12, #13, #15, #17, #19 and #21 (the journey design and decision 0012).
 
 ## Next steps
 
-1. Merge #21 once Codex is clean (the journey design is approved; widgets and the design bar were added after approval).
-2. Design the screens and every widget to a world-class bar (design brief, information architecture, tokens, light and dark boards, benchmark, design and visual reviews), in the Design stage.
-3. The Design gate: a Floorplan blueprint from the approved design, a whole-repository audit, a tidy-up PR, `noticed` triage.
-4. Build plans, one per part, starting with plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests).
-5. Owner questions still open: Nuitee's terms for sandbox use; the cost-cap figures after build step 1; the vector database (plan 3); hosting and the database (plan 6).
+1. Design the screens and every widget to a world-class bar (design brief, information architecture, tokens, light and dark boards, benchmark, design and visual reviews), in the Design stage.
+2. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage.
+3. Build plans, one per part, starting with plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests).
+4. Owner questions still open: Nuitee's terms for sandbox use; the cost-cap figures after build step 1; the vector database (plan 3); hosting and the database (plan 6).
 
 ## Blockers
 
