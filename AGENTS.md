@@ -19,7 +19,7 @@ Stack layers: none (base layer only). Decisions are in `docs/decisions/`; don't 
 3. **Ask before** adding a dependency, changing infrastructure or hosting, spending money (model calls, paid services), changing repository settings, or changing an accepted decision.
 4. **Never push to `main`.** Work on a branch named `type/short-description`; squash-merge through a pull request.
 5. **No agent attribution.** Commit messages and PR descriptions carry no `Co-Authored-By` or "generated with" lines for any coding agent (set in `.claude/settings.json`).
-6. **Plain language for the owner.** When explaining options or decisions, say what each means in practice and give a clear recommendation. Docs, PR descriptions and text travellers see (errors, empty and "unavailable" states) are written with the `simple-english` skill, under the house overrides: British spelling; never rewrite quoted sources, legal or rule text, approved wording or quoted decisions; in check mode, list suggestions only.
+6. **Plain language for the owner.** When explaining options or decisions, say what each means in practice and give a clear recommendation. Docs, PR descriptions and text travellers see (errors, empty and "unavailable" states) are written with the `simple-english` skill, under the house overrides: British spelling; never rewrite quoted sources, legal or rule text, approved wording or quoted decisions; in check mode, list suggestions only; when editing an existing document, keep its style; the skill's rules never override the house rules or this file.
 7. **Enforced, not only written.** If a rule here matters, a check, a hook or a ruleset enforces it. When you add a rule, add its enforcement or say why it can't have one.
 
 ## How work flows
@@ -100,7 +100,7 @@ After merging, post a one-line summary: what merged, and any follow-up issues.
 - Fix every open finding, push once, request one re-review.
 - More than 5 open `review-followup` issues pauses feature work.
 - **Stage gates:** each stage (Design, then each build step in [01 §4](docs/product/01-research-and-direction.md)) ends with a gate: one whole-repository review for contradictions, stale statements and debt, its findings cleared in a tidy-up PR, and `noticed` issues triaged. No gate passes with an open `review-followup` issue.
-- **Floorplan snapshot at each gate:** the tidy-up PR adds an exported Floorplan map (one HTML file, from the blueprint until code exists) as `docs/floorplan/<stage>.html`. Before committing it, check that it holds no secrets, personal data, local folder paths or private material, and leave Health and recent work unticked unless they are checked too.
+- **Floorplan snapshot at each gate:** the tidy-up PR adds an exported Floorplan map (one HTML file, from the blueprint until code exists) as `docs/floorplan/<stage>.html`. An export holds no source code, folder paths or git remotes, but it does hold file names, endpoint paths, code comments the scan picked up and AI-written descriptions: check those for personal data and private material before committing. Never tick Health (it records where a secret sits, even masked); tick recent work only after the same check. Secrets are also caught by gitleaks in `make check`; a check that the file holds no local paths (`/Users/`, `/home/`) is added with the first snapshot. Check the licences of the code and fonts bundled in the export, and record them in `docs/references/third-party.md`.
 
 ## Keeping agent cost down
 
