@@ -1,6 +1,6 @@
 # Layover: the main journey and the agent team
 
-Status: draft for the owner's approval, 19 Nov 2026. Issue #20.
+Status: approved by the owner on 19 Nov 2026 ("Approve (Recommended)", prompt window). Issue #20.
 
 Owner answers are quoted as chosen in prompt windows on 19 Nov 2026. Anything marked **(agent's call)** is a proposal the owner can change.
 
