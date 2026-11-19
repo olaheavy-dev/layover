@@ -33,4 +33,4 @@ None.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Travelpayouts project: create it once Layover has a site (Travelpayouts asks for a link to a traffic source). The partner links API needs its project ID (`trs`), so it is needed before commission is switched on (not before).
 - Travelpayouts payouts: set up the payout method yourself when earnings start (agents never enter payment details).
-- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices). Under the new merge rule, code PRs wait until each is fixed or dismissed in GitHub with a recorded reason; documentation PRs are not blocked.
+- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices). They are repository-health grades and don't block merges (owner: "Exempt Scorecard grades (Recommended)"); improve them when possible.
