@@ -11,7 +11,7 @@ Layover’s planner needs a small set of tools (fares, weather, exchange rates, 
 1. **One planner agent** (Claude with tool calling) for the main traveller conversation.
 2. **Booking is a fixed LangGraph subgraph, not an agent:** Duffel search, price check, approval (`interrupt()`), then order and test payment.
 3. **Multi-agent feature: Compare destinations** (owner chose the recommended option). A supervisor plans the job and starts one research agent per destination in parallel with LangGraph's `Send` API; a final step ranks the results, checks the budget and cites sources. Example: "Lisbon, Marrakech, Malta or Tenerife for 5 days in March, under £700 from Manchester?"
-4. Build the single agent first, so the multi-agent feature can be measured against it (speed, tokens, ranking quality).
+4. Build the single agent first, so the multi-agent feature can be measured against it (speed, tokens, ranking quality), and to check the single planner's quality on its own tools.
 
 ## Consequences
 
