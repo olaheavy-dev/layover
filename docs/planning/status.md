@@ -10,10 +10,9 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- #19 `docs/prompt-window-rule` (closes #18): rule 8 (decisions in a prompt window) and rules from homescout. Codex clean, checks green; owner-only merge (merge rules).
-- `docs/journey-design` (closes #20): the main journey design, decision 0012 (a team of agents with a single-agent baseline), and the hotel and saved-trip answers. Waiting for the owner's approval of the design.
+- #21 `docs/journey-design` (closes #20): the main journey design (approved by the owner), decision 0012 (a team of agents with a single-agent baseline), intents, costs, hotels, Tavily, widgets and the design bar. The owner authorised the merge once Codex and the checks are clean.
 
-Merged on 19 Nov 2026: #1, #2, #3, #8, #12, #13, #15 and #17.
+Merged on 19 Nov 2026: #1, #2, #3, #8, #12, #13, #15, #17 and #19 (rule 8 and the rules from homescout).
 
 ## Next steps
 
@@ -36,4 +35,4 @@ None.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Travelpayouts project: create it once Layover has a site (Travelpayouts asks for a link to a traffic source). The partner links API needs its project ID (`trs`), so it is needed before commission is switched on (not before).
 - Travelpayouts payouts: set up the payout method yourself when earnings start (agents never enter payment details).
-- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices); they are repository-level, not caused by any PR.
+- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices). They are repository-health grades and don't block merges (owner: "Exempt Scorecard grades (Recommended)"); improve them when possible.
