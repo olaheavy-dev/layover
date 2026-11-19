@@ -10,9 +10,9 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- `docs/project-foundations`: decision records 0003 to 0011, the research and direction draft, data sources, the TripMate review and this file.
-- #2 and #3: Dependabot updates (zizmor pre-commit hook v1.31.1 to 1.32.0; six GitHub Actions updates). Small dependency updates merge on green checks unless one is a major bump.
-- `docs/adopt-vestagraph-practices` (stacked on the PR above; closes #4 to #7): practices adopted from Vestagraph: the `test-first` skill, hand-worked expected values, the criteria-to-test map, the step and skill table, live-service tests kept out of the merge check, permanent evaluation IDs, stage gates, the [ordered backlog](backlog.md) and a one-hour review fallback. The owner merges it (it changes the merge rules).
+- #8 `docs/adopt-vestagraph-practices` (closes #4 to #7): practices adopted from Vestagraph: the `test-first` skill, hand-worked expected values, the criteria-to-test map, the step and skill table, live-service tests kept out of the merge check, permanent evaluation IDs, stage gates, the [ordered backlog](backlog.md) and a review fallback aligned with the house rules. Owner-only (merge rules); the owner authorised the agent to merge it once Codex has reviewed its latest commit.
+
+Merged on 19 Nov 2026: #1 (decision records 0003 to 0011, the research and direction draft, data sources, the TripMate review) and the Dependabot updates #2 and #3.
 
 ## Next steps
 
@@ -26,9 +26,8 @@ None.
 
 ## Owner to-dos
 
-- Merge `docs/project-foundations`, then `docs/adopt-vestagraph-practices` (owner-only: merge rules). After `docs/project-foundations` merges, the agent merges `main` into `docs/adopt-vestagraph-practices` and requests a fresh `@codex review` before it can merge.
-- Create the `task` label (the Task issue form applies it, but the repository doesn't have it).
+- Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Travelpayouts project: create it once the repository or site exists.
-- Run `make repo-settings`, and connect the repository to Codex review, if not done yet.
+- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices); they are repository-level, not caused by any PR.
