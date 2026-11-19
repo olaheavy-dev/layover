@@ -91,6 +91,13 @@ Example line: "Flights from £X, stay about £Y and meals about £Z (estimates f
 
 Owner: "Live trips but we will set limits or cap based on IP or something". Live trips are open to the public, with a limit per visitor and an overall cap on model spending. **(Agent's call)** As a precaution, Layover treats an IP address as personal data (the UK GDPR definition includes "an online identifier", [ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/personal-information-what-is-it/what-is-personal-data/what-is-personal-data/)), so only a salted one-way hash is stored, for no longer than the limit window; the cap's figures are set by the owner once build step 1 measures a trip's cost (`AGENTS.md` rule 3).
 
+## 5d. Widgets for tool results, and the design bar
+
+Added by the owner after approval, 19 Nov 2026: "our tools will be attached to widgets so we can display our own custome ui for each tool calls not just free text", and "our designs have to be very thoutful, detailed, professional and worldclass". The owner chose "Now, in the Design stage (Recommended)" for designing the screens and widgets.
+
+- **Widgets.** Every tool returns structured data tagged with a `kind`, and the interface draws each `kind` with its own component. The chat streams text and widget blocks together, and the shared trip page reuses the same widgets. **(Agent's call)** First kinds: `brief_summary`, `comparison_table`, `fare_card`, `climate_chart`, `sea_conditions`, `daylight`, `money`, `advice_card` (FCDO, with its update date), `place_intro`, `map`, `itinerary_day`, `hotel_list`, `cost_estimate`, `booking_approval`, `web_results` and `not_known`. Each widget shows its sources and their age, and each has loading, empty, error and "not known" states (0011). Plan 1 fixes one JSON Schema per `kind`.
+- **Design bar.** Screens and widgets are designed in the Design stage, before the gate, with the design skills: a design brief, information architecture, design tokens with light and dark themes, boards for every screen and widget at phone and desktop widths, a benchmark against travel products, then the `design-reviewer` and `visual-reviewer` passes. Build starts from approved boards.
+
 ## 6. The agent team
 
 | Part | Kind | Job | Tools and data |

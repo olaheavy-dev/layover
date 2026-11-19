@@ -17,10 +17,11 @@ Merged on 19 Nov 2026: #1, #2, #3, #8, #12, #13, #15 and #17.
 
 ## Next steps
 
-1. The journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)); merge #21 once Codex is clean.
-2. Write the build plan (Superpowers `writing-plans`): data contract first, the revised build order for the agent team and the baseline; then a Floorplan blueprint from the approved design.
-3. Open questions from the design: Nuitee's terms for sandbox use, and how long a shareable trip link lasts.
-4. Before switching commission on (it is built but off): choose a weather source that allows commercial use ([options](../references/data-sources.md#weather-options-for-a-site-that-earns-commission)), check the CAP Code and the other sources' commercial terms ([01 §5](../product/01-research-and-direction.md)).
+1. Merge #21 once Codex is clean (the journey design is approved; widgets and the design bar were added after approval).
+2. Design the screens and every widget to a world-class bar (design brief, information architecture, tokens, light and dark boards, benchmark, design and visual reviews), in the Design stage.
+3. The Design gate: a Floorplan blueprint from the approved design, a whole-repository audit, a tidy-up PR, `noticed` triage.
+4. Build plans, one per part, starting with plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests).
+5. Owner questions still open: Nuitee's terms for sandbox use; the cost-cap figures after build step 1; the vector database (plan 3); hosting and the database (plan 6).
 
 ## Blockers
 
