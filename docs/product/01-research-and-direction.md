@@ -14,7 +14,7 @@ An AI travel planner for a **UK-based traveller planning a holiday abroad**, bui
 - **Parallel research agents**, measured against a single agent ([0007](../decisions/0007-agent-design.md)).
 - **Tools as MCP servers** ([0009](../decisions/0009-tools-as-mcp-servers.md)).
 - **Evaluations:** a set of test trips with checks such as "stayed under budget" and "cited FCDO advice", reported as a score.
-- **Earnings attribution:** which feature (chat, fare card, compare) drives clicks and bookings, from SubID-labelled partner links and Travelpayouts booking statistics (register line of 19 Nov 2026).
+- **Earnings attribution:** which feature (chat, fare card, compare) drives clicks and bookings, from SubID-labelled partner links and Travelpayouts booking statistics (register line "Aviasales links are built by the backend…", [decisions](../decisions/README.md#register)).
 - **Honesty about data:** every value labelled with its source and age ([0011](../decisions/0011-product-integrity-rules.md), proposed).
 
 ## 3. What the traveller can see for real

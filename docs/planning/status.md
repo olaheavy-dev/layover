@@ -30,6 +30,6 @@ None.
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
-- Travelpayouts project: create it once the repository or site exists. The partner links API needs its project ID (`trs`), so it is needed before build step 4.
+- Travelpayouts project: create it once Layover has a site (Travelpayouts asks for a link to a traffic source). The partner links API needs its project ID (`trs`), so it is needed before build step 4.
 - Travelpayouts payouts: set up the payout method yourself when earnings start (agents never enter payment details).
 - Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices); they are repository-level, not caused by any PR.

@@ -11,7 +11,6 @@ The repository holds documents only until the design is approved ([0010](../deci
 | # | Issue | Item | Notes |
 |---|---|---|---|
 | 05 | #9 | Create the `task` label used by the Task issue form | `noticed` issue, owner-only (repository settings) |
-| 06 | #10 | Accept decision 0011 and load its rules for agents | PR #12 |
 
 Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[07]` #11, data sources and the earnings decision.
 
