@@ -47,7 +47,7 @@ Owner chose **"Team of agents"**, then **"Team + single-agent baseline (Recommen
 
 ## 5a. Intents: classify first, then route
 
-The supervisor's first step on every message is to classify it into one supported intent, as structured output (a label from a fixed list, so it can be tested), then route it. Owner chose all four intents and "Say so and suggest (Recommended)" for the rest:
+The supervisor's first step on every message is to classify it into one supported intent, as structured output (a label from a fixed list, so it can be tested), then route it. Owner chose all four intents and "Say so and suggest (Recommended)" for the rest; then, for unsupported travel questions only: "we can use for unsupported questioms that relates to travelling alone mot a ask about investment", and "Use it, don't ask" (accepting the risk in Tavily's terms, below):
 
 | Intent | Example | Route |
 |---|---|---|
@@ -55,7 +55,7 @@ The supervisor's first step on every message is to classify it into one supporte
 | `destination_facts` | "Do I need a visa for Turkey?", "What's Lisbon like in October?", "How much is £500 in euros?" | One research agent for one place: FCDO advice, climate, money, holidays, time difference, introduction |
 | `itinerary` | "Three days in Porto" | Straight to the itinerary agent, skipping compare |
 | `fares_and_transport` | "Cheapest flights from Bristol to anywhere in March", "How do I get to Gatwick?" | Cached fares (with their age) and TfL |
-| `unsupported_travel` | A travel question none of the above covers | An honest "I can't help with that yet", plus what Layover can do; logged without personal data to guide what to add next |
+| `unsupported_travel` | A travel question none of the above covers | A Tavily web search: short quotes with their links and the retrieval date, labelled "from a web search, not checked by Layover", plus what Layover can do. Queries carry the travel question only, never traveller details. If the search finds nothing usable, an honest "I can't help with that yet". Logged without personal data to guide what to add next |
 | `not_travel` | Anything else | Politely declined |
 
 A conversation can move between intents (a `destination_facts` question in the middle of `plan_trip`); the supervisor keeps the trip state. **(Agent's call)** When the classifier isn't confident, the brief agent asks one clarifying question rather than guessing.
@@ -83,7 +83,7 @@ Owner chose "Find cost estimates" for what "within budget" means. Offered the re
 - **Stay and meals:** estimates from Wikivoyage listings ("typical double room" under Sleep, "a complete meal for one" under Eat), converted to pounds in tested code with Frankfurter. **(Agent's call)** An estimate is shown only when a city has a minimum number of priced listings (the figure is set in the plan), labelled with the listing count and the page's edit date. Otherwise "not known".
 - **Local transport and activities:** "not known" (0011: missing costs are never shown as zero).
 - **Later, switched off:** Nuitee Connect's city price index for stay (0.02 US dollars a request, cached per city and month), with a monthly cap, built behind a switch that stays off until the owner approves the spend.
-- **Under research:** the owner asked whether Tavily web search could help with prices and unsupported questions; its terms and accuracy are being checked before any decision.
+- **Not from web search:** Tavily results are page snippets with estimated or missing dates, so no figure is taken from them (0011); Tavily serves unsupported travel questions only (§5a).
 
 Example line: "Flights from £X, stay about £Y and meals about £Z (estimates from 6 Wikivoyage listings, page edited March 2026) of your £800; local transport and activities not known". The budget check is tested code.
 
@@ -110,7 +110,7 @@ Each agent's tools sit behind Layover's own MCP servers from build step 2 ([0009
 
 Permanent IDs per area (`AGENTS.md`): `INTENT-`, `BRIEF-`, `COMPARE-`, `ITIN-`, `BOOK-`, `TRIP-`. **(Agent's call)** First cases:
 
-- `INTENT-01` each example in §5a is classified to its intent; `INTENT-02` a non-travel request is declined; `INTENT-03` an unsupported travel question gets "not yet" plus suggestions, never an unsourced answer.
+- `INTENT-01` each example in §5a is classified to its intent; `INTENT-02` a non-travel request is declined; `INTENT-03` an unsupported travel question gets web-search quotes with links and the "not checked by Layover" label, or "not yet", never an unsourced answer; `INTENT-04` a non-travel question (for example about investments) is declined without a web search; `INTENT-05` a web-search query never contains the traveller's details.
 - `BRIEF-01` a vague request ends in a confirmed summary with every field set; `BRIEF-02` a budget or date misread is corrected before searching.
 - `COMPARE-01` all three places stay within the budget in code, or say why not; `COMPARE-02` every figure carries its source and age; `COMPARE-03` no destination is called "safe".
 - `ITIN-01` every stop exists in the source data; `ITIN-02` a gap in data is stated, not filled.
@@ -126,8 +126,9 @@ For the owner or before building:
 1. **Nuitee Connect terms:** its published terms (last updated January 2025) are booking conditions for travel agents and don't mention the sandbox, demo or portfolio use; whether its sandbox hotels are real or fake isn't stated. Ask Nuitee before building the hotel demo. If it says no or doesn't answer, "try booking" ships with Duffel flights only (owner: "Flights-only booking (Recommended)").
 2. **Shareable link expiry:** how long a trip link lasts (a privacy and storage choice). **(Agent's call)** A link reopens a frozen copy of the trip (brief, comparison, summary, itinerary, booking state) with "as of" dates on every fare and advice date; the chat transcript isn't kept.
 3. **Nuitee price index (later):** it is in beta ("may change in future versions"), its occupancy basis isn't stated, and its terms are unconfirmed (same question as item 1). The spend needs the owner's approval before the switch is turned on.
-4. **Spending cap figures and hosting:** set by the owner after build step 1 measures a trip's cost; hosting and the database are infrastructure decisions for the owner.
-5. **Build order:** [01 §4](../../product/01-research-and-direction.md) starts with "a single LangGraph agent"; the plan revises it for the agent team and the baseline.
+4. **Tavily terms:** they allow use "solely for Customer's internal business purposes", which may not cover a public site showing results; the owner chose to use it without asking and accepts that the account could be closed. Tavily keeps queries under a "perpetual, and irrevocable" licence and may use them for AI training, so queries never include traveller details.
+5. **Spending cap figures and hosting:** set by the owner after build step 1 measures a trip's cost; hosting and the database are infrastructure decisions for the owner.
+6. **Build order:** [01 §4](../../product/01-research-and-direction.md) starts with "a single LangGraph agent"; the plan revises it for the agent team and the baseline.
 
 ## 9. Left to the builder
 
