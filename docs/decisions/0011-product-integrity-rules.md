@@ -18,7 +18,7 @@ The rules on facts and data in the owner's earlier project, Vestagraph ([vestagr
 ## Consequences
 
 - Each rule needs a check (an evaluation case, a test or a review rule) once code exists, as `AGENTS.md` rule 7 requires.
-- The rules are in `.claude/rules/product-integrity.md`, which agents load in every session.
+- The rules are in `.claude/rules/product-integrity.md`, which Claude Code loads in every session; `AGENTS.md` names the file so Codex and other agents find it.
 
 ## Alternatives considered
 

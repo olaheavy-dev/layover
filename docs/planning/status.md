@@ -10,10 +10,10 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- `docs/accept-0011` (closes #10): decision 0011 accepted by the owner ("Accept all six (Recommended)"); its rules are in `.claude/rules/product-integrity.md`.
-- #8 `docs/adopt-vestagraph-practices` (closes #4 to #7): practices adopted from Vestagraph; waiting for Codex's review of its latest commit.
+- `docs/accept-0011` (closes #10): decision 0011 accepted by the owner ("Accept all six (Recommended)"); its rules are in `.claude/rules/product-integrity.md` and named in `AGENTS.md`.
+- `docs/data-sources-and-earnings` (closes #11): candidate data sources and the earnings decision; in progress.
 
-Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot).
+Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph: test-first, live-test, IDs, stage gates, backlog, review fallback).
 
 ## Next steps
 
@@ -26,7 +26,8 @@ None.
 
 ## Owner to-dos
 
+- Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Travelpayouts project: create it once the repository or site exists.
-- After the GitHub repository exists: run `make repo-settings`, and connect the repository to Codex review.
+- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices); they are repository-level, not caused by any PR.
