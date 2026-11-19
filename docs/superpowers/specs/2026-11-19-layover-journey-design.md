@@ -96,6 +96,7 @@ Owner: "Live trips but we will set limits or cap based on IP or something". Live
 | Part | Kind | Job | Tools and data |
 |---|---|---|---|
 | Supervisor | Agent | Classifies each message's intent (§5a), routes between the parts and owns the shared trip state | None directly |
+| Web search | Tool step, not an agent | Answers `unsupported_travel` questions with quoted, linked results | Tavily search API |
 | Brief agent | Agent | Chat with the traveller; produce the confirmed brief | OurAirports (airport lookup) |
 | Compare | Fan-out of three research agents, then a ranking step | One agent per destination gathers its facts; ranking compares and checks the budget in code | Travelpayouts cached fares, Open-Meteo Historical/Climate and Marine, sunrise-sunset.org, Python `holidays`, Frankfurter, retrieval over FCDO advice and Wikivoyage ([0008](../../decisions/0008-retrieval-no-knowledge-graph.md)), Wikipedia |
 | Itinerary agent | Agent | Days built from sourced places around the chosen base | Overpass (points of interest and OpenStreetMap hotels), retrieval over Wikivoyage, Open-Meteo, IANA time zones. **(Agent's call)** Foursquare Open Source Places waits unless Overpass proves too slow |
