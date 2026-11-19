@@ -15,7 +15,7 @@ An AI travel planner for a **UK-based traveller planning a holiday abroad**, bui
 - **Tools as MCP servers** ([0009](../decisions/0009-tools-as-mcp-servers.md)).
 - **Evaluations:** a set of test trips with checks such as "stayed under budget" and "cited FCDO advice", reported as a score.
 - **Earnings attribution:** which feature (chat, fare card, compare) drives clicks and bookings, from SubID-labelled partner links and Travelpayouts booking statistics (register line "Aviasales links are built by the backend…", [decisions](../decisions/README.md#register)).
-- **Honesty about data:** every value labelled with its source and age ([0011](../decisions/0011-product-integrity-rules.md), proposed).
+- **Honesty about data:** every value labelled with its source and age ([0011](../decisions/0011-product-integrity-rules.md)).
 
 ## 3. What the traveller can see for real
 
@@ -43,7 +43,6 @@ In order of how much they change what gets built:
 4. **Affiliate links and "non-commercial" data terms:** with affiliate earnings, Layover is likely commercial under Open-Meteo's terms (the free tier is non-commercial, and "promotional activities" count as commercial), so a paid plan or another weather source is needed before launch; options and their terms are compared in [data sources](../references/data-sources.md#weather-options-for-a-site-that-earns-commission). The same applies to Nager.Date (sponsorship) and REST Countries (paid plan).
 5. **UK rules on labelling affiliate links (CAP Code)** to check before launch.
 6. **The public brand:** `layover` is the working name; a brand and domain check comes before launch.
-7. **Product integrity rules** ([0011](../decisions/0011-product-integrity-rules.md)): proposed, awaiting the owner.
 
 ## 6. Not doing
 

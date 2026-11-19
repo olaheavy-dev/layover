@@ -2,11 +2,13 @@
 
 The rulebook for every AI agent and person working on Layover. Claude Code reads it through `CLAUDE.md`, which imports this file (`@AGENTS.md`); Codex and other agents read it directly. Edit **this** file only.
 
-This file comes from `house-template-base` and is updated with `copier update -a .copier-answers.base.yml`. Rules for one part of the code live next to it in `.claude/rules/` (loaded only when an agent touches matching files), and each stack layer adds its own there.
+This file comes from `house-template-base` and is updated with `copier update -a .copier-answers.base.yml`. Rules for one part of the code live next to it in `.claude/rules/` (loaded always, or only when an agent touches matching files if the file sets `paths`), and each stack layer adds its own there.
 
 ## What this project is
 
 An AI travel planner for UK-based holidaymakers, built as a portfolio project with real travel APIs.
+
+Product integrity rules (decision 0011: no invented facts, labelled outside values, no model arithmetic, missing data never zero, no scraping, FCDO links and never "safe") are in `.claude/rules/product-integrity.md`; every agent and reviewer applies them.
 
 Stack layers: none (base layer only). Decisions are in `docs/decisions/`; don't contradict one, propose a new record instead.
 

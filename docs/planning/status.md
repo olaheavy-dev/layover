@@ -10,10 +10,9 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- #12 `docs/accept-0011` (closes #10): decision 0011 accepted by the owner; its rules in `.claude/rules/product-integrity.md`.
-- `docs/data-sources-and-earnings` (closes #11): candidate data sources (GOV.UK bank holidays, Nager.Date, REST Countries, Nominatim, Overpass), Wikivoyage through the MediaWiki API, the Travelpayouts earnings sources, weather options for a commission-earning site, and the owner's earnings decision ("Labels and dashboard"). Owner asked for it not to be merged by the agent.
+- `docs/data-sources-and-earnings` (#13, closes #11): candidate data sources (GOV.UK bank holidays, Nager.Date, REST Countries, Nominatim, Overpass), Wikivoyage through the MediaWiki API, the Travelpayouts earnings sources, weather options for a commission-earning site, and the owner's earnings decision ("Labels and dashboard"). The owner asked the agent not to merge it.
 
-Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph).
+Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph), #12 (decision 0011 accepted; its rules in `.claude/rules/product-integrity.md`).
 
 ## Next steps
 
