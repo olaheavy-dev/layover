@@ -10,7 +10,7 @@ The repository holds documents only until the design is approved ([0010](../deci
 
 | # | Issue | Item | Notes |
 |---|---|---|---|
-| — | #9 | Create the `task` label used by the Task issue form | `noticed` issue, owner-only (repository settings); triaged at the Design gate |
+| 05 | #9 | Create the `task` label used by the Task issue form | `noticed` issue, owner-only (repository settings) |
 
 Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices.
 
