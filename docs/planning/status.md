@@ -10,16 +10,15 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- `docs/free-api-candidates` (#15, closes #14): the free APIs the owner chose to integrate, ideas for later, and sources considered and not used. The owner authorised the agent to merge it once Codex and the checks are clean.
+- `docs/simple-english-and-floorplan` (closes #16): `simple-english` for docs and traveller copy; a Floorplan blueprint after the design document; a map snapshot at each stage gate.
 
-Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph), #12 (decision 0011 accepted; its rules in `.claude/rules/product-integrity.md`), #13 (candidate data sources, the earnings decision, commission built but switched off).
+Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph), #12 (decision 0011 accepted), #13 (candidate data sources, the earnings decision, commission built but switched off), #15 (free APIs chosen for integration).
 
 ## Next steps
 
 1. Answer the first open design question: what the traveller has already decided when they open Layover ([01 §5](../product/01-research-and-direction.md)).
-2. Continue the design (brainstorming), then write the design document and plan.
-3. Research free APIs that add value (#14): trip timing, places and maps, getting there and around, practical and safety context; the owner then picks which to integrate.
-4. Before switching commission on (it is built but off): choose a weather source that allows commercial use ([options](../references/data-sources.md#weather-options-for-a-site-that-earns-commission)), check the CAP Code and the other sources' commercial terms ([01 §5](../product/01-research-and-direction.md)).
+2. Continue the design (brainstorming), then write the design document and plan; once it is approved, make a Floorplan blueprint from it.
+3. Before switching commission on (it is built but off): choose a weather source that allows commercial use ([options](../references/data-sources.md#weather-options-for-a-site-that-earns-commission)), check the CAP Code and the other sources' commercial terms ([01 §5](../product/01-research-and-direction.md)).
 
 ## Blockers
 
@@ -27,6 +26,7 @@ None.
 
 ## Owner to-dos
 
+- Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
 - Before build step 4: read the Travelpayouts partner agreement (or ask the agent to read it in a browser) to confirm fares may link to Aviasales without a partner marker.
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.

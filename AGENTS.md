@@ -19,7 +19,7 @@ Stack layers: none (base layer only). Decisions are in `docs/decisions/`; don't 
 3. **Ask before** adding a dependency, changing infrastructure or hosting, spending money (model calls, paid services), changing repository settings, or changing an accepted decision.
 4. **Never push to `main`.** Work on a branch named `type/short-description`; squash-merge through a pull request.
 5. **No agent attribution.** Commit messages and PR descriptions carry no `Co-Authored-By` or "generated with" lines for any coding agent (set in `.claude/settings.json`).
-6. **Plain language for the owner.** When explaining options or decisions, say what each means in practice and give a clear recommendation.
+6. **Plain language for the owner.** When explaining options or decisions, say what each means in practice and give a clear recommendation. Docs, PR descriptions and text travellers see (errors, empty and "unavailable" states) are written with the `simple-english` skill, under the house overrides: British spelling; never rewrite quoted sources, legal or rule text, approved wording or quoted decisions; in check mode, list suggestions only; when editing an existing document, keep its style; the skill's rules never override the house rules or this file.
 7. **Enforced, not only written.** If a rule here matters, a check, a hook or a ruleset enforces it. When you add a rule, add its enforcement or say why it can't have one.
 
 ## How work flows
@@ -75,7 +75,7 @@ Hosted `@codex review`, the pre-push review and any fallback review follow this 
 6. **Clarity:** could the owner understand and maintain this? Flag unnecessary complexity.
 7. **Handover:** a PR that changes what is done, open or next, a decision, a plan or the backlog without updating `docs/planning/status.md` is a P2 finding (a named exception to "broken rules" being P1), always fixed in the same PR, in any round.
 
-For figures, recalculate them and check them against the cited source. Rule breaches include: an acceptance criterion with no named test, a test whose expected figure has no working or source, a live-service test that runs in the merge check, and an evaluation case or scenario without an ID or with a reused one.
+For figures, recalculate them and check them against the cited source. For prose in docs and traveller copy, flag text that breaks the `simple-english` rules (rule 6) as P3, never as a reason to rewrite quoted or legal text. Rule breaches include: an acceptance criterion with no named test, a test whose expected figure has no working or source, a live-service test that runs in the merge check, and an evaluation case or scenario without an ID or with a reused one.
 
 How to report: most serious first; for each, the file and line, what's wrong, a concrete failure case and a suggested fix. Severity **P0/P1** (wrong behaviour, security or privacy problem, unsourced claim, broken rule) or **P2/P3** (consistency, wording, polish). Say "no issues found" when there are none. A first review is one complete pass including knock-on effects elsewhere; re-reviews check the fixes only (new P2/P3 only on changed lines, P0/P1 anywhere). Reviewers don't push commits or approve merges.
 
@@ -100,6 +100,7 @@ After merging, post a one-line summary: what merged, and any follow-up issues.
 - Fix every open finding, push once, request one re-review.
 - More than 5 open `review-followup` issues pauses feature work.
 - **Stage gates:** each stage (Design, then each build step in [01 §4](docs/product/01-research-and-direction.md)) ends with a gate: one whole-repository review for contradictions, stale statements and debt, its findings cleared in a tidy-up PR, and `noticed` issues triaged. No gate passes with an open `review-followup` issue.
+- **Floorplan snapshot at each gate:** the tidy-up PR adds an exported Floorplan map (one HTML file, from the blueprint until code exists) as `docs/floorplan/<stage>.html`. An export holds no source code, folder paths or git remotes, but it does hold file names, endpoint paths, code comments the scan picked up and AI-written descriptions: check those for personal data and private material before committing. Never tick Health (it records where a secret sits, even masked); tick recent work only after the same check. Secrets are also caught by gitleaks in `make check`; a check that the file holds no local paths (`/Users/`, `/home/`) is added with the first snapshot. Check the licences of the code and fonts bundled in the export, and record them in `docs/references/third-party.md`.
 
 ## Keeping agent cost down
 

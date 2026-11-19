@@ -13,7 +13,7 @@ docs/
 └── superpowers/         specs and plans written with the Superpowers skills (added when first used)
 ```
 
-Planned folders, added when their stage starts: `docs/specs/` for the specification, `docs/architecture/` for system diagrams, `docs/assets/` with an asset register before any image is committed, and `.design/<feature>/` at the repository root for design-skill outputs.
+Planned folders, added when their stage starts: `docs/specs/` for the specification, `docs/architecture/` for system diagrams, `docs/assets/` with an asset register before any image is committed, `.design/<feature>/` at the repository root for design-skill outputs, and `docs/floorplan/` for the Floorplan map snapshot published at each stage gate.
 
 ## What each document is for
 
