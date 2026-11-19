@@ -14,7 +14,7 @@ An AI travel planner for a **UK-based traveller planning a holiday abroad**, bui
 - **Parallel research agents**, measured against a single agent ([0007](../decisions/0007-agent-design.md)).
 - **Tools as MCP servers** ([0009](../decisions/0009-tools-as-mcp-servers.md)).
 - **Evaluations:** a set of test trips with checks such as "stayed under budget" and "cited FCDO advice", reported as a score.
-- **Earnings attribution:** which feature (chat, fare card, compare) drives clicks and bookings, from SubID-labelled partner links and Travelpayouts booking statistics (register line "Aviasales links are built by the backend…", [decisions](../decisions/README.md#register)).
+- **Earnings attribution** (built behind the commission switch, off for now): which feature (chat, fare card, compare) drives clicks and bookings, from SubID-labelled partner links and Travelpayouts booking statistics (register line "Aviasales links are built by the backend…", [decisions](../decisions/README.md#register)).
 - **Honesty about data:** every value labelled with its source and age ([0011](../decisions/0011-product-integrity-rules.md)).
 
 ## 3. What the traveller can see for real
@@ -26,7 +26,7 @@ Cached fares (Aviasales through Travelpayouts), weather, exchange rates, FCDO en
 1. A single LangGraph agent with plain-function tools: weather, exchange rates, FCDO advice.
 2. Move those tools into Layover's own MCP servers.
 3. Retrieval over FCDO and Wikivoyage, with citations, freshness dates and the first evaluations.
-4. Browsing real cached fares from Travelpayouts, labelled with their age, each linking to Aviasales. With commission switched on, the link is a partner link with a SubID naming the feature that produced it; it is built now but switched off, so links are plain (register).
+4. Browsing real cached fares from Travelpayouts, labelled with their age, each linking to Aviasales. With commission switched on, the link is a partner link with a SubID naming the feature that produced it; it is built now but switched off, so links are plain ([register](../decisions/README.md#register)).
 5. The Duffel booking subgraph with the approval step.
 6. Compare destinations: parallel research agents, measured against the single agent.
 7. A private earnings dashboard: clicks, bookings and earnings per feature from the booking statistics API, built behind the same switch.
