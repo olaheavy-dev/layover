@@ -1,0 +1,14 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.7.0
+_src_path: gh:olaheavy-dev/house-template-base
+container_images: false
+description: An AI travel planner for UK-based holidaymakers, built as a portfolio
+    project with real travel APIs.
+domain: ''
+github_org: olaheavy-dev
+license: all-rights-reserved
+owner_github: sunkanmi-olawuwo
+owner_name: Sunkanmi Olawuwo
+project_name: Layover
+project_slug: layover
+stacks: []

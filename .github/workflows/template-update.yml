@@ -1,0 +1,152 @@
+# Owned by house-template-base. Dependabot for the template layers: each week it checks every
+# .copier-answers.*.yml with `copier check-update` and, when a layer has a new version, runs
+# `copier update` and opens one pull request with the changes. Conflicts stay as inline markers,
+# which the merge-conflict check fails on, so they get resolved in the PR rather than hidden.
+# `--trust` runs the template's own tasks and migrations: only templates from olaheavy-dev are applied.
+#
+# The branch and pull request are made with TEMPLATE_UPDATE_TOKEN, a secret in the `template-update`
+# environment (a GitHub App token or a fine-grained token with contents and pull-requests write).
+# A token is used rather than letting GITHUB_TOKEN create pull requests: that setting stays off, and
+# CI runs on PRs opened with a token but not on PRs opened with GITHUB_TOKEN. Without the token the
+# workflow opens an issue saying which layers have updates, using GITHUB_TOKEN with issues: write.
+#
+# One layer failing does not stop the others: its half-done changes are discarded (each layer that
+# updated is already committed, so those stay), the pull request or issue is still opened for the
+# layers that did update and names the failed ones, and the last step then fails the job so the run
+# is red in the Actions list. A failed layer is updated by hand (see the pull request, the issue or the run summary).
+name: Template update
+
+on:
+  schedule:
+    - cron: "23 6 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Update template layers
+    runs-on: ubuntu-24.04
+    # TEMPLATE_UPDATE_TOKEN lives in this environment's secrets (zizmor: secrets-outside-env).
+    environment: template-update
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: read # list open update PRs (private repositories need it)
+      issues: write # report available updates when no token is configured
+    env:
+      COPIER_VERSION: "9.19.1"
+      UPDATE_TOKEN: ${{ secrets.TEMPLATE_UPDATE_TOKEN }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          enable-cache: false
+
+      - name: Look for an open update
+        id: open
+        run: |
+          echo "prs=$(gh pr list --label template-update --state open --json number --jq length)" >> "$GITHUB_OUTPUT"
+          echo "issues=$(gh issue list --label template-update --state open --json number --jq length)" >> "$GITHUB_OUTPUT"
+
+      # An open update PR always means wait. An open notification issue only stops another issue:
+      # once the token is added, the update PR is opened and the issue closed.
+      - name: Apply new template versions
+        if: steps.open.outputs.prs == '0' && (env.UPDATE_TOKEN != '' || steps.open.outputs.issues == '0')
+        id: update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          updated=""
+          failed=""
+          for answers in .copier-answers.*.yml; do
+            status=0
+            uvx "copier==${COPIER_VERSION}" check-update --quiet --answers-file "$answers" || status=$?
+            if [ "$status" -eq 2 ]; then
+              head=$(git rev-parse HEAD)
+              if uvx "copier==${COPIER_VERSION}" update --trust --defaults --conflict inline --answers-file "$answers"; then
+                git add -A && git commit -q -m "chore: update ${answers#.copier-answers.} template layer" --allow-empty
+                updated="${updated} ${answers}"
+              else
+                # Back to where this layer started: earlier layers stay committed, and a layer that
+                # committed partway (a template task) is rolled back too.
+                echo "::warning::copier update failed for ${answers}; its changes were discarded and the other layers continue"
+                git reset -q --hard "$head"
+                git clean -fdq
+                failed="${failed} ${answers}"
+              fi
+            elif [ "$status" -ne 0 ]; then
+              echo "::warning::copier check-update failed for ${answers} (exit ${status})"
+            fi
+          done
+          echo "updated=${updated}" >> "$GITHUB_OUTPUT"
+          echo "failed=${failed}" >> "$GITHUB_OUTPUT"
+
+      - name: Open the pull request
+        if: steps.update.outputs.updated != '' && env.UPDATE_TOKEN != ''
+        env:
+          UPDATED: ${{ steps.update.outputs.updated }}
+          FAILED: ${{ steps.update.outputs.failed }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          branch="chore/template-update-$(date -u +%Y%m%d)"
+          git switch -c "$branch"
+          git push "https://x-access-token:${UPDATE_TOKEN}@github.com/${REPOSITORY}.git" "$branch"
+          {
+            echo "New template versions for:${UPDATED}."
+            echo
+            echo "Review the changes like any other PR. If the merge-conflict check fails, resolve the inline markers in this branch."
+            if [ -n "$FAILED" ]; then
+              echo
+              echo "**Could not update:**${FAILED}. See the failed run for the error. Update each by hand: run \`copier update --trust -a <answers file>\` locally and fix what fails. If that cannot work, \`copier recopy --trust -a <answers file>\` re-applies the layer as if it were new and overwrites your edits to any file it renders, so review \`git diff\` before committing. It is never run automatically."
+            fi
+          } > body.md
+          url=$(GH_TOKEN="$UPDATE_TOKEN" gh pr create --head "$branch" --title "chore: update template layers" \
+            --label template-update --body-file body.md)
+          for issue in $(gh issue list --label template-update --state open --json number --jq '.[].number'); do
+            gh issue close "$issue" --comment "The update is now a pull request: ${url}"
+          done
+
+      - name: Report the update without a token
+        if: steps.update.outputs.updated != '' && env.UPDATE_TOKEN == ''
+        env:
+          UPDATED: ${{ steps.update.outputs.updated }}
+          FAILED: ${{ steps.update.outputs.failed }}
+        run: |
+          {
+            echo "New template versions are available for:${UPDATED}."
+            echo
+            echo "Add a TEMPLATE_UPDATE_TOKEN secret to the \`template-update\` environment so this workflow can open the update as a pull request, or run \`copier update --trust -a <answers file>\` locally."
+            if [ -n "$FAILED" ]; then
+              echo
+              echo "**Could not update automatically:**${FAILED}. Run \`copier update --trust -a <answers file>\` locally and fix what fails. If that cannot work, \`copier recopy --trust -a <answers file>\` re-applies the layer as if it were new and overwrites your edits to any file it renders, so review \`git diff\` before committing. It is never run automatically."
+            fi
+          } > body.md
+          gh issue create --title "Template update available" --label template-update --body-file body.md
+
+      # Runs after the pull request or issue is opened, so the layers that updated are not lost.
+      - name: Fail the run when a layer could not be updated
+        if: ${{ !cancelled() && steps.update.outputs.failed != '' }}
+        env:
+          FAILED: ${{ steps.update.outputs.failed }}
+        run: |
+          echo "::error::These template layers could not be updated:${FAILED}"
+          {
+            echo "### Template layers that could not be updated"
+            echo
+            echo "${FAILED}"
+            echo
+            echo "Update each by hand with \`copier update --trust -a <answers file>\`. \`copier recopy\` re-applies the layer as if it were new and overwrites your edits to any file it renders, so review \`git diff\` before committing. It is never run automatically."
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 1

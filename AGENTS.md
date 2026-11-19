@@ -1,0 +1,95 @@
+# AGENTS.md
+
+The rulebook for every AI agent and person working on Layover. Claude Code reads it through `CLAUDE.md`, which imports this file (`@AGENTS.md`); Codex and other agents read it directly. Edit **this** file only.
+
+This file comes from `house-template-base` and is updated with `copier update -a .copier-answers.base.yml`. Rules for one part of the code live next to it in `.claude/rules/` (loaded only when an agent touches matching files), and each stack layer adds its own there.
+
+## What this project is
+
+An AI travel planner for UK-based holidaymakers, built as a portfolio project with real travel APIs.
+
+Stack layers: none (base layer only). Decisions are in `docs/decisions/`; don't contradict one, propose a new record instead.
+
+## Rules for every agent
+
+1. **No unsourced claims.** Never invent facts, figures, dates or quotes, in code, copy, docs or PR descriptions. A number shown to users comes from code or data and carries its source; a claim in the README is measured, with its dataset and mode.
+2. **Public repository.** Never commit secrets, API keys, `.env` files, personal data, real customer data or private material. Use `.env.example` with placeholders. Infrastructure details (hosts, IPs, other services) stay out of the repo.
+3. **Ask before** adding a dependency, changing infrastructure or hosting, spending money (model calls, paid services), changing repository settings, or changing an accepted decision.
+4. **Never push to `main`.** Work on a branch named `type/short-description`; squash-merge through a pull request.
+5. **No agent attribution.** Commit messages and PR descriptions carry no `Co-Authored-By` or "generated with" lines for any coding agent (set in `.claude/settings.json`).
+6. **Plain language for the owner.** When explaining options or decisions, say what each means in practice and give a clear recommendation.
+7. **Enforced, not only written.** If a rule here matters, a check, a hook or a ruleset enforces it. When you add a rule, add its enforcement or say why it can't have one.
+
+## How work flows
+
+The process is the owner's shared agent workflow, [agent-workflows](https://github.com/olaheavy-dev/agent-workflows), the same on every project: start from the GitHub issue, then brainstorm, write the plan, build test-first in a worktree, review the branch and verify it, open the PR, request `@codex review`, and merge with `Closes #N`. Its README lists the skill for each step; its house rules (linked to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`) cover how agents talk with the owner and hand over. This file is the project's overlay on top and wins where it is more specific.
+
+**Project overlay:**
+
+- **Models:** Opus plans and reviews; Sonnet builds and checks. A cheaper model only for clearly mechanical subtasks.
+- **Issues and plans:** every change starts from a GitHub issue with its goal and acceptance criteria (the "Task" issue form), each criterion with the test that proves it, including edge, error and empty states; a small change gets a short plan. Specs and plans go in `docs/superpowers/specs/` and `docs/superpowers/plans/` (committed), per-plan ledgers in `.superpowers/` (git-ignored). Post a plain-language summary of each plan in the chat.
+- **Decisions:** a hard-to-reverse choice gets a record in `docs/decisions/`; an easily reversible one gets a line in the register.
+- **Checks:** `make check` before pushing is the verification step; `make check-fast` runs in the pre-push and stop hooks. A UI change also gets before-and-after screenshots.
+- **Handover:** at the end of every session, overwrite `docs/planning/status.md` (open PRs, next steps, blockers, owner to-dos).
+
+**Project rules while building:**
+
+- One issue per branch. If the plan is unclear or conflicts with a decision, stop and ask.
+- Small vertical slices: behaviour, tests and docs together. A bug fix comes with a regression test that fails without it.
+- **Noticed, not changed:** list anything outside the task in the PR description and open a `noticed` issue for each.
+- **Stop and ask** when a task needs an undecided product choice, a dependency not yet approved, or work well beyond the issue. **Stop after 3 failed attempts** at the same problem and report what was tried.
+- **Pre-flight check:** search the repository for every term, decision number and figure the change touches, and fix contradictions in the same PR.
+- Commit messages and PR titles follow Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`, `ci:`, `perf:`); CI checks the PR title, which becomes the squash commit. The PR description follows `.github/pull_request_template.md`.
+
+## Code Review Rules
+
+Hosted `@codex review`, the pre-push review and any fallback review follow this section. Check in priority order:
+
+1. **Correctness:** bugs, wrong logic, unhandled states (loading, empty, error, permission denied, flag off).
+2. **Breaches of the rules** in this file and in `.claude/rules/`.
+3. **Security and privacy:** access control, injection, secrets, data exposure, supply chain.
+4. **Spec match:** the issue's acceptance criteria.
+5. **Tests:** important behaviour and edge states covered; no test that only restates the code.
+6. **Clarity:** could the owner understand and maintain this? Flag unnecessary complexity.
+
+How to report: most serious first; for each, the file and line, what's wrong, a concrete failure case and a suggested fix. Severity **P0/P1** (wrong behaviour, security or privacy problem, unsourced claim, broken rule) or **P2/P3** (consistency, wording, polish). Say "no issues found" when there are none. A first review is one complete pass including knock-on effects elsewhere; re-reviews check the fixes only (new P2/P3 only on changed lines, P0/P1 anywhere). Reviewers don't push commits or approve merges.
+
+## When merging
+
+A pull request may be squash-merged only when **all** of these hold:
+
+1. Codex (`@codex review`) has reviewed the latest commit (or, when it is unavailable for over 24 hours, a fresh-context Opus review under "Code Review Rules" is posted as one PR comment headed "Fallback review").
+2. Every finding is fixed, answered with a reason, or deferred under "Review rounds"; every thread is resolved.
+3. Every check has passed (none failing, none running).
+4. The PR adds no security alerts.
+5. It isn't on the owner-only list.
+
+**The owner (@sunkanmi-olawuwo) merges:** changes to `LICENSE`, repository settings or rulesets, CI permissions, `.claude/settings.json`, `.claude/hooks/`, these merge rules, infrastructure or running costs, and any PR where a finding is disputed as wrong.
+
+After merging, post a one-line summary: what merged, and any follow-up issues.
+
+## Review rounds and debt
+
+- P0/P1 always block, in any round.
+- P2/P3 are fixed in rounds 1 and 2; from round 3, open a `review-followup` issue, link it in the reply and resolve the thread.
+- Fix every open finding, push once, request one re-review.
+- More than 5 open `review-followup` issues pauses feature work.
+
+## Keeping agent cost down
+
+- Keep to the model split in "How work flows".
+- Read only the files a task needs; keep PRs to one topic.
+- Run `make check` and the pre-push review before pushing, so external review rounds are rare.
+- Wait for reviews and checks in the background with long intervals; don't poll.
+- Before an expensive task (model calls, large media processing), say so and suggest a cheaper route if there is one.
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `make help` | Every target, including those the stack layers add |
+| `make install` | Install toolchains, dependencies and the git hooks |
+| `make check` | Everything CI runs: the base checks plus each layer's checks |
+| `make check-fast` | The quick subset the pre-push hook and the agent stop hook run |
+| `make repo-settings` | Apply the rulesets in `.github/rulesets/` and the security settings to the GitHub repository (owner only) |
+| `make template-status` | Show whether each template layer has a newer version |
