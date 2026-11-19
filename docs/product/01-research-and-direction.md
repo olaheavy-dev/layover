@@ -14,7 +14,7 @@ An AI travel planner for a **UK-based traveller planning a holiday abroad**, bui
 - **Parallel research agents**, measured against a single agent ([0007](../decisions/0007-agent-design.md)).
 - **Tools as MCP servers** ([0009](../decisions/0009-tools-as-mcp-servers.md)).
 - **Evaluations:** a set of test trips with checks such as "stayed under budget" and "cited FCDO advice", reported as a score.
-- **Honesty about data:** every value labelled with its source and age ([0011](../decisions/0011-product-integrity-rules.md), proposed).
+- **Honesty about data:** every value labelled with its source and age ([0011](../decisions/0011-product-integrity-rules.md)).
 
 ## 3. What the traveller can see for real
 
@@ -40,7 +40,6 @@ In order of how much they change what gets built:
 3. **Accounts and saved trips:** does the traveller sign in and come back to a trip?
 4. **Affiliate links and "non-commercial" data terms:** Open-Meteo's free API is for non-commercial use only and counts promotional activities as commercial. Aviasales links earn commission, so check before launch whether a paid Open-Meteo plan or another weather source is needed ([data sources](../references/data-sources.md)).
 5. **The public brand:** `layover` is the working name; a brand and domain check comes before launch.
-6. **Product integrity rules** ([0011](../decisions/0011-product-integrity-rules.md)): proposed, awaiting the owner.
 
 ## 6. Not doing
 

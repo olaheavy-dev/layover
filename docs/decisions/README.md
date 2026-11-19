@@ -16,7 +16,7 @@ Hard-to-reverse decisions get a numbered record in this folder (template: [0001]
 | [0008](0008-retrieval-no-knowledge-graph.md) | Retrieval over official advice and guides; no knowledge graph | Accepted |
 | [0009](0009-tools-as-mcp-servers.md) | Tools become MCP servers from build step 2 | Accepted |
 | [0010](0010-repository-and-stages.md) | Repository: code name Layover, public, design before code | Accepted |
-| [0011](0011-product-integrity-rules.md) | Product integrity rules | Proposed |
+| [0011](0011-product-integrity-rules.md) | Product integrity rules | Accepted |
 
 ## Register
 

@@ -10,13 +10,15 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- `docs/project-foundations`: decision records 0003 to 0011, the research and direction draft, data sources, the TripMate review and this file.
+- `docs/accept-0011` (closes #10): decision 0011 accepted by the owner ("Accept all six (Recommended)"); its rules are in `.claude/rules/product-integrity.md`.
+- #8 `docs/adopt-vestagraph-practices` (closes #4 to #7): practices adopted from Vestagraph; waiting for Codex's review of its latest commit.
+
+Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot).
 
 ## Next steps
 
 1. Answer the first open design question: what the traveller has already decided when they open Layover ([01 §5](../product/01-research-and-direction.md)).
 2. Continue the design (brainstorming), then write the design document and plan.
-3. Decide on the proposed product integrity rules ([0011](../decisions/0011-product-integrity-rules.md)).
 
 ## Blockers
 
