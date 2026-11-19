@@ -24,18 +24,38 @@ Stack layers: none (base layer only). Decisions are in `docs/decisions/`; don't 
 
 The process is the owner's shared agent workflow, [agent-workflows](https://github.com/olaheavy-dev/agent-workflows), the same on every project: start from the GitHub issue, then brainstorm, write the plan, build test-first in a worktree, review the branch and verify it, open the PR, request `@codex review`, and merge with `Closes #N`. Its README lists the skill for each step; its house rules (linked to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`) cover how agents talk with the owner and hand over. This file is the project's overlay on top and wins where it is more specific.
 
+| Step | Skill or agent | Model |
+| --- | --- | --- |
+| 1. Understand and agree the change | Superpowers `brainstorming` | Opus |
+| 1b. UI or journey work: design review before planning | `design-reviewer` (house-reviewers) | as the agent sets |
+| 2. Plan | Superpowers `writing-plans` | Opus |
+| 3. Build each task | Superpowers `subagent-driven-development` (or `executing-plans`) with `test-driven-development`, plus the project's `test-first` skill for anything numeric | Sonnet |
+| 4. Verify: `make check` and the criteria-to-test map | Superpowers `verification-before-completion` | Sonnet |
+| 5. Pre-push review in a fresh context, under "Code Review Rules" | Superpowers `requesting-code-review` plus `code-security-reviewer`; `visual-reviewer` for UI changes | Opus |
+| 6. Open the PR | Superpowers `finishing-a-development-branch` and the `pr` skill | Sonnet |
+| 7. Codex review; handle comments | `@codex review`, then Superpowers `receiving-code-review` | Opus |
+| 8. Merge under "When merging"; post a one-line summary | Claude Code | — |
+
+If a skill or agent isn't loaded in a session, read its instructions file rather than skipping the step.
+
 **Project overlay:**
 
 - **Models:** Opus plans and reviews; Sonnet builds and checks. A cheaper model only for clearly mechanical subtasks.
 - **Issues and plans:** every change starts from a GitHub issue with its goal and acceptance criteria (the "Task" issue form), each criterion with the test that proves it, including edge, error and empty states; a small change gets a short plan. Specs and plans go in `docs/superpowers/specs/` and `docs/superpowers/plans/` (committed), per-plan ledgers in `.superpowers/` (git-ignored). Post a plain-language summary of each plan in the chat.
+- **Backlog and stages:** open issues are listed in order in `docs/planning/backlog.md`; each issue title starts with its order number (`[01]`) and sits in its stage's milestone. The list changes when an issue opens, closes or moves; a PR that does one of those updates it.
 - **Decisions:** a hard-to-reverse choice gets a record in `docs/decisions/`; an easily reversible one gets a line in the register.
 - **Checks:** `make check` before pushing is the verification step; `make check-fast` runs in the pre-push and stop hooks. A UI change also gets before-and-after screenshots.
+- **Criteria to tests:** before the pre-push review, name the test (file and test name, or evaluation case ID) that proves each acceptance criterion and edge state, in the PR description. A criterion with no named test is a gap to fix first.
 - **Handover:** at the end of every session, overwrite `docs/planning/status.md` (open PRs, next steps, blockers, owner to-dos).
 
 **Project rules while building:**
 
 - One issue per branch. If the plan is unclear or conflicts with a decision, stop and ask.
 - Small vertical slices: behaviour, tests and docs together. A bug fix comes with a regression test that fails without it.
+- **Numbers are test-first.** Budget totals, currency conversions, fare comparisons and anything else Layover calculates follow the `test-first` skill (`.claude/skills/test-first/`): state the expected failure before each run, never weaken an assertion, and record a slice table in the PR. Money is held as integer minor units (pence, cents) or `Decimal`, never as a binary float.
+- **Expected values are worked out by hand.** A test's expected figure is a worked example that shows its working and cites its source (the rate, the fare snapshot, the rounding rule), never a value copied from the code's own output, so a wrong calculation can't confirm itself.
+- **Live services stay out of the merge check.** Tests that call a real outside service (Travelpayouts, Duffel, Open-Meteo, exchange rates, FCDO) are marked `live` and don't run in `make check` or CI. The merge check uses recorded responses in `tests/recorded/<provider>/`, each with its capture date and source, and never containing a key, a token or personal data. A recording is refreshed by running the `live` test that wrote it, which rewrites the file and its capture date; refresh it when the provider's API version changes or a `live` run shows its response has changed, in a PR of its own.
+- **Evaluation cases and spec scenarios have permanent IDs:** an area code and a number (for example `PLAN-03`, `BOOK-01`, `COMPARE-02`) at the start of the case name. Numbers are zero-padded to at least two digits (`PLAN-07`, then `PLAN-100` after `PLAN-99`); an area code is created with the first case in its area. An ID is never reused or renumbered; a case that is no longer needed stays, marked `withdrawn`.
 - **Noticed, not changed:** list anything outside the task in the PR description and open a `noticed` issue for each.
 - **Stop and ask** when a task needs an undecided product choice, a dependency not yet approved, or work well beyond the issue. **Stop after 3 failed attempts** at the same problem and report what was tried.
 - **Pre-flight check:** search the repository for every term, decision number and figure the change touches, and fix contradictions in the same PR.
@@ -51,6 +71,9 @@ Hosted `@codex review`, the pre-push review and any fallback review follow this 
 4. **Spec match:** the issue's acceptance criteria.
 5. **Tests:** important behaviour and edge states covered; no test that only restates the code.
 6. **Clarity:** could the owner understand and maintain this? Flag unnecessary complexity.
+7. **Handover:** a PR that changes what is done, open or next, a decision, a plan or the backlog without updating `docs/planning/status.md` is a P2 finding (a named exception to "broken rules" being P1), always fixed in the same PR, in any round.
+
+For figures, recalculate them and check them against the cited source. Rule breaches include: an acceptance criterion with no named test, a test whose expected figure has no working or source, a live-service test that runs in the merge check, and an evaluation case or scenario without an ID or with a reused one.
 
 How to report: most serious first; for each, the file and line, what's wrong, a concrete failure case and a suggested fix. Severity **P0/P1** (wrong behaviour, security or privacy problem, unsourced claim, broken rule) or **P2/P3** (consistency, wording, polish). Say "no issues found" when there are none. A first review is one complete pass including knock-on effects elsewhere; re-reviews check the fixes only (new P2/P3 only on changed lines, P0/P1 anywhere). Reviewers don't push commits or approve merges.
 
@@ -58,7 +81,7 @@ How to report: most serious first; for each, the file and line, what's wrong, a 
 
 A pull request may be squash-merged only when **all** of these hold:
 
-1. Codex (`@codex review`) has reviewed the latest commit (or, when it is unavailable for over 24 hours, a fresh-context Opus review under "Code Review Rules" is posted as one PR comment headed "Fallback review").
+1. Codex (`@codex review`) has reviewed the latest commit; a rebased PR needs a fresh review. **Fallback:** while Codex is unavailable (usage limit, outage, or a review stuck for over an hour), a documentation-only PR (Markdown and images only) may merge on a fresh-context Opus review under "Code Review Rules", posted as one numbered PR comment headed "Fallback review (Codex unavailable)", with a reply to each finding. Code waits for Codex.
 2. Every finding is fixed, answered with a reason, or deferred under "Review rounds"; every thread is resolved.
 3. Every check has passed (none failing, none running).
 4. The PR adds no security alerts.
@@ -74,6 +97,7 @@ After merging, post a one-line summary: what merged, and any follow-up issues.
 - P2/P3 are fixed in rounds 1 and 2; from round 3, open a `review-followup` issue, link it in the reply and resolve the thread.
 - Fix every open finding, push once, request one re-review.
 - More than 5 open `review-followup` issues pauses feature work.
+- **Stage gates:** each stage (Design, then each build step in [01 §4](docs/product/01-research-and-direction.md)) ends with a gate: one whole-repository review for contradictions, stale statements and debt, its findings cleared in a tidy-up PR, and `noticed` issues triaged. No gate passes with an open `review-followup` issue.
 
 ## Keeping agent cost down
 
