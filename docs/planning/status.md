@@ -2,15 +2,15 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 19 Nov 2026, end of session.
+Last updated: 19 Nov 2026, end of the evening session.
 
 ## Stage
 
-Design. The repository holds documents and their checks only. The main journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)). The design foundations are approved: the [design brief](../design/brief.md), the [information architecture](../design/information-architecture.md) and the [design tokens](../design/tokens.css) (issue #25). The boards for every screen and widget come next, still in the Design stage, then the Design gate. The FastAPI template layer comes with build plan 1, and the Next.js layer when frontend work starts ([0010](../decisions/0010-repository-and-stages.md), [spec §9](../superpowers/specs/2026-11-19-layover-journey-design.md)).
+Design. The repository holds documents and their checks only. The main journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)). The design foundations are approved and merged (#29): the [design brief](../design/brief.md), the [information architecture](../design/information-architecture.md) and the [design tokens](../design/tokens.css). The boards for every screen and widget come next, still in the Design stage, then the Design gate. The FastAPI template layer comes with build plan 1, and the Next.js layer when frontend work starts ([0010](../decisions/0010-repository-and-stages.md), [spec §9](../superpowers/specs/2026-11-19-layover-journey-design.md)).
 
 ## Open pull requests
 
-- #29: design foundations (brief, information architecture, tokens and the contrast check), waiting for Codex review.
+None.
 
 ## Done on 19 Nov 2026
 
@@ -26,6 +26,7 @@ Design. The repository holds documents and their checks only. The main journey d
 | #19 | `AGENTS.md` rule 8 (decisions in a prompt window) and rules from homescout (figures and sources, docs and versions, teach as you build, merge safety; Scorecard grades exempt) |
 | #21 | The main journey design (approved) and decision 0012 (a team of agents, measured against a single-agent baseline) |
 | #23 | Evaluations at each stage gate (coverage table at the Design gate, scores at build gates) |
+| #29 | Design foundations: the design brief with a benchmark of eight products, the information architecture, the design tokens, and a WCAG 2.2 AA contrast check in `make check` (`tools/check_contrast.py`) |
 
 What the journey design settled (owner answers in prompt windows; details in the [spec](../superpowers/specs/2026-11-19-layover-journey-design.md) and the [register](../decisions/README.md#register)):
 
@@ -36,12 +37,19 @@ What the journey design settled (owner answers in prompt windows; details in the
 - Every tool result is a typed widget; screens and widgets are designed to a world-class bar before the gate.
 - Build: one plan per part, after the Design gate.
 
+What the design foundations settled (owner answers in prompt windows; details in the [brief](../design/brief.md), the [information architecture](../design/information-architecture.md) and the [register](../decisions/README.md#register)):
+
+- Look: warm and inspiring tone, warm editorial style, chat plus trip canvas (phone: Chat and Trip tabs), Lucide icons, WCAG 2.2 AA.
+- Colour and type: the Harbour palette in light and dark (one brand blue, one highlight, one warning colour); Source Serif 4 and Source Sans 3.
+- Structure: one scrolling canvas with a section index (Brief, Compare, place, Stay, Days, Booking); side answers in the chat with "Add to trip"; a private working link that keeps the chat and a frozen shared link; a "How Layover works" page.
+- Illustrations: chosen by a side-by-side test in the boards.
+- Tooling: no project board until build plan 1; Aspire for local orchestration and tracing in build plan 1.
+
 ## Next steps
 
-1. **Merge the design foundations PR** (issue #25): brief, information architecture, tokens and the contrast check in `make check`.
-2. **Boards** (issue #28, PR 2 of the design work): static HTML boards for every screen in the [information architecture](../design/information-architecture.md) and every widget `kind` with its loading, empty, error and "not known" states, at 390 px and 1440 px, in light and dark, built on [tokens.css](../design/tokens.css). It includes the illustration side-by-side test on the welcome screen. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief.
-3. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage, a map snapshot in `docs/floorplan/`.
-4. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests, and the Aspire app host for local orchestration and tracing). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
+1. **Fresh session: the boards** (issue #28, PR 2 of the design work), with the design-flow phases 5 and 6 (`brief-to-tasks`, then `frontend-design`): static HTML boards for every screen in the [information architecture](../design/information-architecture.md) and every widget `kind` with its loading, empty, error and "not known" states, at 390 px and 1440 px, in light and dark, built on [tokens.css](../design/tokens.css). It includes the illustration side-by-side test on the welcome screen. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief. Show every option inside a real screen, and ask every question in a prompt window.
+2. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage, a map snapshot in `docs/floorplan/`.
+3. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests, and the Aspire app host for local orchestration and tracing). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
 
 ## Blockers
 
@@ -57,7 +65,7 @@ None. Owner decisions still open, needed later:
 
 - Ask Nuitee whether a portfolio project may use its sandbox and price index.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
-- Review the process issue [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule) in the weekly process review.
+- Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked) and [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes).
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
