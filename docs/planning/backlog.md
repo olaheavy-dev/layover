@@ -11,9 +11,8 @@ The repository holds documents only until the design is approved ([0010](../deci
 | # | Issue | Item | Notes |
 |---|---|---|---|
 | 05 | #9 | Create the `task` label used by the Task issue form | `noticed` issue, owner-only (repository settings) |
-| 08 | #14 | Research free APIs that add value for a UK holidaymaker | The owner picks which to integrate |
 
-Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[06]` #10, decision 0011 accepted; `[07]` #11, data sources and the earnings decision.
+Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[06]` #10, decision 0011 accepted; `[07]` #11, data sources and the earnings decision; `[08]` #14, free APIs chosen for integration.
 
 Next design work (open design questions in [01 §5](../product/01-research-and-direction.md)) gets issues as it starts.
 

@@ -10,9 +10,9 @@ Design. The repository holds documents only; the FastAPI and Next.js template la
 
 ## Open pull requests
 
-- `docs/data-sources-and-earnings` (#13, closes #11): candidate data sources (GOV.UK bank holidays, Nager.Date, REST Countries, Nominatim, Overpass), Wikivoyage through the MediaWiki API, the Travelpayouts earnings sources, weather options for a commission-earning site, the owner's earnings decision ("Labels and dashboard"), and commission built but switched off. The owner asked the agent not to merge it.
+- `docs/free-api-candidates` (#15, closes #14): the free APIs the owner chose to integrate, ideas for later, and sources considered and not used. The owner authorised the agent to merge it once Codex and the checks are clean.
 
-Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph), #12 (decision 0011 accepted; its rules in `.claude/rules/product-integrity.md`).
+Merged on 19 Nov 2026: #1 (foundation decisions and docs), #2 and #3 (Dependabot), #8 (practices adopted from Vestagraph), #12 (decision 0011 accepted; its rules in `.claude/rules/product-integrity.md`), #13 (candidate data sources, the earnings decision, commission built but switched off).
 
 ## Next steps
 
