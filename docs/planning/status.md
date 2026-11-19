@@ -6,7 +6,7 @@ Last updated: 19 Nov 2026, end of session.
 
 ## Stage
 
-Design. The repository holds documents only. The main journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)). Screens and widgets are designed next, still in the Design stage, then the Design gate. The FastAPI and Next.js template layers come with build plan 1 ([0010](../decisions/0010-repository-and-stages.md)).
+Design. The repository holds documents only. The main journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)). Screens and widgets are designed next, still in the Design stage, then the Design gate. The FastAPI template layer comes with build plan 1, and the Next.js layer when frontend work starts ([0010](../decisions/0010-repository-and-stages.md), [spec §9](../superpowers/specs/2026-11-19-layover-journey-design.md)).
 
 ## Open pull requests
 
@@ -46,7 +46,7 @@ What the journey design settled (owner answers in prompt windows; details in the
 
 None. Owner decisions still open, needed later:
 
-- Nuitee's terms for sandbox and price-index use (ask Nuitee before building the hotel demo).
+- Nuitee's terms for sandbox and price-index use (ask Nuitee before building the hotel demo), and approving the price-index spend before its switch is turned on.
 - How long a shared trip link lasts.
 - The cost-cap figures, after build step 1 measures a trip's cost.
 - The vector database (plan 3), and hosting and the database (plan 6).
@@ -60,6 +60,7 @@ None. Owner decisions still open, needed later:
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Tavily: create a free account and API key when the web-search step is built.
+- Nuitee: create an account and sandbox key once Nuitee agrees to portfolio use.
 - Before build step 4: read the Travelpayouts partner agreement (or ask the agent to read it in a browser) to confirm fares may link to Aviasales without a partner marker.
 - Travelpayouts project: create it once Layover has a site (Travelpayouts asks for a link to a traffic source). It is needed before commission is switched on, not before.
 - Travelpayouts payouts: set up the payout method yourself when earnings start (agents never enter payment details).
