@@ -39,7 +39,7 @@ Each screen follows the checklist in [#28](https://github.com/olaheavy-dev/layov
 - [ ] **Stay and Days**: hotel chosen; hotel skipped (days from the centre); Days with a "Not known" opening time and an empty afternoon; the itinerary-only trip (the place, then Stay and Days, with no Compare section).
 - [ ] **Booking**: waiting for approval, approved, declined and price changed, always with "Sandbox: no real booking or payment".
 - [ ] **Chat-only replies and interruptions**: `web_results` in the chat; "I can't help with that yet"; the `not_travel` decline; lost connection with "Try again"; the "New trip" confirmation; the "Share trip" step.
-- [ ] **Phone and navigation**: Chat and Trip tabs, the Trip tab badge, compact widget cards, the sideways section index; folded sections and the section index on desktop.
+- [ ] **Phone and navigation**: Chat and Trip tabs, the Trip tab badge, compact widget cards, the sideways section index; folded sections and the section index on desktop. Part drawn: the long chat (grouped checks, "Jump to latest"), the trip strip, the compact cards and the "3 new" badge are on `trip-lisbon-chat.html`. Still to draw: the sideways index states and the folded sections on desktop.
 - [ ] **Pages outside the trip**: the shared trip (`/s/{share_id}`) with "as of" dates; How Layover works with "no evaluation results yet"; link not found or expired; limit reached, with wording that needs no figure.
 
 ## Review and handover

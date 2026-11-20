@@ -37,7 +37,7 @@ The cost lines use one rule for every place, so the boards stay consistent: flig
 | Local transport, activities | Not known | Not known | Not known |
 | May temperature, typical high and low | 22°C and 14°C | 24°C and 15°C | 23°C and 16°C |
 | Rainy days in May, typical | 5 | 4 | 2 |
-| Sea temperature | 17°C | 18°C | 19°C |
+| Sea temperature (sample label: "Source: Open-Meteo Marine, Live") | 17°C | 18°C | 19°C |
 | Currency | Euro | Euro | Euro |
 | FCDO page | [Portugal](https://www.gov.uk/foreign-travel-advice/portugal) | [Spain](https://www.gov.uk/foreign-travel-advice/spain) | [Malta](https://www.gov.uk/foreign-travel-advice/malta) |
 | FCDO "updated" date | 12 Nov 2026 | 3 Nov 2026 | 28 Oct 2026 |
@@ -57,6 +57,20 @@ States to draw with these places:
 | `climate_chart` | The May row above. The months either side for the chart: April 20°C and 12°C, 7 rainy days; June 25°C and 16°C, 2 rainy days. Averages period: 1991 to 2020, Live |
 | `place_intro` | Two sentences in Layover's own words, with "Source: Wikivoyage, Lisbon, page edited March 2026, Cached, 4 days old". For the Fallback state: "Fallback: Wikipedia, Lisbon" |
 | `advice_card` | "FCDO travel advice: Portugal, updated 12 Nov 2026", Layover's copy Cached, 1 day old, with the link above. Error state: the same link and "Layover could not read it just now" |
+
+## The long chat and the phone cue
+
+Used on `trip-lisbon-chat.html`. The labels follow the rule in the [brief](../brief.md#source-labels).
+
+| Item | Sample content |
+|---|---|
+| Trip strip | "Lisbon, May", "5 facts ready" (fare, cost estimate, advice, weather, money), "View trip" |
+| Trip tab badge | "3 new" |
+| Compact cards | Flights: £96 return per person, Cached, 3 days old. Cost estimate: about £782, estimate, partial, Cached, 3 to 4 days old (the flights are 3 days old and the Wikivoyage lines 4). Travel advice: FCDO advice for Portugal, updated 12 Nov 2026, Cached, 1 day old. Weather in May: highs of 22°C, lows of 14°C, 5 rainy days, Live. Money: £1 = €1.15, rate for 18 Nov 2026, Live |
+| Side question: the beach | "The sea is 17°C in May. Typical highs are 22°C, with 5 rainy days." Source line: Live; Sea: Open-Meteo Marine; Weather: Open-Meteo |
+| Side question: what the estimate leaves out | Local transport and activities: Not known, not counted as £0 |
+| Side question: the FCDO date | "The FCDO page for Portugal was updated on 12 Nov 2026." Layover's copy: Cached, 1 day old |
+| Checks rows | 2 checks (fares and weather for 3 places), 4 checks (FCDO advice, exchange rate, sunrise and sunset, Wikivoyage page), 2 checks (sea temperature, typical May weather), 1 check (FCDO advice) |
 
 ## Where you're staying
 

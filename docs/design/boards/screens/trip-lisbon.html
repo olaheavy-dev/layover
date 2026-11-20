@@ -25,7 +25,7 @@
   <div class="subbar">
     <div class="tabs" role="tablist" aria-label="Chat or trip">
       <button class="tab" role="tab" id="tab-chat" data-view="chat" data-text="Chat" aria-selected="false" tabindex="-1">Chat</button>
-      <button class="tab" role="tab" id="tab-trip" data-view="trip" data-text="Trip" aria-selected="true">Trip<span class="tab__badge" hidden>1</span></button>
+      <button class="tab" role="tab" id="tab-trip" data-view="trip" data-text="Trip" aria-selected="true">Trip<!-- Trip is the active tab on this screen, so its badge is hidden. The badge with its words ("3 new") is drawn on the phone Chat tab in trip-lisbon-chat.html. --><span class="tab__badge tab__badge--words" hidden>3 new</span></button>
     </div>
     <p class="sample-pill">Sample data, not real</p>
   </div>
@@ -35,36 +35,24 @@
     <!-- Chat column -->
     <section class="chat panel" aria-labelledby="tab-chat">
       <h2 class="visually-hidden">Chat</h2>
-      <div class="chat__log" role="log" aria-live="polite" aria-label="Conversation with Layover">
-        <div class="msg msg--traveller">
-          <p class="msg__text">A warm, relaxed food break from Manchester in May. 5 nights, 2 of us, £800 in total.</p>
+      <div class="chat__wrap">
+        <div class="chat__log" role="log" aria-live="polite" aria-label="Conversation with Layover" tabindex="0">
+        <div class="msg msg--traveller"><p class="msg__text">A warm, relaxed food break from Manchester in May. 5 nights, 2 of us, £800 in total.</p></div>
+        <div class="msg"><span class="msg__who">Layover</span><p class="msg__text">Got it: warm, relaxed, good food, from Manchester (MAN), 5 nights in May, 2 adults, £800 in total. Say if anything is wrong.</p></div>
+        <div class="msg msg--traveller"><p class="msg__text">That's right.</p></div>
+        <details class="checks"><summary><span>2 checks</span><span aria-hidden="true">·</span><span class="checks__show">Show</span><span class="checks__hide">Hide</span><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></summary><ul class="steps" aria-label="What Layover checked"><li class="step">Checked fares for 3 places</li><li class="step">Checked the weather for 3 places</li></ul></details>
+        <div class="msg"><span class="msg__who">Layover</span><p class="msg__text">Three places fit. They are side by side on your canvas.</p></div>
+        <div class="msg msg--traveller"><p class="msg__text">Choose Lisbon</p></div>
+        <details class="checks"><summary><span>4 checks</span><span aria-hidden="true">·</span><span class="checks__show">Show</span><span class="checks__hide">Hide</span><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></summary><ul class="steps" aria-label="What Layover checked"><li class="step">Read the FCDO advice for Portugal</li><li class="step">Checked the exchange rate</li><li class="step">Checked sunrise and sunset for 15 May</li><li class="step">Read the Wikivoyage page for Lisbon</li></ul></details>
+        <div class="msg"><span class="msg__who">Layover</span><p class="msg__text">Lisbon it is. Fare, costs, advice, weather and money are on your canvas, each with its source.</p></div>
+        <section class="added" aria-label="Added to your trip"><h3 class="added__head">Added to your trip</h3><ul class="added__list"><li class="mini"><span class="mini__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" /></svg></span><h3 class="mini__title">Flights</h3><button class="btn btn--link mini__act" type="button" data-goto="fare-title">View in trip<span class="visually-hidden">: Flights</span><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></button><p class="mini__fig"><strong>£96</strong> return per person</p><p class="mini__label"><span class="source-label source-label--cached">Cached, 3 days old</span></p></li><li class="mini"><span class="mini__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg></span><h3 class="mini__title">Cost estimate</h3><button class="btn btn--link mini__act" type="button" data-goto="cost-title">View in trip<span class="visually-hidden">: Cost estimate</span><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></button><p class="mini__fig"><strong>about £782</strong> estimate, partial</p><p class="mini__label"><span class="source-label source-label--cached">Cached, 3 to 4 days old</span></p></li><li class="mini"><span class="mini__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg></span><h3 class="mini__title">Travel advice</h3><button class="btn btn--link mini__act" type="button" data-goto="advice-title">View in trip<span class="visually-hidden">: Travel advice</span><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></button><p class="mini__fig"><strong>FCDO advice: Portugal</strong>, updated 12 Nov 2026</p><p class="mini__label"><span class="source-label source-label--cached">Cached, 1 day old</span></p></li><li class="mini"><span class="mini__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="M20 12h2" /><path d="m19.07 4.93-1.41 1.41" /><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" /><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" /></svg></span><h3 class="mini__title">Weather in May</h3><button class="btn btn--link mini__act" type="button" data-goto="climate-title">View in trip<span class="visually-hidden">: Weather in May</span><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></button><p class="mini__fig"><strong>Highs of 22°C</strong>, lows of 14°C, 5 rainy days, typically</p><p class="mini__label"><span class="source-label source-label--live">Live</span></p></li><li class="mini"><span class="mini__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.744 17.736a6 6 0 1 1-7.48-7.48" /><path d="M15 6h1v4" /><path d="m6.134 14.768.866-.5 2 3.464" /><circle cx="16" cy="8" r="6" /></svg></span><h3 class="mini__title">Money</h3><button class="btn btn--link mini__act" type="button" data-goto="money-title">View in trip<span class="visually-hidden">: Money</span><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></button><p class="mini__fig"><strong>£1 = €1.15</strong>, rate for 18 Nov 2026</p><p class="mini__label"><span class="source-label source-label--live">Live</span></p></li></ul></section>
         </div>
-        <div class="msg">
-          <span class="msg__who">Layover</span>
-          <p class="msg__text">Got it: warm, relaxed, good food, from Manchester (MAN), 5 nights in May, 2 adults, £800 in total. Say if anything is wrong.</p>
-        </div>
-        <div class="msg msg--traveller">
-          <p class="msg__text">That's right.</p>
-        </div>
-        <ul class="steps" aria-label="What Layover checked">
-          <li class="step">Checked fares for 3 places</li>
-          <li class="step">Checked the weather for 3 places</li>
-        </ul>
-        <div class="msg">
-          <span class="msg__who">Layover</span>
-          <p class="msg__text">Three places fit. They are side by side on your canvas.</p>
-        </div>
-        <div class="msg msg--traveller">
-          <p class="msg__text">Choose Lisbon</p>
-        </div>
-        <ul class="steps" aria-label="What Layover checked">
-          <li class="step">Read the FCDO advice for Portugal</li>
-          <li class="step">Checked the exchange rate</li>
-        </ul>
-        <div class="msg">
-          <span class="msg__who">Layover</span>
-          <p class="msg__text">Lisbon it is. Fare, costs, advice, weather and money are on your canvas, each with its source.</p>
-        </div>
+        <button class="btn btn--secondary jump" id="jump" type="button" hidden><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>Jump to latest</button>
+      </div>
+      <div class="strip" role="group" aria-label="Your trip so far">
+        <img class="strip__thumb" src="../photos/lisbon.jpg" width="80" height="80" alt="">
+        <p class="strip__text"><span class="strip__name">Lisbon, May</span><span class="strip__meta">5 facts ready</span></p>
+        <button class="btn btn--secondary" type="button" data-goto-tab="trip">View trip<svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></button>
       </div>
       <form class="composer" action="#" onsubmit="return false">
         <label class="visually-hidden" for="message">Message to Layover</label>
@@ -104,12 +92,20 @@
         <section class="section" id="compare" aria-labelledby="compare-title">
           <div class="fold">
             <h2 class="fold__title" id="compare-title">Compare</h2>
-            <p class="fold__body">Compared 3 places: you chose Lisbon</p>
+            <div class="fold__body compare">
+              <p class="compare__line">Compared 3 places: you chose Lisbon</p>
+              <ul class="thumbs" aria-label="The three places compared">
+                <li class="thumb thumb--chosen"><img src="../photos/lisbon.jpg" width="56" height="56" alt="Red roofs of Alfama, Lisbon"><span class="thumb__text"><strong>Lisbon</strong><span class="thumb__state">You chose this</span><small>Photo: João Reguengos, Unsplash</small></span></li>
+                <li class="thumb"><img src="../photos/valencia.jpg" width="56" height="56" alt="City of Arts and Sciences, Valencia"><span class="thumb__text"><strong>Valencia</strong><span class="thumb__state">Also compared</span><small>Photo: Diego Olguin, Unsplash</small></span></li>
+                <li class="thumb"><img src="../photos/valletta.jpg" width="56" height="56" alt="Domed church and harbour wall, Valletta"><span class="thumb__text"><strong>Valletta</strong><span class="thumb__state">Also compared</span><small>Photo: Daniel Höhe, Unsplash</small></span></li>
+              </ul>
+            </div>
             <button class="btn btn--link fold__action" type="button">Show again<svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></button>
           </div>
         </section>
 
         <section class="section place" id="lisbon" aria-labelledby="lisbon-title">
+          <div class="ambient" aria-hidden="true"><img src="../photos/lisbon.jpg" alt=""></div>
           <figure class="place-hero">
             <img class="place-hero__img" src="../photos/lisbon.jpg" width="1600" height="1066"
                  alt="Red roofs of Alfama above the river Tagus, Lisbon">
@@ -120,6 +116,7 @@
               <p class="place-hero__credit">Photo: <a href="https://unsplash.com/@yey_eye">João Reguengos</a>, <a href="https://unsplash.com/">Unsplash</a></p>
             </figcaption>
           </figure>
+          <div class="band" aria-hidden="true"><svg focusable="false"><defs><pattern id="az-band" width="24" height="24" patternUnits="userSpaceOnUse"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x=".75" y=".75" width="22.5" height="22.5" rx="2"/><path d="M12 4.5 19.5 12 12 19.5 4.5 12Z"/><circle cx="12" cy="12" r="2.5"/><path d="M.75 6A5.25 5.25 0 0 0 6 .75M18 .75A5.25 5.25 0 0 0 23.25 6M23.25 18A5.25 5.25 0 0 0 18 23.25M6 23.25A5.25 5.25 0 0 0 .75 18"/></g></pattern></defs><rect width="100%" height="24" fill="url(#az-band)"/></svg></div>
 
           <div class="facts">
 
@@ -127,7 +124,7 @@
             <article class="widget w-fare" aria-labelledby="fare-title">
               <div class="widget__head">
                 <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" /></svg></span>
-                <h3 class="widget__title" id="fare-title">Flights</h3>
+                <div class="widget__titles"><span class="eyebrow">Getting there</span><h3 class="widget__title" id="fare-title">Flights</h3></div>
               </div>
               <div class="widget__body">
                 <p class="figure">£96<span class="figure__unit">return, per person, from Manchester (MAN)</span></p>
@@ -144,10 +141,10 @@
             <article class="widget w-cost" aria-labelledby="cost-title">
               <div class="widget__head">
                 <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg></span>
-                <h3 class="widget__title" id="cost-title">Cost estimate</h3>
+                <div class="widget__titles"><span class="eyebrow">What it costs</span><h3 class="widget__title" id="cost-title">Cost estimate</h3></div>
               </div>
               <div class="widget__body">
-                <p class="figure">about £782<span class="figure__unit">estimate of the known costs, partial: local transport and activities are not known</span></p>
+                <p class="figure"><span class="approx">about</span>£782<span class="figure__unit">estimate of the known costs, partial: local transport and activities are not known</span></p>
                 <p class="verdict"><strong>£18 under your £800 budget on the known costs.</strong> The costs that are not known could take it over.</p>
                 <ul class="lines" aria-label="Breakdown of the known costs">
                   <li class="line">
@@ -192,14 +189,15 @@
             <article class="widget w-advice" aria-labelledby="advice-title">
               <div class="widget__head">
                 <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg></span>
-                <h3 class="widget__title" id="advice-title">Travel advice</h3>
+                <div class="widget__titles"><span class="eyebrow">Before you go</span><h3 class="widget__title" id="advice-title">Travel advice</h3></div>
               </div>
               <div class="widget__body">
                 <p><strong>FCDO travel advice: Portugal</strong><br>Updated 12 Nov 2026</p>
-                <p><span class="source-label source-label--cached">Cached, 1 day old</span> <span class="quiet">(Layover’s copy)</span></p>
                 <p><a class="widget__link" href="https://www.gov.uk/foreign-travel-advice/portugal">Read the FCDO advice for Portugal<svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg></a></p>
               </div>
               <div class="widget__foot">
+                <span class="source-label source-label--cached">Cached, 1 day old</span>
+                <span>Layover’s copy</span>
                 <span>Source: <a href="https://www.gov.uk/foreign-travel-advice/portugal">FCDO, gov.uk</a></span>
               </div>
             </article>
@@ -208,7 +206,7 @@
             <article class="widget w-climate" aria-labelledby="climate-title">
               <div class="widget__head">
                 <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="M20 12h2" /><path d="m19.07 4.93-1.41 1.41" /><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" /><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" /></svg></span>
-                <h3 class="widget__title" id="climate-title">Weather in April, May and June</h3>
+                <div class="widget__titles"><span class="eyebrow">The season</span><h3 class="widget__title" id="climate-title">Weather in April, May and June</h3></div>
               </div>
               <div class="widget__body">
                 <p><strong>May:</strong> highs of 22°C, lows of 14°C and 5 rainy days, typically.</p>
@@ -271,7 +269,7 @@
             <article class="widget w-money" aria-labelledby="money-title">
               <div class="widget__head">
                 <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.744 17.736a6 6 0 1 1-7.48-7.48" /><path d="M15 6h1v4" /><path d="m6.134 14.768.866-.5 2 3.464" /><circle cx="16" cy="8" r="6" /></svg></span>
-                <h3 class="widget__title" id="money-title">Money</h3>
+                <div class="widget__titles"><span class="eyebrow">Spending</span><h3 class="widget__title" id="money-title">Money</h3></div>
               </div>
               <div class="widget__body">
                 <p class="figure">£1 = €1.15<span class="figure__unit">Portugal uses the euro</span></p>
@@ -287,7 +285,7 @@
             <article class="widget w-daylight" aria-labelledby="daylight-title">
               <div class="widget__head">
                 <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v8" /><path d="m4.93 10.93 1.41 1.41" /><path d="M2 18h2" /><path d="M20 18h2" /><path d="m19.07 10.93-1.41 1.41" /><path d="M22 22H2" /><path d="m8 6 4-4 4 4" /><path d="M16 18a4 4 0 0 0-8 0" /></svg></span>
-                <h3 class="widget__title" id="daylight-title">Daylight</h3>
+                <div class="widget__titles"><span class="eyebrow">The light</span><h3 class="widget__title" id="daylight-title">Daylight</h3></div><svg class="deco deco--sun" viewBox="0 0 56 40" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 22a12 12 0 0 1 24 0"/><path d="M28 6V2M39.3 10.7l2.8-2.8M16.7 10.7l-2.8-2.8M44 22h4M12 22H8"/><path d="M6 22H50"/><path d="M6 28q4-3 8 0t8 0 8 0 8 0 8 0"/><path d="M12 34q4-3 8 0t8 0 8 0 8 0"/></g></svg>
               </div>
               <div class="widget__body">
                 <p class="quiet">15 May 2027</p>
@@ -296,9 +294,9 @@
                   <div><dt>Sunset</dt><dd>20:40</dd></div>
                   <div><dt>Day length</dt><dd>14 h 20 min</dd></div>
                 </dl>
-                <p><span class="source-label source-label--live">Live</span></p>
               </div>
               <div class="widget__foot">
+                <span class="source-label source-label--live">Live</span>
                 <span>Source: <a href="https://sunrise-sunset.org/">sunrise-sunset.org</a></span>
               </div>
             </article>
@@ -307,13 +305,14 @@
             <article class="widget w-intro" aria-labelledby="intro-title">
               <div class="widget__head">
                 <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16" /><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" /></svg></span>
-                <h3 class="widget__title" id="intro-title">About Lisbon</h3>
+                <div class="widget__titles"><span class="eyebrow">The place</span><h3 class="widget__title" id="intro-title">About Lisbon</h3></div>
               </div>
               <div class="widget__body">
-                <p class="prose">Lisbon is the capital of Portugal, on the river Tagus. Alfama is one of its old quarters, above the river.</p>
-                <p><span class="source-label source-label--cached">Cached, 4 days old</span> <span class="quiet">Wikivoyage page edited March 2026</span></p>
+                <div class="intro-grid"><figure class="intro-photo"><div class="intro-photo__frame"><img src="../photos/lisbon.jpg" width="1600" height="1066" alt="Red roofs of Alfama, Lisbon, close up"></div><figcaption>Photo: <a href="https://unsplash.com/@yey_eye">João Reguengos</a>, Unsplash</figcaption></figure><div class="intro-text"><div class="pullquote"><span class="pullquote__mark" aria-hidden="true">“</span><p class="prose">Lisbon is the capital of Portugal, on the river Tagus. Alfama is one of its old quarters, above the river.</p></div></div></div>
               </div>
               <div class="widget__foot">
+                <span class="source-label source-label--cached">Cached, 4 days old</span>
+                <span>Page edited March 2026</span>
                 <span>Source: <a href="https://en.wikivoyage.org/wiki/Lisbon">Wikivoyage, Lisbon</a></span>
               </div>
             </article>

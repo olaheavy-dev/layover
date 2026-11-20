@@ -29,6 +29,10 @@
         tab.tabIndex = on ? 0 : -1;
       });
       if (view === "chat" && chatLog) { chatLog.scrollTop = chatLog.scrollHeight; }
+      // Opening the Trip tab clears its "3 new" badge.
+      if (view === "trip") {
+        Array.prototype.forEach.call(document.querySelectorAll(".tab__badge"), function (b) { b.hidden = true; });
+      }
     }
 
     function setRoles() {
@@ -53,6 +57,37 @@
     }
 
     if (chatLog) { chatLog.scrollTop = chatLog.scrollHeight; }
+
+    // "Jump to latest": shows when the traveller has scrolled up in a long chat.
+    var jump = document.getElementById("jump");
+    if (jump && chatLog) {
+      var updateJump = function () { jump.hidden = chatLog.scrollHeight - chatLog.scrollTop - chatLog.clientHeight < 120; };
+      chatLog.addEventListener("scroll", updateJump, { passive: true });
+      jump.addEventListener("click", function () {
+        chatLog.scrollTo({ top: chatLog.scrollHeight, behavior: reduce.matches ? "auto" : "smooth" });
+        chatLog.focus({ preventScroll: true });
+      });
+      updateJump();
+    }
+
+    // "View trip" on the trip strip and "View in trip" on a compact card open the Trip tab.
+    Array.prototype.forEach.call(document.querySelectorAll("[data-goto-tab]"), function (b) {
+      b.addEventListener("click", function () {
+        showView(b.getAttribute("data-goto-tab"));
+        var tab = document.getElementById("tab-" + b.getAttribute("data-goto-tab"));
+        if (tab) { tab.focus(); }
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-goto]"), function (b) {
+      b.addEventListener("click", function () {
+        showView("trip");
+        var widget = document.getElementById(b.getAttribute("data-goto")).closest(".widget");
+        var canvasEl = document.querySelector(".canvas");
+        var index = canvasEl.querySelector(".section-index");
+        canvasEl.scrollTop = canvasEl.scrollTop + widget.getBoundingClientRect().top - canvasEl.getBoundingClientRect().top - index.offsetHeight - 8;
+        document.getElementById("tab-trip").focus();
+      });
+    });
 
     // Links that would leave the board (home, How it works) do nothing here, so the theme hash stays.
     Array.prototype.forEach.call(document.querySelectorAll('a[href="#top"], a[href="#how"]'), function (a) {
