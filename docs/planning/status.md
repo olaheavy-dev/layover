@@ -38,6 +38,7 @@ A fresh-context readiness review (Fable) of everything the boards depend on. Ver
 - **Images** ([brief](../design/brief.md#images)): real Unsplash photos for places ("Download and register (Recommended)"); AI mood scenes made by the owner, only where no named place shows ("AI for mood scenes only"); a three-way illustration test ("Two own styles + library (Recommended)", after comparing homescout); a drawn sample map.
 - **Fonts:** WOFF2 files committed and registered ("Commit font files (Recommended)"). **Logo:** a mark designed in the boards PR ("Design a logo mark now").
 - **Tokens and checks:** `--color-text-on-photo` and two chart colours; `tools/check_boards.py` in `make check` (literal colours, "safe", local paths, outside files, the sample label, the asset register).
+- **Logo:** the owner chose S3, the suitcase character. Final drawing in `docs/design/boards/logo/` (four one-colour SVG masters), shown on the logo board and in every screen's top bar; tokens `--logo-ink` and `--logo-sun` added. The "Logo marks" task in the boards task list is ticked.
 - **Tidy-ups:** #28's screen checklist; the information architecture's itinerary-only order and pinned answers; stale lines in data sources and the register; backlog order (#28 is now `[15]`; #27 joined the Design milestone).
 
 What the journey design settled (owner answers in prompt windows; details in the [spec](../superpowers/specs/2026-11-19-layover-journey-design.md) and the [register](../decisions/README.md#register)):

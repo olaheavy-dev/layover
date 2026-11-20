@@ -142,18 +142,52 @@ img {
   border-bottom: 1px solid var(--color-border-primary);
 }
 
-.wordmark {
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-tight);
-  line-height: 1;
+/* The logo: the suitcase mark and the word "Layover", drawn as inline SVG so the two colours follow the
+   tokens --logo-ink and --logo-sun (a file:// page cannot style an external SVG). The link keeps the
+   accessible name "Layover"; the drawing is hidden from screen readers. The lockup box ends at the
+   baseline, so the y descender hangs below it and the bar centres the letters, not the descender.
+   Size: lockup 2 rem (32 px) high from 1024 px and 1.625 rem (26 px) from 640 px; the small mark alone,
+   1.75 rem (28 px) high, below 640 px. */
+.logo {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  line-height: 0;
   color: var(--color-text-primary);
   text-decoration: none;
 }
 
-.wordmark:hover {
-  color: var(--color-text-primary);
+.logo svg {
+  display: block;
+  overflow: visible;
+}
+
+.logo .logo__full {
+  display: none;
+  height: 1.625rem;
+  width: auto;
+}
+
+.logo .logo__small {
+  height: 1.75rem;
+  width: auto;
+}
+
+/* From 640 px the whole lockup fits beside the trip name. Below it (390 px phones) the lockup would
+   leave the trip name about 95 px, so the small form of the mark stands alone. */
+@media (min-width: 40rem) {
+  .logo .logo__full {
+    display: block;
+  }
+  .logo .logo__small {
+    display: none;
+  }
+}
+
+@media (min-width: 64rem) {
+  .logo .logo__full {
+    height: 2rem;
+  }
 }
 
 .topbar__trip {

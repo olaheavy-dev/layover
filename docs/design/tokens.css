@@ -41,6 +41,9 @@
   --color-text-on-accent: #FFFFFF;
   --color-highlight: #6F9CC4;          /* small markers only: index underline, tool-step dot. Never text,
                                           and never the only cue: the current section is also bold */
+  /* Logo colours: the body and word use the brand blue, the sun sticker the lighter blue marker */
+  --logo-ink: var(--color-accent-primary);   /* the suitcase body and the word */
+  --logo-sun: var(--color-highlight);
 
   /* One warning colour for every problem state. Words and shapes tell the states apart */
   --color-status-warning: #9A4A12;     /* Fallback, Unavailable, widget errors */
@@ -197,6 +200,9 @@
   --color-accent-primary-active: #CFE2F5;
   --color-text-on-accent: #0A1B2D;
   --color-highlight: #5F93C4;
+  /* Logo colours: in dark the sun stays the lighter, warmer element, so it takes the lightest accent */
+  --logo-ink: var(--color-accent-primary);   /* the suitcase body and the word */
+  --logo-sun: var(--color-accent-primary-active);
   --color-status-warning: #F0A86B;
   --color-status-live: #E8EEF5;
   --color-status-cached: #A8B7C9;
@@ -233,6 +239,9 @@
     --color-accent-primary-active: #CFE2F5;
     --color-text-on-accent: #0A1B2D;
     --color-highlight: #5F93C4;
+    /* Logo colours: same as the manual dark block */
+    --logo-ink: var(--color-accent-primary);   /* the suitcase body and the word */
+    --logo-sun: var(--color-accent-primary-active);
     --color-status-warning: #F0A86B;
     --color-status-live: #E8EEF5;
     --color-status-cached: #A8B7C9;
