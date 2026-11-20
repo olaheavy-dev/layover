@@ -28,12 +28,12 @@ The cost lines use one rule for every place, so the boards stay consistent: flig
 |---|---|---|---|
 | Fare from MAN, return, per person | £96, Cached, 3 days old | £84, Cached, 1 day old | £121, Cached, 6 days old |
 | Flights for 2 | £96 × 2 = £192 | £84 × 2 = £168 | £121 × 2 = £242 |
-| Stay estimate per night | about £70 (6 Wikivoyage listings, page edited March 2026) | Not known (too few priced listings) | about £80 (5 Wikivoyage listings, page edited January 2026) |
+| Stay estimate per night | about £70 (estimate from 6 Wikivoyage listings, page edited March 2026, Cached, 4 days old) | Not known (too few priced listings) | about £80 (estimate from 5 Wikivoyage listings, page edited January 2026, Cached, 9 days old) |
 | Stay for 5 nights | £70 × 5 = £350 | Not known | £80 × 5 = £400 |
-| Meal estimate, one person | about £12 | about £11 | about £13 |
+| Meal estimate, one person | about £12 (estimate from the same Wikivoyage page, Cached, 4 days old) | about £11 (estimate from 5 Wikivoyage listings, page edited February 2026, Cached, 2 days old) | about £13 (estimate from the same Wikivoyage page, Cached, 9 days old) |
 | Meals | £12 × 2 × 5 × 2 = £240 | £11 × 2 × 5 × 2 = £220 | £13 × 2 × 5 × 2 = £260 |
-| Known costs | £192 + £350 + £240 = £782 | £168 + £220 = £388, partial (stay not known) | £242 + £400 + £260 = £902 |
-| Against £800 | £800 − £782 = £18 under, before the costs that are not known | Not known: stay is missing | £902 − £800 = £102 over |
+| Known costs | £192 + £350 + £240 = £782, partial (local transport and activities not known) | £168 + £220 = £388, partial (stay, local transport and activities not known) | £242 + £400 + £260 = £902, partial (local transport and activities not known) |
+| Against £800 | £800 − £782 = £18 under on the known costs; the costs that are not known could take it over | Not known: stay is missing | £902 − £800 = £102 over on the known costs alone |
 | Local transport, activities | Not known | Not known | Not known |
 | May temperature, typical high and low | 22°C and 14°C | 24°C and 15°C | 23°C and 16°C |
 | Rainy days in May, typical | 5 | 4 | 2 |
@@ -56,7 +56,7 @@ States to draw with these places:
 | `daylight` | 15 May 2027: sunrise 06:20, sunset 20:40, day length 14 h 20 min (20:40 − 06:20 = 14 h 20 min) |
 | `climate_chart` | The May row above. The months either side for the chart: April 20°C and 12°C, 7 rainy days; June 25°C and 16°C, 2 rainy days. Averages period: 1991 to 2020, Live |
 | `place_intro` | Two sentences in Layover's own words, with "Source: Wikivoyage, Lisbon, page edited March 2026, Cached, 4 days old". For the Fallback state: "Fallback: Wikipedia, Lisbon" |
-| `advice_card` | "FCDO travel advice: Portugal, updated 12 Nov 2026", with the link above. Error state: the same link and "Layover could not read it just now" |
+| `advice_card` | "FCDO travel advice: Portugal, updated 12 Nov 2026", Layover's copy Cached, 1 day old, with the link above. Error state: the same link and "Layover could not read it just now" |
 
 ## Where you're staying
 

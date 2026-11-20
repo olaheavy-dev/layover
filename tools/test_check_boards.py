@@ -91,7 +91,7 @@ class Boards(unittest.TestCase):
         self.assertTrue(any("literal colour" in p and "white" in p for p in found), found)
 
     def test_hex_in_svg_file_fails(self) -> None:
-        self.write("docs/assets/README.md", "| `wave.svg` | drawn for Layover |")
+        self.write("docs/assets/README.md", "| `docs/design/boards/wave.svg` | drawn for Layover |")
         self.write("docs/design/boards/wave.svg", '<svg><path fill="#12436E"/></svg>')
         found = cb.problems(self.root)
         self.assertTrue(any("wave.svg" in p and "literal colour" in p for p in found), found)
@@ -164,15 +164,90 @@ class Boards(unittest.TestCase):
         self.assertTrue(any("lisbon.jpg" in p and "docs/assets/README.md" in p for p in found), found)
 
     def test_registered_image_passes(self) -> None:
-        self.write("docs/assets/README.md", "| `lisbon.jpg` | Unsplash | Unsplash License |")
+        self.write("docs/assets/README.md", "| `docs/design/boards/img/lisbon.jpg` | Unsplash | Unsplash License |")
         self.write("docs/design/boards/img/lisbon.jpg", "x")
         self.assertEqual(cb.problems(self.root), [])
 
     def test_unregistered_font_anywhere_in_docs_fails(self) -> None:
-        self.write("docs/assets/README.md", "| `lisbon.jpg` | Unsplash |")
+        self.write("docs/assets/README.md", "| `docs/design/boards/img/lisbon.jpg` | Unsplash |")
         self.write("docs/assets/fonts/SourceSans3.woff2", "x")
         found = cb.problems(self.root)
         self.assertTrue(any("SourceSans3.woff2" in p for p in found), found)
+
+    # Regression tests from the pre-push review of #31
+
+    def test_outside_srcset_fails(self) -> None:
+        found = self.page(GOOD_PAGE.replace("<svg>", '<img alt="" src="a.jpg" srcset="b.jpg 1x, https://images.unsplash.com/p 2x"><svg>'))
+        self.assertTrue(any("outside" in p and "images.unsplash.com" in p for p in found), found)
+
+    def test_outside_poster_and_object_data_fail(self) -> None:
+        page = GOOD_PAGE.replace("<svg>", '<video poster="https://x.test/p.jpg"></video><object data="https://y.test/o"></object><svg>')
+        found = self.page(page)
+        self.assertTrue(any("x.test" in p for p in found) and any("y.test" in p for p in found), found)
+
+    def test_unquoted_and_spaced_outside_src_fail(self) -> None:
+        page = GOOD_PAGE.replace("</body>", '<script src=https://unpkg.com/x.js></script><img alt="" src=" https://z.test/i.jpg"></body>')
+        found = self.page(page)
+        self.assertTrue(any("unpkg.com" in p for p in found) and any("z.test" in p for p in found), found)
+
+    def test_outside_import_in_inline_script_fails(self) -> None:
+        found = self.page(GOOD_PAGE.replace("</body>", '<script type="module">import x from "https://esm.sh/x";</script></body>'))
+        self.assertTrue(any("esm.sh" in p for p in found), found)
+
+    def test_outside_image_set_fails(self) -> None:
+        found = self.page(GOOD_PAGE.replace(".clear {", '.hero { background-image: image-set("https://cdn.test/a.jpg" 1x); }\n  .clear {'))
+        self.assertTrue(any("cdn.test" in p for p in found), found)
+
+    def test_outside_address_in_js_file_fails(self) -> None:
+        self.write("docs/design/boards/switch.js", 'const u = "https://cdn.test/lib.js"; // a comment // is fine')
+        found = cb.problems(self.root)
+        self.assertTrue(any("switch.js" in p and "cdn.test" in p for p in found), found)
+
+    def test_upper_case_and_htm_pages_are_checked(self) -> None:
+        bad = GOOD_PAGE.replace('<p class="sample">', '<p class="sample" style="color: #fff">')
+        found = self.page(bad, name="A.HTML") + self.page(bad, name="b.htm")
+        self.assertTrue(any("A.HTML" in p for p in found) and any("b.htm" in p for p in found), found)
+
+    def test_safe_in_svg_text_fails(self) -> None:
+        self.write("docs/assets/README.md", "| `docs/design/boards/poster.svg` | drawn for Layover |")
+        self.write("docs/design/boards/poster.svg", "<svg><text>Safe travels</text></svg>")
+        found = cb.problems(self.root)
+        self.assertTrue(any("poster.svg" in p and '"safe"' in p for p in found), found)
+
+    def test_safe_in_value_attribute_and_css_content_fail(self) -> None:
+        page = GOOD_PAGE.replace("<svg>", '<input value="Safe trip"><svg>').replace(".clear {", '.x::after { content: "unsafe"; }\n  .clear {')
+        found = self.page(page)
+        self.assertTrue(any('"safe"' in p for p in found) and any('"unsafe"' in p for p in found), found)
+
+    def test_named_colour_in_custom_property_and_filter_fails(self) -> None:
+        page = GOOD_PAGE.replace(".clear {", ":root { --brand: navy; }\n  .glow { filter: drop-shadow(0 0 2px red); }\n  .clear {")
+        found = self.page(page)
+        self.assertTrue(any("navy" in p and "red" in p for p in found), found)
+
+    def test_register_needs_the_full_path_in_a_table_row(self) -> None:
+        # "lisbon.jpg" in prose, and "data.png" containing "a.png", must not count as registered.
+        self.write("docs/assets/README.md", "Removed: `docs/design/boards/lisbon.jpg` (licence unclear)\n| `docs/x/data.png` | x |")
+        self.write("docs/design/boards/lisbon.jpg", "x")
+        self.write("docs/design/boards/a.png", "x")
+        found = cb.problems(self.root)
+        self.assertTrue(any("lisbon.jpg" in p for p in found) and any("boards/a.png" in p for p in found), found)
+
+    def test_more_media_types_are_registered(self) -> None:
+        self.write("docs/design/boards/scan.tiff", "x")
+        found = cb.problems(self.root)
+        self.assertTrue(any("scan.tiff" in p for p in found), found)
+
+    def test_no_false_positives(self) -> None:
+        # Colour words in file names, a "#fade" selector, a "#123" string, light-dark() with tokens,
+        # and "/home/" inside a web address are all fine.
+        self.write("docs/assets/README.md", "| `docs/design/boards/img/red-door.jpg` | x |")
+        self.write("docs/design/boards/img/red-door.jpg", "x")
+        page = GOOD_PAGE.replace(".clear {", """.door { background: url(img/red-door.jpg); }
+  #fade { opacity: 0; }
+  .tag::before { content: "#123"; }
+  .t { color: light-dark(var(--color-text-primary), var(--color-text-secondary)); }
+  .clear {""").replace("Issue #123", 'See <a href="https://example.org/en/home/about">this page</a>.')
+        self.assertEqual(self.page(page), [])
 
 
 class RealRepository(unittest.TestCase):

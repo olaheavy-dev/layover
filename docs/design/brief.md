@@ -160,7 +160,7 @@ The states:
 |---|---|---|---|---|---|
 | `brief_summary` | Chip shapes while the brief agent writes | Not applicable: the widget appears only when the brief has fields, and the brief agent asks for missing fields in the chat | Not applicable: no outside source. A failed reply is the chat's "Try again" | Not applicable: a missing field is asked for, never guessed | Waiting for confirmation; editing a chip; confirmed; folded row |
 | `comparison_table` | Three card shapes; each fills in when its research agent finishes | No place fits the brief: it says which part of the brief rules places out, and offers "Edit brief" | One card failed, with "Try again"; the other two cards stay | A row in a card says "Not known" | A place swapped for the traveller's own; chosen, folded to "Compared 3 places: you chose Lisbon"; phone cards in a horizontal scroll |
-| `fare_card` | Card shape | Not applicable: no cached fare for the route and month is "Not known" (rule 5) | Travelpayouts failed: no figure, "Try again", and the plain Aviasales search link | No cached fare for this route and month; the Aviasales link is still offered | Cached with its age ("Cached, 3 days old"); an old fare shows its age clearly (the plan sets when a fare is too old to show) |
+| `fare_card` | Card shape | Not applicable: no cached fare for the route and month is "Not known" (bar rule 5) | Travelpayouts failed: no figure, "Try again", and the plain Aviasales search link | No cached fare for this route and month; the Aviasales link is still offered | Cached with its age ("Cached, 3 days old"); an old fare shows its age clearly (the plan sets when a fare is too old to show) |
 | `climate_chart` | Chart frame | Not applicable | Open-Meteo failed | One series (temperature or rain) is not known; the other still shows | The table alternative with the same figures |
 | `sea_conditions` | Card shape | Not applicable | Open-Meteo Marine failed | No sea temperature for this coast | Inland place: the widget is not shown at all, with no empty card |
 | `daylight` | Card shape | Not applicable | sunrise-sunset.org failed | No times for this place and date | — |
@@ -191,8 +191,11 @@ The label each source carries (agent's draft, approved with the table). Live mea
 | Open-Meteo (climate and marine) | Live, with the period that the averages cover |
 | sunrise-sunset.org | Live |
 | OpenStreetMap through Overpass (hotels and stops) | Live |
+| Foursquare Open Source Places (only if it is added: spec §6 keeps it waiting unless Overpass proves too slow) | Cached, with the dataset's release date |
 | Duffel and Nuitee sandboxes | Live, and always the sandbox label |
 | Tavily web search | Its own label: "From a web search, not checked by Layover", with the retrieval date. Never Live or Cached |
+
+Map tiles (OpenFreeMap, with the OpenStreetMap credit) and photos (Unsplash, with the photographer) carry a credit, not a label: they show no figure or fact. A new source gets its row here and in [data sources](../references/data-sources.md) before it is used.
 
 ## Images
 
@@ -205,7 +208,7 @@ Owner's answers on 20 Nov 2026, after the agent compared homescout's image direc
 | Illustrations | Welcome, empty states, errors, link not found | The style the owner picks in the side-by-side test | Decorative, with a text alternative, and never carrying information that the text does not give (as in homescout) |
 | Sample map | The `map` widget on the boards | Drawn in the illustration style, with no map tiles | Marked as sample. The real `map` widget uses OpenFreeMap tiles |
 
-**Why AI only for mood scenes** **(agent's reason, which the owner weighed)**: a generated picture of Lisbon would be an invented fact about a real place (decision 0011, rule 1). A generated suitcase by a window is not.
+**Why AI only for mood scenes** **(agent's reason)**: a generated picture of Lisbon would be an invented fact about a real place (decision 0011, rule 1). A generated suitcase by a window is not.
 
 ## Sample content on the boards
 
