@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: journey widgets · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="widgets-journey.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board board--journey">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Widget gallery</p>
+        <h1 class="board__title">Journey widgets</h1>
+        <p class="board__lead">The widgets a traveller meets from the brief to the booking: your brief, compare places, where you’re staying, days, try booking, web results and “not known”. Each kind shows every state in the state table: loading, empty, error, not known and its own other states. Scroll inside the frames. The 1440 px frame shows the gallery in a column about 720 px wide.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of both frames">
+          <button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button>
+          <button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <section aria-labelledby="desktop-label">
+        <span class="board__label" id="desktop-label">1440 px</span>
+        <div class="frame frame--desktop">
+          <div class="frame__viewport">
+            <iframe title="Journey widgets gallery, 1440 px wide" data-screen="screens/widgets-journey.html" src="screens/widgets-journey.html#light"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section class="board__phone-row" aria-labelledby="phone-label">
+        <div>
+          <span class="board__label" id="phone-label">390 px</span>
+          <div class="frame frame--phone">
+            <iframe title="Journey widgets gallery, 390 px wide" data-screen="screens/widgets-journey.html" src="screens/widgets-journey.html#light"></iframe>
+          </div>
+        </div>
+        <div class="board__notes">
+          <h2>What to look at</h2>
+          <ul>
+            <li>Loading is placeholder shapes in the form of each widget. The shimmer stops when reduced motion is on, and the widget says it is busy to a screen reader.</li>
+            <li>An error says “Unavailable”, what failed and Try again. It never shows a zero, an old figure as current, or a favourable value.</li>
+            <li>A missing value is “Not known” in quiet italics with an empty dot: a row in the comparison (Valencia’s stay), a hotel’s stars and website, one stop’s opening times, or the whole answer.</li>
+            <li>Try booking always carries “Sandbox: no real booking or payment”. Nothing is ordered until Approve, and a changed price asks again.</li>
+            <li>On a phone the comparison is a row of cards that scrolls sideways and snaps, with the same rows in the same order.</li>
+            <li>Web results live in the chat, never get “Add to trip”, and carry their own label. A label shows once for each card, and always beside a price.</li>
+          </ul>
+          <p>Figures and names come from sample-data.md, in “Widget gallery: journey widgets” for the new ones. The frames are live pages: scroll inside them.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
