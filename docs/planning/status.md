@@ -6,17 +6,17 @@ Last updated: 20 Nov 2026, end of the Design gate session (#39).
 
 ## Stage
 
-The Design gate is in review (#39); when it merges, the Design stage is closed and build step 1 starts. The repository still holds documents and their checks only. The build order is approved: eight steps in [01 §4](../product/01-research-and-direction.md#4-build-order), each a milestone ("Build 1: Foundation and data contract" to "Build 8: Earnings dashboard").
+The Design gate is in review (issue #39); when it merges, the Design stage is closed and build step 1 starts. The repository still holds documents and their checks only. The build order is approved: eight steps in [01 §4](../product/01-research-and-direction.md#4-build-order), each a milestone ("Build 1: Foundation and data contract" to "Build 8: Earnings dashboard").
 
 ## Open pull requests
 
-- The Design gate PR (#39): evaluation cases, build order, Floorplan snapshot, audit fixes and triage. Owner-merge (it changes a template-owned check).
+- The Design gate PR (closes issue #39): evaluation cases, build order, Floorplan snapshot, audit fixes and triage. Owner-merge (it changes a template-owned check).
 
 ## The Design gate (#39, 20 Nov 2026)
 
 - **Evaluations:** [docs/evaluations/cases.md](../evaluations/cases.md) holds 53 cases (the first 16 from the spec, 37 new, including `WIDGET-01` to `WIDGET-20`) and a coverage table: every intent, journey step, widget `kind` and decision 0011 rule has at least one case. `tools/check_eval_ids.py` in `make check` fails on a duplicate, badly formed or undefined ID. Score report: **no evaluation set yet** (the first scores come at the build step 1 gate at the earliest).
 - **Build order:** approved by the owner ("Approve, parallel per step (Recommended)"): each step is a vertical slice; its plan fixes the data contract, then backend and frontend are built in parallel and joined. The cost cap's figures now come after step 4, the first step that runs a whole trip ([register](../decisions/README.md#register)).
-- **Floorplan:** version 0.11.0 reviewed (runs locally; its only outside call is an opt-in waitlist, turned off; files match the published checksums), then a blueprint drawn and exported to [docs/floorplan/design.html](../floorplan/design.html) after the owner checked the map ("Accurate enough"). The 2.2 MB file is exempt from the 1 MB large-file check (owner: "Allow it for snapshots (Recommended)"); `tools/check_floorplan.py` fails on local paths, `file://` or git remotes. The blueprint's working files stay local in `floorplan/` (git-ignored), so build step 1 can turn it into a map of the real code.
+- **Floorplan:** version 0.11.0 reviewed (runs locally; its only outside call is an opt-in waitlist, turned off; files match the published checksums), then a blueprint drawn and exported to [docs/floorplan/design.html](../floorplan/design.html) after the owner checked the map ("Accurate enough"). The 2.2 MB file is exempt from the 1 MB large-file check (owner: "Allow it for snapshots (Recommended)"); `tools/check_floorplan.py` fails on common local-path, `file://` and git-remote forms (its docstring lists them). The blueprint's working files stay local in `floorplan/` (git-ignored), so build step 1 can turn it into a map of the real code.
 - **Audit:** a fresh-context whole-repository audit found 20 items (4 P1, 7 P2, 9 P3). Fixed in the PR, except two `noticed` issues (#40, #41) and two left on purpose (accepted records 0003 and 0004 aren't rewritten; the model named in the snapshot comes from 0007 and is confirmed in the step 2 plan).
 - **Triage:** #9, #26, #27, #36 and #40 in Build 1; #35 and #41 in Build 2; #34 in Build 3. No open `review-followup` issue.
 

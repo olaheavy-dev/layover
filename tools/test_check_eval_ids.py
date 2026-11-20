@@ -77,6 +77,23 @@ class EvalIds(unittest.TestCase):
     def test_empty_cases_table_fails(self):
         self.assertEqual(self.run_check("")[0], 1)
 
+    def test_undefined_id_in_coverage_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cases = root / "docs" / "evaluations" / "cases.md"
+            cases.parent.mkdir(parents=True)
+            cases.write_text(HEAD + row("BRIEF-01") + "\n## Coverage\n\n| `plan_trip` | `BRIEF-61` |\n", encoding="utf-8")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                code = ce.main(root)
+        self.assertEqual(code, 1)
+        self.assertIn("BRIEF-61", out.getvalue())
+
+    def test_row_without_backticks_fails(self):
+        code, out = self.run_check(row("BRIEF-01") + "| BRIEF-01 | Area | x | y | n | code | planned |\n")
+        self.assertEqual(code, 1)
+        self.assertIn("backticks", out)
+
     def test_defined_ids_reads_only_cases_section(self):
         text = HEAD + row("BRIEF-01") + "\n## Coverage\n\n| Intent | Cases |\n|---|---|\n| `plan_trip` | `BRIEF-01` |\n"
         self.assertEqual(ce.defined_ids(text), ["BRIEF-01"])

@@ -37,6 +37,18 @@ class Floorplan(unittest.TestCase):
         self.assertEqual(self.run_check(r"<p>c:\users\someone\app</p>")[0], 1)
         self.assertEqual(self.run_check(r'<p>"C:\\Users\\someone"</p>')[0], 1)
 
+    def test_other_local_paths_fail(self):
+        for text in ["/private/tmp/x", "/private/var/folders/ab/x", "/var/folders/ab/x", "/Volumes/Disk/x",
+                     "/root/app", r"D:\Projects\layover", r'"C:\\\\Users\\\\bob"']:
+            with self.subTest(text=text):
+                self.assertEqual(self.run_check(f"<p>{text}</p>")[0], 1)
+
+    def test_other_remotes_fail(self):
+        for text in ["ssh://git@github.com/o/r.git", "git@github.com/o/r", "https://github.com/o/r.git",
+                     "https://gitlab.com/o/r.git", "https://user:tok@github.com/o/r"]:
+            with self.subTest(text=text):
+                self.assertEqual(self.run_check(f"<p>{text}</p>")[0], 1)
+
     def test_git_ssh_remote_fails(self):
         self.assertEqual(self.run_check("<p>git@github.com:someone/app.git</p>")[0], 1)
 

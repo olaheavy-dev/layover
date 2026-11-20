@@ -5,9 +5,12 @@ A snapshot is an exported Floorplan map, committed at each stage gate. The expor
 paths or git remotes, but it is generated, so this check makes sure (register line of 19 Nov 2026, #16).
 
 Fails when any file under docs/floorplan/ holds:
-- a local path: /Users/, /home/, or C:\\Users\\ (any case, with single or doubled backslashes);
+- a local path: /Users/, /home/, /root/, /Volumes/, /private/tmp/, /private/var/, /var/folders/, or a
+  Windows drive path such as C:\\Users or D:\\Projects (one to four backslashes, as JSON inside a script
+  doubles them);
 - a file:// address;
-- an SSH git remote (git@host:...).
+- a git remote: ssh://, git@host: or git@host/, an http(s) address with a user name or token before an @,
+  or a GitHub, GitLab or Bitbucket address ending in .git.
 
 Limits: this is a text search. It doesn't find personal data or private material in names and
 descriptions; that check is done by hand before the snapshot is committed. Secrets are caught by gitleaks
@@ -22,9 +25,14 @@ from pathlib import Path
 
 FOLDER = Path("docs/floorplan")
 PATTERNS = [
-    ("a local path", re.compile(r"/Users/|/home/|[A-Za-z]:\\{1,2}Users\\", re.IGNORECASE)),
+    ("a local path", re.compile(
+        r"/Users/|/home/|/root/|/Volumes/|/private/(?:tmp|var)/|/var/folders/|\b[A-Za-z]:\\{1,4}[A-Za-z0-9_.$ -]",
+        re.IGNORECASE)),
     ("a file:// address", re.compile(r"file://", re.IGNORECASE)),
-    ("an SSH git remote", re.compile(r"\bgit@[A-Za-z0-9.-]+:")),
+    ("a git remote", re.compile(
+        r"ssh://|\bgit@[A-Za-z0-9.-]+[:/]|https?://[^/\s\"'@<>]+@"
+        r"|https?://(?:www\.)?(?:github\.com|gitlab\.com|bitbucket\.org)/[^\s\"'<>]*\.git\b",
+        re.IGNORECASE)),
 ]
 
 
