@@ -111,12 +111,12 @@ The owner chose "Yes, one page (Recommended)":
 
 1. The traveller asks a question in the chat, for example "Do I need a visa for Turkey?".
 2. The answer widget appears inline in the chat, with its source and age. The owner chose "Chat, with 'Add to trip' (Recommended)".
-3. If the answer is about the trip's place, the widget offers "Add to trip". The widget then also appears in the canvas, under that place. If the trip has no place yet, the widget does not offer "Add to trip".
+3. If the answer is about the trip's place, the widget offers "Add to trip". The widget then also appears in the canvas, under that place. If the trip has no place yet, the widget does not offer "Add to trip". If the canvas already holds that widget, the answer says "Already in your trip · View" instead, so nothing shows twice (owner, 20 Nov 2026).
 
 ### Itinerary only (`itinerary`)
 
 1. The traveller asks for a plan for a named place, for example "Three days in Porto".
-2. Layover makes a working trip with no Compare section. The canvas starts at the place, then Stay and Days, because the days start from the hotel, or from the centre if the traveller skips it (spec §5, step 5).
+2. Layover makes a working trip with no Compare section. The canvas starts at the place, then Stay and Days, because the days start from the hotel, or from the centre if the traveller skips it (spec §5, step 5). The trip is named by the place alone until the traveller gives dates. The place section shows the introduction and the map at once; fares, costs, weather and daylight appear only after the traveller gives dates or an airport, which Layover offers in the chat (owner, 20 Nov 2026).
 
 ### A travel question that Layover does not support (`unsupported_travel`)
 

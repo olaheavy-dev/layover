@@ -229,7 +229,7 @@ Owner: "Marked samples, one file (Recommended)", 20 Nov 2026.
 ## Logo and trip name
 
 - Logo: the owner chose "Design a logo mark now" over the agent's text wordmark (20 Nov 2026). The boards PR shows two or three marks inside the real top bar, at both widths and in both themes, and the owner picks one. The mark is recorded in `docs/assets/README.md`. Chosen on 20 Nov 2026 after five rounds of whole-screen samples: **S3, a friendly little suitcase character** (a tilted suitcase with a handle, straps, a smile, wheels and a sun sticker) next to a rounded, hand-drawn "Layover" in the brand blues; the logo's own lettering is used in the logo only, and the rest of the interface keeps Source Serif 4 and Source Sans 3 (owner: "S3: Suitcase character", after asking for "Friendly and playful, Classic travel").
-- Trip name **(agent's call)**: made from the brief, as the place and the month ("Lisbon, May"). Before a place is chosen, it is the month and the feel ("Warm break, May"). Before the brief has fields, it is "New trip". The name never holds the budget or the number of travellers, because a shared link shows it.
+- Trip name **(agent's call)**: made from the brief, as the place and the month ("Lisbon, May"). Before a place is chosen, it is the month and the feel ("Warm break, May"). Before the brief has fields, it is "New trip". An itinerary-only trip with no dates is named by the place alone ("Lisbon"), then by place and month once dates are given (owner, 20 Nov 2026). The name never holds the budget or the number of travellers, because a shared link shows it.
 
 ## Key interactions
 
