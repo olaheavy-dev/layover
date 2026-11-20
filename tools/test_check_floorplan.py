@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import base64
 import contextlib
+import hashlib
 import io
 import sys
 import tempfile
@@ -11,6 +13,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import check_floorplan as cf  # noqa: E402
+
+
+def csp_page(allowed: list[str], scripts: list[str]) -> str:
+    hashes = " ".join(
+        "'sha256-" + base64.b64encode(hashlib.sha256(body.encode("utf-8")).digest()).decode() + "'" for body in allowed)
+    tags = "".join(f"<script>{body}</script>" for body in scripts)
+    return (f'<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src {hashes}">'
+            f"{tags}")
 
 
 class Floorplan(unittest.TestCase):
@@ -60,6 +70,18 @@ class Floorplan(unittest.TestCase):
 
     def test_clean_file_passes(self):
         self.assertEqual(self.run_check("<p>backend/app/main.py and https://github.com/x/y</p>")[0], 0)
+
+    def test_script_matching_csp_passes(self):
+        self.assertEqual(self.run_check(csp_page(["var a = 1;  \n"], ["var a = 1;  \n"]))[0], 0)
+
+    def test_script_not_in_csp_fails(self):
+        # The pre-commit whitespace hook once trimmed a bundled script, so the browser blocked it (Codex, #42).
+        code, out = self.run_check(csp_page(["var a = 1;  \n"], ["var a = 1;\n"]))
+        self.assertEqual(code, 1)
+        self.assertIn("Content-Security-Policy", out)
+
+    def test_page_without_csp_skips_hash_check(self):
+        self.assertEqual(self.run_check("<script>var a = 1;</script>")[0], 0)
 
     def test_no_folder_passes(self):
         self.assertEqual(self.run_check(None)[0], 0)

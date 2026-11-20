@@ -23,9 +23,13 @@ repos:
         args: [--maxkb=4096]
         files: ^docs/floorplan/[^/]+\.html$
       - id: detect-private-key
+      # Floorplan snapshots stay byte-for-byte as exported: their Content-Security-Policy allows each inline
+      # script by its hash, so trimming whitespace blocks the map (Codex review of #42; tools/check_floorplan.py)
       - id: end-of-file-fixer
+        exclude: ^docs/floorplan/[^/]+\.html$
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
+        exclude: ^docs/floorplan/[^/]+\.html$
       - id: no-commit-to-branch
         args: [--branch, main]
 
