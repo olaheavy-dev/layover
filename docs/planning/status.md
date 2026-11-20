@@ -10,7 +10,7 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 
 ## Open pull requests
 
-- This handover PR (end-of-session status).
+- The widgets-first PR (build order change, owner's choice "Widgets in Build 1 (Recommended)").
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -23,7 +23,7 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 
 ## Next steps
 
-1. **Build plan 1** ([01 §4](../product/01-research-and-direction.md#4-build-order), step 1): brainstorm, then write the plan, fixing the data contract first. Decide on a GitHub project board when it starts (owner: "Wait until build (Recommended)").
+1. **Build plan 1** ([01 §4](../product/01-research-and-direction.md#4-build-order), step 1): brainstorm, then write the plan, fixing the data contract first. Widgets first (owner, 20 Nov 2026): once the schemas are fixed, the website and all 20 widget components are built in parallel with the backend foundation, from the boards and sample data. Decide on a GitHub project board when it starts (owner: "Wait until build (Recommended)").
 
 ## Blockers
 
