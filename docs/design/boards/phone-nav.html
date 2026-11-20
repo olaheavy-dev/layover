@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: Phone and navigation · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="screens-journey.css">
+  <link rel="stylesheet" href="screens-pages.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Phone and navigation</p>
+        <h1 class="board__title">Phone and navigation</h1>
+        <p class="board__lead">Chat and Trip tabs on a phone with the “3 new” badge, the trip strip, the compact cards and the sideways section index; then the folded sections and the section index on a desktop.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of all frames"><button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button><button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button></div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. Chat tab: trip strip, compact cards and the “3 new” badge</h2>
+        <p class="state__line">On a phone the chat and the trip are two tabs. The Chat tab keeps a strip above the message box and compact cards in the chat; the Trip tab says in words that something new is there.</p>
+        <section aria-labelledby="dl-1"><span class="board__label" id="dl-1">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="1. Chat tab: trip strip, compact cards and the “3 new” badge, 1440 px wide" data-screen="screens/nav-phone-badge.html" src="screens/nav-phone-badge.html#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="1. Chat tab: trip strip, compact cards and the “3 new” badge, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-1">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="1. Chat tab: trip strip, compact cards and the “3 new” badge, 390 px wide, 390 px, Chat tab" data-screen="screens/nav-phone-badge.html" src="screens/nav-phone-badge.html#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>The Trip tab says “3 new” in words, never a bare number. It goes away when the Trip tab is opened.</li><li>The strip above the message box shows the place photo, “Lisbon, May”, “5 facts ready” and View trip.</li><li>Each compact card has its figure and label, and View in trip takes the traveller to the full widget on the Trip tab. Each button’s name says which card it belongs to.</li><li>At 1440 px there are no tabs: the chat and the canvas sit side by side, so the badge, the strip and the compact cards are phone-only.</li></ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-2">
+        <h2 class="state__title" id="state-2">2. Trip tab: the sideways section index</h2>
+        <p class="state__line">The section index is one row at the top of the Trip tab. It has more sections than fit, so it scrolls sideways and keeps the current section in view. The first frame lands where View in trip on the Flights card leads; the second is further down, on Days.</p>
+        <section aria-labelledby="dl-2"><span class="board__label" id="dl-2">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="2. Trip tab: the sideways section index, 1440 px wide" data-screen="screens/nav-phone-trip.html" src="screens/nav-phone-trip.html#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="2. Trip tab: the sideways section index, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-2">390 px, after View in trip: Flights</span><div class="frame frame--phone"><iframe title="2. Trip tab: the sideways section index, 390 px wide, 390 px, after View in trip: Flights" data-screen="screens/nav-phone-trip.html?tab=trip&at=fare" src="screens/nav-phone-trip.html?tab=trip&at=fare#light"></iframe></div></div><div><span class="board__label" id="p1-2">390 px, scrolled to Days</span><div class="frame frame--phone"><iframe title="2. Trip tab: the sideways section index, 390 px wide, 390 px, scrolled to Days" data-screen="screens/nav-phone-trip.html?tab=trip&at=days" src="screens/nav-phone-trip.html?tab=trip&at=days#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>View in trip lands on the Flights widget, with its top just below the index, so nothing hides it. The index marks Lisbon as the current section.</li><li>On Days the row has moved: Brief is cut off on the left and Booking on the right, which shows that it scrolls. The current section is bold and underlined, so colour is never the only cue.</li><li>A section is in the index only when it has content. Pinned answers have no entry of their own: they sit at the end of the place section.</li><li>On the Trip tab, Brief, Compare and the place stay in order above Stay, Days and Booking.</li></ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-3">
+        <h2 class="state__title" id="state-3">3. Desktop: Brief and Compare folded</h2>
+        <p class="state__line">From 1024 px the chat is on the left and the canvas on the right, and both scroll on their own. Earlier sections fold to one row so the chosen place is on the first screen.</p>
+        <section aria-labelledby="dl-3"><span class="board__label" id="dl-3">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="3. Desktop: Brief and Compare folded, 1440 px wide" data-screen="screens/nav-desktop-folded.html" src="screens/nav-desktop-folded.html#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="3. Desktop: Brief and Compare folded, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-3">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="3. Desktop: Brief and Compare folded, 390 px wide, 390 px, Trip tab" data-screen="screens/nav-desktop-folded.html?tab=trip" src="screens/nav-desktop-folded.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>Brief is one row of chips with Edit. Compare is one line, “Compared 3 places: you chose Lisbon”, with Show again.</li><li>The section index has only three entries, because the trip has only reached the place. “Lisbon” is bold and underlined.</li><li>The folded rows keep their photos’ credits and every label stays visible, so nothing loses its source by being folded.</li></ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-4">
+        <h2 class="state__title" id="state-4">4. Desktop: Stay folded while on Days</h2>
+        <p class="state__line">Further on, the chosen place and the hotel fold too, so Days has the room. Each folded row can be opened again.</p>
+        <section aria-labelledby="dl-4"><span class="board__label" id="dl-4">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="4. Desktop: Stay folded while on Days, 1440 px wide" data-screen="screens/nav-desktop-days.html" src="screens/nav-desktop-days.html#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="4. Desktop: Stay folded while on Days, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-4">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="4. Desktop: Stay folded while on Days, 390 px wide, 390 px, Trip tab" data-screen="screens/nav-desktop-days.html?tab=trip&at=days" src="screens/nav-desktop-days.html?tab=trip&at=days#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>Brief, Compare, Lisbon and Stay are one row each, in journey order. Days is open and “Days” is bold and underlined in the index.</li><li>Stay shows the chosen hotel by name and area, with Change. Layover has no hotel prices, and the row says so.</li><li>Booking is below the days, with “Sandbox: no real booking or payment”.</li></ul>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

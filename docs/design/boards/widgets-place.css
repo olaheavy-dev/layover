@@ -1,0 +1,180 @@
+/* The place widgets gallery (screens/widgets-place.html). Loaded after boards.css. Tokens only: no literal colours
+   (tools/check_boards.py). Sample data, not real: every figure comes from sample-data.md. */
+
+.gx-body { background: var(--color-bg-primary); }
+
+.gx {
+  container-type: inline-size;
+  max-width: 45rem;
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-4) var(--space-9);
+}
+
+.gx__head { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); padding-bottom: var(--space-5); }
+.gx__title {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.gx__lead { max-width: var(--max-width-content); color: var(--color-text-secondary); }
+.gx__nav { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); margin: 0; padding: 0; list-style: none; font-size: var(--font-size-sm); }
+.gx__nav a { display: inline-flex; align-items: center; min-height: 1.5rem; font-family: var(--font-family-mono); }
+
+.kind { padding-top: var(--space-7); }
+.kind__head { padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border-primary); margin-bottom: var(--space-4); }
+.kind__title {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+.kind__title code {
+  padding: 0 var(--space-2);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-bg-tertiary);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+}
+.kind__line { margin-top: var(--space-1); color: var(--color-text-secondary); }
+
+/* Specimens: a caption above each card. Small states sit two to a row; big ones take the full width. */
+.spec-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5) var(--space-4); }
+@media (min-width: 40rem) {
+  .spec-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.spec { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; container-type: inline-size; }
+.spec > .widget { flex: 1; }
+.spec--full { grid-column: 1 / -1; }
+.spec__cap { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); }
+.spec__tag {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-bg-tertiary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+.spec__note { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+
+/* The widgets in this gallery are not animated into place one by one. */
+.spec .widget { animation: none; }
+
+/* Annotation: drawn, not a card */
+.annot {
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border: 2px dashed var(--color-border-control);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.annot strong { color: var(--color-text-primary); }
+
+/* A cost line whose value is a word, not a figure: Unavailable takes the warning colour, in words as well */
+.line--unavailable .line__value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  font-style: normal;
+  color: var(--color-status-warning);
+}
+
+/* ---------- Error and Not known ---------- */
+.note { display: flex; align-items: flex-start; gap: var(--space-3); }
+.note__icon { flex: none; width: 1.5rem; height: 1.5rem; margin-top: 0.1rem; }
+.note__text { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); min-width: 0; }
+.note--error { color: var(--color-text-primary); }
+.note--error .note__icon { color: var(--color-status-warning); }
+.note .btn { min-height: var(--target-min); }
+.unknown .source-label { align-items: baseline; }
+.unknown .source-label::before { margin-top: 0.1em; align-self: flex-start; transform: translateY(0.25em); }
+
+/* ---------- Loading: placeholder shapes in the form of the widget ---------- */
+.skel {
+  display: block;
+  height: 1rem;
+  max-width: 100%;
+  border-radius: var(--border-radius-sm);
+  background: var(--color-bg-tertiary);
+}
+.skel-row { display: flex; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-2); border-top: 1px solid var(--color-border-primary); }
+.skel-lines { display: flex; flex-direction: column; gap: var(--space-3); justify-content: center; }
+.skel--photo { aspect-ratio: 16 / 9; height: auto !important; border-radius: var(--border-radius-md); }
+.skel-chart { display: flex; align-items: flex-end; gap: var(--space-5); height: 9rem; padding-inline: var(--space-4); }
+.skel-chart .skel { flex: 1; height: 100%; border-radius: var(--border-radius-md); }
+.skel-chart .skel:nth-child(1) { height: 60%; }
+.skel-chart .skel:nth-child(2) { height: 80%; }
+.skel-chart .skel:nth-child(3) { height: 45%; }
+.skel-map { display: grid; place-items: center; aspect-ratio: 640 / 300; border-radius: var(--border-radius-md); background: var(--color-bg-tertiary); color: var(--color-text-disabled); }
+.skel-map__pin { width: 2.5rem; height: 2.5rem; }
+.widget[aria-busy="true"] .widget__foot { border-top-color: var(--color-border-primary); }
+
+/* A soft sweep, only when the traveller has not asked for less motion */
+@media (prefers-reduced-motion: no-preference) {
+  .skel, .skel-map {
+    background-image: linear-gradient(90deg, var(--color-bg-tertiary) 0%, var(--tint-surface-chip) 50%, var(--color-bg-tertiary) 100%);
+    background-size: 220% 100%;
+    animation: gx-sweep 1.6s var(--easing-default) infinite;
+  }
+}
+@keyframes gx-sweep {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
+}
+
+/* ---------- The drawn sample map: tokens only ---------- */
+.mp { display: block; width: 100%; height: auto; border-radius: var(--border-radius-md); border: 1px solid var(--color-border-primary); }
+.mp-land { fill: var(--color-bg-tertiary); }
+.mp-streets line { stroke: var(--color-bg-secondary); stroke-width: 3; opacity: 0.8; }
+.mp-major { stroke: var(--color-bg-secondary); stroke-width: 9; stroke-linecap: round; fill: none; }
+.mp-river { fill: var(--illus-water); stroke: var(--illus-wave); stroke-width: 2; }
+.mp-wave { fill: none; stroke: var(--illus-wave); stroke-width: 2; stroke-linecap: round; }
+.mp-b .mp-t { fill: var(--illus-pap-t); }
+.mp-b .mp-l { fill: var(--illus-pap-l); }
+.mp-b .mp-r { fill: var(--illus-pap-r); }
+.mp-h .mp-t { fill: var(--illus-ink-t); }
+.mp-h .mp-l { fill: var(--illus-ink-l); }
+.mp-h .mp-r { fill: var(--illus-ink-r); }
+.mp-b polygon, .mp-h polygon { stroke: var(--color-border-control); stroke-width: 1; stroke-linejoin: round; }
+.mp-ring { fill: var(--color-bg-secondary); stroke: var(--color-accent-primary); stroke-width: 3; }
+.mp-dot { fill: var(--color-accent-primary); }
+.mp-pin { fill: var(--color-accent-primary); stroke: var(--color-bg-secondary); stroke-width: 2; stroke-linejoin: round; }
+.mp-pin-eye { fill: var(--color-bg-secondary); }
+.mp-label {
+  font-family: var(--font-family-body);
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+  fill: var(--color-text-primary);
+  stroke: var(--color-bg-secondary);
+  stroke-width: 4px;
+  paint-order: stroke;
+}
+.mp-tag { fill: var(--color-bg-secondary); stroke: var(--color-border-control); }
+.mp-tag-text { font-family: var(--font-family-body); font-size: 12px; font-weight: var(--font-weight-semibold); fill: var(--color-text-primary); }
+
+.legend--map { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+.legend--map li { display: flex; align-items: flex-start; gap: var(--space-3); }
+.key { flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.1rem; }
+.key--ring { border: 3px solid var(--color-accent-primary); border-radius: var(--border-radius-full); background: var(--color-bg-secondary); }
+.key--pin { background: var(--color-accent-primary); border-radius: var(--border-radius-full) var(--border-radius-full) var(--border-radius-full) 0; transform: rotate(-45deg) scale(0.85); }
+
+.places { display: flex; flex-direction: column; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.places li { display: flex; align-items: flex-start; gap: var(--space-3); }
+.places .icon { flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; color: var(--color-accent-primary); }
+.places a { display: inline-flex; align-items: center; min-height: 1.5rem; }
+
+@media (max-width: 39.99rem) {
+  .gx__title { font-size: var(--font-size-xl); }
+}
+
+/* Climate: from 40rem boards.css puts the chart beside its words. States with no chart stay in one column. */
+@container (min-width: 40rem) {
+  .w-climate .widget__body:has(> .note) { display: flex; flex-direction: column; }
+  .w-climate .skel-chart { grid-column: 1; grid-row: 1 / span 3; align-self: start; height: 13rem; }
+}
+@container (min-width: 40rem) {
+  .w-climate .widget__body > .skel-chart { grid-column: 1; grid-row: 1 / span 3; align-self: start; height: 13rem; }
+}

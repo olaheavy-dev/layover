@@ -28,10 +28,11 @@ The traveller describes the trip they want in a chat. Layover answers in the cha
 - Colour: the Harbour palette in [tokens.css](tokens.css). It has blue-grey neutrals, one deep harbour blue for actions, one lighter blue for small markers, and one warning colour for problems only. The owner rejected a first round of palettes: "the colros make it look all iver the place and not something that was designed intentionally". The owner then said "Harbour feels like a very good start", saw three refined versions, and chose "Harbour as before". Warmth comes from the photos and the type, not from the interface colours.
 - Source labels: Live and Cached use the normal text colours with different dot shapes. Fallback and Unavailable use the warning colour. Not known uses quiet italic text. Words always name the state, so colour never carries the meaning alone.
 - Unavailable and Not known **(agent's call)**: "Unavailable" is one of the four labels in decision 0011, rule 2. It means that Layover asked the source and the source failed. "Not known" means that no source Layover uses has the value. Both follow rule 4: neither shows a zero or a favourable value.
+- Spark (owner: "E: combined (Recommended)", 20 Nov 2026, after comparing six whole-screen versions of the Lisbon screen in both themes): a richer "harbour at night" dark theme (deep navy surfaces, a soft glow from the place photo behind the place header, slightly lifted cards); small photos of the compared places in the folded Compare row and a photo beside the place introduction; editorial type (large serif figures, an italic place line, a small heading above each card title, the place introduction as a pull-quote); and two small line drawings in the highlight blue (a tile band under the place photo, a sun over water in the daylight card). The palette stays one colour family. The owner said: "the dark looks to plain and also i feel like both themes still needs some spark".
 - Highlight: the lighter blue is for small markers only. It is never text, and never the only cue. For example, the current section in the index is also bold.
 - Photos: tall destination photos with the place name over them, from Unsplash, with the photographer credited on the photo ([data sources](../references/data-sources.md)). Text over a photo always sits on a dark gradient (a scrim) so that it meets the contrast target, in `--color-text-on-photo`, which stays white in both themes. More in "Images" below.
 - Icons: Lucide. The owner chose "Lucide (Recommended)". The licence is ISC, and the icons that come from the Feather project are under MIT. Both allow commercial use when their notices are kept ([licence](https://github.com/lucide-icons/lucide/blob/main/LICENSE), checked 19 Nov 2026).
-- Illustrations: for the welcome screen, empty states and error states. They must be world class and match warm editorial. The owner said: "Our iluustrations have to be wolrd class and match our choice", then chose "Side-by-side test (Recommended)". On 20 Nov 2026, after the agent compared homescout's approach, the owner chose "Two own styles + library (Recommended)": the welcome screen is drawn three times, with an isometric illustration drawn for Layover (as homescout uses), an editorial line drawing in a travel-poster style drawn for Layover, and a recoloured free-library illustration. The agent proposes one or two libraries whose licence allows changes and commercial use without credit, with the licence text and the date checked, and the owner picks the library (owner: "Own SVG vs free library (Recommended)"). After the owner picks a style, a one-page style guide (shapes, line, light and colour from the tokens) comes before any more drawings, so that every illustration matches.
+- Illustrations: for the welcome screen, empty states and error states. They must be world class and match warm editorial. The owner said: "Our iluustrations have to be wolrd class and match our choice", then chose "Side-by-side test (Recommended)". On 20 Nov 2026, after the agent compared homescout's approach, the owner chose "Two own styles + library (Recommended)": the welcome screen is drawn three times, with an isometric illustration drawn for Layover (as homescout uses), an editorial line drawing in a travel-poster style drawn for Layover, and a recoloured free-library illustration. The agent proposes one or two libraries whose licence allows changes and commercial use without credit, with the licence text and the date checked, and the owner picks the library (owner: "Own SVG vs free library (Recommended)"). On 20 Nov 2026, after the logo was chosen, the owner set the illustrations' feel to match it: friendly, playful, classic travel ("Match the logo (Recommended)"). After the owner picks a style, a one-page style guide (shapes, line, light and colour from the tokens) comes before any more drawings, so that every illustration matches. Chosen on 20 Nov 2026: isometric scenes around the logo's suitcase (owner: "1: Isometric (Recommended)"); the free library was checked (Open Doodles, CC0) and not used. The rules are in the [illustration guide](boards/illustration-guide.html).
 - Reference points: the benchmark below.
 - Anti-references: the owner chose these three:
   - Pushy booking sites: countdown timers, "only 2 left", crossed-out prices and deal banners.
@@ -98,7 +99,7 @@ The owner chose "1. Chat + trip canvas (Recommended)".
 
 - Desktop: the chat sits in a column on the left, and the trip canvas fills the right.
 - Phone: two tabs, Chat and Trip. When a widget appears in the canvas, the chat shows a compact card that opens it in the Trip tab. A widget that lives only in the chat, such as a side answer or web results, shows in full in the chat.
-- Shared trip page: the canvas on its own, without the chat, as a frozen copy with "as of" dates (spec §8, item 2).
+- Shared trip page: the canvas on its own, without the chat, as a frozen copy with "as of" dates (spec §8, item 2) The "Share trip" step has a tick box "Include my budget and who's travelling", off by default; without it, the shared copy leaves out the budget and traveller chips and every "under/over your budget" line (owner: "Ask when sharing", 20 Nov 2026).
 
 ## Component inventory
 
@@ -111,7 +112,9 @@ All components are new. "Widget" means a block that shows one tool result, tagge
 | Top bar | Logo, trip name, "Share trip", "How it works" and "New trip" ([information architecture](information-architecture.md#navigation-model)) |
 | Chat and Trip tabs | Phone only |
 | Chat message | Traveller and Layover messages, streamed |
-| Tool step line | One short line for each tool call, for example "Checked fares for 3 places". It shows the agent work without filling the chat |
+| Tool step line | One short line for each tool call, for example "Checked fares for 3 places". The steps for one answer fold into one row ("4 checks · Show") that opens on tap, so a long chat is not a list of steps |
+| Jump to latest | Appears in the chat when the traveller has scrolled up |
+| Trip strip | Phone, Chat tab: a slim bar above the message input once a trip exists, with the place photo, the trip name, what is ready and "View trip" |
 | Compact widget card in chat | Phone: opens the full widget in the Trip tab |
 | Message input | With send, and a stop button while Layover is answering |
 | Source and age label | Shared by every widget: the source name, a link, and Live, Cached (with its age), Fallback or Unavailable (decision 0011, rule 2) |
@@ -181,6 +184,8 @@ On a phone, every widget that is also on the canvas has a compact card in the ch
 
 The label each source carries (agent's draft, approved with the table). Live means fetched for this answer. Cached means stored earlier, by Layover or by the provider, and it always shows the age. On the shared trip, every label adds "as of" and the share date.
 
+How often labels show (owner: "One per card, prices always (Recommended)", 20 Nov 2026): a widget shows its label once, in its source line, when all its figures share one source and age. A row or figure gets its own label only when its source or age differs from the rest of the widget. A price always has its label beside it (bar rule 1). "Live" is drawn more quietly than Cached, Fallback and Unavailable, but it is still written in words. This meets decision 0011, rule 2, because every outside value still has a visible label.
+
 | Source | Label |
 |---|---|
 | Travelpayouts fares | Cached, with the fare's age ("Cached, 3 days old") |
@@ -193,6 +198,7 @@ The label each source carries (agent's draft, approved with the table). Live mea
 | OpenStreetMap through Overpass (hotels and stops) | Live |
 | Foursquare Open Source Places (only if it is added: spec §6 keeps it waiting unless Overpass proves too slow) | Cached, with the dataset's release date |
 | Duffel and Nuitee sandboxes | Live, and always the sandbox label |
+| Holidays library and IANA time-zone database (offline, proposed for #26) | Cached, with the data's release date (owner, 20 Nov 2026) |
 | Tavily web search | Its own label: "From a web search, not checked by Layover", with the retrieval date. Never Live or Cached |
 
 Map tiles (OpenFreeMap, with the OpenStreetMap credit) and photos (Unsplash, with the photographer) carry a credit, not a label: they show no figure or fact. A new source gets its row here and in [data sources](../references/data-sources.md) before it is used.
@@ -222,8 +228,8 @@ Owner: "Marked samples, one file (Recommended)", 20 Nov 2026.
 
 ## Logo and trip name
 
-- Logo: the owner chose "Design a logo mark now" over the agent's text wordmark (20 Nov 2026). The boards PR shows two or three marks inside the real top bar, at both widths and in both themes, and the owner picks one. The mark is recorded in `docs/assets/README.md`.
-- Trip name **(agent's call)**: made from the brief, as the place and the month ("Lisbon, May"). Before a place is chosen, it is the month and the feel ("Warm break, May"). Before the brief has fields, it is "New trip". The name never holds the budget or the number of travellers, because a shared link shows it.
+- Logo: the owner chose "Design a logo mark now" over the agent's text wordmark (20 Nov 2026). The boards PR shows two or three marks inside the real top bar, at both widths and in both themes, and the owner picks one. The mark is recorded in `docs/assets/README.md`. Chosen on 20 Nov 2026 after five rounds of whole-screen samples: **S3, a friendly little suitcase character** (a tilted suitcase with a handle, straps, a smile, wheels and a sun sticker) next to a rounded, hand-drawn "Layover" in the brand blues; the logo's own lettering is used in the logo only, and the rest of the interface keeps Source Serif 4 and Source Sans 3 (owner: "S3: Suitcase character", after asking for "Friendly and playful, Classic travel").
+- Trip name **(agent's call)**: made from the brief, as the place and the month ("Lisbon, May"). Before a place is chosen, it is the month and the feel ("Warm break, May"). Before the brief has fields, it is "New trip". An itinerary-only trip with no dates is named by the place alone ("Lisbon"), then by place and month once dates are given (owner, 20 Nov 2026). The name never holds the budget or the number of travellers, because a shared link shows it.
 
 ## Key interactions
 
@@ -234,6 +240,7 @@ Owner: "Marked samples, one file (Recommended)", 20 Nov 2026.
 - Booking: the `booking_approval` widget pauses the flow. Nothing is ordered until the traveller presses Approve. The widget always carries the sandbox label.
 - Sharing: "Share trip" gives a link to the frozen canvas. The page shows the "as of" date of every fare and every advice date.
 - Stopping: the traveller can stop an answer while it streams.
+- Dialogs (for the build): when a dialog opens, focus moves to the least destructive action (Cancel). Focus stays inside the dialog until it closes. Esc closes it. Focus returns to the button that opened it. The page behind is inert (not clickable, not readable by assistive technology). The dialog's body text is linked to it with `aria-describedby`.
 - Motion **(agent's call)**: widgets settle into place with a short fade and rise. Loading uses a soft shimmer. When the traveller asks for reduced motion, changes are instant.
 
 ## Responsive behaviour

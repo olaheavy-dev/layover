@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: Stay and Days · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="screens-journey.css">
+  <link rel="stylesheet" href="screens-place.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Stay and Days</p>
+        <h1 class="board__title">Stay and Days</h1>
+        <p class="board__lead">Where the traveller sleeps, and the days built from it: a hotel chosen, a hotel skipped, a hotel changed, and a trip that began as an itinerary request with no comparison. The Stay section comes before Days, because the days start from the hotel or from the centre.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of all frames"><button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button><button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button></div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. Hotel chosen, days built from it</h2>
+        <p class="state__line">Sample Hotel Alfama is the base. Day 1 and Day 2 start from it, Day 2 has a stop with no opening times, and Day 3 is empty.</p>
+        <section aria-labelledby="desktop-label-1">
+          <span class="board__label" id="desktop-label-1">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Hotel chosen, days built from it, 1440 px wide" data-screen="screens/stay-chosen.html" src="screens/stay-chosen.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Hotel chosen, days built from it, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-1">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Hotel chosen, days built from it, 390 px wide, Chat tab" data-screen="screens/stay-chosen.html" src="screens/stay-chosen.html#light"></iframe></div></div><div><span class="board__label" id="pt-1">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Hotel chosen, days built from it, 390 px wide, Trip tab" data-screen="screens/stay-chosen.html?tab=trip" src="screens/stay-chosen.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The chosen hotel says “Your base”, and the other two offer Choose instead. Stars and website say Not known where the source has nothing: nothing is guessed, and there are no prices.</li><li>Day 2: Torre de Belém says “Opening times: Not known”, and Mosteiro dos Jerónimos still shows 10:00 to 17:30. The row is not hidden.</li><li>Day 3 says it has too few sourced places and offers Look in a wider area or Leave it free. The afternoon is not filled with places that have no source.</li><li>The map above now shows the hotel pin. The section index ends Lisbon, Stay, Days.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-2">
+        <h2 class="state__title" id="state-2">2. Hotel skipped, days from the centre</h2>
+        <p class="state__line">The traveller skipped the hotel. The stay widget says so, and every day starts from the centre of Lisbon.</p>
+        <section aria-labelledby="desktop-label-2">
+          <span class="board__label" id="desktop-label-2">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Hotel skipped, days from the centre, 1440 px wide" data-screen="screens/stay-skipped.html" src="screens/stay-skipped.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Hotel skipped, days from the centre, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-2">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Hotel skipped, days from the centre, 390 px wide, Chat tab" data-screen="screens/stay-skipped.html" src="screens/stay-skipped.html#light"></iframe></div></div><div><span class="board__label" id="pt-2">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Hotel skipped, days from the centre, 390 px wide, Trip tab" data-screen="screens/stay-skipped.html?tab=trip" src="screens/stay-skipped.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>Day 1 carries the banner “Days start from the centre of Lisbon”. Day 2 repeats the start in a quiet line.</li><li>Choose a hotel is still offered, so skipping can be undone. The map keeps the place centre only: there is no hotel to pin.</li><li>The Stay section stays on the canvas and in the index, so the traveller can find the choice again.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-3">
+        <h2 class="state__title" id="state-3">3. Hotel changed, days rebuilt</h2>
+        <p class="state__line">The traveller changed the base to Sample Hotel Belém. The map pin moves, and each day says it was rebuilt.</p>
+        <section aria-labelledby="desktop-label-3">
+          <span class="board__label" id="desktop-label-3">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Hotel changed, days rebuilt, 1440 px wide" data-screen="screens/stay-changed.html" src="screens/stay-changed.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Hotel changed, days rebuilt, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-3">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Hotel changed, days rebuilt, 390 px wide, Chat tab" data-screen="screens/stay-changed.html" src="screens/stay-changed.html#light"></iframe></div></div><div><span class="board__label" id="pt-3">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Hotel changed, days rebuilt, 390 px wide, Trip tab" data-screen="screens/stay-changed.html?tab=trip" src="screens/stay-changed.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The stay widget says “You changed your base to Sample Hotel Belém. The days are rebuilt from it.” in a status note, and Belém now says “Your base”.</li><li>Day 1 and Day 2 carry the note “Rebuilt after you changed your hotel to Sample Hotel Belém.” Day 2’s stops are in Belém, which is why they fit.</li><li>The drawn map is only a sample: its pin moves to another block to show the change. It is not a real position.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-4">
+        <h2 class="state__title" id="state-4">4. Itinerary only: “Three days in Lisbon”</h2>
+        <p class="state__line">No brief and no comparison. The canvas starts at the place, then Stay, then Days. The trip name is “Lisbon”.</p>
+        <section aria-labelledby="desktop-label-4">
+          <span class="board__label" id="desktop-label-4">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Itinerary only: “Three days in Lisbon”, 1440 px wide" data-screen="screens/itinerary-only.html" src="screens/itinerary-only.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Itinerary only: “Three days in Lisbon”, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-4">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Itinerary only: “Three days in Lisbon”, 390 px wide, Chat tab" data-screen="screens/itinerary-only.html" src="screens/itinerary-only.html#light"></iframe></div></div><div><span class="board__label" id="pt-4">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Itinerary only: “Three days in Lisbon”, 390 px wide, Trip tab" data-screen="screens/itinerary-only.html?tab=trip" src="screens/itinerary-only.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The section index is Lisbon, Stay, Days. There is no Brief and no Compare, because nothing was briefed or compared.</li><li>The trip is named “Lisbon”, with no month, because no dates were given. It gets a month once the traveller gives dates.</li><li>The place shows only its introduction and the map, with one quiet line saying that fares, costs, weather and daylight appear once dates or an airport are given. Nothing is guessed, and no empty cards or zeros stand in for them.</li><li>The chat offers the next step: “Tell me your dates to add weather and daylight, or your airport to add fares.”</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <aside class="state" aria-label="Notes for the owner">
+        <h2 class="state__title">Notes for the owner</h2>
+        <ul>
+          <li><strong>Three notes are decided.</strong> The three notes that stood here (the sea card on the side-answer screens, the itinerary-only trip name and the itinerary-only place) were decided on 20 Nov 2026. The decisions are in the register in <code>docs/decisions/README.md</code>, and the boards now follow them. No open notes remain on this board.</li>
+        </ul>
+      </aside>
+
+    </div>
+  </div>
+</body>
+</html>

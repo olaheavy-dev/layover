@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: the chosen place, finished · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="screens-journey.css">
+  <link rel="stylesheet" href="screens-place.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · The chosen place, finished</p>
+        <h1 class="board__title">The chosen place, finished</h1>
+        <p class="board__lead">The chosen place below its first screen, then two side answers in the chat (one that can be added, one already in the trip) and the added answer pinned to the place. On a phone the Chat tab holds the conversation and the Trip tab holds the canvas, opened at the part that matters. Every figure comes from the sample data file.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of all frames"><button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button><button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button></div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. Below the first screen</h2>
+        <p class="state__line">The sea, daylight, the introduction and the map come after the five key facts. The comparison stays folded above, and the canvas opens at the daylight card, just above the sea and the map.</p>
+        <section aria-labelledby="desktop-label-1">
+          <span class="board__label" id="desktop-label-1">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Below the first screen, 1440 px wide" data-screen="screens/place-below.html" src="screens/place-below.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Below the first screen, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-1">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Below the first screen, 390 px wide, Chat tab" data-screen="screens/place-below.html" src="screens/place-below.html#light"></iframe></div></div><div><span class="board__label" id="pt-1">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Below the first screen, 390 px wide, Trip tab" data-screen="screens/place-below.html?tab=trip" src="screens/place-below.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The sea card says 17°C with its own label (Live) and source, Open-Meteo Marine. It is shown only because Lisbon is on a coast.</li><li>The map is the drawn sample map with the place centre only: no hotel and no stops exist yet, and the card says so in its legend.</li><li>The trip strip on the Chat tab now says “9 facts ready”: the five key facts plus these four.</li><li>The section index is still Brief, Compare and Lisbon. The widgets below the hero belong to the place, so they have no entries of their own.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-2">
+        <h2 class="state__title" id="state-2">2. A side answer in the chat</h2>
+        <p class="state__line">The traveller asks “What’s the time difference with Lisbon?”. Nothing on the canvas answers it, so the answer is a new widget inline in the chat, with its source and label, and an Add to trip button.</p>
+        <section aria-labelledby="desktop-label-2">
+          <span class="board__label" id="desktop-label-2">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="A side answer in the chat, 1440 px wide" data-screen="screens/place-side-answer.html" src="screens/place-side-answer.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="A side answer in the chat, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-2">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="A side answer in the chat, 390 px wide, Chat tab" data-screen="screens/place-side-answer.html" src="screens/place-side-answer.html#light"></iframe></div></div><div><span class="board__label" id="pt-2">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="A side answer in the chat, 390 px wide, Trip tab" data-screen="screens/place-side-answer.html?tab=trip" src="screens/place-side-answer.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The answer is the time difference card: “Same time as the UK” for 15 May 2027, the middle of the month (the dates are not set yet), labelled Cached (release of 1 Nov 2026, a sample date), with its source. The words say there is no clock change to make.</li><li>Add to trip is a quiet button under the answer, and the line beside it says where the card will go. The canvas has no such card yet, so adding it is a real choice.</li><li>The canvas is the approved one, with the sea card in its place. The time difference card is a proposed widget, drawn on the “Widgets: proposed” board.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-3">
+        <h2 class="state__title" id="state-3">3. A side answer already in your trip</h2>
+        <p class="state__line">The traveller asks “Is May a good time for the beach?”. The sea card is already on the canvas, so the chat shows it again as an answer but says “Already in your trip”, with a View link, instead of Add to trip.</p>
+        <section aria-labelledby="desktop-label-3">
+          <span class="board__label" id="desktop-label-3">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="A side answer already in your trip, 1440 px wide" data-screen="screens/place-side-answer-added.html" src="screens/place-side-answer-added.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="A side answer already in your trip, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-3">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="A side answer already in your trip, 390 px wide, Chat tab" data-screen="screens/place-side-answer-added.html" src="screens/place-side-answer-added.html#light"></iframe></div></div><div><span class="board__label" id="pt-3">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="A side answer already in your trip, 390 px wide, Trip tab" data-screen="screens/place-side-answer-added.html?tab=trip" src="screens/place-side-answer-added.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The answer is the sea card: 17°C, Live, Open-Meteo Marine. The words add the typical highs and rainy days, with their own source line. Layover gives the facts and says the choice is the traveller’s.</li><li>The line under it says “Already in your trip” with a View link. View opens the sea card on the canvas, or the Trip tab on a phone. Nothing is added twice.</li><li>The decision of 20 Nov 2026 (see the register in the decisions README): an answer the canvas already holds never offers Add to trip.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+
+      <article class="state" aria-labelledby="state-4">
+        <h2 class="state__title" id="state-4">4. The time difference answer, pinned</h2>
+        <p class="state__line">After Add to trip on the time difference answer, the card sits at the end of the place section under “Added from the chat”. It has no entry in the section index.</p>
+        <section aria-labelledby="desktop-label-4">
+          <span class="board__label" id="desktop-label-4">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="The time difference answer, pinned, 1440 px wide" data-screen="screens/place-pinned.html" src="screens/place-pinned.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="The time difference answer, pinned, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-4">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="The time difference answer, pinned, 390 px wide, Chat tab" data-screen="screens/place-pinned.html" src="screens/place-pinned.html#light"></iframe></div></div><div><span class="board__label" id="pt-4">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="The time difference answer, pinned, 390 px wide, Trip tab" data-screen="screens/place-pinned.html?tab=trip" src="screens/place-pinned.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The chat keeps its answer and shows “Added to trip” with a View in trip link. The Trip tab on a phone shows the badge “1 new”.</li><li>The pinned card keeps its label and source, and the question that made it is quoted above it, so the traveller remembers why it is there. The sea card stays in its own place in the key facts.</li><li>The section index still ends at Lisbon: pinned answers belong to the place (information architecture, 20 Nov 2026).</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 20 Nov 2026, end of the session (written in the boards-readiness PR, for #31).
+Last updated: 20 Nov 2026, end of the boards build (branch `docs/design-boards`, #28; not pushed yet).
 
 ## Stage
 
@@ -10,7 +10,17 @@ Design. The repository holds documents and their checks only. The main journey d
 
 ## Open pull requests
 
-- [#32](https://github.com/olaheavy-dev/layover/pull/32) boards readiness (closes #31 and #33). CI passes. Codex found one P1, now fixed: Python cache files with local paths had been committed. Next session: check Codex's re-review of the latest commit and merge if it's clean (owner: "Move merge to next session"). The cache files stay in the branch's earlier commits until the branch is deleted after the merge; the squash merge keeps them out of `main`.
+- The boards PR for #28 (branch `docs/design-boards`): opened on 20 Nov 2026 after the pre-push review, waiting for `@codex review`. It closes #28; #26 stays open for build plan 1.
+
+## The boards (#28), 20 Nov 2026
+
+All boards are drawn: 18 board pages and about 60 screens in `docs/design/boards/`, listed with their states and two coverage tables in [index.html](../design/boards/index.html). The repository files are the master copy; a private claude.ai artifact shows the same boards (owner: "Repo + private artifact (Recommended)"), and a second private artifact held the options the owner compared. The links are in the session chat, not here, because they are private.
+
+Settled by the owner on 20 Nov 2026 (each answer is in the [register](../decisions/README.md#register)): the look (direction E, "harbour at night" dark theme), labels once per card with prices always labelled, long chats (grouped checks, "Jump to latest"), the phone trip strip, vague messages ("Which Valencia?", `BRIEF-03`), the logo (S3, the suitcase character, after five rounds), isometric illustrations matching the logo, the proposed widgets for #26, the side-answer and itinerary-only rules, and sharing ("Ask when sharing": a tick box for budget and travellers, off by default). Agent's call: Layover asks for exact dates before booking and never picks them.
+
+Reviews: a design review and a visual review (fresh contexts) found 3 P1s and several P2/P3s; all are fixed. `make check` passes (75 tests; the contrast check now also covers text on the tinted surfaces; a board page missing from the index fails the check).
+
+Still open: the mood scenes, which wait for the owner's images, are split out to #35 (prompts in [mood-scene-prompts.md](../design/boards/mood-scene-prompts.md)). Noticed in the reviews: #34 (no source for a place's currency) and #36 (harden the board checks with a real HTML parser).
 
 ## Done on 19 Nov 2026
 
@@ -38,6 +48,7 @@ A fresh-context readiness review (Fable) of everything the boards depend on. Ver
 - **Images** ([brief](../design/brief.md#images)): real Unsplash photos for places ("Download and register (Recommended)"); AI mood scenes made by the owner, only where no named place shows ("AI for mood scenes only"); a three-way illustration test ("Two own styles + library (Recommended)", after comparing homescout); a drawn sample map.
 - **Fonts:** WOFF2 files committed and registered ("Commit font files (Recommended)"). **Logo:** a mark designed in the boards PR ("Design a logo mark now").
 - **Tokens and checks:** `--color-text-on-photo` and two chart colours; `tools/check_boards.py` in `make check` (literal colours, "safe", local paths, outside files, the sample label, the asset register).
+- **Logo:** the owner chose S3, the suitcase character. Final drawing in `docs/design/boards/logo/` (four one-colour SVG masters), shown on the logo board and in every screen's top bar; tokens `--logo-ink` and `--logo-sun` added. The "Logo marks" task in the boards task list is ticked.
 - **Tidy-ups:** #28's screen checklist; the information architecture's itinerary-only order and pinned answers; stale lines in data sources and the register; backlog order (#28 is now `[15]`; #27 joined the Design milestone).
 
 What the journey design settled (owner answers in prompt windows; details in the [spec](../superpowers/specs/2026-11-19-layover-journey-design.md) and the [register](../decisions/README.md#register)):
@@ -59,10 +70,9 @@ What the design foundations settled (owner answers in prompt windows; details in
 
 ## Next steps
 
-1. **Merge #32** once Codex's re-review is clean (see above).
-2. **Fresh session: the boards** (issue #28, PR 2 of the design work), with the design-flow phases 5 and 6 (`brief-to-tasks`, then `frontend-design`). Follow #28's screen checklist and the [state table](../design/brief.md#widget-states). Start by creating `docs/assets/README.md`, then commit the fonts, read the Unsplash licence again and register the photos. The boards include the three-way illustration test, two or three logo marks in the real top bar, and the mood-scene prompts for the owner. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief. Show every option inside a real screen, and ask every question in a prompt window.
-3. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage, a map snapshot in `docs/floorplan/`.
-4. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests, and the Aspire app host for local orchestration and tracing). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
+1. **The boards PR (#28):** handle Codex's review (fix every finding, push once, ask once), then merge under "When merging" and remove the `layover-boards` worktree.
+2. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage (#9, #26, #27, #34, #36), a map snapshot in `docs/floorplan/`.
+3. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas incl. the four kinds proposed for #26, money types, the commission switch, recorded-response tests, the holidays library as an approved dependency, and the Aspire app host). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
 
 ## Blockers
 
@@ -77,10 +87,10 @@ None. Owner decisions still open, needed later:
 ## Owner to-dos
 
 - Ask Nuitee whether a portfolio project may use its sandbox and price index.
-- During the boards: make the mood scenes in ChatGPT from the prompts the agent writes (welcome and "How Layover works" only), and pick the illustration style, the free library and the logo mark.
+- Make the mood scenes in ChatGPT from the prompts in [mood-scene-prompts.md](../design/boards/mood-scene-prompts.md) (welcome and "How Layover works" only), and send them to the agent to register before they are committed.
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
-- Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked) [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes) and [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents).
+- Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked) [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes) [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) and [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options).
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).

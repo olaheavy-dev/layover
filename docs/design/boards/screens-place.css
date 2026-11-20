@@ -1,0 +1,60 @@
+/* The chosen place (below the first screen), side answers, Stay and Days.
+   Loaded after boards.css, widgets-place.css, widgets-journey.css and screens-journey.css. Tokens only (see ../tokens.css):
+   no literal colours. */
+
+/* Place widgets below the first screen: the sea and the map join the key facts. The areas apply only where the
+   canvas is wide enough for two columns; on a phone every card is one block in a single column. */
+@container (min-width: 40rem) {
+  .w-sea { grid-area: sea; align-self: start; }
+  .w-map { grid-area: map; }
+  .facts--more {
+    grid-template-areas:
+      "fare cost"
+      "advice cost"
+      "climate climate"
+      "money daylight"
+      "sea map"
+      "intro intro";
+  }
+  /* An itinerary-only place has no brief, so only the introduction and the map, one under the other. */
+  .facts--plain { grid-template-areas: "intro" "map"; grid-template-columns: minmax(0, 1fr); }
+}
+
+/* An itinerary-only place: one quiet line that says what appears after dates or an airport are given. */
+.place-later { margin-top: var(--space-4); font-size: var(--font-size-sm); line-height: var(--line-height-snug); color: var(--color-text-secondary); }
+
+/* A side answer in the chat: the widget, then the words, then "Add to trip". */
+.msg .widget { margin-top: var(--space-2); }
+.msg__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin-top: var(--space-2); }
+.msg__hint { font-size: var(--font-size-xs); line-height: var(--line-height-snug); color: var(--color-text-secondary); }
+.msg__added { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-3); margin-top: var(--space-2); }
+.msg__added .jg-status .icon { width: 1rem; height: 1rem; }
+
+/* Pinned answers: at the end of the place section, with no entry in the section index. */
+.pinned { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-border-primary); scroll-margin-top: var(--space-9); }
+.pinned__title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+.pinned__ask { font-size: var(--font-size-sm); line-height: var(--line-height-snug); color: var(--color-text-secondary); }
+.pinned .widget { max-width: 28rem; }
+
+/* Stay and Days sections: a heading and one line, then the widgets. */
+.sec { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--color-border-primary); }
+.sec__head { display: flex; flex-direction: column; gap: var(--space-1); }
+.sec__title {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.sec__line { font-size: var(--font-size-sm); line-height: var(--line-height-snug); color: var(--color-text-secondary); }
+.days { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+@container (min-width: 40rem) {
+  .days { grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); align-items: start; }
+}
+.sec:last-child { padding-bottom: var(--space-8); }

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: the long chat and the phone cue · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Working trip</p>
+        <h1 class="board__title">The long chat and the phone cue</h1>
+        <p class="board__lead">The Lisbon trip after a long chat. On a phone, the Chat tab shows the conversation with each answer's checks folded into one row, compact cards for what joined the trip, a trip strip above the message box and a "3 new" badge on the Trip tab. On a desktop, the chat is the left column next to the trip.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of both frames">
+          <button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button>
+          <button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <section aria-labelledby="desktop-label">
+        <span class="board__label" id="desktop-label">1440 px</span>
+        <div class="frame frame--desktop">
+          <div class="frame__viewport">
+            <iframe title="Lisbon chat screen, 1440 px wide" data-screen="screens/trip-lisbon-chat.html" src="screens/trip-lisbon-chat.html#light"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section class="board__phone-row" aria-labelledby="phone-label">
+        <div>
+          <span class="board__label" id="phone-label">390 px</span>
+          <div class="frame frame--phone">
+            <iframe title="Lisbon chat screen, 390 px wide" data-screen="screens/trip-lisbon-chat.html" src="screens/trip-lisbon-chat.html#light"></iframe>
+          </div>
+        </div>
+        <div class="board__notes">
+          <h2>What to look at</h2>
+          <ul>
+            <li>The checks for one answer are one row, "4 checks · Show". Tap it to see the steps.</li>
+            <li>Scroll up in the chat: "Jump to latest" appears. The compact cards have scrolled off the top by now, which is why the trip strip stays above the message box.</li>
+            <li>The strip names the trip and what is ready ("5 facts ready"). The Trip tab says "3 new" in words, not just a number.</li>
+            <li>The sea temperature answer names its source (Open-Meteo Marine) and says Live. Prices on the compact cards keep their label beside them.</li>
+          </ul>
+          <p>Figures come from sample-data.md. The frames are live pages: scroll inside them. Opening the Trip tab clears the badge.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

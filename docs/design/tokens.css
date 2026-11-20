@@ -8,11 +8,14 @@
  *   one warning colour used only for problems, and blue-grey neutrals.
  * Fonts: Source Serif 4 (display) and Source Sans 3 (body), SIL Open Font License
  *   (owner: "Source Serif 4 + Source Sans 3").
+ * Dark theme: "harbour at night", a deep navy with a lifted card surface and a soft blue glow
+ *   (owner: "E: combined (Recommended)", 20 Nov 2026). The light theme is unchanged.
  *
  * Every colour has a light value in the first :root block and a dark value in the two dark blocks.
  * tools/check_contrast.py reads this file in `make check` and fails if a text pair is under
  * 4.5:1 or a control or focus pair is under 3:1 (WCAG 2.2 AA), in either theme.
- * Keep every colour as a six-digit hex value so the check can read it.
+ * Keep every --color-* value as a six-digit hex so the check can read it. The --tint-* tokens are
+ * derived from them with color-mix() and are used for glows and surfaces, never for text colour.
  */
 
 :root {
@@ -38,9 +41,12 @@
   --color-text-on-accent: #FFFFFF;
   --color-highlight: #6F9CC4;          /* small markers only: index underline, tool-step dot. Never text,
                                           and never the only cue: the current section is also bold */
+  /* Logo colours: the body and word use the brand blue, the sun sticker the lighter blue marker */
+  --logo-ink: var(--color-accent-primary);   /* the suitcase body and the word */
+  --logo-sun: var(--color-highlight);
 
   /* One warning colour for every problem state. Words and shapes tell the states apart */
-  --color-status-warning: #9A4A12;     /* Fallback, Unavailable, widget errors */
+  --color-status-warning: #964710;     /* Fallback, Unavailable, widget errors. Darkened from #9A4A12 on 20 Nov 2026 to keep 4.5:1 on the traveller chat bubble */
   --color-status-live: #17202B;        /* Live: normal text with a filled dot */
   --color-status-cached: #56606B;      /* Cached: quiet text with a half-filled dot */
   --color-status-not-known: #56606B;   /* Not known: quiet italic text with an empty dot */
@@ -57,6 +63,50 @@
   --color-surface-overlay: rgba(16, 21, 27, 0.5);  /* behind dialogs */
   --color-scrim: #080C18;              /* dark gradient under text on photos */
   --color-text-on-photo: #FFFFFF;      /* place names and credits on the scrim; white in both themes */
+
+  /* ---------- Tints and glows (derived from the colours above) ---------- */
+  /* Built with color-mix() from the theme colours, so one definition follows both themes: the
+     custom properties are resolved on the root element, where the theme's own values apply. Board
+     files use these names and never write a colour. Used mostly in the dark theme ("harbour at
+     night"): lifted cards, the soft glow behind the photo, small tinted surfaces. */
+  --tint-glow-soft: color-mix(in srgb, var(--color-highlight) 8%, transparent);   /* wide ambient glow, low */
+  --tint-glow: color-mix(in srgb, var(--color-highlight) 16%, transparent);       /* wide ambient glow */
+  --tint-glow-ring: color-mix(in srgb, var(--color-highlight) 30%, transparent);  /* ring round a dot */
+  --tint-glow-icon: color-mix(in srgb, var(--color-highlight) 24%, transparent);  /* icon tile fill */
+  --tint-glow-icon-line: color-mix(in srgb, var(--color-highlight) 45%, transparent); /* icon tile edge */
+  --tint-glow-hero: color-mix(in srgb, var(--color-highlight) 55%, transparent);  /* light under the hero photo */
+  --tint-surface-topbar: color-mix(in srgb, var(--color-highlight) 14%, var(--color-bg-secondary));
+  --tint-surface-chat: color-mix(in srgb, var(--color-highlight) 10%, var(--color-bg-secondary));
+  --tint-surface-pill: color-mix(in srgb, var(--color-highlight) 12%, var(--color-bg-secondary));
+  --tint-surface-verdict: color-mix(in srgb, var(--color-highlight) 20%, var(--color-bg-secondary));
+  --tint-surface-chart-band: color-mix(in srgb, var(--color-highlight) 28%, var(--color-bg-secondary));
+  --tint-surface-chip: color-mix(in srgb, var(--color-highlight) 16%, var(--color-bg-tertiary));
+  --tint-surface-traveller: color-mix(in srgb, var(--color-highlight) 22%, var(--color-bg-tertiary));
+  --tint-surface-index: color-mix(in srgb, var(--color-bg-primary) 92%, transparent);
+  --tint-surface-lift: color-mix(in srgb, var(--color-text-primary) 5%, var(--color-bg-secondary)); /* top of a lifted card */
+  --tint-border-lift: color-mix(in srgb, var(--color-highlight) 22%, var(--color-border-primary));
+  --tint-border-lift-top: color-mix(in srgb, var(--color-text-primary) 20%, var(--color-border-primary));
+  --tint-line-lift: color-mix(in srgb, var(--color-text-primary) 8%, transparent);  /* inner top edge of a card */
+  --tint-line-hero: color-mix(in srgb, var(--color-text-primary) 12%, transparent); /* hairline round the hero */
+
+  /* ---------- Illustration colours (isometric style, docs/design/boards/illustration-guide.html) ---------- */
+  /* Every drawing uses only these. A solid has three faces: -t is the top (lightest), -l the left, -r the
+     right (darkest). The light comes from above and to the left. Colours are derived from the theme colours
+     above, so they follow the theme; the dark values are set in the dark blocks below. */
+  --illus-water: color-mix(in srgb, var(--color-highlight) 38%, var(--color-bg-secondary));
+  --illus-wave: color-mix(in srgb, var(--color-bg-secondary) 80%, transparent);
+  --illus-shadow: color-mix(in srgb, var(--logo-ink) 20%, transparent);
+  --illus-cut: var(--color-bg-secondary);   /* eyes, windows, notches: shows the page through the drawing */
+  --illus-sun: var(--logo-sun);
+  --illus-ink-t: color-mix(in srgb, var(--logo-ink) 78%, var(--color-bg-secondary));
+  --illus-ink-l: var(--logo-ink);
+  --illus-ink-r: var(--color-accent-primary-active);
+  --illus-sun-t: color-mix(in srgb, var(--color-highlight) 55%, var(--color-bg-secondary));
+  --illus-sun-l: var(--color-highlight);
+  --illus-sun-r: color-mix(in srgb, var(--color-highlight) 70%, var(--logo-ink));
+  --illus-pap-t: var(--color-bg-secondary);
+  --illus-pap-l: var(--color-bg-tertiary);
+  --illus-pap-r: color-mix(in srgb, var(--color-highlight) 42%, var(--color-bg-tertiary));
 
   /* ---------- Photos ---------- */
   /* Text on a photo sits only where the scrim is at least this opaque, so white text keeps
@@ -152,73 +202,105 @@
 /* ---------- Colour: dark theme ---------- */
 /* The two dark blocks hold the same values: one follows the system setting, one a manual choice. */
 :root[data-theme="dark"] {
-  --color-bg-primary: #10151B;
-  --color-bg-secondary: #18202A;
-  --color-bg-tertiary: #22303D;
-  --color-bg-inverse: #ECEFF2;
-  --color-text-primary: #ECEFF2;
-  --color-text-secondary: #A3ADB8;
-  --color-text-disabled: #6C7783;
-  --color-text-inverse: #10151B;
+  --color-bg-primary: #0A1422;
+  --color-bg-secondary: #101F33;
+  --color-bg-tertiary: #19304B;
+  --color-bg-inverse: #E8EEF5;
+  --color-text-primary: #E8EEF5;
+  --color-text-secondary: #A8B7C9;
+  --color-text-disabled: #6A7A8E;
+  --color-text-inverse: #0A1422;
   --color-text-link: #9CC3E8;
-  --color-border-primary: #29323D;
-  --color-border-control: #74808C;
+  --color-border-primary: #1F3550;
+  --color-border-control: #7189A3;
   --color-border-focus: #9CC3E8;
   --color-accent-primary: #9CC3E8;
   --color-accent-primary-hover: #B7D4F0;
   --color-accent-primary-active: #CFE2F5;
-  --color-text-on-accent: #0D1E2E;
-  --color-highlight: #4E7AA3;
+  --color-text-on-accent: #0A1B2D;
+  --color-highlight: #5F93C4;
+  /* Logo colours: in dark the sun stays the lighter, warmer element, so it takes the lightest accent */
+  --logo-ink: var(--color-accent-primary);   /* the suitcase body and the word */
+  --logo-sun: var(--color-accent-primary-active);
   --color-status-warning: #F0A86B;
-  --color-status-live: #ECEFF2;
-  --color-status-cached: #A3ADB8;
-  --color-status-not-known: #A3ADB8;
+  --color-status-live: #E8EEF5;
+  --color-status-cached: #A8B7C9;
+  --color-status-not-known: #A8B7C9;
   --color-status-info: #9CC3E8;
   --color-chart-1: #9CC3E8;
   --color-chart-2: #6E9AC4;
   --color-surface-overlay: rgba(0, 0, 0, 0.6);
   --color-scrim: #080C18;
   --color-text-on-photo: #FFFFFF;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 6px 20px -12px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
-  --shadow-focus: 0 0 0 2px #10151B, 0 0 0 4px #9CC3E8;
+  --shadow-sm: 0 1px 2px rgba(2, 8, 18, 0.4);
+  --shadow-md: 0 8px 24px -12px rgba(2, 8, 18, 0.75);
+  --shadow-lg: 0 18px 44px -20px rgba(2, 8, 18, 0.85);
+  --shadow-focus: 0 0 0 2px #0A1422, 0 0 0 4px #9CC3E8;
+  /* Illustration colours, dark theme (see the light values above) */
+  --illus-water: color-mix(in srgb, var(--color-highlight) 22%, var(--color-bg-secondary));
+  --illus-wave: color-mix(in srgb, var(--color-accent-primary) 38%, transparent);
+  --illus-shadow: color-mix(in srgb, var(--color-bg-primary) 70%, transparent);
+  --illus-ink-t: var(--color-accent-primary-active);
+  --illus-ink-l: var(--color-accent-primary);
+  --illus-ink-r: var(--color-highlight);
+  --illus-sun-t: color-mix(in srgb, var(--color-highlight) 60%, var(--color-accent-primary-active));
+  --illus-sun-l: color-mix(in srgb, var(--color-highlight) 80%, var(--color-accent-primary));
+  --illus-sun-r: var(--color-highlight);
+  --illus-pap-t: color-mix(in srgb, var(--color-accent-primary) 42%, var(--color-bg-secondary));
+  --illus-pap-l: color-mix(in srgb, var(--color-accent-primary) 26%, var(--color-bg-secondary));
+  --illus-pap-r: color-mix(in srgb, var(--color-accent-primary) 14%, var(--color-bg-secondary));
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg-primary: #10151B;
-    --color-bg-secondary: #18202A;
-    --color-bg-tertiary: #22303D;
-    --color-bg-inverse: #ECEFF2;
-    --color-text-primary: #ECEFF2;
-    --color-text-secondary: #A3ADB8;
-    --color-text-disabled: #6C7783;
-    --color-text-inverse: #10151B;
+    --color-bg-primary: #0A1422;
+    --color-bg-secondary: #101F33;
+    --color-bg-tertiary: #19304B;
+    --color-bg-inverse: #E8EEF5;
+    --color-text-primary: #E8EEF5;
+    --color-text-secondary: #A8B7C9;
+    --color-text-disabled: #6A7A8E;
+    --color-text-inverse: #0A1422;
     --color-text-link: #9CC3E8;
-    --color-border-primary: #29323D;
-    --color-border-control: #74808C;
+    --color-border-primary: #1F3550;
+    --color-border-control: #7189A3;
     --color-border-focus: #9CC3E8;
     --color-accent-primary: #9CC3E8;
     --color-accent-primary-hover: #B7D4F0;
     --color-accent-primary-active: #CFE2F5;
-    --color-text-on-accent: #0D1E2E;
-    --color-highlight: #4E7AA3;
+    --color-text-on-accent: #0A1B2D;
+    --color-highlight: #5F93C4;
+    /* Logo colours: same as the manual dark block */
+    --logo-ink: var(--color-accent-primary);   /* the suitcase body and the word */
+    --logo-sun: var(--color-accent-primary-active);
     --color-status-warning: #F0A86B;
-    --color-status-live: #ECEFF2;
-    --color-status-cached: #A3ADB8;
-    --color-status-not-known: #A3ADB8;
+    --color-status-live: #E8EEF5;
+    --color-status-cached: #A8B7C9;
+    --color-status-not-known: #A8B7C9;
     --color-status-info: #9CC3E8;
     --color-chart-1: #9CC3E8;
     --color-chart-2: #6E9AC4;
     --color-surface-overlay: rgba(0, 0, 0, 0.6);
     --color-scrim: #080C18;
     --color-text-on-photo: #FFFFFF;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 6px 20px -12px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
-    --shadow-focus: 0 0 0 2px #10151B, 0 0 0 4px #9CC3E8;
+    --shadow-sm: 0 1px 2px rgba(2, 8, 18, 0.4);
+    --shadow-md: 0 8px 24px -12px rgba(2, 8, 18, 0.75);
+    --shadow-lg: 0 18px 44px -20px rgba(2, 8, 18, 0.85);
+    --shadow-focus: 0 0 0 2px #0A1422, 0 0 0 4px #9CC3E8;
+    /* Illustration colours, dark theme (see the light values above) */
+    --illus-water: color-mix(in srgb, var(--color-highlight) 22%, var(--color-bg-secondary));
+    --illus-wave: color-mix(in srgb, var(--color-accent-primary) 38%, transparent);
+    --illus-shadow: color-mix(in srgb, var(--color-bg-primary) 70%, transparent);
+    --illus-ink-t: var(--color-accent-primary-active);
+    --illus-ink-l: var(--color-accent-primary);
+    --illus-ink-r: var(--color-highlight);
+    --illus-sun-t: color-mix(in srgb, var(--color-highlight) 60%, var(--color-accent-primary-active));
+    --illus-sun-l: color-mix(in srgb, var(--color-highlight) 80%, var(--color-accent-primary));
+    --illus-sun-r: var(--color-highlight);
+    --illus-pap-t: color-mix(in srgb, var(--color-accent-primary) 42%, var(--color-bg-secondary));
+    --illus-pap-l: color-mix(in srgb, var(--color-accent-primary) 26%, var(--color-bg-secondary));
+    --illus-pap-r: color-mix(in srgb, var(--color-accent-primary) 14%, var(--color-bg-secondary));
     color-scheme: dark;
   }
 }

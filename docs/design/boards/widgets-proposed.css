@@ -1,0 +1,83 @@
+/* The proposed widgets gallery (screens/widgets-proposed.html). Loaded after widgets-place.css, which supplies the
+   gallery shell, the loading shapes and the error note. Tokens only: no literal colours (tools/check_boards.py).
+   Sample data, not real: every figure comes from sample-data.md. */
+
+/* The proposals note at the top */
+.pp-note {
+  align-self: stretch;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border-control);
+  border-left: 4px solid var(--color-highlight);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-secondary);
+}
+.pp-note__title { margin-bottom: var(--space-1); font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); }
+.pp-note p { max-width: var(--max-width-content); }
+
+/* "Proposed" marks */
+.pp-badge, .pp-tagp {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--border-radius-full);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-secondary);
+  vertical-align: middle;
+}
+
+/* The proposal strip above each kind's states */
+.pp-prop { display: flex; flex-direction: column; margin: 0 0 var(--space-5); font-size: var(--font-size-sm); }
+.pp-prop > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-1) var(--space-4);
+  padding-block: var(--space-2);
+  border-top: 1px solid var(--color-border-primary);
+}
+@media (min-width: 40rem) {
+  .pp-prop > div { grid-template-columns: 7rem minmax(0, 1fr); }
+}
+.pp-prop dt { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; color: var(--color-text-secondary); }
+.pp-prop dd { margin: 0; max-width: var(--max-width-content); }
+.pp-prop code { font-family: var(--font-family-mono); font-size: 0.95em; }
+
+/* Widget details */
+.pp-sub { margin-top: calc(var(--space-2) * -1); }
+.w-hol .line__value, .w-fl .line__value { white-space: normal; }
+.w-hol .line__value { font-family: var(--font-family-body); font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); }
+.w-fl .line__meta { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-4); }
+
+/* Route steps */
+.pp-steps { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+.pp-step {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--color-border-primary);
+}
+.pp-step__icon { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: var(--border-radius-full); background: var(--color-bg-tertiary); color: var(--color-accent-primary); }
+.pp-step__icon .icon { width: 1.125rem; height: 1.125rem; }
+.pp-step__min { font-weight: var(--font-weight-semibold); white-space: nowrap; font-variant-numeric: var(--font-numeric); }
+
+/* Compact cards: boards.css hides them from 64rem (a phone cue); the gallery shows them at every width */
+.pp-chat {
+  max-width: 24rem;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  background: var(--tint-surface-chat);
+}
+.pp-chat .added { display: flex; }
+
+/* Board page: the gallery is tall, so its frames are taller than the other boards */
+.board--proposed .frame--desktop .frame__viewport { height: calc(1400px * var(--scale)); }
+.board--proposed .frame--desktop iframe { height: 1400px; }
+.board--proposed .frame--phone iframe { height: 900px; }
+
+/* A time difference is a phrase, not a big number */
+.w-tz .figure { font-size: var(--font-size-xl); }

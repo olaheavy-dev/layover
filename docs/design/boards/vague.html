@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: vague and unclear messages · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Before a trip has a place</p>
+        <h1 class="board__title">Vague and unclear messages</h1>
+        <p class="board__lead">What Layover does when a message is missing a detail, is unclear, names a place that has more than one match, or asks a side question before any place is chosen. It asks one question at a time and never guesses.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of both frames">
+          <button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button>
+          <button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. A detail is missing</h2>
+        <p class="state__line">Layover asks one short question, with the likely answers as buttons. The canvas shows what it knows and what is missing, never a guess.</p>
+        <section aria-labelledby="desktop-label-1">
+          <span class="board__label" id="desktop-label-1">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="1. A detail is missing, 1440 px wide" data-screen="screens/vague-brief.html" src="screens/vague-brief.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-labelledby="phone-label-1">
+          <div>
+            <span class="board__label" id="phone-label-1">390 px</span>
+            <div class="frame frame--phone">
+              <iframe title="1. A detail is missing, 390 px wide" data-screen="screens/vague-brief.html" src="screens/vague-brief.html#light"></iframe>
+            </div>
+          </div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The brief on the canvas has dashed "not set yet" chips. "Not too pricey" is shown in the traveller's words, with "no amount yet": it is not a budget.</li>
+            <li>The trip is named "Warm break, May", from the month and the feel.</li>
+            <li>Only one question is asked. The later ones wait.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-2">
+        <h2 class="state__title" id="state-2">2. The meaning is unclear</h2>
+        <p class="state__line">Layover asks one question and offers what it can do as choices, instead of guessing.</p>
+        <section aria-labelledby="desktop-label-2">
+          <span class="board__label" id="desktop-label-2">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="2. The meaning is unclear, 1440 px wide" data-screen="screens/vague-clarify.html" src="screens/vague-clarify.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-labelledby="phone-label-2">
+          <div>
+            <span class="board__label" id="phone-label-2">390 px</span>
+            <div class="frame frame--phone">
+              <iframe title="2. The meaning is unclear, 390 px wide" data-screen="screens/vague-clarify.html" src="screens/vague-clarify.html#light"></iframe>
+            </div>
+          </div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The choices are buttons in a named group. "Something else" is always last.</li>
+            <li>No trip exists to show yet, so the canvas is a quiet line of text. The illustration comes after the illustration test.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-3">
+        <h2 class="state__title" id="state-3">3. Which Valencia?</h2>
+        <p class="state__line">A place name with more than one match gets a "which one" question. Layover never picks one itself (<code>BRIEF-03</code>).</p>
+        <section aria-labelledby="desktop-label-3">
+          <span class="board__label" id="desktop-label-3">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="3. Which Valencia?, 1440 px wide" data-screen="screens/vague-which-place.html" src="screens/vague-which-place.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-labelledby="phone-label-3">
+          <div>
+            <span class="board__label" id="phone-label-3">390 px</span>
+            <div class="frame frame--phone">
+              <iframe title="3. Which Valencia?, 390 px wide" data-screen="screens/vague-which-place.html" src="screens/vague-which-place.html#light"></iframe>
+            </div>
+          </div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>Both matches are real places, and the board says nothing else about them.</li>
+            <li>"Somewhere else" covers a third Valencia, or a different place.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-4">
+        <h2 class="state__title" id="state-4">4. A side question before any place</h2>
+        <p class="state__line">The answer shows in the chat as a money widget. There is no "Add to trip", because the trip has no place yet.</p>
+        <section aria-labelledby="desktop-label-4">
+          <span class="board__label" id="desktop-label-4">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="4. A side question before any place, 1440 px wide" data-screen="screens/vague-side-answer.html" src="screens/vague-side-answer.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-labelledby="phone-label-4">
+          <div>
+            <span class="board__label" id="phone-label-4">390 px</span>
+            <div class="frame frame--phone">
+              <iframe title="4. A side question before any place, 390 px wide" data-screen="screens/vague-side-answer.html" src="screens/vague-side-answer.html#light"></iframe>
+            </div>
+          </div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The figures and the label (Live, ECB rate for 18 Nov 2026, Frankfurter) are the same as on the Lisbon board.</li>
+            <li>On a phone this widget lives only in the chat, so it shows in full there.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

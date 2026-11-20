@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: Pages outside the trip · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="screens-journey.css">
+  <link rel="stylesheet" href="screens-pages.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Pages outside the trip</p>
+        <h1 class="board__title">Pages outside the trip</h1>
+        <p class="board__lead">The shared trip, How Layover works, a link that does not work, and the limit-reached state.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of all frames"><button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button><button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button></div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. Shared trip</h2>
+        <p class="state__line">What a friend sees at the shared link: the trip, frozen and read only. Every age carries the date the trip was shared, so an old fare is never read as a new one. It is the default copy: the traveller did not tick “Include my budget and who’s travelling”, so it shows no budget and no traveller count.</p>
+        <section aria-labelledby="dl-1"><span class="board__label" id="dl-1">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="1. Shared trip, 1440 px wide" data-screen="screens/shared-trip.html" src="screens/shared-trip.html#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="1. Shared trip, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-1">390 px, top</span><div class="frame frame--phone"><iframe title="1. Shared trip, 390 px wide, 390 px, top" data-screen="screens/shared-trip.html" src="screens/shared-trip.html#light"></iframe></div></div><div><span class="board__label" id="p1-1">390 px, the facts</span><div class="frame frame--phone"><iframe title="1. Shared trip, 390 px wide, 390 px, the facts" data-screen="screens/shared-trip.html?at=lisbon" src="screens/shared-trip.html?at=lisbon#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>The header says “Shared trip, as of 18 Nov 2026” and that fares and advice can change after that date.</li><li>There is no chat, no message box and no Edit, Choose, Add to trip or Share trip. “Plan your own trip” leads to the welcome screen.</li><li>Every Live and Cached label adds “as of 18 Nov 2026”. A “Not known” label has no age, so it stays as it is.</li><li>There is no budget chip, no traveller chip and no “under or over your budget” line. Places, dates, fares, costs and advice stay.</li><li>The FCDO advice keeps its own “updated” date and its link.</li></ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-2">
+        <h2 class="state__title" id="state-2">2. How Layover works: what it does and the agent team</h2>
+        <p class="state__line">One page for every visitor, and for recruiters in particular. The first two sections say what Layover does and show the team of agents.</p>
+        <section aria-labelledby="dl-2"><span class="board__label" id="dl-2">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="2. How Layover works: what it does and the agent team, 1440 px wide" data-screen="screens/how-it-works.html" src="screens/how-it-works.html#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="2. How Layover works: what it does and the agent team, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-2">390 px, top</span><div class="frame frame--phone"><iframe title="2. How Layover works: what it does and the agent team, 390 px wide, 390 px, top" data-screen="screens/how-it-works.html" src="screens/how-it-works.html#light"></iframe></div></div><div><span class="board__label" id="p1-2">390 px, the team</span><div class="frame frame--phone"><iframe title="2. How Layover works: what it does and the agent team, 390 px wide, 390 px, the team" data-screen="screens/how-it-works.html?at=team" src="screens/how-it-works.html?at=team#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>The team diagram is HTML, so a screen reader reads it as an ordered list. The caption says the same in words.</li><li>The slot for the mood scene is a designed placeholder, because the owner has not made the image yet. It will carry the “Illustrative photo:” alt text and the footer line when it exists.</li><li>On a phone the four steps stack in order. The section index at the top scrolls sideways, like the one on the Trip tab.</li></ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-3">
+        <h2 class="state__title" id="state-3">3. How Layover works: rules, data sources and evaluation</h2>
+        <p class="state__line">The six rules in plain words, each data source with its terms, and the evaluation section, which says “No evaluation results yet” until scores exist.</p>
+        <section aria-labelledby="dl-3"><span class="board__label" id="dl-3">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="3. How Layover works: rules, data sources and evaluation, 1440 px wide" data-screen="screens/how-it-works.html?at=rules" src="screens/how-it-works.html?at=rules#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="3. How Layover works: rules, data sources and evaluation, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-3">390 px, the rules</span><div class="frame frame--phone"><iframe title="3. How Layover works: rules, data sources and evaluation, 390 px wide, 390 px, the rules" data-screen="screens/how-it-works.html?at=rules" src="screens/how-it-works.html?at=rules#light"></iframe></div></div><div><span class="board__label" id="p1-3">390 px, data sources</span><div class="frame frame--phone"><iframe title="3. How Layover works: rules, data sources and evaluation, 390 px wide, 390 px, data sources" data-screen="screens/how-it-works.html?at=sources" src="screens/how-it-works.html?at=sources#light"></iframe></div></div><div><span class="board__label" id="p2-3">390 px, evaluation</span><div class="frame frame--phone"><iframe title="3. How Layover works: rules, data sources and evaluation, 390 px wide, 390 px, evaluation" data-screen="screens/how-it-works.html?at=evaluation" src="screens/how-it-works.html?at=evaluation#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>The rules and the sources come from decision 0011 and the data sources list. Nothing new is claimed.</li><li>Each source has a link, what it gives and its terms. Open-Meteo’s non-commercial terms are stated, not hidden.</li><li>Evaluation shows no score, no number of trips and no comparison, because none exists. The label is in the “Not known” style.</li><li>The last section links to the GitHub repository.</li></ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-4">
+        <h2 class="state__title" id="state-4">4. Link not found</h2>
+        <p class="state__line">A wrong link, or a link that no longer works, looks the same: the page does not say whether a trip ever existed. How long links last is not decided.</p>
+        <section aria-labelledby="dl-4"><span class="board__label" id="dl-4">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="4. Link not found, 1440 px wide" data-screen="screens/link-not-found.html" src="screens/link-not-found.html#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="4. Link not found, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-4">390 px</span><div class="frame frame--phone"><iframe title="4. Link not found, 390 px wide, 390 px" data-screen="screens/link-not-found.html" src="screens/link-not-found.html#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>The page says the link does not work and gives two reasons it may be so, without saying which applies, and without saying whether a trip ever existed.</li><li>“Plan a new trip” is the one main action. The small isometric illustration is the welcome scene without its ticket, and is decoration only.</li><li>There is no trip name in the top bar, because there is no trip.</li></ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-5">
+        <h2 class="state__title" id="state-5">5. Limit reached</h2>
+        <p class="state__line">The traveller has reached a limit. The message box is turned off and a notice says so. The trip stays readable and can still be shared.</p>
+        <section aria-labelledby="dl-5"><span class="board__label" id="dl-5">1440 px</span>
+          <div class="frame frame--desktop"><div class="frame__viewport">
+            <iframe title="5. Limit reached, 1440 px wide" data-screen="screens/limit-reached.html" src="screens/limit-reached.html#light"></iframe>
+          </div></div>
+        </section>
+        <section class="board__phone-row" aria-label="5. Limit reached, phone">
+          <div class="sj-pair"><div><span class="board__label" id="p0-5">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="5. Limit reached, 390 px wide, 390 px, Chat tab" data-screen="screens/limit-reached.html" src="screens/limit-reached.html#light"></iframe></div></div><div><span class="board__label" id="p1-5">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="5. Limit reached, 390 px wide, 390 px, Trip tab" data-screen="screens/limit-reached.html?tab=trip" src="screens/limit-reached.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>The notice has no figure, because the limits are not set yet. It says when planning returns in words: when the limit resets.</li><li>The input and the Send button are disabled, and their text says why. Share trip is still in the top bar.</li><li>The chat and the canvas stay as they were: the traveller can read everything and keep the link.</li></ul>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

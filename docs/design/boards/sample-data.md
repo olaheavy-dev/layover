@@ -37,7 +37,7 @@ The cost lines use one rule for every place, so the boards stay consistent: flig
 | Local transport, activities | Not known | Not known | Not known |
 | May temperature, typical high and low | 22°C and 14°C | 24°C and 15°C | 23°C and 16°C |
 | Rainy days in May, typical | 5 | 4 | 2 |
-| Sea temperature | 17°C | 18°C | 19°C |
+| Sea temperature (sample label: "Source: Open-Meteo Marine, Live") | 17°C | 18°C | 19°C |
 | Currency | Euro | Euro | Euro |
 | FCDO page | [Portugal](https://www.gov.uk/foreign-travel-advice/portugal) | [Spain](https://www.gov.uk/foreign-travel-advice/spain) | [Malta](https://www.gov.uk/foreign-travel-advice/malta) |
 | FCDO "updated" date | 12 Nov 2026 | 3 Nov 2026 | 28 Oct 2026 |
@@ -53,10 +53,37 @@ States to draw with these places:
 | Widget | Sample content |
 |---|---|
 | `money` | £1 = €1.15, European Central Bank rate for 18 Nov 2026, Live. Conversion: £500 is about €575 (£500 × 1.15 = €575) |
-| `daylight` | 15 May 2027: sunrise 06:20, sunset 20:40, day length 14 h 20 min (20:40 − 06:20 = 14 h 20 min) |
+| `daylight` | One day is needed and the dates are not set, so the card says "15 May, the middle of the month: your dates are not set yet" (the dates rule in the register, 20 Nov 2026). 15 May 2027: sunrise 06:20, sunset 20:40, day length 14 h 20 min (20:40 − 06:20 = 14 h 20 min). Credit: a visible link to sunrise-sunset.org on the card |
 | `climate_chart` | The May row above. The months either side for the chart: April 20°C and 12°C, 7 rainy days; June 25°C and 16°C, 2 rainy days. Averages period: 1991 to 2020, Live |
-| `place_intro` | Two sentences in Layover's own words, with "Source: Wikivoyage, Lisbon, page edited March 2026, Cached, 4 days old". For the Fallback state: "Fallback: Wikipedia, Lisbon" |
+| `place_intro`, and the hero place line | The hero line "Portugal’s capital, on the river Tagus." carries its source beside the photo credit: "Place line: Wikivoyage, Lisbon, Cached, 4 days old". Two sentences in Layover's own words, with "Source: Wikivoyage, Lisbon, page edited March 2026, Cached, 4 days old". For the Fallback state: "Fallback: Wikipedia, Lisbon" |
 | `advice_card` | "FCDO travel advice: Portugal, updated 12 Nov 2026", Layover's copy Cached, 1 day old, with the link above. Error state: the same link and "Layover could not read it just now" |
+
+## The long chat and the phone cue
+
+Used on `trip-lisbon-chat.html`. The labels follow the rule in the [brief](../brief.md#source-labels).
+
+| Item | Sample content |
+|---|---|
+| Trip strip | "Lisbon, May", "5 facts ready" (fare, cost estimate, advice, weather, money), "View trip" |
+| Trip tab badge | "3 new" |
+| Compact cards | Flights: £96 return per person, Cached, 3 days old. Cost estimate: about £782, estimate, partial, Cached, 3 to 4 days old (the flights are 3 days old and the Wikivoyage lines 4). Travel advice: FCDO advice for Portugal, updated 12 Nov 2026, Cached, 1 day old. Weather in May: highs of 22°C, lows of 14°C, 5 rainy days, Live. Money: £1 = €1.15, rate for 18 Nov 2026, Live |
+| Side question: the beach | "The sea is 17°C in May. Typical highs are 22°C, with 5 rainy days." Source line: Live; Sea: Open-Meteo Marine; Weather: Open-Meteo |
+| Side question: what the estimate leaves out | Local transport and activities: Not known, not counted as £0 |
+| Side question: the FCDO date | "The FCDO page for Portugal was updated on 12 Nov 2026." Layover's copy: Cached, 1 day old |
+| Checks rows | 2 checks (fares and weather for 3 places), 4 checks (FCDO advice, exchange rate, sunrise and sunset, Wikivoyage page), 2 checks (sea temperature, typical May weather), 1 check (FCDO advice); on the Stay and Days boards: 3 checks (hotels near the centre of Lisbon, places to visit, 3 days built from the hotel) and, on the itinerary-only trip, 3 checks (the Wikivoyage page for Lisbon, hotels near the centre, places to visit) |
+
+## Vague and unclear messages
+
+Used on `vague.html` (four states). Sample messages written for the boards; none is a real traveller's message. Facts allowed: place names and the money figures already above. "Not too pricey" is the traveller's own wording, not a budget: no amount is set until Layover asks.
+
+| State | Traveller says | Layover says and offers |
+|---|---|---|
+| Missing detail | "Somewhere warm in May, not too pricey" | "Good start. I have May, somewhere warm, and not too pricey. Nothing is confirmed yet." Question: "Which airport would you fly from?" Quick answers: Manchester (MAN), London Heathrow (LHR), Birmingham (BHX), Somewhere else. Trip name: "Warm break, May". Brief so far: May; Warm; Budget: not too pricey (no amount yet). Not set yet: Departure airport, Length, Travellers |
+| One clarifying question | "Lisbon or Porto?" | "I can do a few things with that." Question: "Do you want to compare the two for a trip, or plan days in one of them?" Choices: Compare them for a trip, Plan days in Lisbon, Plan days in Porto, Something else. Trip name: "New trip" |
+| Which place | "Three days in Valencia" | "More than one place has that name, so I will not guess." Question: "Which Valencia do you mean?" Choices: Valencia, Spain; Valencia, Venezuela; Somewhere else. Both are real places; the board says nothing else about them. Trip name: "New trip" |
+| Side answer, no place yet | "How much is £500 in euros?" | The `money` widget in the chat: £1 = €1.15, £500 is about €575 (from the `money` row above: £500 × 1.15 = €575), Live, European Central Bank rate for 18 Nov 2026, Source: Frankfurter. No "Add to trip" (no place yet). "Here is the conversion. Say where you want to go, or what kind of break, and I will start a trip." Trip name: "New trip" |
+
+Empty canvas lines: "It appears here once Layover knows what you want." (clarifying question), "It appears here once you have chosen the place." (which place), "It appears here once you have a place." (side answer).
 
 ## Where you're staying
 
@@ -72,7 +99,7 @@ The chosen state uses Sample Hotel Alfama. The skipped state says "Days start fr
 
 | Day | Stops | Notes |
 |---|---|---|
-| Day 1 | Castelo de São Jorge (10:00 to 18:00), Miradouro de Santa Luzia, a walk through Alfama | Opening hours are sample values |
+| Day 1 | Castelo de São Jorge (10:00 to 18:00), Miradouro de Santa Luzia (opening times Not known), a walk through Alfama (no opening times: it is a walk) | Opening hours are sample values |
 | Day 2 | Torre de Belém (opening times Not known), Mosteiro dos Jerónimos (10:00 to 17:30) | Draws the row-level "Not known" |
 | Day 3 | Too few sourced places for the afternoon | Draws the Empty state of `itinerary_day` |
 
@@ -80,8 +107,9 @@ The chosen state uses Sample Hotel Alfama. The skipped state says "Days start fr
 
 | Field | Sample value |
 |---|---|
-| Flights | MAN to LIS, 14 May 2027, back 19 May 2027, 2 adults |
-| Sandbox price | £192 for 2 (the same as the fare above) |
+| Dates step | First state on the Booking board. Layover asks "Which dates would you like to fly?" because the brief only says May 2027, 5 nights, and never picks dates. Choices (samples, not facts): "Fri 14 to Wed 19 May" (14 May 2027 is a Friday; 5 nights later is Wed 19 May), "Fri 21 to Wed 26 May" (21 May is a Friday; 21 + 5 = 26), "Other dates". The later states say the traveller chose "Fri 14 to Wed 19 May" |
+| Flights | MAN to LIS, 14 May 2027, back 19 May 2027, 2 adults (the dates the traveller chose) |
+| Sandbox price | £192 for 2. The sandbox price lines say "Sandbox price, not the fare above" and never show "£96 × 2 adults", so a sandbox price is not read as the cached fare |
 | Price-changed state | £204 for 2, and Layover asks again |
 | Approved state | Sandbox order SANDBOX-0001, "Sandbox: no real booking or payment" |
 | Hotel | Flights only on the boards, until Nuitee agrees to sandbox use (status file) |
@@ -93,3 +121,134 @@ Question: "Can I take a pushchair on Lisbon trams?" Two results, each a made-up 
 ## Sharing
 
 Shared trip "as of" 18 Nov 2026. Every age on the shared board is shown "as of" that date.
+
+## Widget gallery: place widgets
+
+Used on `widgets-place.html`. One extra state needs a figure that the tables above do not hold: Lisbon's cost estimate when the fares source fails.
+
+| Item | Sample content |
+|---|---|
+| Lisbon cost estimate, fares source failed | Flights: Unavailable (no figure). Stay £70 × 5 = £350 and meals £12 × 2 × 5 × 2 = £240, as above. Known costs so far: £350 + £240 = £590, partial (flights, local transport and activities missing). No comparison with the £800 budget, because a missing line could change the answer |
+
+## Widget gallery: journey widgets
+
+Used on `widgets-journey.html`. Only what the gallery needs beyond the sections above. None of it is a real fact.
+
+| Item | Sample content |
+|---|---|
+| Swapped place | The traveller types "Porto" to replace Valletta. The card is named by what they typed, says "Researching your place" and shows no figure and no photo |
+| No place fits | Only the brief above is used: the budget chip "£800 in total" is marked as the part that rules places out. No other figure is shown |
+| Day 1 stops | Only the castle has opening hours (10:00 to 18:00). The viewpoint and the walk show no hours row. The walk comes from Wikivoyage, Lisbon, Cached, 4 days old; the other stops come from OpenStreetMap, Live |
+| Day 2 after a hotel change | The rebuilt-day note uses the Day 2 stops, because Torre de Belém and Mosteiro dos Jerónimos are in Belém, the base of Sample Hotel Belém |
+| Booking, price you saw and price now | £192 for 2 and £204 for 2 (no difference is shown). Declined: "Nothing was ordered" |
+| Web result quotes | Two made-up quotes from `example.org`, retrieved 18 Nov 2026: "Fold the pushchair before you board if the tram is busy." and "Ask the driver where to stand with a pushchair." Each is marked "sample quote" |
+| `not_known` answer | "Layover doesn't know local bus fares in Lisbon: none of its sources has them. It can show the cost estimate without them." |
+| Compact card ages | Compare places: "Cached, 1 to 6 days old" (the fares are 3, 1 and 6 days old). Known costs: Lisbon "3 to 4 days old", Valencia "1 to 2 days old", Valletta "6 to 9 days old" (the flights and the Wikivoyage lines) |
+
+## Widget gallery: proposed widgets
+
+Used on `widgets-proposed.html` (proposals for [#26](https://github.com/olaheavy-dev/layover/issues/26)). Made up for the boards, except the two time zone rows, which were derived and checked.
+
+| Item | Sample content |
+|---|---|
+| Release dates in labels | "Cached, release of 1 Nov 2026" is a made-up date for the library or database release. The real widget shows the real release |
+| `public_holidays` | Lisbon, May 2027 (the dates are not set, so the card covers the month and never says "14 to 19 May"). Layover could not run the holidays library for these boards, so no real holiday date is used. Two made-up rows, both named "Sample holiday": Mon 17 May 2027 and Wed 19 May 2027. The weekdays are worked from 14 May 2027 being a Friday (17 May is a Monday, 19 May a Wednesday). The Empty state ("No public holidays in May 2027") is a sample outcome and is not checked against the library |
+| `time_difference`, Lisbon | Derived with Python `zoneinfo` on 20 Nov 2026, for 15 May 2027 at 12:00 (the middle of the month, because the dates are not set; 14 May has the same offsets): `Europe/London` is BST, UTC+1; `Europe/Lisbon` is WEST, UTC+1. Difference 1 − 1 = 0 hours: "Same time as the UK" |
+| `time_difference`, Valletta | Same check: `Europe/Malta` is CEST, UTC+2. Difference 2 − 1 = 1 hour ahead: 12:00 in the UK is 13:00 in Valletta. The tz data release on the machine was not recorded |
+| `fare_list` | From Bristol (BRS), leaving in March 2027, return, per person, all made up and sorted lowest first: Faro £59 (Cached, 3 days old), Valencia £64 (1 day), Lisbon £71 (2 days), Valletta £98 (5 days). Naples is the "Not known" row: no cached fare. Compact card: "From £59", "Cached, 1 to 5 days old" for the four fares shown. Whether these routes run from Bristol is not claimed |
+| `transport_route` | A made-up journey from Paddington station to Heathrow Terminals 2 and 3: walk to the platform 5 min, Elizabeth line 32 min, walk to departures 6 min. Total 5 + 32 + 6 = 43 min. Planned for Sat 15 May 2027 (the middle of the month: the dates are not set yet), leaving 09:00 (made up). Station and line names are real places and services, but the times are not TfL's |
+
+## Starting a trip and Comparing
+
+Used on `start.html` and `compare.html`. Sample messages written for the boards; none is a real traveller's message. The figures are the ones above; nothing new is calculated.
+
+| Item | Sample content |
+|---|---|
+| First message | "Somewhere warm in May, about £800 for two, from Manchester". Trip name "Warm break, May" (month and feel, before a place is chosen) |
+| Next missing field | Length. Question "How many nights would you like to go for?" Quick answers: 3 nights, 5 nights, 7 nights, Something else (choices, not facts) |
+| Traveller's answer | "5 nights. Somewhere relaxed, with good food." Layover states how it read the message: "two" as 2 adults and "about £800" as £800 in total, so the traveller can correct it. The brief is then the one in "The brief" above |
+| Brief states | Waiting for your OK, editing the budget chip ("£800 in total"), confirmed ("Confirmed by you") |
+| Confirm question in the chat | "Is that right? Nothing is searched until you confirm." Answers: Yes, that's right; Change something |
+| Strip and card wording | Strip meta: "Brief waiting for your OK", "Editing your brief", "Brief confirmed, checking 3 places", "Checking 3 places, 1 ready", "3 places ready to compare", "2 places ready, 1 did not load", "2 places ready, Porto loading", "No place fits yet". The counts come from the three places above |
+| Card states | Loading: Lisbon filled, the other two shapes. Filled: the three places above, Valencia's stay Not known. Failed: Valletta ("Layover could not check fares, costs or weather for Valletta just now"). Swapped: Porto, "Researching your place", no figure and no photo |
+| No place fits | The budget chip is the part that rules places out. The words use no cost figure: "I could not find a place that fits £800 in total for 2 adults from Manchester in May 2027." |
+
+## Booking and chat-only boards
+
+Used on `booking.html` and `chat-only.html`. Sample messages written for the boards; no figure is new. Booking figures are the "Booking (sandbox)" table above.
+
+| Item | Sample content |
+|---|---|
+| Booking chat | "Can I try booking the flights?" The offer line says "You chose 14 to 19 May 2027" and repeats MAN to LIS, 14 to 19 May 2027, 2 adults, £192 for 2. Price changed: £204 for 2, no difference shown |
+| Chat-only question | "Can I take a pushchair on Lisbon trams?" with the two web-result quotes above. "I can't help with that yet. The web search found nothing I can use." is the same question with no usable result, followed by what Layover can do (compare places, show flights, costs, advice, weather and money, plan the days, try a sandbox booking). This is the one wording on every board; the search-failed state in the journey gallery is a different case and says "The web search did not answer just now." with Try again |
+| Not about travel | "Write me a poem about my cat". The decline gives "Three days in Porto" as the example (the welcome prompt) |
+| Lost connection | The unsent message "What does the FCDO say about Lisbon?" |
+| Share trip | Tick box "Include my budget and who’s travelling", unticked, with the line "Unticked, the copy shows places, dates, fares, costs and advice, but not your budget or who is travelling. Tick it to add them." Sample link `layover.example/s/sample-share-link` (not a real address), "as of 18 Nov 2026" |
+| New trip | "Lisbon, May" stays at its working link; no time limit is stated, because how long links last is not decided |
+
+## Phone and navigation, and pages outside the trip
+
+Used on `phone-nav.html` and `pages.html`. No new figure is made up. Everything below comes from the sections above or from a project document.
+
+| Item | Sample content |
+|---|---|
+| Sideways index on the Trip tab | Brief, Compare, Lisbon, Stay, Days, Booking. A section is in the index only when it has content |
+| Folded Lisbon row | "Lisbon: flights, cost estimate, travel advice, weather and money, each with its source." No figure |
+| Folded Stay row | "Sample Hotel Alfama, Alfama. Your base for the days." The hotel is the chosen one in "Where you're staying". "Hotel names and areas only: Layover has no hotel prices" repeats the sources note in the journey widgets |
+| Days on the navigation boards | Day 1 and Day 2 as in "Days" above; Booking is the "waiting for your approval" state, as in "Booking (sandbox)" |
+| Shared trip, what is in the copy | The share step has a tick box "Include my budget and who’s travelling", unticked by default (owner: "Ask when sharing", 20 Nov 2026), with one line saying what it does. The default shared copy shows places, dates, fares, costs and advice, but no budget chip, no traveller chip and no "under or over your budget" line. The flights fare line says "£96 per person" and "£192 in total" so it does not show the traveller count |
+| Shared trip, "as of" rule | Every Live and Cached label adds ", as of 18 Nov 2026" (for example "Cached, 3 days old, as of 18 Nov 2026"). A "Not known" label has no age and stays as it is. The header says "Shared trip, as of 18 Nov 2026" |
+| How Layover works: rules | The six rules of decision 0011, in plain words, with its date (19 Nov 2026) |
+| How Layover works: agent team | The supervisor, the brief agent, the research agents (one for each place), the itinerary agent and the booking steps, as in decision 0012 |
+| How Layover works: data sources | Every source the boards use, from the "Chosen" and "Free APIs chosen for integration (#14)" tables in `docs/references/data-sources.md` (checked 19 Nov 2026): the seven "Chosen" rows plus Open-Meteo Marine, sunrise-sunset.org, the IANA time zone database, OpenFreeMap, Wikipedia and Wikidata, OpenStreetMap through Overpass, Unsplash, TfL Unified API, Tavily and the Python holidays library. Name, link, what it gives, terms, copied from that file. No candidate source is listed |
+| How Layover works: evaluation | "No evaluation results yet": no score, no trip count and no comparison, because none exists |
+| Limit reached | No figure. "You have reached the limit for planning" and "You can plan again when the limit resets, later on" (the limits are not set yet, spec §5c) |
+| Link not found | "This link does not work" and "The address may be wrong, or the link may no longer work. Check that you copied all of it." It does not say whether a trip ever existed, and says nothing about a time limit (how long links last is not decided) |
+
+## The chosen place, finished, and Stay and Days
+
+Used on `place.html` and `stay-days.html` (the side-answer screens are `place-side-answer.html`, `place-side-answer-added.html` and `place-pinned.html`). Only what these boards need beyond the sections above. None of it is a real fact.
+
+| Item | Sample content |
+|---|---|
+| Trip strip counts | "9 facts ready": the five key facts (fare, cost estimate, advice, weather, money) plus the sea, daylight, place introduction and map (5 + 4 = 9). "Stay and 3 days ready" once the hotel is chosen or skipped |
+| Trip tab badge | "1 new", on the Chat tab after a side answer is pinned |
+| Side answer: the time difference | Traveller: "What’s the time difference with Lisbon?". The answer is the proposed `time_difference` widget: "Same time as the UK" on 15 May, the middle of the month (the dates are not set yet), label "Cached, release of 1 Nov 2026 (sample date)", source the IANA time zone database. The figures and their working are in "Widget gallery: proposed widgets" (`time_difference`, Lisbon): not repeated here. Layover words: "There is no clock change to make: on 15 May, the middle of the month, Lisbon and the UK are on the same time. Your dates are not set yet." It is not on the canvas, so the chat offers "Add to trip" (hint: "Adds this card to Lisbon, under “Added from the chat”.") and, once added, the card sits under "Added from the chat" |
+| Side answer already on the canvas: the beach | Traveller: "Is May a good time for the beach?". The sea card (17°C, Live, Open-Meteo Marine) is on the canvas, so the chat shows it with "Typical highs are 22°C, with 5 rainy days. You decide if that suits you." (weather source: Open-Meteo, Live; all figures from the tables above), then "Already in your trip · View" in place of "Add to trip". View opens the sea card on the canvas (the Trip tab on a phone) |
+| Side answer boards | The canvas on all three side-answer screens is the approved one, with the sea card (the "9 facts ready" count includes it) |
+| Chat messages | Traveller: "Plan three days in Lisbon", "Choose Sample Hotel Alfama", "Skip the hotel", "Choose Sample Hotel Belém instead", "Three days in Lisbon". They are choices and requests, not facts |
+| Days after a hotel change | Day 1 keeps the same three stops as in "Days" above and Day 2 keeps its two stops. The sample does not model how stops move when the base changes. Day 1 and Day 2 each carry the note that they were rebuilt |
+| Days when the hotel is skipped | The same stops as "Days" above. Day 1 shows the banner "Days start from the centre of Lisbon", Day 2 a quiet line |
+| Itinerary-only trip | "Three days in Lisbon" with Lisbon sample data, because there are no Porto days (the information architecture's example is Porto). Trip name "Lisbon", with no month because none was given. The place shows only its introduction and the map, then one quiet line: "Fares, costs, weather and daylight for Lisbon appear here once you give dates or an airport." The chat offers: "Tell me your dates to add weather and daylight, or your airport to add fares." Nothing is guessed |
+| Map for Sample Hotel Belém | The drawn sample map moves its pin to another block. The position is not real |
+
+## Comparison card labels
+
+Used on the comparison cards (`comparison_table` and the `compare-*` screens). Every line comes from "The three places" above; nothing new is calculated. The card shows Flights + Stay + Meals so the known costs add up on screen.
+
+| Line | Lisbon | Valencia | Valletta |
+|---|---|---|---|
+| Flights for 2 | £192, "£96 × 2 adults", Cached, 3 days old | £168, "£84 × 2 adults", Cached, 1 day old | £242, "£121 × 2 adults", Cached, 6 days old |
+| Stay, 5 nights | about £350, "£70 × 5 nights, an estimate from 6 Wikivoyage listings, page edited March 2026", Cached, 4 days old | Not known: too few priced listings | about £400, "£80 × 5 nights, an estimate from 5 Wikivoyage listings, page edited January 2026", Cached, 9 days old |
+| Meals, 5 days | about £240, "£12 × 2 people × 5 days × 2 meals, an estimate", Cached, 4 days old | about £220, "£11 × 2 people × 5 days × 2 meals, an estimate", Cached, 2 days old | about £260, "£13 × 2 people × 5 days × 2 meals, an estimate", Cached, 9 days old |
+| Known costs | about £782: "£192 + £350 + £240. Partial: local transport and activities are not known" | about £388: "£168 + £220. Partial: stay, local transport and activities are not known" | about £902: "£242 + £400 + £260. Partial: local transport and activities are not known" |
+| Weather in May | "Typically 22°C high, 14°C low, 5 rainy days, averages 1991 to 2020", Live | "Typically 24°C high, 15°C low, 4 rainy days, averages 1991 to 2020", Live | "Typically 23°C high, 16°C low, 2 rainy days, averages 1991 to 2020", Live |
+
+The chat line after the comparison is neutral. It does not say places "fit": "Here are three places side by side. Lisbon is under your £800 on known costs, Valletta is over, and Valencia’s stay is not known." The strip says "Checking 3 places" and "3 places ready to compare".
+
+## Edge states
+
+Used on `edge-states.html` (screens `edge-after-stop.html`, `edge-visa.html`, `edge-chip-invalid.html`, `edge-no-photo.html`, `edge-hours-weekday.html`, `edge-hours-dates.html` and `edge-gbp.html`). Every value is made up for the boards, except the FCDO links, which were checked on 20 Nov 2026 (the entry requirements page answered with HTTP 200).
+
+| Item | Sample content |
+|---|---|
+| After Stop: kept text | "Here are two results from a web search. Layover has not checked them, so" (the text stops where the traveller pressed Stop; no source line) |
+| After Stop: line and actions | "You stopped this answer." with the actions "Continue" and "Ask again"; "Nothing from this answer was added to your trip." |
+| Visa: question and answer | Traveller: "Do I need a visa for Portugal?". Layover: "Layover does not give visa rules. The FCDO entry requirements page for Portugal is the place to check. It was updated on 12 Nov 2026." |
+| Visa: `advice_card` | Title "Entry requirements"; "FCDO travel advice: Portugal, Entry requirements"; "Updated 12 Nov 2026" (sample date); link text "Check the entry requirements for Portugal" to `https://www.gov.uk/foreign-travel-advice/portugal/entry-requirements`; label "Cached, 1 day old"; "Layover's copy"; source "FCDO, gov.uk" |
+| Visa: note and action | "Entry rules can change. Open the page to read the current rules before you book." The action "Add to trip" with "Adds this card to Lisbon, under “Added from the chat”." |
+| Budget error | Box holds "eight hundred-ish" (an empty box shows the same message). Error: "Type the total in pounds, for example 800." Hint: "Save works when the box holds a number. Nothing is searched until you confirm your brief." Save is disabled |
+| No photo | Porto, trip name "Porto, May". Traveller: "Use Porto instead". Layover: "Porto it is. I am researching it now. Facts appear on your canvas as each one is ready." Hero: "The place you chose", "Porto", "No photo of this place yet". No credit, no figure, no one-line description. Card "Researching Porto": "Fare, costs, advice, weather and money appear here as each one is ready. Nothing is shown until it has a source." |
+| Hours, dates not set | Same Day 1 stops as in "Days" above. Castelo de São Jorge: "Opening times depend on the day. Add your dates to see them." with the action "Add your dates". Layover: "Here is Day 1. Some places are open at different times on different days, and your dates are not set yet. Those stops say so instead of showing one set of hours." |
+| Hours, dates set | Traveller: "14 to 19 May 2027". Layover: "Thanks. Your dates are Friday 14 to Wednesday 19 May 2027. Day 1 is Friday 14 May, so each stop shows its hours for that day." Brief chip "14 to 19 May 2027 · 5 nights"; title "Day 1, Friday 14 May 2027"; Castelo de São Jorge: "Open Friday 10:00 to 18:00" (the sample 10:00 to 18:00; the board does not claim it is the real Friday opening time) |
+| Money, a place that uses pounds | "Sample place", an invented name, stands for any place that uses pounds. Traveller: "Choose Sample place". Layover: "Sample place it is. Its money card says there is no exchange rate to show, because it uses pounds." Card text: "This place uses pounds sterling, so there is no exchange rate to show." No rate, no label, no source line: no outside value is on the card. Where Layover learns a place's currency is not settled (see "Noticed" in the pull request) |

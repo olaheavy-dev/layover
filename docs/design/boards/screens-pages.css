@@ -1,0 +1,101 @@
+/* Phone and navigation, and the pages outside the trip: the few styles these screens add to boards.css, widgets-journey.css and
+   screens-journey.css. Tokens only (see ../tokens.css): no literal colours. */
+
+/* ---------- Page screens: one column, no chat ---------- */
+.app--page { grid-template-rows: auto auto minmax(0, 1fr); }
+@media (min-width: 64rem) { .app--page { grid-template-rows: auto minmax(0, 1fr); } }
+.subbar--only { justify-content: flex-end; }
+.canvas.page { min-height: 0; min-width: 0; overflow-y: auto; overscroll-behavior: contain; }
+
+/* A section heading on the canvas (Days, Booking, and the sections of the pages) */
+.sec-title { margin: var(--space-6) 0 var(--space-3); font-family: var(--font-family-display); font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); line-height: var(--line-height-snug); letter-spacing: var(--letter-spacing-tight); }
+.days-list { display: flex; flex-direction: column; gap: var(--space-4); }
+.days-list .widget { margin: 0; }
+.section .fold__body .quiet { display: block; color: var(--color-text-secondary); }
+
+/* ---------- Shared trip ---------- */
+.shared-head { display: grid; gap: var(--space-2); padding-block: var(--space-5) var(--space-4); border-bottom: 1px solid var(--color-border-primary); }
+.shared-head__kicker { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; color: var(--color-text-secondary); }
+.shared-head__kicker .icon { width: 1rem; height: 1rem; }
+.shared-head__title { font-family: var(--font-family-display); font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-tight); }
+.shared-head__line { max-width: 40rem; color: var(--color-text-secondary); }
+.shared-head__act { margin-top: var(--space-2); }
+@media (min-width: 40rem) { .shared-head__title { font-size: var(--font-size-3xl); } }
+
+/* ---------- Notice in the chat (limit reached) ---------- */
+.notice { display: flex; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--color-status-warning); border-radius: var(--border-radius-md); background: var(--color-bg-secondary); line-height: var(--line-height-snug); }
+.notice p + p { margin-top: var(--space-2); }
+.notice__icon { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: var(--border-radius-full); background: var(--color-bg-tertiary); color: var(--color-text-primary); }
+.notice__icon .icon { width: 1.125rem; height: 1.125rem; }
+.notice__title { margin-bottom: var(--space-1); font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); }
+.composer--off { background: var(--color-bg-tertiary); border-style: dashed; }
+.composer--off .composer__input { cursor: not-allowed; }
+.composer--off .composer__input::placeholder { color: var(--color-text-secondary); }
+.composer--off .btn:disabled { cursor: not-allowed; opacity: 1; background: var(--color-bg-secondary); color: var(--color-text-disabled); border: 1px solid var(--color-border-primary); }
+
+/* ---------- Link not found ---------- */
+.nf .canvas__inner { min-height: 100%; display: grid; align-content: center; padding-bottom: var(--space-6); }
+.nf__box { display: grid; justify-items: center; gap: var(--space-3); max-width: 30rem; margin-inline: auto; padding-block: var(--space-6); text-align: center; }
+.nf__illus { width: min(15rem, 70%); margin-bottom: 0; }
+.nf__title { font-family: var(--font-family-display); font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-tight); }
+.nf__line { color: var(--color-text-secondary); font-size: var(--font-size-md); }
+.nf__acts { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-2) var(--space-4); margin-top: var(--space-2); }
+@media (min-width: 40rem) { .nf__title { font-size: var(--font-size-3xl); } }
+
+/* ---------- How Layover works ---------- */
+.hw-inner { max-width: 56rem; }
+.hw-hero { display: grid; gap: var(--space-5); padding-block: var(--space-6) var(--space-5); border-bottom: 1px solid var(--color-border-primary); }
+.hw-hero__text { display: grid; gap: var(--space-3); align-content: start; }
+.hw-hero__title { font-family: var(--font-family-display); font-size: var(--font-size-3xl); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-tight); }
+.hw-hero__lead { font-size: var(--font-size-md); line-height: var(--line-height-relaxed); color: var(--color-text-secondary); }
+@media (min-width: 48rem) { .hw-hero { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; } .hw-hero__title { font-size: var(--font-size-4xl); } }
+
+/* Designed placeholder for the mood scene (the owner makes the image) */
+.mood-slot { display: grid; place-items: center; align-content: center; gap: var(--space-2); aspect-ratio: 16 / 10; width: 100%; margin: 0; padding: var(--space-4); border: 2px dashed var(--color-border-control); border-radius: var(--border-radius-lg); background: var(--color-bg-tertiary); color: var(--color-text-secondary); text-align: center; font-size: var(--font-size-sm); }
+.mood-slot__art { width: 40%; max-width: 8rem; height: auto; }
+
+.hw .sec-title { margin-top: var(--space-6); }
+.hw__p { max-width: 42rem; margin-bottom: var(--space-3); line-height: var(--line-height-relaxed); }
+.hw a:not(.btn) { color: var(--color-text-link); }
+
+/* The agent team: a supervisor above four steps. Horizontal from 48rem, stacked below. */
+.team { display: grid; gap: var(--space-3); margin: var(--space-4) 0 0; }
+.team__sup { display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-4); border: 2px solid var(--color-accent-primary); border-radius: var(--border-radius-md); background: var(--color-bg-secondary); text-align: center; }
+.team__sup span { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.team__steps { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; position: relative; }
+.team__steps::before { content: ""; position: absolute; left: 1.5rem; top: -0.75rem; bottom: 1.5rem; border-left: 2px solid var(--color-border-control); }
+.team__step { position: relative; display: flex; gap: var(--space-3); padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border-primary); border-radius: var(--border-radius-md); background: var(--color-bg-secondary); font-size: var(--font-size-sm); line-height: var(--line-height-snug); }
+.team__step p { color: var(--color-text-secondary); }
+.team__n { flex: none; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: var(--border-radius-full); background: var(--color-accent-primary); color: var(--color-text-on-accent); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
+.team__name { margin-bottom: var(--space-1); font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); }
+.team__cap { font-size: var(--font-size-sm); color: var(--color-text-secondary); max-width: 42rem; }
+@media (min-width: 48rem) {
+  .team__steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .team__steps::before { display: none; }
+  .team__sup { position: relative; margin-bottom: var(--space-3); }
+  .team__sup::after { content: ""; position: absolute; left: 50%; top: 100%; height: var(--space-3); border-left: 2px solid var(--color-border-control); }
+  .team__step { flex-direction: column; }
+}
+
+.rules { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; counter-reset: rule; }
+.rule { position: relative; padding: var(--space-3) var(--space-4) var(--space-3) var(--space-8); border: 1px solid var(--color-border-primary); border-radius: var(--border-radius-md); background: var(--color-bg-secondary); counter-increment: rule; line-height: var(--line-height-snug); }
+.rule::before { content: counter(rule); position: absolute; left: var(--space-4); top: var(--space-3); display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: var(--border-radius-full); background: var(--color-bg-tertiary); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
+.rule__name { margin-bottom: var(--space-1); font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); }
+.rule p { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+@media (min-width: 48rem) { .rules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.srcs { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.src { padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border-primary); border-radius: var(--border-radius-md); background: var(--color-bg-secondary); font-size: var(--font-size-sm); line-height: var(--line-height-snug); }
+.src__name { margin-bottom: var(--space-2); font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); }
+.src__name a { display: inline-flex; align-items: center; gap: var(--space-2); }
+.src__name .icon { width: 1rem; height: 1rem; }
+.src p + p { margin-top: var(--space-1); }
+.src__k { display: inline-block; min-width: 3.5rem; font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; color: var(--color-text-secondary); }
+@media (min-width: 48rem) { .srcs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.eval-none { padding: var(--space-4); border: 1px dashed var(--color-border-control); border-radius: var(--border-radius-md); background: var(--color-bg-secondary); }
+.eval-none__head { margin-bottom: var(--space-3); }
+.eval-none .hw__p { margin-bottom: 0; }
+
+/* Board page: the phone frames of one state sit side by side, and wrap on a narrow board. */
+.state .sj-pair { align-items: flex-start; }

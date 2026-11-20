@@ -1,0 +1,30 @@
+/* Starting a trip and Comparing: the few styles these screens add to boards.css and widgets-journey.css.
+   Tokens only (see ../tokens.css): no literal colours. */
+
+/* widgets-journey.css sets the gallery's top strip. On a working screen the strip holds the Chat and Trip tabs. */
+@media (max-width: 63.99rem) {
+  .subbar { justify-content: space-between; padding: 0 var(--space-4); }
+}
+
+/* Empty canvas with the small form of the welcome illustration (no ticket). The drawing is the welcome scene's own symbol. */
+.sj-start .canvas__inner { min-height: 100%; display: grid; align-content: center; padding-bottom: var(--space-6); }
+.sj-start .empty { min-height: 0; max-width: 28rem; width: 100%; gap: var(--space-2); padding-block: var(--space-6); }
+.sj-start .empty__line { font-size: var(--font-size-md); }
+.sj-illus { --ticket-display: none; display: block; width: min(20rem, 80%); height: auto; margin: 0 auto var(--space-3); }
+@media (max-width: 63.99rem) {
+  .sj-start .canvas__inner { align-content: start; }
+}
+
+/* Trip strip without a place photo: an icon in a quiet square, until a place is chosen. */
+.strip__icon { flex: none; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: var(--border-radius-md); background: var(--color-bg-tertiary); color: var(--color-accent-primary); }
+.strip__icon .icon { width: 1.25rem; height: 1.25rem; }
+
+/* A check that is still running (hollow dot) and one that failed (warning dot). The words carry the meaning too. */
+.step--busy::before { background: none; border: 2px solid var(--color-highlight); width: 0.5rem; height: 0.5rem; }
+.step--failed::before { background: var(--color-status-warning); }
+.step--failed { color: var(--color-text-primary); }
+
+/* Board page: the two phone frames of one state (Chat tab and Trip tab) sit side by side. */
+.sj-pair { display: flex; flex-wrap: wrap; gap: var(--space-5); }
+.sj-pair > div { flex: none; }
+.state .board__notes { flex: 1 1 16rem; }

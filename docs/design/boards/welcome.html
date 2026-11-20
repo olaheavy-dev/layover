@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: welcome and new trip · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Start here</p>
+        <h1 class="board__title">Welcome and new trip</h1>
+        <p class="board__lead">The first screen at <code>/</code>. It asks "Where to next?", offers four example prompts and shows the empty trip with the isometric illustration. The illustration rules are in the <a href="illustration-guide.html">illustration guide</a>.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of both frames">
+          <button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button>
+          <button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. Before any message</h2>
+        <p class="state__line">A new traveller sees one question, four example prompts they can press, and an empty trip that says what will appear there. Nothing is searched until they write or press a prompt.</p>
+        <section aria-labelledby="desktop-label-1">
+          <span class="board__label" id="desktop-label-1">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="1. Welcome, 1440 px wide" data-screen="screens/welcome.html" src="screens/welcome.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-labelledby="phone-label-1">
+          <div>
+            <span class="board__label" id="phone-label-1">390 px</span>
+            <div class="frame frame--phone">
+              <iframe title="1. Welcome, 390 px wide" data-screen="screens/welcome.html" src="screens/welcome.html#light"></iframe>
+            </div>
+          </div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The illustration is the isometric style the owner chose. It is decoration only: the words beside it carry the meaning.</li>
+            <li>On a phone the illustration sits small above the question, without the ticket, which is too small to read at that size.</li>
+            <li>The four prompts are buttons in a named group. Pressing one would send it as the first message.</li>
+            <li>"Every figure shows where it came from and how old it is" is the honesty line, with a link to "How Layover works".</li>
+            <li>No mood scene (a generated photo) is on this page yet. It waits for the owner's images, so the footer line about AI-generated photos is not shown.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</body>
+</html>
