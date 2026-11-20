@@ -10,7 +10,7 @@ The repository holds documents and their checks only until the design is approve
 
 | # | Issue | Item | Notes |
 |---|---|---|---|
-| 22 | #39 | Design gate: evaluation coverage, build order, Floorplan snapshot and audit | Closed by the gate PR |
+| — | — | None open: the Design stage closed with the gate (#42) | |
 
 ## Build steps
 
@@ -29,4 +29,4 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 
 Milestones: Build 1: Foundation and data contract; Build 2: Chat, intents and the brief; Build 3: Facts about one place; Build 4: Fares and compare; Build 5: Itinerary and where to stay; Build 6: Sandbox booking; Build 7: Trip links and going public; Build 8: Earnings dashboard.
 
-Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[06]` #10, decision 0011 accepted; `[07]` #11, data sources and the earnings decision; `[08]` #14, free APIs chosen for integration; `[09]` #16, simple-english and Floorplan adopted; `[10]` #18, prompt-window rule and rules from homescout; `[11]` #20, the main journey design and decision 0012; `[12]` #22, evaluations at each stage gate; `[13]` #25, design foundations (brief, information architecture and tokens); `[14]` #31, boards readiness (widget state table, sample data, image rules, board checks); `[15]` #28, the design boards for every screen and widget state (#37); `[18]` #33, the owner's reason for decision 0004 recorded in the register.
+Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[06]` #10, decision 0011 accepted; `[07]` #11, data sources and the earnings decision; `[08]` #14, free APIs chosen for integration; `[09]` #16, simple-english and Floorplan adopted; `[10]` #18, prompt-window rule and rules from homescout; `[11]` #20, the main journey design and decision 0012; `[12]` #22, evaluations at each stage gate; `[13]` #25, design foundations (brief, information architecture and tokens); `[14]` #31, boards readiness (widget state table, sample data, image rules, board checks); `[15]` #28, the design boards for every screen and widget state (#37); `[18]` #33, the owner's reason for decision 0004 recorded in the register; `[22]` #39, the Design gate (#42); `[25]` #45, widgets first: the website and all widgets in build step 1 (#44).
