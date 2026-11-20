@@ -143,3 +143,16 @@ Used on `widgets-journey.html`. Only what the gallery needs beyond the sections 
 | Web result quotes | Two made-up quotes from `example.org`, retrieved 18 Nov 2026: "Fold the pushchair before you board if the tram is busy." and "Ask the driver where to stand with a pushchair." Each is marked "sample quote" |
 | `not_known` answer | "Layover doesn't know local bus fares in Lisbon: none of its sources has them. It can show the cost estimate without them." |
 | Compact card ages | Compare places: "Cached, 1 to 6 days old" (the fares are 3, 1 and 6 days old). Known costs: Lisbon "3 to 4 days old", Valencia "1 to 2 days old", Valletta "6 to 9 days old" (the flights and the Wikivoyage lines) |
+
+## Widget gallery: proposed widgets
+
+Used on `widgets-proposed.html` (proposals for [#26](https://github.com/olaheavy-dev/layover/issues/26)). Made up for the boards, except the two time zone rows, which were derived and checked.
+
+| Item | Sample content |
+|---|---|
+| Release dates in labels | "Cached, release of 1 Nov 2026" is a made-up date for the library or database release. The real widget shows the real release |
+| `public_holidays` | Lisbon, 14 to 19 May 2027. Layover could not run the holidays library for these boards, so no real holiday date is used. Two made-up rows, both named "Sample holiday": Mon 17 May 2027 (day 4 of the trip) and Wed 19 May 2027 (the day you fly home). The weekdays are worked from 14 May 2027 being a Friday. The Empty state ("No public holidays on 14 to 19 May 2027") is a sample outcome and is not checked against the library |
+| `time_difference`, Lisbon | Derived with Python `zoneinfo` on 20 Nov 2026, for 14 May 2027 at 12:00: `Europe/London` is BST, UTC+1; `Europe/Lisbon` is WEST, UTC+1. Difference 1 − 1 = 0 hours: "Same time as the UK" |
+| `time_difference`, Valletta | Same check: `Europe/Malta` is CEST, UTC+2. Difference 2 − 1 = 1 hour ahead: 12:00 in the UK is 13:00 in Valletta. The tz data release on the machine was not recorded |
+| `fare_list` | From Bristol (BRS), leaving in March 2027, return, per person, all made up and sorted lowest first: Faro £59 (Cached, 3 days old), Valencia £64 (1 day), Lisbon £71 (2 days), Valletta £98 (5 days). Naples is the "Not known" row: no cached fare. Compact card: "From £59", "Cached, 1 to 5 days old" for the four fares shown. Whether these routes run from Bristol is not claimed |
+| `transport_route` | A made-up journey from Paddington station to Heathrow Terminals 2 and 3: walk to the platform 5 min, Elizabeth line 32 min, walk to departures 6 min. Total 5 + 32 + 6 = 43 min. Planned for Fri 14 May 2027, leaving 09:00 (made up). Station and line names are real places and services, but the times are not TfL's |
