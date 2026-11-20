@@ -11,6 +11,12 @@ sys.path.insert(0, str(Path(__file__).parent))
 import check_boards as cb  # noqa: E402
 
 LABEL = "Sample data, not real"
+REG_HEAD = ("| File | What it is | Source | Author or owner | Licence and terms | Date checked |\n"
+            "|---|---|---|---|---|---|\n")
+
+
+def reg_row(path: str, source: str = "Unsplash", licence: str = "Unsplash License") -> str:
+    return f"| `{path}` | a file | {source} | someone | {licence} | 20 Nov 2026 |\n"
 
 GOOD_PAGE = f"""<!doctype html>
 <html lang="en-GB">
@@ -164,7 +170,7 @@ class Boards(unittest.TestCase):
         self.assertTrue(any("lisbon.jpg" in p and "docs/assets/README.md" in p for p in found), found)
 
     def test_registered_image_passes(self) -> None:
-        self.write("docs/assets/README.md", "| `docs/design/boards/img/lisbon.jpg` | Unsplash | Unsplash License |")
+        self.write("docs/assets/README.md", REG_HEAD + reg_row("docs/design/boards/img/lisbon.jpg"))
         self.write("docs/design/boards/img/lisbon.jpg", "x")
         self.assertEqual(cb.problems(self.root), [])
 
@@ -240,13 +246,135 @@ class Boards(unittest.TestCase):
     def test_no_false_positives(self) -> None:
         # Colour words in file names, a "#fade" selector, a "#123" string, light-dark() with tokens,
         # and "/home/" inside a web address are all fine.
-        self.write("docs/assets/README.md", "| `docs/design/boards/img/red-door.jpg` | x |")
+        self.write("docs/assets/README.md", REG_HEAD + reg_row("docs/design/boards/img/red-door.jpg"))
         self.write("docs/design/boards/img/red-door.jpg", "x")
         page = GOOD_PAGE.replace(".clear {", """.door { background: url(img/red-door.jpg); }
   #fade { opacity: 0; }
   .tag::before { content: "#123"; }
   .t { color: light-dark(var(--color-text-primary), var(--color-text-secondary)); }
   .clear {""").replace("Issue #123", 'See <a href="https://example.org/en/home/about">this page</a>.')
+        self.assertEqual(self.page(page), [])
+
+    # Gap 1: .js files get the same "safe" and literal-colour checks
+
+    def js(self, text: str) -> list[str]:
+        self.write("docs/design/boards/switch.js", text)
+        return cb.problems(self.root)
+
+    def test_safe_in_js_string_and_comment_fails(self) -> None:
+        # Expected failure before the fix: .js files are only scanned for local paths and outside addresses.
+        found = self.js('el.textContent = "Lisbon is safe";\n// the safest option\n')
+        self.assertTrue(any("switch.js" in p and '"safe"' in p for p in found), found)
+        self.assertTrue(any("switch.js" in p and '"safest"' in p for p in found), found)
+
+    def test_safety_and_safe_area_in_js_pass(self) -> None:
+        self.assertEqual(self.js('el.textContent = "Safety and security"; el.style.padding = "env(safe-area-inset-top)";'), [])
+
+    def test_hex_and_functions_in_js_fail(self) -> None:
+        for code, needle in (('el.style.color = "#12436E";', "#12436E"),
+                             ("ctx.fillStyle = '#fff';", "#fff"),
+                             ('el.style.background = `rgba(0, 0, 0, 0.5)`;', "rgba("),
+                             ('const c = "hsl(200 50% 40%)";', "hsl(")):
+            with self.subTest(code=code):
+                found = self.js(code)
+                self.assertTrue(any("switch.js" in p and "literal colour" in p and needle in p for p in found), found)
+
+    def test_named_colour_assigned_to_a_colour_property_in_js_fails(self) -> None:
+        for code in ('el.style.color = "red";',
+                     "el.style.backgroundColor = 'Navy';",
+                     "el.style.setProperty('color', 'red');",
+                     "el.setAttribute('fill', \"white\");"):
+            with self.subTest(code=code):
+                found = self.js(code)
+                self.assertTrue(any("switch.js" in p and "literal colour" in p for p in found), found)
+
+    def test_js_with_tokens_and_colour_words_elsewhere_passes(self) -> None:
+        code = ('el.style.color = "var(--color-text-primary)"; el.style.setProperty("background", "var(--color-bg-secondary)");\n'
+                'const label = "red"; const w = "white"; el.className = "red-door";\n'
+                'el.style.color = "currentColor";')
+        self.assertEqual(self.js(code), [])
+
+    def test_js_comment_looking_text_in_a_string_does_not_hide_an_outside_address(self) -> None:
+        # The string below contains "/*" and then "*/" later, so stripping /* */ would remove the address.
+        found = self.js('const a = "/*"; const u = "https://cdn.test/lib.js"; const b = "*/";')
+        self.assertTrue(any("switch.js" in p and "cdn.test" in p for p in found), found)
+
+    def test_inline_script_outside_address_after_slash_star_string_fails(self) -> None:
+        page = GOOD_PAGE.replace("</body>", '<script>const a = "/*"; fetch("https://cdn.test/x"); const b = "*/";</script></body>')
+        found = self.page(page)
+        self.assertTrue(any("cdn.test" in p for p in found), found)
+
+    # Gap 2: token values live only in tokens.css
+
+    def test_defining_a_token_in_a_style_block_fails(self) -> None:
+        for prop in ("--color-text-primary", "--tint-glow", "--illus-water", "--logo-ink"):
+            with self.subTest(prop=prop):
+                found = self.page(GOOD_PAGE.replace(".clear {", ".x { %s: var(--color-accent-primary); }\n  .clear {" % prop))
+                self.assertTrue(any("welcome.html" in p and prop in p and "tokens.css" in p for p in found), found)
+
+    def test_defining_a_token_in_a_style_attribute_or_css_file_fails(self) -> None:
+        found = self.page(GOOD_PAGE.replace('<p class="sample">', '<p class="sample" style="--color-bg-primary: var(--color-bg-tertiary)">'))
+        self.assertTrue(any("--color-bg-primary" in p for p in found), found)
+        self.write("docs/design/boards/boards.css", ":root { --color-accent-primary: var(--color-chart-1); }")
+        found = cb.problems(self.root)
+        self.assertTrue(any("boards.css" in p and "--color-accent-primary" in p for p in found), found)
+
+    def test_defining_a_token_from_js_fails(self) -> None:
+        found = self.js("document.documentElement.style.setProperty('--color-bg-primary', 'var(--color-bg-tertiary)');")
+        self.assertTrue(any("switch.js" in p and "--color-bg-primary" in p for p in found), found)
+
+    def test_using_tokens_and_defining_other_properties_passes(self) -> None:
+        page = GOOD_PAGE.replace(".clear {", ".x { --gap: 8px; --card-pad: 12px; color: var(--color-text-primary); }\n  .clear {")
+        self.assertEqual(self.page(page), [])
+
+    # Gap 3: a register row needs a Source and a Licence
+
+    def registered(self, row: str) -> list[str]:
+        self.write("docs/assets/README.md", REG_HEAD + row)
+        self.write("docs/design/boards/img/lisbon.jpg", "x")
+        return cb.problems(self.root)
+
+    def test_row_with_empty_or_dash_source_or_licence_fails(self) -> None:
+        # Expected failure before the fix: any table row naming the path counts as registered.
+        for source, licence in (("", "Unsplash License"), ("   ", "Unsplash License"), ("\u2014", "Unsplash License"),
+                                ("Unsplash", ""), ("Unsplash", "  "), ("Unsplash", "\u2014"), ("Unsplash", "-")):
+            with self.subTest(source=source, licence=licence):
+                found = self.registered(reg_row("docs/design/boards/img/lisbon.jpg", source, licence))
+                self.assertTrue(any("lisbon.jpg" in p and "Source" in p and "Licence" in p for p in found), found)
+
+    def test_row_with_source_and_licence_passes(self) -> None:
+        self.assertEqual(self.registered(reg_row("docs/design/boards/img/lisbon.jpg")), [])
+
+    def test_row_under_no_header_is_not_registered(self) -> None:
+        self.write("docs/assets/README.md", "| `docs/design/boards/img/lisbon.jpg` | Unsplash | Unsplash License |")
+        self.write("docs/design/boards/img/lisbon.jpg", "x")
+        found = cb.problems(self.root)
+        self.assertTrue(any("lisbon.jpg" in p for p in found), found)
+
+    def test_columns_are_found_by_each_tables_own_header(self) -> None:
+        # Second table lists the columns in another order; the licence is empty there.
+        self.write("docs/assets/README.md", REG_HEAD + reg_row("docs/design/boards/img/a.jpg") +
+                   "\n| Licence | File | Source |\n|---|---|---|\n| MIT | `docs/design/boards/img/b.jpg` | Lucide |\n"
+                   "|  | `docs/design/boards/img/c.jpg` | Lucide |\n")
+        for n in "abc":
+            self.write(f"docs/design/boards/img/{n}.jpg", "x")
+        found = cb.problems(self.root)
+        self.assertEqual([p.split(":")[0] for p in found], ["docs/design/boards/img/c.jpg"], found)
+
+    # Gap 5: closing tags may hold whitespace
+
+    def test_style_closer_with_whitespace_is_still_scanned(self) -> None:
+        # "</style >" is a valid closer; without the fix the block is not found and its colour is missed.
+        page = GOOD_PAGE.replace("</style>", "</style >").replace("var(--color-bg-primary)", "#F7F6F3", 1)
+        found = self.page(page)
+        self.assertTrue(any("literal colour" in p and "#F7F6F3" in p for p in found), found)
+
+    def test_script_closer_with_whitespace_is_still_scanned(self) -> None:
+        page = GOOD_PAGE.replace("</body>", '<script>import x from "https://esm.sh/x";</script ></body>')
+        found = self.page(page)
+        self.assertTrue(any("esm.sh" in p for p in found), found)
+        # the script is not read as visible text either
+        page = GOOD_PAGE.replace("</body>", "<script>var s = 'safe';</script\t\n></body>")
         self.assertEqual(self.page(page), [])
 
     # The board index (docs/design/boards/index.html) links every board page

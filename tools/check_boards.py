@@ -6,8 +6,10 @@ Fails when:
   other colour functions, or a named colour) instead of a token from docs/design/tokens.css (issue #28);
 - a board's text says "safe", "safer", "safest", "safely" or "unsafe" (decision 0011, rule 6), in visible
   text, in alt, title, aria-label, placeholder, value or content attributes, in SVG text, or in a CSS
-  `content` string. "Safety" is allowed, because it is part of the FCDO's own section name,
-  "Safety and security";
+  `content` string, and anywhere in a .js or .mjs file (strings and comments). "Safety" is allowed, because
+  it is part of the FCDO's own section name, "Safety and security";
+- a board defines a --color-*, --tint-*, --illus-* or --logo-* custom property (token values live only in
+  docs/design/tokens.css, so the contrast check covers them); using var(--x) is fine;
 - a file in the boards folder holds a local path (/Users/, /home/, C:\\Users\\);
 - a board loads a script, stylesheet, font or image from another site (src, srcset, href, poster, data and
   background attributes, CSS url(), image-set() and @import, and addresses in scripts). Boards are
@@ -16,8 +18,17 @@ Fails when:
 - a board page in docs/design/boards/ (not index.html, not the screens/ sub-folder) is not linked from
   docs/design/boards/index.html, once index.html exists (the index is how the reviewers check coverage);
 - an image, font, video, audio file or PDF anywhere under docs/ is not in a table row of
-  docs/assets/README.md, named by its path from the repository root in backticks
-  (AGENTS.md: "Media is registered first").
+  docs/assets/README.md, named by its path from the repository root in backticks, with a non-empty Source
+  and Licence cell (columns found by the header row of that table; empty, whitespace and a dash do not
+  count) (AGENTS.md: "Media is registered first").
+
+Scripts (.js, .mjs) get a pragmatic text scan, not a parser. Limits: the "safe" check reads the whole file, so
+a comment or an identifier such as `safeMode` is flagged too (rename it); only `safe-area` is let through. Hex colours are flagged only when
+quoted whole ("#12436E") or after a colon in a string ("color:#fff"), so a "#fade" id selector is not
+flagged. rgb(, hsl( and the other colour functions are flagged anywhere. A named colour is flagged only
+when assigned straight to a colour property (`.style.color = "red"`, `style.setProperty("color", "red")`,
+`setAttribute("fill", "red")`); a colour built by joining strings or read from data is not seen. Outside
+addresses are found in the raw text, comments included.
 
 Colours are checked only in declaration values and colour attributes: .css files, <style> blocks,
 style="" attributes and the SVG colour attributes (fill, stroke and so on). So "#123" in board text,
@@ -66,8 +77,8 @@ highlighttext selecteditem selecteditemtext mark marktext graytext accentcolor a
 
 COMMENT_CSS = re.compile(r"/\*.*?\*/", re.S)
 COMMENT_HTML = re.compile(r"<!--.*?-->", re.S)
-STYLE_BLOCK = re.compile(r"<style[^>]*>(.*?)</style>", re.S | re.I)
-SCRIPT_BLOCK = re.compile(r"<script[^>]*>(.*?)</script>", re.S | re.I)
+STYLE_BLOCK = re.compile(r"<style[^>]*>(.*?)</style\s*>", re.S | re.I)
+SCRIPT_BLOCK = re.compile(r"<script[^>]*>(.*?)</script\s*>", re.S | re.I)
 TAG = re.compile(r"<([a-zA-Z][\w:-]*)((?:[^>\"']|\"[^\"]*\"|'[^']*')*)>", re.S)
 ATTR = re.compile(r"""([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>"']+))""", re.S)
 COLOUR_ATTRS = {"fill", "stroke", "stop-color", "flood-color", "lighting-color", "color", "bgcolor"}
@@ -84,7 +95,16 @@ COLOUR_PROP = re.compile(r"color|background|fill|stroke|border|outline|shadow|co
                          re.I)
 CSS_CONTENT = re.compile(r"content\s*:\s*(\"[^\"]*\"|'[^']*')", re.I)
 
+TOKEN_DEF = re.compile(r"^--(?:color|tint|illus|logo)-")
+JS_HEX = re.compile(r"""(?:["'`]|:\s*)(#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4}))(?=["'`;\s)])""")
+JS_PROP_COLOUR = r"(?:[\w-]*(?:color|colour|background|fill|stroke|border|outline|shadow)[\w-]*)"
+JS_NAMED_ASSIGN = re.compile(
+    r"""(?:\.style\.""" + JS_PROP_COLOUR + r"""\s*=|(?:setProperty|setAttribute)\(\s*["']""" + JS_PROP_COLOUR +
+    r"""["']\s*,)\s*["'`]\s*([A-Za-z]+)\s*["'`]""", re.I)
+JS_TOKEN_SET = re.compile(r"""setProperty\(\s*["'](--(?:color|tint|illus|logo)-[\w-]*)["']""")
+
 SAFE = re.compile(r"\b(safe|safer|safest|safely|unsafe)\b", re.I)
+JS_SAFE = re.compile(r"\b(safe|safer|safest|safely|unsafe)\b(?!-area)", re.I)  # env(safe-area-inset-*) is CSS
 LOCAL_PATH = re.compile(r"(?<![\w.%-])(?:/Users/|/home/[A-Za-z])|[A-Za-z]:\\Users\\")
 OUTSIDE_URL = re.compile(r"^\s*(?:https?:)?//", re.I)
 CSS_OUTSIDE = re.compile(r"""(?:url\(\s*["']?|["'])\s*((?:https?:)?//[^"')\s,]+)""", re.I)
@@ -120,6 +140,20 @@ def _literal_colours(decls: list[tuple[str, str]]) -> list[str]:
     return found
 
 
+def _script_problems(rel: Path, text: str) -> list[str]:
+    """The colour, token and "safe" checks for a .js or .mjs file. See the module docstring for its limits."""
+    found: list[str] = []
+    literals = JS_HEX.findall(text) + [m.group(0) for m in FUNC.finditer(text)]
+    literals += [m.group(1).lower() for m in JS_NAMED_ASSIGN.finditer(text) if m.group(1).lower() in NAMED]
+    if literals:
+        found.append(f"{rel}: literal colour {', '.join(sorted(set(literals)))}; use a token from tokens.css")
+    for name in sorted(set(JS_TOKEN_SET.findall(text))):
+        found.append(f"{rel}: defines {name}; token values live only in docs/design/tokens.css")
+    for word in sorted({m.group(0).lower() for m in JS_SAFE.finditer(text)}):
+        found.append(f'{rel}: says "{word}"; Layover never calls a place safe (decision 0011, rule 6)')
+    return found
+
+
 def _css_parts(text: str, suffix: str) -> list[str]:
     if suffix == ".css":
         return [text]
@@ -135,9 +169,12 @@ def _board_problems(root: Path, path: Path) -> list[str]:
         found.append(f"{rel}: holds a local path; remove it")
     outside: list[str] = []
     if suffix in SCRIPT_SUFFIXES:
-        outside += SCRIPT_OUTSIDE.findall(COMMENT_CSS.sub("", text))
+        # Raw text: stripping /* */ would also strip a string that looks like a comment (a false pass).
+        outside += SCRIPT_OUTSIDE.findall(text)
     if suffix not in BOARD_SUFFIXES:
-        return found + [f"{rel}: loads an outside file ({u}); commit and register it instead" for u in outside]
+        if suffix in SCRIPT_SUFFIXES:
+            found += _script_problems(rel, text)
+        return found + [f"{rel}: loads an outside file ({u}); commit and register it instead" for u in sorted(set(outside))]
 
     markup = COMMENT_HTML.sub("", text) if suffix != ".css" else ""
     css_parts = _css_parts(text, suffix)
@@ -161,6 +198,8 @@ def _board_problems(root: Path, path: Path) -> list[str]:
     for script in SCRIPT_BLOCK.findall(markup):
         outside += SCRIPT_OUTSIDE.findall(script)
 
+    for name in sorted({prop for prop, _ in decls if TOKEN_DEF.match(prop)}):
+        found.append(f"{rel}: defines {name}; token values live only in docs/design/tokens.css")
     literals = _literal_colours(decls)
     if literals:
         found.append(f"{rel}: literal colour {', '.join(sorted(set(literals)))}; use a token from tokens.css")
@@ -178,6 +217,51 @@ def _board_problems(root: Path, path: Path) -> list[str]:
     return found
 
 
+EMPTY_CELLS = {"", "-", "\u2013", "\u2014"}
+
+
+def _cells(row: str) -> list[str]:
+    return [c.strip() for c in row.strip().strip("|").split("|")]
+
+
+def _registered(register: Path) -> tuple[set[str], set[str]]:
+    """(paths with a complete row, paths whose row lacks a Source or a Licence).
+
+    Each table's header row names its columns: "Source" and "Licence..." (or "License...") must be non-empty.
+    A row under no header, or under a header without those columns, counts as incomplete.
+    """
+    complete: set[str] = set()
+    incomplete: set[str] = set()
+    if not register.is_file():
+        return complete, incomplete
+    lines = register.read_text().splitlines()
+    source_col = licence_col = None
+    header = True  # the next table line starts a table
+    for n, line in enumerate(lines):
+        if not line.lstrip().startswith("|"):
+            header = True
+            continue
+        cells = _cells(line)
+        if header:
+            following = lines[n + 1] if n + 1 < len(lines) else ""
+            is_header = bool(re.fullmatch(r"\|?[\s:|-]+\|?", following.strip())) and following.strip().startswith(("|", "-", ":"))
+            source_col = licence_col = None
+            if is_header:
+                names = [c.lower() for c in cells]
+                source_col = next((i for i, c in enumerate(names) if c == "source"), None)
+                licence_col = next((i for i, c in enumerate(names) if c.startswith(("licence", "license"))), None)
+                header = False
+                continue
+            header = False
+        if re.fullmatch(r"\|?[\s:|-]+\|?", line.strip()):
+            continue
+        ok = (source_col is not None and licence_col is not None and max(source_col, licence_col) < len(cells)
+              and cells[source_col] not in EMPTY_CELLS and cells[licence_col] not in EMPTY_CELLS)
+        for path in re.findall(r"`([^`]+)`", line):
+            (complete if ok else incomplete).add(path)
+    return complete, incomplete
+
+
 def _register_problems(root: Path) -> list[str]:
     docs = root / "docs"
     if not docs.is_dir():
@@ -185,13 +269,19 @@ def _register_problems(root: Path) -> list[str]:
     media = sorted(p for p in docs.rglob("*") if p.is_file() and p.suffix.lower() in MEDIA_SUFFIXES)
     if not media:
         return []
-    register = root / REGISTER
-    rows = [line for line in register.read_text().splitlines() if line.lstrip().startswith("|")] \
-        if register.is_file() else []
-    named = {m for row in rows for m in re.findall(r"`([^`]+)`", row)}
-    return [f"{p.relative_to(root).as_posix()}: not in a table row of {REGISTER} as "
-            f"`{p.relative_to(root).as_posix()}`; register its source and terms before committing it"
-            for p in media if p.relative_to(root).as_posix() not in named]
+    complete, incomplete = _registered(root / REGISTER)
+    found = []
+    for p in media:
+        rel = p.relative_to(root).as_posix()
+        if rel in complete:
+            continue
+        if rel in incomplete:
+            found.append(f"{rel}: its row in {REGISTER} needs a Source cell and a Licence cell that are not "
+                         f"empty (under a table header that names them); register its source and terms")
+        else:
+            found.append(f"{rel}: not in a table row of {REGISTER} as `{rel}`; "
+                         f"register its source and terms before committing it")
+    return found
 
 
 def _index_problems(root: Path) -> list[str]:

@@ -44,6 +44,7 @@ SPECIAL_PAIRS: list[tuple[str, str, float, str]] = [
 
 # Tokens every theme must define, so that deleting one fails the check.
 REQUIRED = sorted({"color-text-primary", "color-text-secondary", "color-text-link", "color-status-warning",
+                   "color-status-info", "color-status-live", "color-status-cached", "color-status-not-known",
                    "color-text-on-photo", "color-chart-1", "color-chart-2",
                    *BACKGROUNDS, *(t for pair in SPECIAL_PAIRS for t in pair[:2])})
 
@@ -62,7 +63,8 @@ def pairs_for(tokens: dict[str, str]) -> list[tuple[str, str, float, str]]:
     return built + charts + SPECIAL_PAIRS
 
 
-TINT_TEXT = ("color-text-primary", "color-text-secondary", "color-text-link")
+TINT_TEXT = ("color-text-primary", "color-text-secondary", "color-text-link", "color-status-info",
+             "color-status-warning", "color-status-live", "color-status-cached", "color-status-not-known")
 MIX = re.compile(r"^color-mix\(\s*in\s+srgb\s*,\s*var\(--([a-z0-9-]+)\)\s+(\d+(?:\.\d+)?)%\s*,"
                  r"\s*var\(--([a-z0-9-]+)\)\s*\)$")
 DECL = re.compile(r"--([a-z0-9-]+)\s*:\s*([^;]+);")
@@ -134,6 +136,39 @@ def _block(css: str, opener: str) -> dict[str, str] | None:
     return {name: value.strip() for name, value in DECL.findall(css[body_start:body_end])}
 
 
+BLOCK_NAMES = {":root": ":root", ':root[data-theme="dark"]': ':root[data-theme="dark"]',
+               ':root:not([data-theme="light"])': "the prefers-color-scheme: dark :root:not([data-theme=\"light\"])"}
+RULE = re.compile(r"([^{}]+)\{([^{}]*)\}")
+
+
+def _block_problems(path: Path, css: str) -> list[str]:
+    """Each --color-* token is defined once, in one of the three known blocks, and never set again later.
+
+    Reports a token defined in any other rule, defined twice in one block, or set again by a later copy of
+    a known block. The message names the token.
+    """
+    found: list[str] = []
+    seen: dict[tuple[str, str], int] = {}  # (block, token) -> index of the rule that first set it
+    for index, rule in enumerate(RULE.finditer(css)):
+        selector = " ".join(rule.group(1).split())
+        names = [name for name, value in DECL.findall(rule.group(2)) if name.startswith("color-")]
+        if not names:
+            continue
+        block = BLOCK_NAMES.get(selector)
+        if block is None:
+            found += [f"{path}: --{n} is defined in `{selector}`, outside the three token blocks; "
+                      f"define colours only in :root, :root[data-theme=\"dark\"] and the prefers-color-scheme block"
+                      for n in sorted(set(names))]
+            continue
+        for n in sorted({n for n in names if names.count(n) > 1}):
+            found.append(f"{path}: --{n} is defined twice in {block}; keep one value")
+        for n in sorted(set(names)):
+            first = seen.setdefault((block, n), index)
+            if first != index:
+                found.append(f"{path}: --{n} is set again in a later {block} block; keep one definition per block")
+    return found
+
+
 def problems(path: Path) -> list[str]:
     css = re.sub(r"/\*.*?\*/", "", path.read_text(), flags=re.S)
     light = _block(css, ":root {")
@@ -144,9 +179,7 @@ def problems(path: Path) -> list[str]:
     found: list[str] = []
     if manual != system:
         found.append(f"{path}: the two dark blocks differ; keep them identical")
-    for later in re.finditer(r":root\s*\{([^}]*)\}", css[css.index(":root {") + 1:]):
-        if "--color-" in later.group(1):
-            found.append(f"{path}: a later :root block sets colours; keep light colours in the first :root block")
+    found += _block_problems(path, css)
     themes = {"light": light, "dark": {**light, **manual}}
     for theme, tokens in themes.items():
         for name in REQUIRED:
@@ -164,6 +197,11 @@ def problems(path: Path) -> list[str]:
             if ratio < minimum:
                 found.append(f"{theme}: --{fg} on --{bg} is {ratio:.2f}:1, needs {minimum}:1 ({what})")
         surfaces, _ = split_tints(tokens)
+        for fg in TINT_TEXT if surfaces else ():
+            if fg not in tokens:
+                found.append(f"{theme}: missing --{fg} (text on a tinted surface)")
+            elif not HEX.match(tokens[fg]):
+                found.append(f"{theme}: --{fg} must be a six-digit hex value (text on a tinted surface)")
         for name in surfaces:
             try:
                 surface = resolve_color_mix(tokens[name], tokens)

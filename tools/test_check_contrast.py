@@ -274,6 +274,111 @@ class TintFile(unittest.TestCase):
             self.assertEqual(cc.skipped_tints(path), ["tint-glow"])
 
 
+class TokenBlocks(unittest.TestCase):
+    """A --color-* token may be defined once, in one of the three known blocks (gap 4)."""
+
+    def run_check(self, css: str) -> list[str]:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "tokens.css"
+            path.write_text(css)
+            return cc.problems(path)
+
+    def base(self) -> str:
+        return SAMPLE.replace("DARK", DARK_OK)
+
+    def test_colour_defined_in_another_rule_fails_and_names_the_token(self) -> None:
+        # Expected failure before the fix: only a later :root block is looked at, so a class rule is not.
+        found = self.run_check(self.base() + "\n.card { --color-text-primary: #FFFFFF; }\n")
+        self.assertTrue(any("--color-text-primary" in p and ".card" in p and "outside" in p for p in found), found)
+
+    def test_colour_defined_inside_a_media_query_rule_fails(self) -> None:
+        found = self.run_check(self.base() + "\n@media (min-width: 40rem) { body { --color-bg-primary: #000000; } }\n")
+        self.assertTrue(any("--color-bg-primary" in p and "outside" in p for p in found), found)
+
+    def test_token_defined_twice_in_one_block_fails(self) -> None:
+        css = self.base().replace("  --color-chart-1: #000000;\n", "  --color-chart-1: #000000;\n  --color-chart-1: #111111;\n")
+        found = self.run_check(css)
+        self.assertTrue(any("--color-chart-1" in p and "twice" in p and ":root" in p for p in found), found)
+
+    def test_token_defined_twice_in_the_dark_block_fails(self) -> None:
+        dark = "--color-chart-1: #000000; --color-chart-1: #111111;"
+        found = self.run_check(SAMPLE.replace("DARK", dark))
+        self.assertTrue(any("--color-chart-1" in p and "twice" in p and "dark" in p for p in found), found)
+
+    def test_later_block_overriding_a_token_fails_and_names_it(self) -> None:
+        # Each block already sets the token once; a second copy of the block sets it again.
+        base = SAMPLE.replace("DARK", "--color-text-primary: #000000;")
+        for later in (':root { --color-text-primary: #EEEEEE; }',
+                      ':root[data-theme="dark"] { --color-text-primary: #EEEEEE; }',
+                      '@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --color-text-primary: #EEEEEE; } }'):
+            with self.subTest(later=later):
+                found = self.run_check(base + "\n" + later + "\n")
+                self.assertTrue(any("--color-text-primary" in p and "later" in p for p in found), found)
+
+    def test_non_colour_custom_properties_elsewhere_are_not_colour_tokens(self) -> None:
+        self.assertEqual(self.run_check(self.base() + "\n.card { --card-pad: 8px; --tint-x: red; }\n"), [])
+
+    def test_each_token_once_per_block_passes(self) -> None:
+        dark = "--color-chart-1: #000000;"
+        self.assertEqual(self.run_check(SAMPLE.replace("DARK", dark)), [])
+
+
+class StatusTextOnTints(unittest.TestCase):
+    """The status text tokens are tested on tinted surfaces like the other text tokens (gap 4)."""
+
+    STATUS = ("color-status-info", "color-status-warning", "color-status-live", "color-status-cached",
+              "color-status-not-known")
+    TINT = ("  --color-highlight: #000000;\n"
+            "  --tint-surface-x: color-mix(in srgb, var(--color-highlight) 50%, var(--color-bg-secondary));\n")
+
+    def run_check(self, css: str) -> list[str]:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "tokens.css"
+            path.write_text(css)
+            return cc.problems(path)
+
+    def sample(self, dark: str = "") -> str:
+        return SAMPLE.replace("DARK", dark).replace("  --color-chart-2: #000000;\n", "  --color-chart-2: #000000;\n" + self.TINT)
+
+    def test_the_tint_text_list_holds_the_five_status_tokens(self) -> None:
+        for token in self.STATUS:
+            self.assertIn(token, cc.TINT_TEXT)
+
+    def test_status_text_too_faint_on_a_tint_fails_with_token_theme_and_ratio(self) -> None:
+        # Working: tint = black 50% over white = 127.5 per channel, rounded half up to 128 = #808080.
+        # Luminance of #808080: 128 / 255 = 0.50196; ((0.50196 + 0.055) / 1.055) ** 2.4 = 0.2159.
+        # Status text #333333: 51 / 255 = 0.2; ((0.2 + 0.055) / 1.055) ** 2.4 = 0.24171 ** 2.4 = 0.03311.
+        # Ratio = (0.2159 + 0.05) / (0.03311 + 0.05) = 0.2659 / 0.08311 = 3.20, under 4.5:1.
+        # On white it is 1.05 / 0.08311 = 12.6:1, so only the tint check catches it.
+        # Source: https://www.w3.org/TR/WCAG22/#dfn-relative-luminance and #dfn-contrast-ratio
+        css = self.sample().replace("--color-status-info: #000000", "--color-status-info: #333333")
+        found = self.run_check(css)
+        self.assertTrue(any("tint-surface-x" in p and "light" in p and "color-status-info" in p and "3.20:1" in p
+                            for p in found), found)
+
+    def test_every_status_token_is_checked_on_the_tint(self) -> None:
+        # Same working as above, each token set to #333333 in turn.
+        for token in self.STATUS:
+            with self.subTest(token=token):
+                css = self.sample().replace(f"--{token}: #000000", f"--{token}: #333333")
+                found = self.run_check(css)
+                self.assertTrue(any("tint-surface-x" in p and f"--{token} " in p and "3.20:1" in p for p in found), found)
+
+    def test_missing_status_token_fails_loudly_with_a_tint_present(self) -> None:
+        css = self.sample().replace("  --color-status-cached: #000000;\n", "")
+        found = self.run_check(css)
+        self.assertTrue(any("color-status-cached" in p and "tinted surface" in p and "missing" in p for p in found), found)
+
+    def test_non_hex_status_token_fails_loudly_with_a_tint_present(self) -> None:
+        css = self.sample().replace("--color-status-live: #000000", "--color-status-live: #000")
+        found = self.run_check(css)
+        self.assertTrue(any("color-status-live" in p and "tinted surface" in p and "six-digit hex" in p for p in found), found)
+
+    def test_status_tokens_on_a_tint_that_keeps_contrast_pass(self) -> None:
+        # Black on #808080: (0.2159 + 0.05) / 0.05 = 5.32, over 4.5:1.
+        self.assertEqual(self.run_check(self.sample()), [])
+
+
 class RealTokens(unittest.TestCase):
     def test_layover_tokens_pass(self) -> None:
         path = Path(__file__).resolve().parent.parent / "docs" / "design" / "tokens.css"
