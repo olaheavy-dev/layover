@@ -209,9 +209,9 @@
 
 /* ---------- Logo board ---------- */
 .lg {
-  --logo-tile-bg: var(--color-accent-primary);
-  --logo-tile-fg: var(--color-text-on-accent);
-  --logo-tile-sun: var(--color-highlight);
+  --lg-tile-bg: var(--color-accent-primary);
+  --lg-tile-fg: var(--color-text-on-accent);
+  --lg-tile-sun: var(--color-highlight);
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
@@ -219,9 +219,9 @@
 }
 
 :root[data-theme="dark"] .lg {
-  --logo-tile-bg: var(--color-bg-tertiary);
-  --logo-tile-fg: var(--color-accent-primary);
-  --logo-tile-sun: var(--color-accent-primary-active);
+  --lg-tile-bg: var(--color-bg-tertiary);
+  --lg-tile-fg: var(--color-accent-primary);
+  --lg-tile-sun: var(--color-accent-primary-active);
 }
 
 .lg__section h2 {

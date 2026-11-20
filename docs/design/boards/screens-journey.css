@@ -10,7 +10,7 @@
 .sj-start .canvas__inner { min-height: 100%; display: grid; align-content: center; padding-bottom: var(--space-6); }
 .sj-start .empty { min-height: 0; max-width: 28rem; width: 100%; gap: var(--space-2); padding-block: var(--space-6); }
 .sj-start .empty__line { font-size: var(--font-size-md); }
-.sj-illus { --illus-ticket-display: none; display: block; width: min(20rem, 80%); height: auto; margin: 0 auto var(--space-3); }
+.sj-illus { --ticket-display: none; display: block; width: min(20rem, 80%); height: auto; margin: 0 auto var(--space-3); }
 @media (max-width: 63.99rem) {
   .sj-start .canvas__inner { align-content: start; }
 }

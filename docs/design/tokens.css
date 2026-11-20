@@ -46,7 +46,7 @@
   --logo-sun: var(--color-highlight);
 
   /* One warning colour for every problem state. Words and shapes tell the states apart */
-  --color-status-warning: #9A4A12;     /* Fallback, Unavailable, widget errors */
+  --color-status-warning: #964710;     /* Fallback, Unavailable, widget errors. Darkened from #9A4A12 on 20 Nov 2026 to keep 4.5:1 on the traveller chat bubble */
   --color-status-live: #17202B;        /* Live: normal text with a filled dot */
   --color-status-cached: #56606B;      /* Cached: quiet text with a half-filled dot */
   --color-status-not-known: #56606B;   /* Not known: quiet italic text with an empty dot */

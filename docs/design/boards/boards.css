@@ -1682,7 +1682,7 @@ img {
 .empty__line { color: var(--color-text-secondary); }
 
 /* Welcome screen: the isometric illustration comes from the illustration guide; colours are --illus-* tokens. */
-.welcome-mini { --illus-ticket-display: none; display: block; width: 13.5rem; max-width: 70%; height: auto; margin: 0 0 var(--space-1) -0.25rem; }
+.welcome-mini { --ticket-display: none; display: block; width: 13.5rem; max-width: 70%; height: auto; margin: 0 0 var(--space-1) -0.25rem; }
 .welcome__title { font-family: var(--font-family-display); font-size: var(--font-size-2xl); font-weight: var(--font-weight-medium); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-tight); }
 .welcome__lead { color: var(--color-text-secondary); font-size: var(--font-size-base); }
 .welcome .chat__log::before { display: none; }
@@ -1705,7 +1705,7 @@ img {
   .welcome .canvas__inner { align-content: start; }
 }
 
-.illus-ticket { display: var(--illus-ticket-display, inline); }
+.illus-ticket { display: var(--ticket-display, inline); }
 
 /* Standalone links (source lines, credits, the header link) keep a target at least 24px tall (WCAG 2.5.8).
    Links inside running sentences are left alone. */
