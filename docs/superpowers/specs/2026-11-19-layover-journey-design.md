@@ -116,7 +116,7 @@ Each agent's tools sit behind Layover's own MCP servers from build step 2 ([0009
 
 ## 7. Evaluations
 
-Permanent IDs per area (`AGENTS.md`): `INTENT-`, `BRIEF-`, `COMPARE-`, `ITIN-`, `BOOK-`, `TRIP-`. **(Agent's call)** First cases:
+Permanent IDs per area (`AGENTS.md`): `INTENT-`, `BRIEF-`, `COMPARE-`, `ITIN-`, `BOOK-`, `TRIP-`, and since the Design gate `SHARE-` and `WIDGET-`. The master list, with every case and the coverage table, is [docs/evaluations/cases.md](../../evaluations/cases.md) (Design gate, #39); the first cases below keep their IDs and meaning there. **(Agent's call)** First cases:
 
 - `INTENT-01` each example in §5a is classified to its intent; `INTENT-02` a non-travel request is declined; `INTENT-03` an unsupported travel question gets web-search quotes with links and the "not checked by Layover" label, or "not yet", never an unsourced answer; `INTENT-04` a non-travel question (for example about investments) is declined without a web search; `INTENT-05` a web-search query never contains the traveller's details.
 - `BRIEF-01` a vague request ends in a confirmed summary with every field set; `BRIEF-02` a budget or date misread is corrected before searching; `BRIEF-03` a place name with more than one match gets a "which one" question with the matches as choices, never a guess.

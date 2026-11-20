@@ -23,7 +23,7 @@
 
 ## Review Focus
 
-- An ID cited in a doc but missing from `cases.md` (for example a typo `BRIEF-3`). Expected: `make check` fails and names the file. Tested in Task 1.
+- An ID cited in a doc but missing from `cases.md` (for example a typo that drops the zero from a brief case). Expected: `make check` fails and names the file. Tested in Task 1.
 - An ID in a code block, or as an example in `AGENTS.md` (`PLAN-03`, `PLAN-100`). Expected: not flagged; only `docs/` is scanned, and only areas defined in `cases.md` count. Tested in Task 1.
 - A withdrawn case. Expected: it stays defined and isn't reported as missing. Tested in Task 1.
 - A Floorplan export with a Windows path (`C:\Users\`) or an SSH git remote (`git@github.com:`). Expected: the check fails. Tested in Task 3.
@@ -69,8 +69,8 @@ Copy the 16 existing cases from spec §7 into the table unchanged.
 
 - [ ] **Step 1: Write the failing tests** in `tools/test_check_eval_ids.py` (`unittest`, same style as `test_check_boards.py`, temporary folders):
   - `test_duplicate_id_fails`: two rows `` `BRIEF-01` `` → `main` returns 1, and the message names `BRIEF-01`.
-  - `test_bad_form_fails`: rows `` `BRIEF-1` `` and `` `brief-01` `` → 1.
-  - `test_cited_but_undefined_fails`: `docs/x.md` cites `BRIEF-09` while `BRIEF` is defined → 1, and the message names `docs/x.md`.
+  - `test_bad_form_fails`: a row whose number has one digit, and a row in lower case → 1.
+  - `test_cited_but_undefined_fails`: `docs/x.md` cites an undefined number in a defined area → 1, and the message names `docs/x.md`.
   - `test_unknown_area_ignored`: `docs/x.md` cites `PLAN-03` and `WCAG-22`, no `PLAN` area defined → 0.
   - `test_withdrawn_counts_as_defined`: a `withdrawn` row cited in `docs/` → 0.
   - `test_three_digit_ids`: `PLAN-100` is valid, `PLAN-007` is not (zero padding only up to two digits).
