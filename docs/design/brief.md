@@ -240,6 +240,7 @@ Owner: "Marked samples, one file (Recommended)", 20 Nov 2026.
 - Booking: the `booking_approval` widget pauses the flow. Nothing is ordered until the traveller presses Approve. The widget always carries the sandbox label.
 - Sharing: "Share trip" gives a link to the frozen canvas. The page shows the "as of" date of every fare and every advice date.
 - Stopping: the traveller can stop an answer while it streams.
+- Dialogs (for the build): when a dialog opens, focus moves to the least destructive action (Cancel). Focus stays inside the dialog until it closes. Esc closes it. Focus returns to the button that opened it. The page behind is inert (not clickable, not readable by assistive technology). The dialog's body text is linked to it with `aria-describedby`.
 - Motion **(agent's call)**: widgets settle into place with a short fade and rise. Loading uses a soft shimmer. When the traveller asks for reduced motion, changes are instant.
 
 ## Responsive behaviour
