@@ -202,7 +202,7 @@ def main(argv: list[str]) -> int:
         print(f"contrast: {p}", file=sys.stderr)
     skipped = skipped_tints(path)
     if skipped:
-        print("contrast: not checked (transparency needs a backdrop): " + ", ".join(f"--{t}" for t in skipped))
+        print("contrast: not checked (glows, lines, borders and transparent surfaces: no backdrop to test against): " + ", ".join(f"--{t}" for t in skipped))
     if not found:
         print(f"contrast: {path} meets WCAG 2.2 AA in both themes")
     return 1 if found else 0
