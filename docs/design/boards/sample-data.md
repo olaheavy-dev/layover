@@ -184,3 +184,37 @@ Used on `booking.html` and `chat-only.html`. Sample messages written for the boa
 | Lost connection | The unsent message "What does the FCDO say about Lisbon?" |
 | Share trip | Sample link `layover.example/s/sample-share-link` (not a real address), "as of 18 Nov 2026" |
 | New trip | "Lisbon, May" stays at its working link; no time limit is stated, because how long links last is not decided |
+
+## Phone and navigation, and pages outside the trip
+
+Used on `phone-nav.html` and `pages.html`. No new figure is made up. Everything below comes from the sections above or from a project document.
+
+| Item | Sample content |
+|---|---|
+| Sideways index on the Trip tab | Brief, Compare, Lisbon, Stay, Days, Booking. A section is in the index only when it has content |
+| Folded Lisbon row | "Lisbon: flights, cost estimate, travel advice, weather and money, each with its source." No figure |
+| Folded Stay row | "Sample Hotel Alfama, Alfama. Your base for the days." The hotel is the chosen one in "Where you're staying". "Hotel names and areas only: Layover has no hotel prices" repeats the sources note in the journey widgets |
+| Days on the navigation boards | Day 1 and Day 2 as in "Days" above; Booking is the "waiting for your approval" state, as in "Booking (sandbox)" |
+| Shared trip, "as of" rule | Every Live and Cached label adds ", as of 18 Nov 2026" (for example "Cached, 3 days old, as of 18 Nov 2026"). A "Not known" label has no age and stays as it is. The header says "Shared trip, as of 18 Nov 2026" |
+| How Layover works: rules | The six rules of decision 0011, in plain words, with its date (19 Nov 2026) |
+| How Layover works: agent team | The supervisor, the brief agent, the research agents (one for each place), the itinerary agent and the booking steps, as in decision 0012 |
+| How Layover works: data sources | The seven rows of "Chosen" in `docs/references/data-sources.md` (checked 19 Nov 2026): name, link, what it gives, terms. No candidate source is listed |
+| How Layover works: evaluation | "No evaluation results yet": no score, no trip count and no comparison, because none exists |
+| Limit reached | No figure. "You have reached the limit for planning" and "You can plan again when the limit resets, later on" (the limits are not set yet, spec §5c) |
+| Link not found | "This link does not work". It does not say whether a trip ever existed |
+
+## The chosen place, finished, and Stay and Days
+
+Used on `place.html` and `stay-days.html`. Only what these boards need beyond the sections above. None of it is a real fact.
+
+| Item | Sample content |
+|---|---|
+| Trip strip counts | "9 facts ready": the five key facts (fare, cost estimate, advice, weather, money) plus the sea, daylight, place introduction and map (5 + 4 = 9). "Stay and 3 days ready" once the hotel is chosen or skipped |
+| Trip tab badge | "1 new", on the Chat tab after a side answer is pinned |
+| Side answer: the beach | The sea card (17°C, Live, Open-Meteo Marine), then "Typical highs are 22°C, with 5 rainy days. Whether that suits you is your call." Weather source: Open-Meteo, Live. All figures from the tables above |
+| Side answer boards | The canvas on the two side-answer screens is drawn without a sea card, so the answer is not shown twice. In the real planner a coastal place would already have it |
+| Chat messages | Traveller: "Plan three days in Lisbon", "Choose Sample Hotel Alfama", "Skip the hotel", "Choose Sample Hotel Belém instead", "Three days in Lisbon". They are choices and requests, not facts |
+| Days after a hotel change | Day 1 keeps the same three stops as in "Days" above and Day 2 keeps its two stops. The sample does not model how stops move when the base changes. Day 1 and Day 2 each carry the note that they were rebuilt |
+| Days when the hotel is skipped | The same stops as "Days" above. Day 1 shows the banner "Days start from the centre of Lisbon", Day 2 a quiet line |
+| Itinerary-only trip | "Three days in Lisbon" with Lisbon sample data, because there are no Porto days (the information architecture's example is Porto). Trip name "Lisbon", with no month because none was given. The place shows only its introduction and the map, because the fare, cost, weather and daylight widgets need an airport, a budget or dates |
+| Map for Sample Hotel Belém | The drawn sample map moves its pin to another block. The position is not real |

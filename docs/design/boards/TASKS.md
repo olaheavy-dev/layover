@@ -37,12 +37,12 @@ Each screen follows the checklist in [#28](https://github.com/olaheavy-dev/layov
 - [x] **Vague and unclear messages** (owner, 20 Nov 2026): the brief agent asking for missing details with quick-answer chips; the one clarifying question; "Which Valencia?" with the matches as choices; a side answer before any place is chosen (no "Add to trip"). Shown first as clickable samples.
 - [x] **Starting a trip**: the empty canvas after the first message; the brief waiting for confirmation, editing a chip and confirmed.
 - [x] **Comparing**: three loading cards; one failed card with "Try again"; a "Not known" row (Valencia's stay); a swapped place; no place fits.
-- [ ] **The chosen place, finished**: the remaining place widgets below the first screen; a side answer inline in the chat with "Add to trip", and the same answer pinned under "Added from the chat". _Reuses: the first-look screen._
-- [ ] **Stay and Days**: hotel chosen; hotel skipped (days from the centre); Days with a "Not known" opening time and an empty afternoon; the itinerary-only trip (the place, then Stay and Days, with no Compare section).
+- [x] **The chosen place, finished**: the remaining place widgets below the first screen; a side answer inline in the chat with "Add to trip", and the same answer pinned under "Added from the chat". _Reuses: the first-look screen._
+- [x] **Stay and Days**: hotel chosen; hotel skipped (days from the centre); Days with a "Not known" opening time and an empty afternoon; the itinerary-only trip (the place, then Stay and Days, with no Compare section).
 - [x] **Booking**: waiting for approval, approved, declined and price changed, always with "Sandbox: no real booking or payment".
 - [x] **Chat-only replies and interruptions**: `web_results` in the chat; "I can't help with that yet"; the `not_travel` decline; lost connection with "Try again"; the "New trip" confirmation; the "Share trip" step.
-- [ ] **Phone and navigation**: Chat and Trip tabs, the Trip tab badge, compact widget cards, the sideways section index; folded sections and the section index on desktop. Part drawn: the long chat (grouped checks, "Jump to latest"), the trip strip, the compact cards and the "3 new" badge are on `trip-lisbon-chat.html`. Still to draw: the sideways index states and the folded sections on desktop.
-- [ ] **Pages outside the trip**: the shared trip (`/s/{share_id}`) with "as of" dates; How Layover works with "no evaluation results yet"; link not found or expired; limit reached, with wording that needs no figure.
+- [x] **Phone and navigation**: Chat and Trip tabs, the Trip tab badge, compact widget cards, the sideways section index; folded sections and the section index on desktop. Part drawn: the long chat (grouped checks, "Jump to latest"), the trip strip, the compact cards and the "3 new" badge are on `trip-lisbon-chat.html`. Drawn on `phone-nav.html` (the badge, the sideways index, two folded states on desktop).
+- [x] **Pages outside the trip**: the shared trip (`/s/{share_id}`) with "as of" dates; How Layover works with "no evaluation results yet"; link not found or expired; limit reached, with wording that needs no figure. Drawn on `pages.html`.
 
 ## Review and handover
 
