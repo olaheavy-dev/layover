@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New trip, a side answer · Layover</title>
+  <link rel="stylesheet" href="../../tokens.css">
+  <link rel="stylesheet" href="../boards.css">
+  <script src="../screen.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="Layover, home">Layover</a>
+    <h1 class="topbar__trip">New trip</h1>
+    <p class="sample-pill">Sample data, not real</p>
+    <div class="topbar__actions">
+      <a class="btn btn--link" href="#how"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M9 9.5a3 2.5 0 016 0c0 2-2 2-3 3.5" /><path d="M12 17h.01" /></svg><span class="btn__label">How it works</span></a>
+      <button class="btn btn--secondary" type="button"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg><span class="btn__label">New trip</span></button>
+    </div>
+  </header>
+
+
+  <div class="subbar">
+    <div class="tabs" role="tablist" aria-label="Chat or trip">
+      <button class="tab" role="tab" id="tab-chat" data-view="chat" data-text="Chat" aria-selected="true">Chat</button>
+      <button class="tab" role="tab" id="tab-trip" data-view="trip" data-text="Trip" aria-selected="false" tabindex="-1">Trip</button>
+    </div>
+    <p class="sample-pill">Sample data, not real</p>
+  </div>
+
+  <div class="workspace" data-view="chat">
+
+    <!-- Chat column -->
+    <section class="chat panel" aria-labelledby="tab-chat">
+      <h2 class="visually-hidden">Chat</h2>
+      <div class="chat__wrap">
+        <div class="chat__log" role="log" aria-live="polite" aria-label="Conversation with Layover" tabindex="0">
+        <div class="msg msg--traveller"><p class="msg__text">How much is £500 in euros?</p></div>
+        <div class="msg"><span class="msg__who">Layover</span>
+          <article class="widget w-money" aria-labelledby="money-title">
+            <div class="widget__head">
+              <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.744 17.736a6 6 0 1 1-7.48-7.48" /><path d="M15 6h1v4" /><path d="m6.134 14.768.866-.5 2 3.464" /><circle cx="16" cy="8" r="6" /></svg></span>
+              <div class="widget__titles"><span class="eyebrow">Spending</span><h3 class="widget__title" id="money-title">Money</h3></div>
+            </div>
+            <div class="widget__body">
+              <p class="figure">£1 = €1.15<span class="figure__unit">pounds to euros</span></p>
+              <p>£500 is about €575</p>
+              <p><span class="source-label source-label--live">Live</span> <span class="quiet">European Central Bank rate for 18 Nov 2026</span></p>
+            </div>
+            <div class="widget__foot">
+              <span>Source: <a href="https://frankfurter.dev/">Frankfurter</a></span>
+            </div>
+          </article>
+        </div>
+        <div class="msg"><span class="msg__who">Layover</span><p class="msg__text">Here is the conversion. Say where you want to go, or what kind of break, and I will start a trip.</p></div>
+        </div>
+      </div>
+      <form class="composer" action="#" onsubmit="return false">
+        <label class="visually-hidden" for="message">Message to Layover</label>
+        <input class="composer__input" id="message" type="text" placeholder="Message Layover" autocomplete="off">
+        <button class="btn btn--primary" type="submit" aria-label="Send"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /> <path d="m21.854 2.147-10.94 10.939" /></svg></button>
+      </form>
+    </section>
+
+    <!-- Canvas -->
+    <main class="canvas panel" id="top" aria-label="Your trip">
+      <div class="canvas__inner">
+        <section class="empty" aria-labelledby="empty-title">
+          <h2 class="empty__title" id="empty-title">Your trip</h2>
+          <p class="empty__line">It appears here once you have a place.</p>
+          <!-- illustration comes after the illustration test -->
+        </section>
+      </div>
+    </main>
+
+  </div>
+</div>
+</body>
+</html>

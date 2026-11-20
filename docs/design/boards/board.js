@@ -25,11 +25,12 @@
   var first = location.hash.replace("#", "") === "dark" ? "dark" : "light";
   setTheme(first);
 
-  var desktop = document.querySelector(".frame--desktop");
+  var desktops = Array.prototype.slice.call(document.querySelectorAll(".frame--desktop"));
   function fit() {
-    if (!desktop) { return; }
-    var scale = Math.min(1, desktop.clientWidth / 1440);
-    desktop.style.setProperty("--scale", String(scale));
+    desktops.forEach(function (desktop) {
+      var scale = Math.min(1, desktop.clientWidth / 1440);
+      desktop.style.setProperty("--scale", String(scale));
+    });
   }
   window.addEventListener("resize", fit);
   fit();

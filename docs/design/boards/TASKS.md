@@ -33,7 +33,7 @@ Every `kind` with every state in the [state table](../brief.md#widget-states) th
 Each screen follows the checklist in [#28](https://github.com/olaheavy-dev/layover/issues/28) and is drawn at 390 px and 1440 px, in both themes.
 
 - [ ] **Welcome** (`/`), with the illustration the owner picked, the four example prompts and the honesty line. Includes the mood-scene prompts for the owner to make in ChatGPT (welcome and "How Layover works" only), written to the image rules in the brief. _Depends on: illustration test._
-- [ ] **Vague and unclear messages** (owner, 20 Nov 2026): the brief agent asking for missing details with quick-answer chips; the one clarifying question; "Which Valencia?" with the matches as choices; a side answer before any place is chosen (no "Add to trip"). Shown first as clickable samples.
+- [x] **Vague and unclear messages** (owner, 20 Nov 2026): the brief agent asking for missing details with quick-answer chips; the one clarifying question; "Which Valencia?" with the matches as choices; a side answer before any place is chosen (no "Add to trip"). Shown first as clickable samples.
 - [ ] **Starting a trip**: the empty canvas after the first message; the brief waiting for confirmation, editing a chip and confirmed.
 - [ ] **Comparing**: three loading cards; one failed card with "Try again"; a "Not known" row (Valencia's stay); a swapped place; no place fits.
 - [ ] **The chosen place, finished**: the remaining place widgets below the first screen; a side answer inline in the chat with "Add to trip", and the same answer pinned under "Added from the chat". _Reuses: the first-look screen._

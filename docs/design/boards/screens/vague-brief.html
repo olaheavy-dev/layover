@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Warm break, May, a missing detail · Layover</title>
+  <link rel="stylesheet" href="../../tokens.css">
+  <link rel="stylesheet" href="../boards.css">
+  <script src="../screen.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="Layover, home">Layover</a>
+    <h1 class="topbar__trip">Warm break, May</h1>
+    <p class="sample-pill">Sample data, not real</p>
+    <div class="topbar__actions">
+      <a class="btn btn--link" href="#how"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M9 9.5a3 2.5 0 016 0c0 2-2 2-3 3.5" /><path d="M12 17h.01" /></svg><span class="btn__label">How it works</span></a>
+      <button class="btn btn--secondary" type="button"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg><span class="btn__label">New trip</span></button>
+    </div>
+  </header>
+
+
+  <div class="subbar">
+    <div class="tabs" role="tablist" aria-label="Chat or trip">
+      <button class="tab" role="tab" id="tab-chat" data-view="chat" data-text="Chat" aria-selected="true">Chat</button>
+      <button class="tab" role="tab" id="tab-trip" data-view="trip" data-text="Trip" aria-selected="false" tabindex="-1">Trip</button>
+    </div>
+    <p class="sample-pill">Sample data, not real</p>
+  </div>
+
+  <div class="workspace" data-view="chat">
+
+    <!-- Chat column -->
+    <section class="chat panel" aria-labelledby="tab-chat">
+      <h2 class="visually-hidden">Chat</h2>
+      <div class="chat__wrap">
+        <div class="chat__log" role="log" aria-live="polite" aria-label="Conversation with Layover" tabindex="0">
+        <div class="msg msg--traveller"><p class="msg__text">Somewhere warm in May, not too pricey</p></div>
+
+        <div class="msg"><span class="msg__who">Layover</span>
+          <p class="msg__text">Good start. I have May, somewhere warm, and not too pricey. Nothing is confirmed yet.</p>
+          <div class="ask">
+          <p class="msg__question" id="q-airport">Which airport would you fly from?</p>
+          <div class="quick" role="group" aria-labelledby="q-airport">
+            <button class="quick__btn" type="button">Manchester (MAN)</button>
+            <button class="quick__btn" type="button">London Heathrow (LHR)</button>
+            <button class="quick__btn" type="button">Birmingham (BHX)</button>
+            <button class="quick__btn" type="button">Somewhere else</button>
+          </div>
+          <p class="ask__hint">Or type another airport below.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+      <form class="composer" action="#" onsubmit="return false">
+        <label class="visually-hidden" for="message">Message to Layover</label>
+        <input class="composer__input" id="message" type="text" placeholder="Type your own answer" autocomplete="off">
+        <button class="btn btn--primary" type="submit" aria-label="Send"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /> <path d="m21.854 2.147-10.94 10.939" /></svg></button>
+      </form>
+    </section>
+
+    <!-- Canvas -->
+    <main class="canvas panel" id="top" aria-label="Your trip">
+      <div class="canvas__inner">
+        <section class="section section--lead" id="brief" aria-labelledby="brief-title">
+          <article class="widget w-brief">
+            <div class="widget__head">
+              <span class="widget__icon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16" /> <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" /></svg></span>
+              <div class="widget__titles"><span class="eyebrow">Waiting for details</span><h2 class="widget__title" id="brief-title">Your brief so far</h2></div>
+            </div>
+            <div class="widget__body">
+              <ul class="chips" aria-label="Your brief so far">
+                <li class="chip">May</li>
+                <li class="chip">Warm</li>
+                <li class="chip">Budget: not too pricey (no amount yet)</li>
+                <li class="chip chip--missing">Departure airport: not set yet</li>
+                <li class="chip chip--missing">Length: not set yet</li>
+                <li class="chip chip--missing">Travellers: not set yet</li>
+              </ul>
+              <p class="quiet">Layover asks for what is missing in the chat, one question at a time. Nothing is searched until you confirm your brief.</p>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+  </div>
+</div>
+</body>
+</html>

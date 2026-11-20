@@ -1577,3 +1577,72 @@ img {
     display: none;
   }
 }
+
+/* ---------- Vague and unclear messages: one question at a time ---------- */
+/* The question Layover asks: set in the display type, so it reads as the one thing to answer. */
+.ask { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-2); }
+.msg__question {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.ask__hint { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+
+/* Quick answers (short, in a row) and choices (longer, in a list). Both are real buttons in a named group. */
+.quick, .choices { display: flex; gap: var(--space-2); }
+.quick { flex-wrap: wrap; }
+.choices { flex-direction: column; }
+.quick__btn, .choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 2.5rem;
+  min-width: var(--target-min);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-secondary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  text-align: left;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--easing-default),
+    border-color var(--duration-fast) var(--easing-default);
+}
+.quick__btn:hover, .choice:hover { background: var(--color-bg-tertiary); border-color: var(--color-accent-primary); }
+.choice { width: 100%; min-height: 2.75rem; }
+.choice .icon { flex: none; color: var(--color-text-secondary); }
+
+/* A brief field that is not set yet: a dashed outline and words, never a guessed value. */
+.chips .chip.chip--missing {
+  background: none;
+  border: 1px dashed var(--color-border-control);
+  color: var(--color-text-secondary);
+}
+.section--lead { padding-top: var(--space-5); }
+.w-brief .chips { margin: 0; }
+
+/* Empty canvas: one quiet line, text only. The illustration comes after the illustration test. */
+.empty {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  min-height: min(32rem, 70vh);
+  max-width: 24rem;
+  margin-inline: auto;
+  text-align: center;
+}
+.empty__title {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+}
+.empty__line { color: var(--color-text-secondary); }

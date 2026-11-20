@@ -72,6 +72,19 @@ Used on `trip-lisbon-chat.html`. The labels follow the rule in the [brief](../br
 | Side question: the FCDO date | "The FCDO page for Portugal was updated on 12 Nov 2026." Layover's copy: Cached, 1 day old |
 | Checks rows | 2 checks (fares and weather for 3 places), 4 checks (FCDO advice, exchange rate, sunrise and sunset, Wikivoyage page), 2 checks (sea temperature, typical May weather), 1 check (FCDO advice) |
 
+## Vague and unclear messages
+
+Used on `vague.html` (four states). Sample messages written for the boards; none is a real traveller's message. Facts allowed: place names and the money figures already above. "Not too pricey" is the traveller's own wording, not a budget: no amount is set until Layover asks.
+
+| State | Traveller says | Layover says and offers |
+|---|---|---|
+| Missing detail | "Somewhere warm in May, not too pricey" | "Good start. I have May, somewhere warm, and not too pricey. Nothing is confirmed yet." Question: "Which airport would you fly from?" Quick answers: Manchester (MAN), London Heathrow (LHR), Birmingham (BHX), Somewhere else. Trip name: "Warm break, May". Brief so far: May; Warm; Budget: not too pricey (no amount yet). Not set yet: Departure airport, Length, Travellers |
+| One clarifying question | "Lisbon or Porto?" | "I can do a few things with that." Question: "Do you want to compare the two for a trip, or plan days in one of them?" Choices: Compare them for a trip, Plan days in Lisbon, Plan days in Porto, Something else. Trip name: "New trip" |
+| Which place | "Three days in Valencia" | "More than one place has that name, so I will not guess." Question: "Which Valencia do you mean?" Choices: Valencia, Spain; Valencia, Venezuela; Somewhere else. Both are real places; the board says nothing else about them. Trip name: "New trip" |
+| Side answer, no place yet | "How much is £500 in euros?" | The `money` widget in the chat: £1 = €1.15, £500 is about €575 (from the `money` row above: £500 × 1.15 = €575), Live, European Central Bank rate for 18 Nov 2026, Source: Frankfurter. No "Add to trip" (no place yet). "Here is the conversion. Say where you want to go, or what kind of break, and I will start a trip." Trip name: "New trip" |
+
+Empty canvas lines: "It appears here once Layover knows what you want." (clarifying question), "It appears here once you have chosen the place." (which place), "It appears here once you have a place." (side answer).
+
 ## Where you're staying
 
 | Hotel (made up) | Area | Stars | Website |
