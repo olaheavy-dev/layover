@@ -2,15 +2,15 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 19 Nov 2026, end of the evening session.
+Last updated: 20 Nov 2026, end of the session (written in the boards-readiness PR, #31).
 
 ## Stage
 
-Design. The repository holds documents and their checks only. The main journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)). The design foundations are approved and merged (#29): the [design brief](../design/brief.md), the [information architecture](../design/information-architecture.md) and the [design tokens](../design/tokens.css). The boards for every screen and widget come next, still in the Design stage, then the Design gate. The FastAPI template layer comes with build plan 1, and the Next.js layer when frontend work starts ([0010](../decisions/0010-repository-and-stages.md), [spec §9](../superpowers/specs/2026-11-19-layover-journey-design.md)).
+Design. The repository holds documents and their checks only. The main journey design is approved ([spec](../superpowers/specs/2026-11-19-layover-journey-design.md)). The design foundations are approved and merged (#29): the [design brief](../design/brief.md), the [information architecture](../design/information-architecture.md) and the [design tokens](../design/tokens.css). A readiness review on 20 Nov 2026 found what the boards still needed; #31 settles it (the widget state table, sample data, image rules, new tokens and the board checks). The boards for every screen and widget come next (#28), still in the Design stage, then the Design gate. The FastAPI template layer comes with build plan 1, and the Next.js layer when frontend work starts ([0010](../decisions/0010-repository-and-stages.md), [spec §9](../superpowers/specs/2026-11-19-layover-journey-design.md)).
 
 ## Open pull requests
 
-None.
+None once the boards-readiness PR (#31) merges.
 
 ## Done on 19 Nov 2026
 
@@ -27,6 +27,18 @@ None.
 | #21 | The main journey design (approved) and decision 0012 (a team of agents, measured against a single-agent baseline) |
 | #23 | Evaluations at each stage gate (coverage table at the Design gate, scores at build gates) |
 | #29 | Design foundations: the design brief with a benchmark of eight products, the information architecture, the design tokens, and a WCAG 2.2 AA contrast check in `make check` (`tools/check_contrast.py`) |
+| #30 | End-of-session status (19 Nov 2026, evening) |
+
+## Done on 20 Nov 2026
+
+A fresh-context readiness review (Fable) of everything the boards depend on. Verdict: ready after small fixes and owner decisions. The fixes and the owner's nine answers are in the boards-readiness PR (#31):
+
+- **Widget states:** a table of every `kind` against Loading, Empty, Error and Not known, with the extra states, definitions of Empty and Fallback, and the label for each source ([brief](../design/brief.md#widget-states)). Owner: "Agent drafts, you approve (Recommended)".
+- **Sample content:** every board says "Sample data, not real" and takes its figures from [sample-data.md](../design/boards/sample-data.md). Owner: "Marked samples, one file (Recommended)".
+- **Images** ([brief](../design/brief.md#images)): real Unsplash photos for places ("Download and register (Recommended)"); AI mood scenes made by the owner, only where no named place shows ("AI for mood scenes only"); a three-way illustration test ("Two own styles + library (Recommended)", after comparing homescout); a drawn sample map.
+- **Fonts:** WOFF2 files committed and registered ("Commit font files (Recommended)"). **Logo:** a mark designed in the boards PR ("Design a logo mark now").
+- **Tokens and checks:** `--color-text-on-photo` and two chart colours; `tools/check_boards.py` in `make check` (literal colours, "safe", local paths, outside files, the sample label, the asset register).
+- **Tidy-ups:** #28's screen checklist; the information architecture's itinerary-only order and pinned answers; stale lines in data sources and the register; backlog order (#28 is now `[15]`; #27 joined the Design milestone).
 
 What the journey design settled (owner answers in prompt windows; details in the [spec](../superpowers/specs/2026-11-19-layover-journey-design.md) and the [register](../decisions/README.md#register)):
 
@@ -47,7 +59,7 @@ What the design foundations settled (owner answers in prompt windows; details in
 
 ## Next steps
 
-1. **Fresh session: the boards** (issue #28, PR 2 of the design work), with the design-flow phases 5 and 6 (`brief-to-tasks`, then `frontend-design`): static HTML boards for every screen in the [information architecture](../design/information-architecture.md) and every widget `kind` with its loading, empty, error and "not known" states, at 390 px and 1440 px, in light and dark, built on [tokens.css](../design/tokens.css). It includes the illustration side-by-side test on the welcome screen. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief. Show every option inside a real screen, and ask every question in a prompt window.
+1. **Fresh session: the boards** (issue #28, PR 2 of the design work), with the design-flow phases 5 and 6 (`brief-to-tasks`, then `frontend-design`). Follow #28's screen checklist and the [state table](../design/brief.md#widget-states). Start by creating `docs/assets/README.md`, then commit the fonts, read the Unsplash licence again and register the photos. The boards include the three-way illustration test, two or three logo marks in the real top bar, and the mood-scene prompts for the owner. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief. Show every option inside a real screen, and ask every question in a prompt window.
 2. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage, a map snapshot in `docs/floorplan/`.
 3. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests, and the Aspire app host for local orchestration and tracing). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
 
@@ -59,11 +71,13 @@ None. Owner decisions still open, needed later:
 - How long a working trip link and a shared trip link last (the working link keeps the chat, so it holds more personal data).
 - The cost-cap figures, after build step 1 measures a trip's cost.
 - The vector database (plan 3), and hosting and the database (plan 6).
-- How the fonts are served (frontend plan): the agent recommends self-hosting, because Google's font servers receive visitors' IP addresses.
+- How the fonts are served in the app: the boards commit the font files (owner, 20 Nov 2026), and the frontend plan reuses them unless it records a reason not to.
 
 ## Owner to-dos
 
 - Ask Nuitee whether a portfolio project may use its sandbox and price index.
+- During the boards: make the mood scenes in ChatGPT from the prompts the agent writes (welcome and "How Layover works" only), and pick the illustration style, the free library and the logo mark.
+- Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
 - Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked) and [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes).
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).

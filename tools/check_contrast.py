@@ -5,8 +5,10 @@ Reads docs/design/tokens.css: the first `:root {` block holds the light values, 
 blocks (`:root[data-theme="dark"]` and the `prefers-color-scheme: dark` block) override them. The
 two dark blocks must hold the same values. Every --color-text-* and --color-status-* token is tested on
 every page background and needs 4.5:1 (WCAG 1.4.3); control borders and the focus ring need 3:1
-(WCAG 1.4.11). The highlight colour is not tested: it is never text and never the only cue. White text on a photo is tested over a white photo under the scrim at
-its minimum opacity. Formulas: https://www.w3.org/TR/WCAG22/#dfn-contrast-ratio
+(WCAG 1.4.11). Every --color-chart-* token needs 3:1 on every page background (WCAG 1.4.11: chart marks).
+The highlight colour is not tested: it is never text and never the only cue. --color-text-on-photo is
+tested over a white photo under the scrim at its minimum opacity (the worst case), in both themes.
+Formulas: https://www.w3.org/TR/WCAG22/#dfn-contrast-ratio
 """
 
 from __future__ import annotations
@@ -21,7 +23,7 @@ NON_TEXT = 3.0
 BACKGROUNDS = ("color-bg-primary", "color-bg-secondary", "color-bg-tertiary")
 
 # Text tokens with their own background, or exempt (WCAG 1.4.3 exempts disabled controls).
-SPECIAL_TEXT = {"color-text-on-accent", "color-text-inverse", "color-text-disabled"}
+SPECIAL_TEXT = {"color-text-on-accent", "color-text-inverse", "color-text-disabled", "color-text-on-photo"}
 
 # Pairs that are not "text token on a page background": (foreground, background, minimum, what it is)
 SPECIAL_PAIRS: list[tuple[str, str, float, str]] = [
@@ -35,6 +37,7 @@ SPECIAL_PAIRS: list[tuple[str, str, float, str]] = [
 
 # Tokens every theme must define, so that deleting one fails the check.
 REQUIRED = sorted({"color-text-primary", "color-text-secondary", "color-text-link", "color-status-warning",
+                   "color-text-on-photo", "color-chart-1", "color-chart-2",
                    *BACKGROUNDS, *(t for pair in SPECIAL_PAIRS for t in pair[:2])})
 
 
@@ -47,7 +50,9 @@ def pairs_for(tokens: dict[str, str]) -> list[tuple[str, str, float, str]]:
     text = sorted(t for t in tokens
                   if (t.startswith("color-text-") or t.startswith("color-status-")) and t not in SPECIAL_TEXT)
     built = [(t, bg, TEXT, "text") for t in text for bg in BACKGROUNDS]
-    return built + SPECIAL_PAIRS
+    charts = [(t, bg, NON_TEXT, "chart mark") for t in sorted(tokens) if t.startswith("color-chart-")
+              for bg in BACKGROUNDS]
+    return built + charts + SPECIAL_PAIRS
 
 
 DECL = re.compile(r"--([a-z0-9-]+)\s*:\s*([^;]+);")
@@ -116,13 +121,15 @@ def problems(path: Path) -> list[str]:
             if ratio < minimum:
                 found.append(f"{theme}: --{fg} on --{bg} is {ratio:.2f}:1, needs {minimum}:1 ({what})")
         scrim, opacity = tokens.get("color-scrim"), tokens.get("scrim-text-min-opacity")
-        if scrim and opacity and HEX.match(scrim):
+        on_photo = tokens.get("color-text-on-photo")
+        if scrim and opacity and on_photo and HEX.match(scrim) and HEX.match(on_photo):
             under = blend(scrim, "#FFFFFF", float(opacity))
-            ratio = contrast("#FFFFFF", under)
+            ratio = contrast(on_photo, under)
             if ratio < TEXT:
-                found.append(f"{theme}: white text on the photo scrim is {ratio:.2f}:1, needs {TEXT}:1")
+                found.append(f"{theme}: --color-text-on-photo on the photo scrim is {ratio:.2f}:1, needs {TEXT}:1")
         else:
-            found.append(f"{theme}: missing --color-scrim or --scrim-text-min-opacity")
+            found.append(f"{theme}: --color-scrim, --scrim-text-min-opacity and --color-text-on-photo "
+                         "must be set, with six-digit hex colours")
     return found
 
 

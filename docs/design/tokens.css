@@ -46,8 +46,17 @@
   --color-status-not-known: #56606B;   /* Not known: quiet italic text with an empty dot */
   --color-status-info: #12436E;
 
+  /* Charts (climate_chart): two series, each at least 3:1 on every background (WCAG 1.4.11).
+     Words, a legend and the mark's shape (line or bars) tell them apart, never colour alone. */
+  --color-chart-1: #12436E;            /* first series, for example temperature (a line) */
+  --color-chart-2: #5B87AE;            /* second series, for example rain (bars) */
+
+  /* Loading shapes (benchmark rule 12) use --color-bg-tertiary on a card. They are placeholders,
+     not content, so they need no contrast minimum. */
+
   --color-surface-overlay: rgba(16, 21, 27, 0.5);  /* behind dialogs */
   --color-scrim: #080C18;              /* dark gradient under text on photos */
+  --color-text-on-photo: #FFFFFF;      /* place names and credits on the scrim; white in both themes */
 
   /* ---------- Photos ---------- */
   /* Text on a photo sits only where the scrim is at least this opaque, so white text keeps
@@ -72,6 +81,7 @@
   --font-size-2xl: 2.25rem;   /* 36px: place name on the canvas */
   --font-size-3xl: 3rem;      /* 48px: welcome heading, desktop */
   --font-size-4xl: 3.75rem;   /* 60px: hero place name, desktop only */
+  /* On a phone, the welcome heading and the hero place name use --font-size-2xl (36px). */
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -164,8 +174,11 @@
   --color-status-cached: #A3ADB8;
   --color-status-not-known: #A3ADB8;
   --color-status-info: #9CC3E8;
+  --color-chart-1: #9CC3E8;
+  --color-chart-2: #6E9AC4;
   --color-surface-overlay: rgba(0, 0, 0, 0.6);
   --color-scrim: #080C18;
+  --color-text-on-photo: #FFFFFF;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 6px 20px -12px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
@@ -197,8 +210,11 @@
     --color-status-cached: #A3ADB8;
     --color-status-not-known: #A3ADB8;
     --color-status-info: #9CC3E8;
+    --color-chart-1: #9CC3E8;
+    --color-chart-2: #6E9AC4;
     --color-surface-overlay: rgba(0, 0, 0, 0.6);
     --color-scrim: #080C18;
+    --color-text-on-photo: #FFFFFF;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 6px 20px -12px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
