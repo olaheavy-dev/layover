@@ -69,7 +69,11 @@
 
 /* ---------- comparison_table ---------- */
 .w-cmp, .w-cmp-none { container-type: inline-size; container-name: cmp; }
+/* The card strip scrolls inside its own box; the widget clips any sideways spill so the page never scrolls sideways. */
+.w-cmp, .w-cmp-none { max-width: 100%; min-width: 0; overflow-x: clip; }
 .cmp-track { display: flex; gap: var(--space-3); margin: 0 calc(var(--space-5) * -1); padding: var(--space-1) var(--space-5) var(--space-3); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--space-5); list-style: none; }
+/* Edge fade: a soft right edge shows that more cards wait. It goes when the cards sit in a grid. */
+.cmp-track { -webkit-mask-image: linear-gradient(to right, var(--color-bg-primary) calc(100% - 1.25rem), transparent); mask-image: linear-gradient(to right, var(--color-bg-primary) calc(100% - 1.25rem), transparent); }
 .cmp-track:focus-visible { box-shadow: inset var(--shadow-focus); }
 .cmp-card { flex: 0 0 min(17.5rem, 82%); display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; padding: var(--space-3); border: 1px solid var(--color-border-primary); border-radius: var(--border-radius-md); background: var(--color-bg-primary); scroll-snap-align: start; }
 /* flex:none stops the stretched card from spreading its children apart */
@@ -77,7 +81,7 @@
 .cmp-card > .cmp-actions { margin-top: auto; }
 .cmp-hint { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
 @container cmp (min-width: 34rem) {
-  .cmp-track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0; overflow: visible; }
+  .cmp-track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0; overflow: visible; -webkit-mask-image: none; mask-image: none; }
   .cmp-card { flex: none; }
   .cmp-hint { display: none; }
 }

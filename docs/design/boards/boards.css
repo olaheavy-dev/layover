@@ -1706,3 +1706,11 @@ img {
 }
 
 .illus-ticket { display: var(--illus-ticket-display, inline); }
+
+/* Standalone links (source lines, credits, the header link) keep a target at least 24px tall (WCAG 2.5.8).
+   Links inside running sentences are left alone. */
+.stop__src a, .src__name a, .webres__title a, .widget__foot a, .welcome__honest a, .place-hero__credit a, figcaption a, .msg__source a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+}
