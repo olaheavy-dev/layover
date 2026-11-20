@@ -1,0 +1,36 @@
+/* Board page: the Light/Dark switch and the scaling of the 1440 px frame.
+   The switch changes the hash of each frame's address (#light or #dark). The screen listens for that
+   and sets its own theme. This works when the page is opened from disk (file://), where a page cannot
+   reach into a frame. */
+(function () {
+  var root = document.documentElement;
+  var buttons = Array.prototype.slice.call(document.querySelectorAll("[data-theme-choice]"));
+  var frames = Array.prototype.slice.call(document.querySelectorAll("iframe[data-screen]"));
+
+  function setTheme(theme) {
+    root.setAttribute("data-theme", theme);
+    buttons.forEach(function (button) {
+      button.setAttribute("aria-pressed", button.getAttribute("data-theme-choice") === theme ? "true" : "false");
+    });
+    frames.forEach(function (frame) {
+      frame.src = frame.getAttribute("data-screen") + "#" + theme;
+    });
+    try { history.replaceState(null, "", "#" + theme); } catch (e) { /* some browsers refuse on disk */ }
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () { setTheme(button.getAttribute("data-theme-choice")); });
+  });
+
+  var first = location.hash.replace("#", "") === "dark" ? "dark" : "light";
+  setTheme(first);
+
+  var desktop = document.querySelector(".frame--desktop");
+  function fit() {
+    if (!desktop) { return; }
+    var scale = Math.min(1, desktop.clientWidth / 1440);
+    desktop.style.setProperty("--scale", String(scale));
+  }
+  window.addEventListener("resize", fit);
+  fit();
+})();

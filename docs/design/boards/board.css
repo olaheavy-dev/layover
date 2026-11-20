@@ -1,0 +1,190 @@
+/* The board page: title, theme switch and the screen in two frames. Tokens only (see tokens.css). */
+.board {
+  max-width: var(--max-width-page);
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-5) var(--space-9);
+}
+
+.board__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5) var(--space-7);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+.board__intro {
+  max-width: 44rem;
+}
+
+.board__kicker {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.board__title {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.board__lead {
+  margin-top: var(--space-4);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.board__tools {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+/* Light and dark switch: two toggle buttons */
+.switch {
+  display: inline-flex;
+  padding: var(--space-1);
+  gap: var(--space-1);
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-secondary);
+}
+
+.switch .btn {
+  min-height: 2.25rem;
+  border-radius: var(--border-radius-sm);
+}
+
+.switch .btn[aria-pressed="true"] {
+  background: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+}
+
+.switch .btn[aria-pressed="false"]:hover {
+  background: var(--color-bg-tertiary);
+}
+
+.board__label {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-bg-tertiary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: var(--font-numeric);
+}
+
+.board__frames {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.frame {
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+  box-shadow: var(--shadow-lg);
+}
+
+.frame iframe {
+  display: block;
+  border: 0;
+}
+
+/* 1440 px frame: shown at 1440 px wide, then scaled down to the width of the board. */
+.frame--desktop {
+  --scale: 0.9;
+  width: 100%;
+}
+
+.frame--desktop .frame__viewport {
+  width: 100%;
+  height: calc(900px * var(--scale));
+  overflow: hidden;
+}
+
+.frame--desktop iframe {
+  width: 1440px;
+  height: 900px;
+  transform: scale(var(--scale));
+  transform-origin: 0 0;
+}
+
+.frame--phone {
+  width: 392px;
+  flex: none;
+}
+
+.frame--phone iframe {
+  width: 390px;
+  height: 844px;
+}
+
+.board__phone-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-7);
+}
+
+.board__notes {
+  flex: 1 1 18rem;
+  max-width: 36rem;
+}
+
+.board__notes h2 {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+
+.board__notes ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding-left: var(--space-5);
+  line-height: var(--line-height-normal);
+}
+
+.board__notes p {
+  margin-top: var(--space-5);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 39.99rem) {
+  .board {
+    padding-inline: var(--space-4);
+  }
+  .board__title {
+    font-size: var(--font-size-2xl);
+  }
+  .board__tools {
+    align-items: flex-start;
+  }
+}
+
+.board__sample {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: var(--z-toast);
+  pointer-events: none;
+}
