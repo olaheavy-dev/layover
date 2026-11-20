@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: edge states · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="screens-journey.css">
+  <link rel="stylesheet" href="screens-edge.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Edge states</p>
+        <h1 class="board__title">Edge states</h1>
+        <p class="board__lead">Six states the design review found: after Stop, a visa question, a budget that cannot be saved, a place with no photo, opening times that depend on the day, and a place that uses pounds. Each says what is known and what is not, and none shows a made-up value.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of all frames"><button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button><button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button></div>
+      </div>
+    </header>
+
+
+<div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. After the traveller pressed Stop</h2>
+        <p class="state__line">The partial answer stays. One quiet line says it was stopped, and the traveller can continue or ask again.</p>
+        <section aria-labelledby="desktop-label-1">
+          <span class="board__label" id="desktop-label-1">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="After the traveller pressed Stop, 1440 px wide" data-screen="screens/edge-after-stop.html" src="screens/edge-after-stop.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="After the traveller pressed Stop, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-1">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="After the traveller pressed Stop, 390 px wide, Chat tab" data-screen="screens/edge-after-stop.html" src="screens/edge-after-stop.html#light"></iframe></div></div><div><span class="board__label" id="pt-1">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="After the traveller pressed Stop, 390 px wide, Trip tab" data-screen="screens/edge-after-stop.html?tab=trip" src="screens/edge-after-stop.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The text stops where the traveller pressed Stop. It is not tidied up or finished, and it has no source line, because Layover has not finished the answer.</li><li>“You stopped this answer.” is a quiet status line in words. Continue is the main action; Ask again is quieter.</li><li>The canvas is exactly as before. “Nothing from this answer was added to your trip” says so in words.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-2">
+        <h2 class="state__title" id="state-2">2. “Do I need a visa for Portugal?”</h2>
+        <p class="state__line">Layover gives no visa rule of its own. It points to the FCDO entry requirements page and shows when that page was updated.</p>
+        <section aria-labelledby="desktop-label-2">
+          <span class="board__label" id="desktop-label-2">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="“Do I need a visa for Portugal?”, 1440 px wide" data-screen="screens/edge-visa.html" src="screens/edge-visa.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="“Do I need a visa for Portugal?”, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-2">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="“Do I need a visa for Portugal?”, 390 px wide, Chat tab" data-screen="screens/edge-visa.html" src="screens/edge-visa.html#light"></iframe></div></div><div><span class="board__label" id="pt-2">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="“Do I need a visa for Portugal?”, 390 px wide, Trip tab" data-screen="screens/edge-visa.html?tab=trip" src="screens/edge-visa.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The card links to the FCDO entry requirements page, with “Updated 12 Nov 2026” and the Cached, 1 day old label (sample values).</li><li>The answer says Layover does not give visa rules. It states no rule and says nothing about how the place is to visit.</li><li>The card is a side answer: Add to trip is offered, and nothing changes on the canvas until the traveller presses it.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-3">
+        <h2 class="state__title" id="state-3">3. A budget that cannot be saved</h2>
+        <p class="state__line">The budget box holds “eight hundred-ish”. The error says what to type, Save waits, and nothing is searched.</p>
+        <section aria-labelledby="desktop-label-3">
+          <span class="board__label" id="desktop-label-3">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="A budget that cannot be saved, 1440 px wide" data-screen="screens/edge-chip-invalid.html" src="screens/edge-chip-invalid.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="A budget that cannot be saved, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-3">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="A budget that cannot be saved, 390 px wide, Chat tab" data-screen="screens/edge-chip-invalid.html" src="screens/edge-chip-invalid.html#light"></iframe></div></div><div><span class="board__label" id="pt-3">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="A budget that cannot be saved, 390 px wide, Trip tab" data-screen="screens/edge-chip-invalid.html?tab=trip" src="screens/edge-chip-invalid.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The error is in words with an icon, in the warning colour, and it names an example: “Type the total in pounds, for example 800.” An empty box shows the same line.</li><li>Save is disabled until the box holds a number. The hint says nothing is searched until the brief is confirmed.</li><li>The other chips and Confirm brief stay as they were. The old budget is kept until a new valid one is saved.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-4">
+        <h2 class="state__title" id="state-4">4. The chosen place, no photo</h2>
+        <p class="state__line">Porto has no photo, so a drawn scene stands in: the sun and the sea from the welcome illustration, above the place name.</p>
+        <section aria-labelledby="desktop-label-4">
+          <span class="board__label" id="desktop-label-4">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="The chosen place, no photo, 1440 px wide" data-screen="screens/edge-no-photo.html" src="screens/edge-no-photo.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="The chosen place, no photo, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-4">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="The chosen place, no photo, 390 px wide, Chat tab" data-screen="screens/edge-no-photo.html" src="screens/edge-no-photo.html#light"></iframe></div></div><div><span class="board__label" id="pt-4">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="The chosen place, no photo, 390 px wide, Trip tab" data-screen="screens/edge-no-photo.html?tab=trip" src="screens/edge-no-photo.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The drawing uses the isometric style from the illustration guide, in the illustration colour tokens, in light and dark.</li><li>The name sits on a plain panel below the drawing. There is no photo credit. “No photo of this place yet” is said quietly.</li><li>No figure is shown: the card says Porto is being researched. The strip and the folded brief are as usual.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-5">
+        <h2 class="state__title" id="state-5">5. Opening times, dates not set</h2>
+        <p class="state__line">Opening times can differ by weekday, and the trip has only a month. The stop says so and offers Add your dates, instead of showing one set of hours.</p>
+        <section aria-labelledby="desktop-label-5">
+          <span class="board__label" id="desktop-label-5">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Opening times, dates not set, 1440 px wide" data-screen="screens/edge-hours-weekday.html" src="screens/edge-hours-weekday.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Opening times, dates not set, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-5">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Opening times, dates not set, 390 px wide, Chat tab" data-screen="screens/edge-hours-weekday.html" src="screens/edge-hours-weekday.html#light"></iframe></div></div><div><span class="board__label" id="pt-5">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Opening times, dates not set, 390 px wide, Trip tab" data-screen="screens/edge-hours-weekday.html?tab=trip" src="screens/edge-hours-weekday.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>Castelo de São Jorge shows “Opening times depend on the day. Add your dates to see them.” It does not show one set of hours.</li><li>The stop with no known hours still says “Opening times: Not known”. These are two different states.</li><li>The brief chip still says “May 2027 · 5 nights”: the month is enough to plan, and Layover does not pick dates.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-6">
+        <h2 class="state__title" id="state-6">6. Opening times, dates set</h2>
+        <p class="state__line">With dates, Day 1 is a named day and each stop shows its hours for that day.</p>
+        <section aria-labelledby="desktop-label-6">
+          <span class="board__label" id="desktop-label-6">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Opening times, dates set, 1440 px wide" data-screen="screens/edge-hours-dates.html" src="screens/edge-hours-dates.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Opening times, dates set, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-6">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Opening times, dates set, 390 px wide, Chat tab" data-screen="screens/edge-hours-dates.html" src="screens/edge-hours-dates.html#light"></iframe></div></div><div><span class="board__label" id="pt-6">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Opening times, dates set, 390 px wide, Trip tab" data-screen="screens/edge-hours-dates.html?tab=trip" src="screens/edge-hours-dates.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>Day 1 is “Saturday 15 May 2027”, and the castle shows “Open Saturday 10:00 to 18:00” (a sample value, as in the sample data).</li><li>The brief chip now reads “15 to 20 May 2027 · 5 nights”. The stop with no known hours is unchanged.</li><li>Compare this with the state before: the same stop, the same source line, a different hours row.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-7">
+        <h2 class="state__title" id="state-7">7. A place that uses pounds</h2>
+        <p class="state__line">No exchange rate is needed, so the Money card says so in words and shows no rate and no “£1 = £1”.</p>
+        <section aria-labelledby="desktop-label-7">
+          <span class="board__label" id="desktop-label-7">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="A place that uses pounds, 1440 px wide" data-screen="screens/edge-gbp.html" src="screens/edge-gbp.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="A place that uses pounds, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-7">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="A place that uses pounds, 390 px wide, Chat tab" data-screen="screens/edge-gbp.html" src="screens/edge-gbp.html#light"></iframe></div></div><div><span class="board__label" id="pt-7">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="A place that uses pounds, 390 px wide, Trip tab" data-screen="screens/edge-gbp.html?tab=trip" src="screens/edge-gbp.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>There is no figure and no Live or Cached label, because there is no outside value on the card.</li><li>“Sample place” stands for any place that uses pounds. The board names no real place, because a place’s currency is a fact that needs a source.</li><li>The card is not hidden: a gap in the canvas would look like missing data.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

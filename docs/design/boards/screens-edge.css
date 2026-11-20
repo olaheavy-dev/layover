@@ -1,0 +1,32 @@
+/* Edge states board: six states the design review found. Colours come only from tokens. */
+
+/* 1. After Stop: the kept text, one quiet line, and two ways on. */
+.edge-stopnote { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-2); font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); }
+.edge-stopnote .icon { width: 1rem; height: 1rem; }
+.edge-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin-top: var(--space-2); }
+.edge-actions .btn .icon { width: 1rem; height: 1rem; }
+.edge-stopped .msg__hint { margin-top: var(--space-2); }
+
+/* 3. An invalid budget: the error says what to type; Save waits. */
+.jg-edit__input[aria-invalid="true"] { border-color: var(--color-status-warning); box-shadow: 0 0 0 1px var(--color-status-warning); }
+.edge-error { display: flex; align-items: flex-start; gap: var(--space-2); font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); line-height: var(--line-height-snug); color: var(--color-status-warning); }
+.edge-error .icon { flex: none; width: 1rem; height: 1rem; margin-top: 0.125rem; }
+.jg-edit .btn:disabled { cursor: not-allowed; opacity: 1; background: var(--color-bg-secondary); color: var(--color-text-disabled); border: 1px solid var(--color-border-primary); }
+
+/* 4. The chosen place with no photo: a drawn scene above the name, in normal text colours (no scrim needed). */
+.place-hero--nophoto { flex-direction: column; align-items: stretch; height: auto; background: var(--color-bg-tertiary); color: var(--color-text-primary); }
+.place-hero--nophoto::after { content: none; }
+.place-hero--nophoto .edge-scene { display: block; width: 100%; height: 11rem; }
+.place-hero--nophoto .place-hero__text { padding: var(--space-4) var(--space-5) var(--space-5); background: var(--color-bg-secondary); border-top: 1px solid var(--color-border-primary); }
+.place-hero--nophoto .place-hero__credit { position: static; margin: var(--space-1) 0 0; font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.place-hero--nophoto .place-hero__name { font-size: var(--font-size-2xl); }
+.facts--single { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); margin-top: var(--space-4); }
+@container (min-width: 40rem) { .place-hero--nophoto .edge-scene { height: 14rem; } }
+
+/* 5. Opening times that depend on the day. */
+.edge-depends { color: var(--color-text-secondary); }
+.edge-dates { margin-top: var(--space-1); }
+.edge-dates .btn .icon { width: 1rem; height: 1rem; }
+
+/* 6. A place that uses pounds: words only, no rate. */
+.edge-gbp { font-family: var(--font-family-display); font-size: var(--font-size-lg); line-height: var(--line-height-snug); }
