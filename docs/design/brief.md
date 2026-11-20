@@ -227,7 +227,7 @@ Owner: "Marked samples, one file (Recommended)", 20 Nov 2026.
 
 ## Logo and trip name
 
-- Logo: the owner chose "Design a logo mark now" over the agent's text wordmark (20 Nov 2026). The boards PR shows two or three marks inside the real top bar, at both widths and in both themes, and the owner picks one. The mark is recorded in `docs/assets/README.md`.
+- Logo: the owner chose "Design a logo mark now" over the agent's text wordmark (20 Nov 2026). The boards PR shows two or three marks inside the real top bar, at both widths and in both themes, and the owner picks one. The mark is recorded in `docs/assets/README.md`. Chosen on 20 Nov 2026 after three rounds of whole-screen samples: **M5, a bold rounded L with a sun in its inner corner**, filled, in the brand blue with the sun in the highlight blue, next to "Layover" in Source Serif 4 (owner: "M5: Bold L with sun").
 - Trip name **(agent's call)**: made from the brief, as the place and the month ("Lisbon, May"). Before a place is chosen, it is the month and the feel ("Warm break, May"). Before the brief has fields, it is "New trip". The name never holds the budget or the number of travellers, because a shared link shows it.
 
 ## Key interactions
