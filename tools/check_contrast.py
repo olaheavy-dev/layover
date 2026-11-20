@@ -9,6 +9,13 @@ every page background and needs 4.5:1 (WCAG 1.4.3); control borders and the focu
 The highlight colour is not tested: it is never text and never the only cue. --color-text-on-photo is
 tested over a white photo under the scrim at its minimum opacity (the worst case), in both themes.
 Formulas: https://www.w3.org/TR/WCAG22/#dfn-contrast-ratio
+
+Tinted surfaces: every --tint-surface-* token of the form `color-mix(in srgb, var(--X) N%, var(--Y))`
+is worked out in each theme and --color-text-primary, --color-text-secondary and --color-text-link are
+tested on it at 4.5:1. Other --tint-* tokens (glows, lines, borders, and a surface mixed with
+`transparent`) are skipped and listed in the output: transparency can't be checked without the backdrop.
+The --illus-* tokens are left out on purpose: illustrations are decorative and carry no information
+(brief, "Accessibility requirements").
 """
 
 from __future__ import annotations
@@ -55,6 +62,9 @@ def pairs_for(tokens: dict[str, str]) -> list[tuple[str, str, float, str]]:
     return built + charts + SPECIAL_PAIRS
 
 
+TINT_TEXT = ("color-text-primary", "color-text-secondary", "color-text-link")
+MIX = re.compile(r"^color-mix\(\s*in\s+srgb\s*,\s*var\(--([a-z0-9-]+)\)\s+(\d+(?:\.\d+)?)%\s*,"
+                 r"\s*var\(--([a-z0-9-]+)\)\s*\)$")
 DECL = re.compile(r"--([a-z0-9-]+)\s*:\s*([^;]+);")
 HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
 
@@ -80,6 +90,39 @@ def blend(top: str, bottom: str, opacity: float) -> str:
     t, b = top.lstrip("#"), bottom.lstrip("#")
     out = [round(opacity * int(t[i:i + 2], 16) + (1 - opacity) * int(b[i:i + 2], 16)) for i in (0, 2, 4)]
     return "#" + "".join(f"{v:02X}" for v in out)
+
+
+def resolve_color_mix(value: str, tokens: dict[str, str]) -> str:
+    """Work out `color-mix(in srgb, var(--X) N%, var(--Y))` as a hex colour. Raises ValueError otherwise.
+
+    Each channel is X * N / 100 + Y * (1 - N / 100) on 0 to 255 values, then rounded half up to an 8-bit
+    channel, as a browser stores it. Source: CSS Color 5, https://www.w3.org/TR/css-color-5/#color-mix
+    (the sRGB mix without alpha is this weighted average).
+    """
+    m = MIX.match(value.strip())
+    if not m:
+        raise ValueError(f"cannot read {value!r}; expected color-mix(in srgb, var(--X) N%, var(--Y))")
+    x, percent, y = m.group(1), float(m.group(2)), m.group(3)
+    if percent > 100:
+        raise ValueError(f"{value!r}: the percentage is over 100%")
+    for name in (x, y):
+        if name not in tokens or not HEX.match(tokens[name]):
+            raise ValueError(f"{value!r}: --{name} is not a six-digit hex token")
+    a, b = tokens[x].lstrip("#"), tokens[y].lstrip("#")
+    out = [int(percent / 100 * int(a[i:i + 2], 16) + (1 - percent / 100) * int(b[i:i + 2], 16) + 0.5)
+           for i in (0, 2, 4)]
+    return "#" + "".join(f"{v:02X}" for v in out)
+
+
+def split_tints(tokens: dict[str, str]) -> tuple[list[str], list[str]]:
+    """(surfaces to check, other --tint-* tokens skipped). A surface mixed with transparent is skipped."""
+    surfaces, skipped = [], []
+    for name in sorted(t for t in tokens if t.startswith("tint-")):
+        if name.startswith("tint-surface-") and "transparent" not in tokens[name]:
+            surfaces.append(name)
+        else:
+            skipped.append(name)
+    return surfaces, skipped
 
 
 def _block(css: str, opener: str) -> dict[str, str] | None:
@@ -120,6 +163,19 @@ def problems(path: Path) -> list[str]:
             ratio = contrast(a, b)
             if ratio < minimum:
                 found.append(f"{theme}: --{fg} on --{bg} is {ratio:.2f}:1, needs {minimum}:1 ({what})")
+        surfaces, _ = split_tints(tokens)
+        for name in surfaces:
+            try:
+                surface = resolve_color_mix(tokens[name], tokens)
+            except ValueError as error:
+                found.append(f"{theme}: --{name}: {error}")
+                continue
+            for fg in TINT_TEXT:
+                if fg in tokens and HEX.match(tokens[fg]):
+                    ratio = contrast(tokens[fg], surface)
+                    if ratio < TEXT:
+                        found.append(f"{theme}: --{fg} on --{name} ({surface}) is {ratio:.2f}:1, "
+                                     f"needs {TEXT}:1 (text on a tinted surface)")
         scrim, opacity = tokens.get("color-scrim"), tokens.get("scrim-text-min-opacity")
         on_photo = tokens.get("color-text-on-photo")
         if scrim and opacity and on_photo and HEX.match(scrim) and HEX.match(on_photo):
@@ -133,11 +189,20 @@ def problems(path: Path) -> list[str]:
     return found
 
 
+def skipped_tints(path: Path) -> list[str]:
+    """The --tint-* tokens that are not checked (glows, lines, borders, surfaces with transparency)."""
+    css = re.sub(r"/\*.*?\*/", "", path.read_text(), flags=re.S)
+    return split_tints(_block(css, ":root {") or {})[1]
+
+
 def main(argv: list[str]) -> int:
     path = Path(argv[1]) if len(argv) > 1 else Path("docs/design/tokens.css")
     found = problems(path)
     for p in found:
         print(f"contrast: {p}", file=sys.stderr)
+    skipped = skipped_tints(path)
+    if skipped:
+        print("contrast: not checked (transparency needs a backdrop): " + ", ".join(f"--{t}" for t in skipped))
     if not found:
         print(f"contrast: {path} meets WCAG 2.2 AA in both themes")
     return 1 if found else 0

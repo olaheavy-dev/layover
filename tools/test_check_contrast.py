@@ -178,10 +178,122 @@ class FailurePaths(unittest.TestCase):
         self.assertTrue(any("missing" in p and "color-chart-1" in p for p in found), found)
 
 
+TINT_LINES = """  --color-highlight: #FFFFFF;
+  --tint-surface-x: color-mix(in srgb, var(--color-highlight) 80%, var(--color-bg-secondary));
+  --tint-glow: color-mix(in srgb, var(--color-highlight) 16%, transparent);
+"""
+
+
+class TintMix(unittest.TestCase):
+    """color-mix(in srgb, A p%, B): each channel is A * p / 100 + B * (1 - p / 100), on 0 to 255 values.
+
+    Source: CSS Color 5, https://www.w3.org/TR/css-color-5/#color-mix (premultiplied sRGB mix; with no
+    alpha it is the plain weighted average above).
+    """
+
+    TOKENS = {"a": "#FF0000", "b": "#FFFFFF", "k": "#000000"}
+
+    def test_resolve_red_20_percent_over_white(self) -> None:
+        # Working: red = (255, 0, 0), white = (255, 255, 255), p = 20%.
+        # R = 255 * 0.2 + 255 * 0.8 = 255; G = 0 * 0.2 + 255 * 0.8 = 204; B = 204. 204 = 0xCC, so #FFCCCC.
+        self.assertEqual(cc.resolve_color_mix("color-mix(in srgb, var(--a) 20%, var(--b))", self.TOKENS), "#FFCCCC")
+
+    def test_resolve_exact_half_rounds_up(self) -> None:
+        # Working: black 50% over white: 0 * 0.5 + 255 * 0.5 = 127.5 per channel. A browser stores 8-bit
+        # channels, so 127.5 rounds half up to 128 = 0x80: #808080.
+        self.assertEqual(cc.resolve_color_mix("color-mix(in srgb, var(--k) 50%, var(--b))", self.TOKENS), "#808080")
+
+    def test_resolve_malformed_mix_fails_loudly(self) -> None:
+        for bad in ("color-mix(in oklab, var(--a) 20%, var(--b))",   # not the sRGB space
+                    "color-mix(in srgb, var(--a), var(--b))",         # no percentage
+                    "color-mix(in srgb, var(--a) 120%, var(--b))",    # over 100%
+                    "color-mix(in srgb, var(--zzz) 20%, var(--b))",   # unknown token
+                    "color-mix(in srgb, var(--a) 20%, transparent)",  # transparency has no backdrop here
+                    "color-mix(in srgb, #FF0000 20%, var(--b))"):     # not a token
+            with self.subTest(bad=bad):
+                with self.assertRaises(ValueError):
+                    cc.resolve_color_mix(bad, self.TOKENS)
+
+    def test_surfaces_are_split_from_glows_and_lines(self) -> None:
+        tokens = {"tint-surface-chip": "x", "tint-surface-index": "color-mix(in srgb, var(--a) 92%, transparent)",
+                  "tint-glow": "color-mix(in srgb, var(--a) 16%, transparent)", "tint-border-lift": "x",
+                  "illus-water": "x", "color-text-primary": "#000000"}
+        surfaces, skipped = cc.split_tints(tokens)
+        self.assertEqual(surfaces, ["tint-surface-chip"])
+        self.assertEqual(skipped, ["tint-border-lift", "tint-glow", "tint-surface-index"])  # no --illus-*
+
+
+class TintFile(unittest.TestCase):
+    def run_check(self, css: str) -> list[str]:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "tokens.css"
+            path.write_text(css)
+            return cc.problems(path)
+
+    def sample(self, dark: str = "", tint: str = TINT_LINES) -> str:
+        return SAMPLE.replace("DARK", dark).replace("  --color-chart-2: #000000;\n", "  --color-chart-2: #000000;\n" + tint)
+
+    def test_tint_that_keeps_contrast_passes(self) -> None:
+        # Working: highlight white 80% over white = white. Black text on white is 21:1.
+        self.assertEqual(self.run_check(self.sample()), [])
+
+    def test_quiet_text_on_a_mid_grey_tint_fails_with_token_theme_and_ratio(self) -> None:
+        # Working: tint = black 50% over white = #808080 (127.5 rounds to 128). Text is #999999.
+        # Luminance of #808080: 128 / 255 = 0.50196; ((0.50196 + 0.055) / 1.055) ** 2.4 = 0.52796 ** 2.4 = 0.2159.
+        # Luminance of #999999: 153 / 255 = 0.6; (0.655 / 1.055) ** 2.4 = 0.62085 ** 2.4 = 0.3185.
+        # Ratio = (0.3185 + 0.05) / (0.2159 + 0.05) = 0.3685 / 0.2659 = 1.39, under 4.5:1.
+        # Source: https://www.w3.org/TR/WCAG22/#dfn-relative-luminance and #dfn-contrast-ratio
+        tint = ("  --color-highlight: #000000;\n"
+                "  --tint-surface-x: color-mix(in srgb, var(--color-highlight) 50%, var(--color-bg-secondary));\n")
+        css = self.sample(tint=tint).replace("--color-text-secondary: #000000", "--color-text-secondary: #999999")
+        found = self.run_check(css)
+        self.assertTrue(any("tint-surface-x" in p and "light" in p and "color-text-secondary" in p
+                            and "1.39:1" in p for p in found), found)
+        # Its own page-background checks fail too, so look for the tint line, not only for any line.
+
+    def test_tint_failure_in_dark_only_is_reported_as_dark(self) -> None:
+        # Working: dark highlight is black. Tint = black 80% over white = 255 * 0.2 = 51 = #333333.
+        # Luminance of #333333: 51 / 255 = 0.2; (0.255 / 1.055) ** 2.4 = 0.24171 ** 2.4 = 0.0331.
+        # Black text on it: (0.0331 + 0.05) / (0 + 0.05) = 1.66, under 4.5:1. In light the tint is white: 21:1.
+        found = self.run_check(self.sample(dark="--color-highlight: #000000;"))
+        tint_lines = [p for p in found if "tint-surface-x" in p]
+        self.assertTrue(tint_lines and all(p.startswith("dark:") for p in tint_lines), found)
+        self.assertTrue(any("1.66:1" in p for p in tint_lines), found)
+
+    def test_malformed_tint_surface_fails_loudly(self) -> None:
+        css = self.sample().replace(" 80%", "")
+        found = self.run_check(css)
+        self.assertTrue(any("tint-surface-x" in p and "color-mix" in p for p in found), found)
+
+    def test_glow_with_transparency_is_not_a_failure(self) -> None:
+        # --tint-glow in TINT_LINES mixes with transparent: it is skipped, not parsed or failed.
+        self.assertEqual(self.run_check(self.sample()), [])
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "tokens.css"
+            path.write_text(self.sample())
+            self.assertEqual(cc.skipped_tints(path), ["tint-glow"])
+
+
 class RealTokens(unittest.TestCase):
     def test_layover_tokens_pass(self) -> None:
         path = Path(__file__).resolve().parent.parent / "docs" / "design" / "tokens.css"
         self.assertEqual(cc.problems(path), [])
+
+
+class RealTintTokens(unittest.TestCase):
+    PATH = Path(__file__).resolve().parent.parent / "docs" / "design" / "tokens.css"
+
+    def test_every_tint_surface_is_checked_and_the_rest_listed(self) -> None:
+        # Eight surfaces carry text (top bar, chat, pill, verdict box, chart band, chip, traveller bubble, and
+        # the top of a lifted card).
+        # The index bar (92% over transparent), the glows and the lines are skipped and listed.
+        surfaces, skipped = cc.split_tints(cc._block(self.PATH.read_text(), ":root {"))
+        self.assertEqual(surfaces, ["tint-surface-chart-band", "tint-surface-chat", "tint-surface-chip",
+                                    "tint-surface-lift", "tint-surface-pill", "tint-surface-topbar", "tint-surface-traveller",
+                                    "tint-surface-verdict"])
+        self.assertIn("tint-surface-index", skipped)
+        self.assertIn("tint-glow", skipped)
+        self.assertFalse(any(name.startswith("illus-") for name in skipped))
 
 
 if __name__ == "__main__":

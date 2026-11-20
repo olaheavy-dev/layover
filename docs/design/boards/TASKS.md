@@ -47,6 +47,6 @@ Each screen follows the checklist in [#28](https://github.com/olaheavy-dev/layov
 ## Review and handover
 
 - [ ] **Board index**: `index.html` in this folder links every board, with the state each one shows, so the reviewers can check coverage against #28 and the state table.
-- [ ] **Accessibility pass**: teach `tools/check_contrast.py` to test text on the `--tint-surface-*` tokens (checked by hand on 20 Nov 2026: lowest 4.58:1, quiet text on the traveller bubble in light); contrast from the tokens, visible focus on every control, targets of at least 24 by 24 px, reduced motion, text alternatives for charts and illustrations (brief, "Accessibility requirements").
+- [ ] **Accessibility pass**: contrast from the tokens (text on the `--tint-surface-*` tokens is now enforced by `tools/check_contrast.py`: lowest 4.58:1, quiet text on the traveller bubble in light; the glows, lines and the transparent index bar are skipped and listed, and the decorative `--illus-*` tokens are left out), visible focus on every control, targets of at least 24 by 24 px, reduced motion, text alternatives for charts and illustrations (brief, "Accessibility requirements").
 - [ ] **Design review**: the `design-reviewer` against the 12 "bar for Layover" rules and the state table; the `visual-reviewer` at 390, 768, 1024 and 1440 px.
 - [ ] **Handover**: tick #28's checklist, update `docs/planning/status.md` and `docs/planning/backlog.md`, run `make check`, then the pre-push review and the pull request.
