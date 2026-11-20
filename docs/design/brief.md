@@ -198,6 +198,7 @@ How often labels show (owner: "One per card, prices always (Recommended)", 20 No
 | OpenStreetMap through Overpass (hotels and stops) | Live |
 | Foursquare Open Source Places (only if it is added: spec §6 keeps it waiting unless Overpass proves too slow) | Cached, with the dataset's release date |
 | Duffel and Nuitee sandboxes | Live, and always the sandbox label |
+| Holidays library and IANA time-zone database (offline, proposed for #26) | Cached, with the data's release date (owner, 20 Nov 2026) |
 | Tavily web search | Its own label: "From a web search, not checked by Layover", with the retrieval date. Never Live or Cached |
 
 Map tiles (OpenFreeMap, with the OpenStreetMap credit) and photos (Unsplash, with the photographer) carry a credit, not a label: they show no figure or fact. A new source gets its row here and in [data sources](../references/data-sources.md) before it is used.
