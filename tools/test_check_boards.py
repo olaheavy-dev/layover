@@ -249,11 +249,48 @@ class Boards(unittest.TestCase):
   .clear {""").replace("Issue #123", 'See <a href="https://example.org/en/home/about">this page</a>.')
         self.assertEqual(self.page(page), [])
 
+    # The board index (docs/design/boards/index.html) links every board page
+
+    def index(self, *hrefs: str) -> None:
+        links = " ".join(f'<a href="{h}">board</a>' for h in hrefs)
+        self.write("docs/design/boards/index.html", GOOD_PAGE.replace("<a href=\"#days\">", links + " <a href=\"#days\">"))
+
+    def test_board_page_missing_from_the_index_fails(self) -> None:
+        # Expected failure before the check exists: nothing looks at index.html, so no problem is reported.
+        self.write("docs/design/boards/welcome.html", GOOD_PAGE)
+        self.write("docs/design/boards/booking.html", GOOD_PAGE)
+        self.index("welcome.html")
+        found = cb.problems(self.root)
+        self.assertEqual([p for p in found if "not linked" in p],
+                         ["docs/design/boards/booking.html: not linked from index.html; add it to the board index"], found)
+
+    def test_index_that_links_every_board_page_passes(self) -> None:
+        self.write("docs/design/boards/welcome.html", GOOD_PAGE)
+        self.write("docs/design/boards/booking.html", GOOD_PAGE)
+        self.index("welcome.html", "booking.html#top")  # a fragment still counts as a link
+        self.assertEqual(cb.problems(self.root), [])
+
+    def test_screens_in_the_sub_folder_need_no_index_link(self) -> None:
+        self.write("docs/design/boards/screens/welcome.html", GOOD_PAGE)
+        self.index()
+        self.assertEqual(cb.problems(self.root), [])
+
+    def test_a_link_to_another_site_does_not_count(self) -> None:
+        self.write("docs/design/boards/welcome.html", GOOD_PAGE)
+        self.index("https://example.org/welcome.html")
+        found = cb.problems(self.root)
+        self.assertTrue(any("welcome.html" in p and "not linked" in p for p in found), found)
+
 
 class RealRepository(unittest.TestCase):
     def test_layover_passes(self) -> None:
         root = Path(__file__).resolve().parent.parent
         self.assertEqual(cb.problems(root), [])
+
+    def test_layover_has_a_board_index(self) -> None:
+        # Without index.html the "not linked" check would never run.
+        root = Path(__file__).resolve().parent.parent
+        self.assertTrue((root / "docs" / "design" / "boards" / "index.html").is_file())
 
 
 if __name__ == "__main__":

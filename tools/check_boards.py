@@ -13,6 +13,8 @@ Fails when:
   background attributes, CSS url(), image-set() and @import, and addresses in scripts). Boards are
   self-contained: fonts and images are committed and registered. Links (<a href>) to other sites are allowed;
 - a board page has no "Sample data, not real" label (owner: "Marked samples, one file (Recommended)");
+- a board page in docs/design/boards/ (not index.html, not the screens/ sub-folder) is not linked from
+  docs/design/boards/index.html, once index.html exists (the index is how the reviewers check coverage);
 - an image, font, video, audio file or PDF anywhere under docs/ is not in a table row of
   docs/assets/README.md, named by its path from the repository root in backticks
   (AGENTS.md: "Media is registered first").
@@ -192,6 +194,25 @@ def _register_problems(root: Path) -> list[str]:
             for p in media if p.relative_to(root).as_posix() not in named]
 
 
+def _index_problems(root: Path) -> list[str]:
+    boards = root / BOARDS
+    index = boards / "index.html"
+    if not index.is_file():
+        return []
+    markup = COMMENT_HTML.sub("", index.read_text(errors="replace"))
+    linked = set()
+    for tag, body in TAG.findall(markup):
+        if tag.lower() == "a":
+            for name, value in _attrs(body):
+                target = value.split("#")[0].split("?")[0].strip()
+                if name == "href" and target and not OUTSIDE_URL.match(target):
+                    linked.add(Path(target).as_posix().removeprefix("./"))
+    pages = sorted(p.name for p in boards.glob("*") if p.is_file() and p.suffix.lower() in PAGE_SUFFIXES
+                   and p.name != "index.html")
+    return [f"{(BOARDS / name).as_posix()}: not linked from index.html; add it to the board index"
+            for name in pages if name not in linked]
+
+
 def problems(root: Path) -> list[str]:
     found: list[str] = []
     boards = root / BOARDS
@@ -199,7 +220,7 @@ def problems(root: Path) -> list[str]:
         for path in sorted(boards.rglob("*")):
             if path.is_file() and path.suffix.lower() in TEXT_SUFFIXES:
                 found += _board_problems(root, path)
-    return found + _register_problems(root)
+    return found + _index_problems(root) + _register_problems(root)
 
 
 def main(argv: list[str]) -> int:
