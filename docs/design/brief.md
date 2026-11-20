@@ -99,7 +99,7 @@ The owner chose "1. Chat + trip canvas (Recommended)".
 
 - Desktop: the chat sits in a column on the left, and the trip canvas fills the right.
 - Phone: two tabs, Chat and Trip. When a widget appears in the canvas, the chat shows a compact card that opens it in the Trip tab. A widget that lives only in the chat, such as a side answer or web results, shows in full in the chat.
-- Shared trip page: the canvas on its own, without the chat, as a frozen copy with "as of" dates (spec §8, item 2) The "Share trip" step has a tick box "Include my budget and who's travelling", off by default; without it, the shared copy leaves out the budget and traveller chips and every "under/over your budget" line (owner: "Ask when sharing", 20 Nov 2026).
+- Shared trip page: the canvas on its own, without the chat, as a frozen copy with "as of" dates (spec §8, item 2). The "Share trip" step has a tick box "Include my budget and who's travelling", off by default; without it, the shared copy leaves out the budget and traveller chips and every "under/over your budget" line (owner: "Ask when sharing", 20 Nov 2026).
 
 ## Component inventory
 
@@ -268,7 +268,7 @@ The owner chose "WCAG 2.2 AA (Recommended)" ([WCAG 2.2](https://www.w3.org/TR/WC
 ## Out of scope
 
 - Building the app. This brief and the boards are designs only. Code starts after the Design gate (decision 0010).
-- Accounts, sign-in and saved trips other than shared links.
+- Accounts, sign-in and saved trips other than working and shared links.
 - Real bookings and payments. The booking is a sandbox.
 - Hotel prices.
 - Marketing pages other than the welcome screen.

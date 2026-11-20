@@ -16,10 +16,20 @@ repos:
       - id: check-toml
       - id: check-added-large-files
         args: [--maxkb=1024]
+        # Floorplan gate snapshots bundle their layout engine and fonts (about 2.2 MB); owner: "Allow it for snapshots (Recommended)", 20 Nov 2026 (#39)
+        exclude: ^docs/floorplan/[^/]+\.html$
+      - id: check-added-large-files
+        name: check for added large files (Floorplan snapshots, 4 MB)
+        args: [--maxkb=4096]
+        files: ^docs/floorplan/[^/]+\.html$
       - id: detect-private-key
+      # Floorplan snapshots stay byte-for-byte as exported: their Content-Security-Policy allows each inline
+      # script by its hash, so trimming whitespace blocks the map (Codex review of #42; tools/check_floorplan.py)
       - id: end-of-file-fixer
+        exclude: ^docs/floorplan/[^/]+\.html$
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
+        exclude: ^docs/floorplan/[^/]+\.html$
       - id: no-commit-to-branch
         args: [--branch, main]
 

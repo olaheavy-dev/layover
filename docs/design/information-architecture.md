@@ -54,7 +54,7 @@ The canvas holds these sections, in journey order. Earlier sections fold to a sh
 
 1. Brief: the `brief_summary` widget, with Edit.
 2. Compare: the `comparison_table` widget. After the pick, it folds to a row such as "Compared 3 places: you chose Lisbon".
-3. The chosen place: photo and name first, then the key facts on the first screen (benchmark rule 10). The order is `fare_card`, `cost_estimate`, `advice_card`, `climate_chart`, `money`, then `sea_conditions`, `daylight`, `place_intro` and `map`.
+3. The chosen place: photo and name first, then the key facts on the first screen (benchmark rule 10). The order is `fare_card`, `cost_estimate`, `advice_card`, `climate_chart`, `money`, then `sea_conditions`, `daylight`, `place_intro` and `map`. The places of `public_holidays` and `time_difference` (proposed for #26) in this order are set in the build step 3 plan.
 4. Stay: the `hotel_list` widget. The chosen hotel becomes the base for the days.
 5. Days: one `itinerary_day` widget for each day, built from the chosen hotel (spec §5, step 5).
 6. Booking: the `booking_approval` widget, with the sandbox label.
@@ -129,8 +129,8 @@ The owner chose "Yes, one page (Recommended)":
 ### Vague or unclear messages
 
 1. A trip request with missing details: the brief agent asks for what is missing, one short question at a time, with quick-answer chips where the answers are few (for example the nearest airports). The canvas stays empty until the brief has fields.
-2. A message whose meaning is unclear: Layover asks one clarifying question rather than guessing (spec §4).
-3. A place name with more than one match, such as "Valencia": Layover asks "Which Valencia?" and offers the matches as choices. It never guesses (spec §4, `BRIEF-03`).
+2. A message whose meaning is unclear: Layover asks one clarifying question rather than guessing (spec §5a).
+3. A place name with more than one match, such as "Valencia": Layover asks "Which Valencia?" and offers the matches as choices. It never guesses (spec §5a, `BRIEF-03`).
 4. A side question before any place is chosen: the answer shows in the chat without "Add to trip".
 
 ### Not about travel (`not_travel`)
@@ -183,6 +183,6 @@ A trip grows to at most one comparison, one place, a few days, one hotel list an
 
 ## Open questions
 
-- Some answers in the spec have no widget `kind` yet: local holidays and the time difference (spec §5, step 4, and the `destination_facts` route), fares "to anywhere" (a list of places, not one fare), and TfL journeys to the airport. The boards PR proposes how each is shown, and plan 1 fixes the schemas. Tracked in a `noticed` issue.
+- **Answered, 20 Nov 2026:** the four answers that had no widget `kind` (local holidays, the time difference, fares "to anywhere" and TfL journeys) now have proposed kinds `public_holidays`, `time_difference`, `fare_list` and `transport_route`, chosen by the owner ([register](../decisions/README.md#register)), with evaluation cases `WIDGET-17` to `WIDGET-20`; build step 1 fixes their schemas ([#26](https://github.com/olaheavy-dev/layover/issues/26)).
 
 - How long working and shared links last. This was already open in spec §8, item 2, and it now applies to both kinds of link. A working link keeps the chat, so it holds more personal data than a shared link. The owner decides this before the build plan for trip links.
