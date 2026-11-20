@@ -10,7 +10,7 @@ Design. The repository holds documents and their checks only. The main journey d
 
 ## Open pull requests
 
-None once the boards-readiness PR (for #31) merges.
+- [#32](https://github.com/olaheavy-dev/layover/pull/32) boards readiness (closes #31 and #33). CI passes. Codex found one P1, now fixed: Python cache files with local paths had been committed. Next session: check Codex's re-review of the latest commit and merge if it's clean (owner: "Move merge to next session"). The cache files stay in the branch's earlier commits until the branch is deleted after the merge; the squash merge keeps them out of `main`.
 
 ## Done on 19 Nov 2026
 
@@ -59,9 +59,10 @@ What the design foundations settled (owner answers in prompt windows; details in
 
 ## Next steps
 
-1. **Fresh session: the boards** (issue #28, PR 2 of the design work), with the design-flow phases 5 and 6 (`brief-to-tasks`, then `frontend-design`). Follow #28's screen checklist and the [state table](../design/brief.md#widget-states). Start by creating `docs/assets/README.md`, then commit the fonts, read the Unsplash licence again and register the photos. The boards include the three-way illustration test, two or three logo marks in the real top bar, and the mood-scene prompts for the owner. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief. Show every option inside a real screen, and ask every question in a prompt window.
-2. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage, a map snapshot in `docs/floorplan/`.
-3. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests, and the Aspire app host for local orchestration and tracing). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
+1. **Merge #32** once Codex's re-review is clean (see above).
+2. **Fresh session: the boards** (issue #28, PR 2 of the design work), with the design-flow phases 5 and 6 (`brief-to-tasks`, then `frontend-design`). Follow #28's screen checklist and the [state table](../design/brief.md#widget-states). Start by creating `docs/assets/README.md`, then commit the fonts, read the Unsplash licence again and register the photos. The boards include the three-way illustration test, two or three logo marks in the real top bar, and the mood-scene prompts for the owner. Then the `design-reviewer` and `visual-reviewer` passes, tested against the 12 "bar for Layover" rules in the brief. Show every option inside a real screen, and ask every question in a prompt window.
+3. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage, a map snapshot in `docs/floorplan/`.
+4. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas, money types, the commission switch, recorded-response tests, and the Aspire app host for local orchestration and tracing). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
 
 ## Blockers
 
