@@ -26,7 +26,7 @@ Every `kind` with every state in the [state table](../brief.md#widget-states) th
 
 - [x] **Place widgets**: `fare_card`, `cost_estimate`, `advice_card`, `climate_chart` (with its table alternative), `money`, `sea_conditions`, `daylight`, `place_intro` (with Fallback) and `map` (the drawn sample map). Covers: filled, loading, error (Unavailable), not known, and each kind's extra states. _Reuses: the widget card and source label._
 - [x] **Journey widgets**: `brief_summary`, `comparison_table` (including the phone cards in a horizontal scroll), `hotel_list`, `itinerary_day`, `booking_approval`, `web_results` and `not_known`, plus the phone compact card in the chat. Covers: every state in the table, including empty, the folded rows and every booking state.
-- [ ] **Proposals for the kinds without a `kind`** ([#26](https://github.com/olaheavy-dev/layover/issues/26)): local holidays, the time difference, fares "to anywhere" and TfL journeys, each drawn as a widget with its source label. The figures they need are added to `sample-data.md` first. Plan 1 fixes the schemas.
+- [x] **Proposals for the kinds without a `kind`** ([#26](https://github.com/olaheavy-dev/layover/issues/26)): local holidays, the time difference, fares "to anywhere" and TfL journeys, each drawn as a widget with its source label. The figures they need are added to `sample-data.md` first. Plan 1 fixes the schemas.
 
 ## Screens
 
