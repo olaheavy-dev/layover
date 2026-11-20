@@ -16,19 +16,12 @@
       "sea map"
       "intro intro";
   }
-  /* With no sea card (it is the side answer on those screens), the map sits under the introduction. */
-  .facts--nosea {
-    grid-template-areas:
-      "fare cost"
-      "advice cost"
-      "climate climate"
-      "money daylight"
-      "intro intro"
-      "map map";
-  }
   /* An itinerary-only place has no brief, so only the introduction and the map, one under the other. */
   .facts--plain { grid-template-areas: "intro" "map"; grid-template-columns: minmax(0, 1fr); }
 }
+
+/* An itinerary-only place: one quiet line that says what appears after dates or an airport are given. */
+.place-later { margin-top: var(--space-4); font-size: var(--font-size-sm); line-height: var(--line-height-snug); color: var(--color-text-secondary); }
 
 /* A side answer in the chat: the widget, then the words, then "Add to trip". */
 .msg .widget { margin-top: var(--space-2); }

@@ -205,16 +205,17 @@ Used on `phone-nav.html` and `pages.html`. No new figure is made up. Everything 
 
 ## The chosen place, finished, and Stay and Days
 
-Used on `place.html` and `stay-days.html`. Only what these boards need beyond the sections above. None of it is a real fact.
+Used on `place.html` and `stay-days.html` (the side-answer screens are `place-side-answer.html`, `place-side-answer-added.html` and `place-pinned.html`). Only what these boards need beyond the sections above. None of it is a real fact.
 
 | Item | Sample content |
 |---|---|
 | Trip strip counts | "9 facts ready": the five key facts (fare, cost estimate, advice, weather, money) plus the sea, daylight, place introduction and map (5 + 4 = 9). "Stay and 3 days ready" once the hotel is chosen or skipped |
 | Trip tab badge | "1 new", on the Chat tab after a side answer is pinned |
-| Side answer: the beach | The sea card (17°C, Live, Open-Meteo Marine), then "Typical highs are 22°C, with 5 rainy days. Whether that suits you is your call." Weather source: Open-Meteo, Live. All figures from the tables above |
-| Side answer boards | The canvas on the two side-answer screens is drawn without a sea card, so the answer is not shown twice. In the real planner a coastal place would already have it |
+| Side answer: the time difference | Traveller: "What’s the time difference with Lisbon?". The answer is the proposed `time_difference` widget: "Same time as the UK" for 14 to 19 May 2027, label "Cached, release of 1 Nov 2026 (sample date)", source the IANA time zone database. The figures and their working are in "Widget gallery: proposed widgets" (`time_difference`, Lisbon): not repeated here. Layover words: "There is no clock change to make: on those dates Lisbon and the UK are on the same time." It is not on the canvas, so the chat offers "Add to trip" (hint: "Adds this card to Lisbon, under “Added from the chat”.") and, once added, the card sits under "Added from the chat" |
+| Side answer already on the canvas: the beach | Traveller: "Is May a good time for the beach?". The sea card (17°C, Live, Open-Meteo Marine) is on the canvas, so the chat shows it with "Typical highs are 22°C, with 5 rainy days. Whether that suits you is your call." (weather source: Open-Meteo, Live; all figures from the tables above), then "Already in your trip · View" in place of "Add to trip". View opens the sea card on the canvas (the Trip tab on a phone) |
+| Side answer boards | The canvas on all three side-answer screens is the approved one, with the sea card (the "9 facts ready" count includes it) |
 | Chat messages | Traveller: "Plan three days in Lisbon", "Choose Sample Hotel Alfama", "Skip the hotel", "Choose Sample Hotel Belém instead", "Three days in Lisbon". They are choices and requests, not facts |
 | Days after a hotel change | Day 1 keeps the same three stops as in "Days" above and Day 2 keeps its two stops. The sample does not model how stops move when the base changes. Day 1 and Day 2 each carry the note that they were rebuilt |
 | Days when the hotel is skipped | The same stops as "Days" above. Day 1 shows the banner "Days start from the centre of Lisbon", Day 2 a quiet line |
-| Itinerary-only trip | "Three days in Lisbon" with Lisbon sample data, because there are no Porto days (the information architecture's example is Porto). Trip name "Lisbon", with no month because none was given. The place shows only its introduction and the map, because the fare, cost, weather and daylight widgets need an airport, a budget or dates |
+| Itinerary-only trip | "Three days in Lisbon" with Lisbon sample data, because there are no Porto days (the information architecture's example is Porto). Trip name "Lisbon", with no month because none was given. The place shows only its introduction and the map, then one quiet line: "Fares, costs, weather and daylight for Lisbon appear here once you give dates or an airport." The chat offers: "Tell me your dates to add weather and daylight, or your airport to add fares." Nothing is guessed |
 | Map for Sample Hotel Belém | The drawn sample map moves its pin to another block. The position is not real |

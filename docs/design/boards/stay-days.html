@@ -105,7 +105,7 @@
           <div class="board__notes">
             <h3>What to look at</h3>
             <ul>
-            <li>The section index is Lisbon, Stay, Days. There is no Brief and no Compare, because nothing was briefed or compared.</li><li>The place shows only its introduction and the map. Fares, costs, weather and daylight need an airport, a budget or dates, and nobody has given any, so they are not shown (the agent’s call, see the note for the owner).</li><li>The information architecture’s example is Porto, but the sample data has no Porto days, so the board uses Lisbon. The trip name has no month, because none was given. The brief’s naming rule does not cover this case yet (a gap, see the note for the owner).</li>
+            <li>The section index is Lisbon, Stay, Days. There is no Brief and no Compare, because nothing was briefed or compared.</li><li>The trip is named “Lisbon”, with no month, because no dates were given. It gets a month once the traveller gives dates.</li><li>The place shows only its introduction and the map, with one quiet line saying that fares, costs, weather and daylight appear once dates or an airport are given. Nothing is guessed, and no empty cards or zeros stand in for them.</li><li>The chat offers the next step: “Tell me your dates to add weather and daylight, or your airport to add fares.”</li>
             </ul>
           </div>
         </section>
@@ -113,9 +113,7 @@
       <aside class="state" aria-label="Notes for the owner">
         <h2 class="state__title">Notes for the owner</h2>
         <ul>
-          <li><strong>Sea card on the side-answer screens.</strong> In the real planner a coastal place would already have its sea card, so the beach question could point to it instead of adding a second one. The boards leave the sea card out of the canvas on the two side-answer screens, so it is not drawn twice. Decision needed: does “Add to trip” stay on an answer the canvas already holds?</li>
-          <li><strong>Itinerary-only trip name.</strong> The brief names a trip by place and month. A request such as “Three days in Lisbon” has no month, so the board shows “Lisbon”. The rule needs a line for this case.</li>
-          <li><strong>Itinerary-only place.</strong> The agent chose to show only the introduction and the map there. Say if the traveller should also see the currency or the weather.</li>
+          <li><strong>Three notes are decided.</strong> The three notes that stood here (the sea card on the side-answer screens, the itinerary-only trip name and the itinerary-only place) were decided on 20 Nov 2026. The decisions are in the register in <code>docs/decisions/README.md</code>, and the boards now follow them. No open notes remain on this board.</li>
         </ul>
       </aside>
 
