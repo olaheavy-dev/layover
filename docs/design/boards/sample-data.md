@@ -99,7 +99,7 @@ The chosen state uses Sample Hotel Alfama. The skipped state says "Days start fr
 
 | Day | Stops | Notes |
 |---|---|---|
-| Day 1 | Castelo de São Jorge (10:00 to 18:00), Miradouro de Santa Luzia, a walk through Alfama | Opening hours are sample values |
+| Day 1 | Castelo de São Jorge (10:00 to 18:00), Miradouro de Santa Luzia (opening times Not known), a walk through Alfama (no opening times: it is a walk) | Opening hours are sample values |
 | Day 2 | Torre de Belém (opening times Not known), Mosteiro dos Jerónimos (10:00 to 17:30) | Draws the row-level "Not known" |
 | Day 3 | Too few sourced places for the afternoon | Draws the Empty state of `itinerary_day` |
 
