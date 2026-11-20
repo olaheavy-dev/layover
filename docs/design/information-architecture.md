@@ -28,7 +28,7 @@ What each link stores:
 - Primary navigation: none in the usual sense. Layover has one main task, so the top bar holds the logo (a link to `/`), the trip name, "Share trip" and "How it works".
 - Secondary navigation: the section index on the canvas. The owner chose "One scroll + section index (Recommended)". Sections stack in journey order, and a small sticky index jumps between them: Brief, Compare, the chosen place, Stay, Days, Booking. A section appears in the index only when it has content. The current section is bold and underlined, so colour is never the only cue.
 - Utility navigation: "How it works", and "New trip", which starts again at `/` after a confirmation inside the page.
-- Phone and tablet, below 1024 px **(agent's call)**: two tabs, Chat and Trip. The Trip tab shows a badge when new content arrives. The section index scrolls sideways at the top of the Trip tab.
+- Phone and tablet, below 1024 px **(agent's call)**: two tabs, Chat and Trip. The Trip tab shows a labelled badge, such as "3 new", when new content arrives. Once a trip exists, a trip strip sits above the message input on the Chat tab, with the place photo, the trip name, what is ready (for example "5 facts ready") and "View trip" (owner: "Trip strip + cards (Recommended)", 20 Nov 2026). The section index scrolls sideways at the top of the Trip tab.
 - Desktop, from 1024 px **(agent's call)**: the chat column on the left and the canvas on the right. Both scroll on their own.
 
 ## Content hierarchy
@@ -163,7 +163,7 @@ The owner chose "Yes, one page (Recommended)":
 
 ## Content growth
 
-A trip grows to at most one comparison, one place, a few days, one hotel list and one booking, plus pinned answers. A long trip relies on the section index and on folded sections, so it needs no pages or search. The chat grows without limit during a session. It scrolls, and the canvas keeps what matters. Layover has no list of trips, because it has no accounts.
+A trip grows to at most one comparison, one place, a few days, one hotel list and one booking, plus pinned answers. A long trip relies on the section index and on folded sections, so it needs no pages or search. The chat grows without limit during a session. It scrolls, and the canvas keeps what matters. The tool steps for one answer fold into one row, such as "4 checks · Show", and "Jump to latest" appears when the traveller scrolls up (owner: "Group steps + jump (Recommended)", 20 Nov 2026). Layover has no list of trips, because it has no accounts.
 
 ## URL strategy
 
