@@ -10,7 +10,7 @@ The Design gate is in review (issue #39); when it merges, the Design stage is cl
 
 ## Open pull requests
 
-- The Design gate PR (closes issue #39): evaluation cases, build order, Floorplan snapshot, audit fixes and triage. Owner-merge (it changes a template-owned check).
+- The Design gate PR [#42](https://github.com/olaheavy-dev/layover/pull/42) (closes issue #39): evaluation cases, build order, Floorplan snapshot, audit fixes and triage. Owner-merge (it changes a template-owned check).
 
 ## The Design gate (#39, 20 Nov 2026)
 
