@@ -124,6 +124,13 @@ The owner chose "Yes, one page (Recommended)":
 2. If the search finds nothing usable, the chat says "I can't help with that yet". It shows no widget.
 3. A web result never offers "Add to trip" **(agent's call)**, because Layover has not checked it.
 
+### Vague or unclear messages
+
+1. A trip request with missing details: the brief agent asks for what is missing, one short question at a time, with quick-answer chips where the answers are few (for example the nearest airports). The canvas stays empty until the brief has fields.
+2. A message whose meaning is unclear: Layover asks one clarifying question rather than guessing (spec §4).
+3. A place name with more than one match, such as "Valencia": Layover asks "Which Valencia?" and offers the matches as choices. It never guesses (spec §4, `BRIEF-03`).
+4. A side question before any place is chosen: the answer shows in the chat without "Add to trip".
+
 ### Not about travel (`not_travel`)
 
 1. The chat declines politely in one line and gives an example of what Layover can do. It shows no widget.

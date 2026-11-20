@@ -58,7 +58,7 @@ The supervisor's first step on every message is to classify it into one supporte
 | `unsupported_travel` | A travel question none of the above covers | A Tavily web search: short quotes with their links and the retrieval date, labelled "from a web search, not checked by Layover", plus what Layover can do. Queries carry the travel question only, never traveller details. If the search finds nothing usable, an honest "I can't help with that yet". Logged without personal data to guide what to add next |
 | `not_travel` | Anything else | Politely declined |
 
-A conversation can move between intents (a `destination_facts` question in the middle of `plan_trip`); the supervisor keeps the trip state. **(Agent's call)** When the classifier isn't confident, the brief agent asks one clarifying question rather than guessing.
+A conversation can move between intents (a `destination_facts` question in the middle of `plan_trip`); the supervisor keeps the trip state. **(Agent's call)** When the classifier isn't confident, the brief agent asks one clarifying question rather than guessing. When a place name could mean more than one place (for example "Valencia", in Spain or Venezuela), Layover asks which one, offering the matches as choices, and never guesses (owner: "Add the board (Recommended)", 20 Nov 2026).
 
 ## 5. The journey (`plan_trip`)
 
@@ -119,7 +119,7 @@ Each agent's tools sit behind Layover's own MCP servers from build step 2 ([0009
 Permanent IDs per area (`AGENTS.md`): `INTENT-`, `BRIEF-`, `COMPARE-`, `ITIN-`, `BOOK-`, `TRIP-`. **(Agent's call)** First cases:
 
 - `INTENT-01` each example in §5a is classified to its intent; `INTENT-02` a non-travel request is declined; `INTENT-03` an unsupported travel question gets web-search quotes with links and the "not checked by Layover" label, or "not yet", never an unsourced answer; `INTENT-04` a non-travel question (for example about investments) is declined without a web search; `INTENT-05` a web-search query never contains the traveller's details.
-- `BRIEF-01` a vague request ends in a confirmed summary with every field set; `BRIEF-02` a budget or date misread is corrected before searching.
+- `BRIEF-01` a vague request ends in a confirmed summary with every field set; `BRIEF-02` a budget or date misread is corrected before searching; `BRIEF-03` a place name with more than one match gets a "which one" question with the matches as choices, never a guess.
 - `COMPARE-01` all three places stay within the budget in code, or say why not; `COMPARE-02` every figure carries its source and age; `COMPARE-03` no destination is called "safe".
 - `ITIN-01` every stop exists in the source data; `ITIN-02` a gap in data is stated, not filled.
 - `BOOK-01` no order is placed without the approval step; `BOOK-02` the booking is labelled as a sandbox and never uses a Travelpayouts fare.
