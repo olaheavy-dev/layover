@@ -89,6 +89,25 @@
   --tint-line-lift: color-mix(in srgb, var(--color-text-primary) 8%, transparent);  /* inner top edge of a card */
   --tint-line-hero: color-mix(in srgb, var(--color-text-primary) 12%, transparent); /* hairline round the hero */
 
+  /* ---------- Illustration colours (isometric style, docs/design/boards/illustration-guide.html) ---------- */
+  /* Every drawing uses only these. A solid has three faces: -t is the top (lightest), -l the left, -r the
+     right (darkest). The light comes from above and to the left. Colours are derived from the theme colours
+     above, so they follow the theme; the dark values are set in the dark blocks below. */
+  --illus-water: color-mix(in srgb, var(--color-highlight) 38%, var(--color-bg-secondary));
+  --illus-wave: color-mix(in srgb, var(--color-bg-secondary) 80%, transparent);
+  --illus-shadow: color-mix(in srgb, var(--logo-ink) 20%, transparent);
+  --illus-cut: var(--color-bg-secondary);   /* eyes, windows, notches: shows the page through the drawing */
+  --illus-sun: var(--logo-sun);
+  --illus-ink-t: color-mix(in srgb, var(--logo-ink) 78%, var(--color-bg-secondary));
+  --illus-ink-l: var(--logo-ink);
+  --illus-ink-r: var(--color-accent-primary-active);
+  --illus-sun-t: color-mix(in srgb, var(--color-highlight) 55%, var(--color-bg-secondary));
+  --illus-sun-l: var(--color-highlight);
+  --illus-sun-r: color-mix(in srgb, var(--color-highlight) 70%, var(--logo-ink));
+  --illus-pap-t: var(--color-bg-secondary);
+  --illus-pap-l: var(--color-bg-tertiary);
+  --illus-pap-r: color-mix(in srgb, var(--color-highlight) 42%, var(--color-bg-tertiary));
+
   /* ---------- Photos ---------- */
   /* Text on a photo sits only where the scrim is at least this opaque, so white text keeps
      4.5:1 even over a white photo. check_contrast.py tests the worst case. */
@@ -217,6 +236,19 @@
   --shadow-md: 0 8px 24px -12px rgba(2, 8, 18, 0.75);
   --shadow-lg: 0 18px 44px -20px rgba(2, 8, 18, 0.85);
   --shadow-focus: 0 0 0 2px #0A1422, 0 0 0 4px #9CC3E8;
+  /* Illustration colours, dark theme (see the light values above) */
+  --illus-water: color-mix(in srgb, var(--color-highlight) 22%, var(--color-bg-secondary));
+  --illus-wave: color-mix(in srgb, var(--color-accent-primary) 38%, transparent);
+  --illus-shadow: color-mix(in srgb, var(--color-bg-primary) 70%, transparent);
+  --illus-ink-t: var(--color-accent-primary-active);
+  --illus-ink-l: var(--color-accent-primary);
+  --illus-ink-r: var(--color-highlight);
+  --illus-sun-t: color-mix(in srgb, var(--color-highlight) 60%, var(--color-accent-primary-active));
+  --illus-sun-l: color-mix(in srgb, var(--color-highlight) 80%, var(--color-accent-primary));
+  --illus-sun-r: var(--color-highlight);
+  --illus-pap-t: color-mix(in srgb, var(--color-accent-primary) 42%, var(--color-bg-secondary));
+  --illus-pap-l: color-mix(in srgb, var(--color-accent-primary) 26%, var(--color-bg-secondary));
+  --illus-pap-r: color-mix(in srgb, var(--color-accent-primary) 14%, var(--color-bg-secondary));
   color-scheme: dark;
 }
 
@@ -256,6 +288,19 @@
     --shadow-md: 0 8px 24px -12px rgba(2, 8, 18, 0.75);
     --shadow-lg: 0 18px 44px -20px rgba(2, 8, 18, 0.85);
     --shadow-focus: 0 0 0 2px #0A1422, 0 0 0 4px #9CC3E8;
+    /* Illustration colours, dark theme (see the light values above) */
+    --illus-water: color-mix(in srgb, var(--color-highlight) 22%, var(--color-bg-secondary));
+    --illus-wave: color-mix(in srgb, var(--color-accent-primary) 38%, transparent);
+    --illus-shadow: color-mix(in srgb, var(--color-bg-primary) 70%, transparent);
+    --illus-ink-t: var(--color-accent-primary-active);
+    --illus-ink-l: var(--color-accent-primary);
+    --illus-ink-r: var(--color-highlight);
+    --illus-sun-t: color-mix(in srgb, var(--color-highlight) 60%, var(--color-accent-primary-active));
+    --illus-sun-l: color-mix(in srgb, var(--color-highlight) 80%, var(--color-accent-primary));
+    --illus-sun-r: var(--color-highlight);
+    --illus-pap-t: color-mix(in srgb, var(--color-accent-primary) 42%, var(--color-bg-secondary));
+    --illus-pap-l: color-mix(in srgb, var(--color-accent-primary) 26%, var(--color-bg-secondary));
+    --illus-pap-r: color-mix(in srgb, var(--color-accent-primary) 14%, var(--color-bg-secondary));
     color-scheme: dark;
   }
 }

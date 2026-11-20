@@ -1680,3 +1680,29 @@ img {
   line-height: var(--line-height-snug);
 }
 .empty__line { color: var(--color-text-secondary); }
+
+/* Welcome screen: the isometric illustration comes from the illustration guide; colours are --illus-* tokens. */
+.welcome-mini { --illus-ticket-display: none; display: block; width: 13.5rem; max-width: 70%; height: auto; margin: 0 0 var(--space-1) -0.25rem; }
+.welcome__title { font-family: var(--font-family-display); font-size: var(--font-size-2xl); font-weight: var(--font-weight-medium); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-tight); }
+.welcome__lead { color: var(--color-text-secondary); font-size: var(--font-size-base); }
+.welcome .chat__log::before { display: none; }
+.welcome .chat__log { gap: var(--space-4); padding-top: var(--space-5); }
+.welcome__prompts-label { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; color: var(--color-text-secondary); margin-top: var(--space-2); }
+.welcome .choices { gap: var(--space-2); }
+.welcome .canvas__inner { min-height: 100%; display: grid; align-content: center; padding-bottom: var(--space-6); }
+.welcome .empty { min-height: 0; max-width: 36rem; width: 100%; gap: var(--space-2); padding-block: var(--space-6); }
+.welcome-illus { display: block; width: 100%; height: auto; margin-bottom: var(--space-3); }
+.welcome .empty__line { font-size: var(--font-size-md); max-width: 28rem; }
+.welcome__honest { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: var(--space-1) var(--space-4); margin-top: var(--space-3); font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.welcome__honest a { font-weight: var(--font-weight-semibold); }
+@media (min-width: 40rem) { .welcome__title { font-size: var(--font-size-3xl); } }
+@media (min-width: 64rem) {
+  .welcome-mini { display: none; }
+  .welcome .chat__log { padding: var(--space-8) var(--space-5) var(--space-4); }
+  .welcome .composer { margin-inline: var(--space-5); }
+}
+@media (max-width: 63.99rem) {
+  .welcome .canvas__inner { align-content: start; }
+}
+
+.illus-ticket { display: var(--illus-ticket-display, inline); }

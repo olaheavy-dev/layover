@@ -330,3 +330,60 @@
   margin-top: var(--space-4);
   padding-left: var(--space-5);
 }
+
+/* ---------- Illustration guide ---------- */
+/* One screen long: a text column and a drawing for each rule. Tokens only. */
+.guide__section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5) var(--space-7);
+  align-items: start;
+  padding-block: var(--space-7);
+  border-bottom: 1px solid var(--color-border-primary);
+}
+@media (min-width: 64rem) {
+  .guide__section { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+  .guide__section--wide { grid-template-columns: minmax(0, 1fr); }
+}
+.guide__text h2 {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+.guide__text p { margin-bottom: var(--space-3); color: var(--color-text-secondary); }
+.guide__list { display: flex; flex-direction: column; gap: var(--space-2); padding-left: var(--space-5); list-style: disc; color: var(--color-text-secondary); }
+.guide__list strong { color: var(--color-text-primary); }
+.guide__fig { margin: 0; padding: var(--space-4); border: 1px solid var(--color-border-primary); border-radius: var(--border-radius-lg); background: var(--color-bg-primary); }
+.guide__fig figcaption { margin-top: var(--space-3); font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.guide__fig--scene { background: var(--color-bg-primary); }
+.guide__section--lead .guide__fig { align-self: stretch; }
+.g-art { display: block; width: 100%; height: auto; }
+.guide__fig--pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.guide__fig--pair > div { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.guide__fig--pair .g-art { max-width: 12rem; }
+.guide__fig--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 90rem) { .guide__fig--four { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.guide__fig--shade .g-art { max-width: 28rem; margin-inline: auto; }
+.g-tag { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--border-radius-full); background: var(--color-bg-tertiary); font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); text-align: center; }
+.g-tag--do::before { content: "\2713\00a0"; }
+.g-tag--dont::before { content: "\2715\00a0"; }
+.guide__table { width: 100%; margin-bottom: var(--space-4); border-collapse: collapse; font-size: var(--font-size-sm); }
+.guide__table th, .guide__table td { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border-primary); text-align: left; vertical-align: top; }
+.guide__table td { color: var(--color-text-secondary); }
+.guide__table code { display: block; white-space: nowrap; font-size: var(--font-size-xs); overflow-wrap: anywhere; }
+.sw { display: block; width: 2rem; height: 1.25rem; margin-bottom: var(--space-1); border-radius: var(--border-radius-sm); border: 1px solid var(--color-border-primary); }
+.g-cast { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: var(--space-4); }
+.g-card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); border: 1px solid var(--color-border-primary); border-radius: var(--border-radius-lg); background: var(--color-bg-primary); font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.g-card__art { display: grid; place-items: center; height: 11rem; }
+.g-card__art .g-art { max-height: 100%; width: auto; max-width: 100%; }
+.g-card__name { font-family: var(--font-family-display); font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+.guide__fig--sizes { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-6); }
+.sz { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.sz--l { flex: 1 1 18rem; }
+.sz--s { flex: 0 0 auto; }
+.sz--l svg { width: 100%; max-width: 28.75rem; height: auto; }
+.sz__phone { width: 13.5rem; }
+.sz__phone svg { display: block; width: 100%; height: auto; }
+.guide__note { max-width: none; }
