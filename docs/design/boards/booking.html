@@ -18,7 +18,7 @@
       <div class="board__intro">
         <p class="board__kicker">Layover boards · Booking</p>
         <h1 class="board__title">Booking</h1>
-        <p class="board__lead">Trying the flight booking in the sandbox: waiting for approval, approved, declined and price changed. Booking is the last section on the canvas and has its own entry in the section index. The flow pauses and nothing is ordered until the traveller presses Approve. Every state says “Sandbox: no real booking or payment”.</p>
+        <p class="board__lead">Trying the flight booking in the sandbox: choosing the dates, waiting for approval, approved, declined and price changed. Booking is the last section on the canvas and has its own entry in the section index. The flow pauses and nothing is ordered until the traveller presses Approve. Every state says “Sandbox: no real booking or payment”.</p>
       </div>
       <div class="board__tools">
         <div class="switch" role="group" aria-label="Theme of all frames"><button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button><button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button></div>
@@ -26,8 +26,27 @@
     </header>
 
     <div class="board__frames">
+      <article class="state" aria-labelledby="state-0">
+        <h2 class="state__title" id="state-0">1. Choosing the dates</h2>
+        <p class="state__line">The first step. Layover only has “May 2027, 5 nights”, so it asks for exact dates and never picks them. Nothing is searched or ordered yet.</p>
+        <section aria-labelledby="desktop-label-0">
+          <span class="board__label" id="desktop-label-0">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Choosing the dates, 1440 px wide" data-screen="screens/booking-dates.html" src="screens/booking-dates.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Choosing the dates, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-0">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Choosing the dates, 390 px wide, Chat tab" data-screen="screens/booking-dates.html" src="screens/booking-dates.html#light"></iframe></div></div><div><span class="board__label" id="pt-0">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Choosing the dates, 390 px wide, Trip tab" data-screen="screens/booking-dates.html?tab=trip" src="screens/booking-dates.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul><li>Layover asks “Which dates would you like to fly?” with date choices and “Other dates”. The choices are samples.</li><li>The Booking section says it appears once the dates are chosen: no price and no offer yet.</li><li>The sandbox label is already there: “Sandbox: no real booking or payment”.</li></ul>
+          </div>
+        </section>
+      </article>
       <article class="state" aria-labelledby="state-1">
-        <h2 class="state__title" id="state-1">1. Waiting for approval</h2>
+        <h2 class="state__title" id="state-1">2. Waiting for approval</h2>
         <p class="state__line">The sandbox offer is in the Booking section. The chat says the flow is paused until Approve. On a phone the chat shows a compact card with “View in trip”.</p>
         <section aria-labelledby="desktop-label-1">
           <span class="board__label" id="desktop-label-1">1440 px</span>
@@ -42,13 +61,13 @@
           <div class="board__notes">
             <h3>What to look at</h3>
             <ul>
-            <li>Approve and Decline are equal choices, both on the canvas. The chat has no Approve button, so nothing can be ordered by accident.</li><li>The sandbox label “Sandbox: no real booking or payment” is the first thing in the widget and on the compact card.</li><li>The price, £192 for 2, has its Live label. Only the sandbox figures from the sample data are used.</li>
+            <li>Approve and Decline are equal choices, both on the canvas. The chat has no Approve button, so nothing can be ordered by accident.</li><li>The sandbox label “Sandbox: no real booking or payment” is the first thing in the widget and on the compact card.</li><li>The price, £192 for 2, has its Live label and says it is a sandbox price, not the fare above. The dates are the ones the traveller chose in step 1.</li>
             </ul>
           </div>
         </section>
       </article>
       <article class="state" aria-labelledby="state-2">
-        <h2 class="state__title" id="state-2">2. Approved</h2>
+        <h2 class="state__title" id="state-2">3. Approved</h2>
         <p class="state__line">After Approve, the sandbox order runs and the widget shows its result: SANDBOX-0001.</p>
         <section aria-labelledby="desktop-label-2">
           <span class="board__label" id="desktop-label-2">1440 px</span>
@@ -69,7 +88,7 @@
         </section>
       </article>
       <article class="state" aria-labelledby="state-3">
-        <h2 class="state__title" id="state-3">3. Declined</h2>
+        <h2 class="state__title" id="state-3">4. Declined</h2>
         <p class="state__line">The traveller pressed Decline. Nothing was ordered.</p>
         <section aria-labelledby="desktop-label-3">
           <span class="board__label" id="desktop-label-3">1440 px</span>
@@ -90,7 +109,7 @@
         </section>
       </article>
       <article class="state" aria-labelledby="state-4">
-        <h2 class="state__title" id="state-4">4. The price changed</h2>
+        <h2 class="state__title" id="state-4">5. The price changed</h2>
         <p class="state__line">At the price check the sandbox price was £204 for 2, not £192. Layover shows both prices as plain words and asks again.</p>
         <section aria-labelledby="desktop-label-4">
           <span class="board__label" id="desktop-label-4">1440 px</span>

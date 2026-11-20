@@ -175,3 +175,4 @@
 .board--journey .frame--desktop .frame__viewport { height: calc(1400px * var(--scale)); }
 .board--journey .frame--desktop iframe { height: 1400px; }
 .board--journey .frame--phone iframe { height: 900px; }
+.bk-can { display: flex; flex-direction: column; gap: var(--space-1); padding-left: var(--space-5); margin: var(--space-1) 0 0; font-size: var(--font-size-base); line-height: var(--line-height-normal); list-style: disc; }
