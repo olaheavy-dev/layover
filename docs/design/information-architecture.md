@@ -70,6 +70,8 @@ The order of the key facts is the agent's call. Cost and fares come first becaus
 3. Each fare and advice date stays as it was when the trip was shared, with its "as of" date.
 4. A "Plan your own trip" link to `/`.
 
+Budget and travellers on a shared trip: the "Share trip" step has a tick box "Include my budget and who's travelling", off by default. Without it, the shared copy leaves out the budget and traveller chips and every "under/over your budget" line (owner: "Ask when sharing", 20 Nov 2026).
+
 ### How Layover works (`/how-it-works`)
 
 The owner chose "Yes, one page (Recommended)":
