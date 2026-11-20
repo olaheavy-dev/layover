@@ -10,7 +10,7 @@ Design. The repository holds documents and their checks only. The main journey d
 
 ## Open pull requests
 
-None yet. The boards work for #28 is on the branch `docs/design-boards` (a worktree beside the project, `layover-boards`). It is ready for the pre-push review; the pull request opens after the owner says to push.
+- The boards PR for #28 (branch `docs/design-boards`): opened on 20 Nov 2026 after the pre-push review, waiting for `@codex review`. It closes #28; #26 stays open for build plan 1.
 
 ## The boards (#28), 20 Nov 2026
 
@@ -70,7 +70,7 @@ What the design foundations settled (owner answers in prompt windows; details in
 
 ## Next steps
 
-1. **The boards PR (#28):** the pre-push review (Opus, fresh context, with the security reviewer), then push, open the PR with `Closes #28`, and request `@codex review`. The owner says when to push.
+1. **The boards PR (#28):** handle Codex's review (fix every finding, push once, ask once), then merge under "When merging" and remove the `layover-boards` worktree.
 2. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage (#9, #26, #27, #34, #36), a map snapshot in `docs/floorplan/`.
 3. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas incl. the four kinds proposed for #26, money types, the commission switch, recorded-response tests, the holidays library as an approved dependency, and the Aspire app host). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
 
