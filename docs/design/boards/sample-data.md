@@ -171,3 +171,16 @@ Used on `start.html` and `compare.html`. Sample messages written for the boards;
 | Strip and card wording | Strip meta: "Brief waiting for your OK", "Editing your brief", "Brief confirmed, checking 3 places", "Checking 3 places, 1 ready", "3 places ready to compare", "2 places ready, 1 did not load", "2 places ready, Porto loading", "No place fits yet". The counts come from the three places above |
 | Card states | Loading: Lisbon filled, the other two shapes. Filled: the three places above, Valencia's stay Not known. Failed: Valletta ("Layover could not check fares, costs or weather for Valletta just now"). Swapped: Porto, "Researching your place", no figure and no photo |
 | No place fits | The budget chip is the part that rules places out. The words use no cost figure: "I could not find a place that fits £800 in total for 2 adults from Manchester in May 2027." |
+
+## Booking and chat-only boards
+
+Used on `booking.html` and `chat-only.html`. Sample messages written for the boards; no figure is new. Booking figures are the "Booking (sandbox)" table above.
+
+| Item | Sample content |
+|---|---|
+| Booking chat | "Can I try booking the flights?" The offer line repeats MAN to LIS, 14 to 19 May 2027, 2 adults, £192 for 2. Price changed: £204 for 2, no difference shown |
+| Chat-only question | "Can I take a pushchair on Lisbon trams?" with the two web-result quotes above. "I can't help with that yet" is the same question with no usable result |
+| Not about travel | "Write me a poem about my cat". The decline gives "Three days in Porto" as the example (the welcome prompt) |
+| Lost connection | The unsent message "What does the FCDO say about Lisbon?" |
+| Share trip | Sample link `layover.example/s/sample-share-link` (not a real address), "as of 18 Nov 2026" |
+| New trip | "Lisbon, May" stays at its working link; no time limit is stated, because how long links last is not decided |

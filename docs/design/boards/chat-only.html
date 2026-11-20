@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: Chat-only replies and interruptions · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="screens-journey.css">
+  <link rel="stylesheet" href="screens-booking.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Chat-only replies</p>
+        <h1 class="board__title">Chat-only replies and interruptions</h1>
+        <p class="board__lead">What happens in the chat without the canvas changing: a web search answer, an honest “I can’t help with that yet”, an answer the traveller stops, a message that is not about travel, a lost connection, and the New trip and Share trip steps. All of these are in the page: no browser alert and no browser dialog.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of all frames"><button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button><button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button></div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. Web results in the chat</h2>
+        <p class="state__line">The question is a travel question that Layover has no tool for, so it runs a web search. The result stays in the chat.</p>
+        <section aria-labelledby="desktop-label-1">
+          <span class="board__label" id="desktop-label-1">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Web results in the chat, 1440 px wide" data-screen="screens/chat-web-results.html" src="screens/chat-web-results.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Web results in the chat, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-1">390 px</span><div class="frame frame--phone"><iframe title="Web results in the chat, 390 px wide" data-screen="screens/chat-web-results.html" src="screens/chat-web-results.html#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The widget says “From a web search, not checked by Layover” at the top, with the retrieval date. It never uses Live or Cached, and it has no “Add to trip”: a line under it says so.</li><li>The two quotes come from example.org and are marked “sample quote”. The boards never put made-up words in a real site’s mouth.</li><li>The canvas does not change. On a phone the widget shows in full in the chat, so the Trip tab is not needed.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-2">
+        <h2 class="state__title" id="state-2">2. Stopping an answer</h2>
+        <p class="state__line">While an answer streams, the Send button turns into Stop. The traveller can end the answer at any point.</p>
+        <section aria-labelledby="desktop-label-2">
+          <span class="board__label" id="desktop-label-2">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Stopping an answer, 1440 px wide" data-screen="screens/chat-stop.html" src="screens/chat-stop.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Stopping an answer, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-2">390 px</span><div class="frame frame--phone"><iframe title="Stopping an answer, 390 px wide" data-screen="screens/chat-stop.html" src="screens/chat-stop.html#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>Stop has a word and an icon, not only an icon, and it sits where Send was.</li><li>The check row says what is still running. A hidden line tells a screen reader that Layover is answering.</li><li>The caret is still: nothing moves, so reduced motion needs no special case.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-3">
+        <h2 class="state__title" id="state-3">3. I can’t help with that yet</h2>
+        <p class="state__line">The web search found nothing usable. Layover says so and says what it can do. No widget.</p>
+        <section aria-labelledby="desktop-label-3">
+          <span class="board__label" id="desktop-label-3">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="I can’t help with that yet, 1440 px wide" data-screen="screens/chat-cant-help.html" src="screens/chat-cant-help.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="I can’t help with that yet, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-3">390 px</span><div class="frame frame--phone"><iframe title="I can’t help with that yet, 390 px wide" data-screen="screens/chat-cant-help.html" src="screens/chat-cant-help.html#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The line is plain and one sentence. It does not guess an answer.</li><li>The list of what Layover can do gives the traveller a way on.</li><li>Nothing is added to the canvas.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-4">
+        <h2 class="state__title" id="state-4">4. Not about travel</h2>
+        <p class="state__line">A message that is not about travel is declined politely in one line, with an example. No trip is made, so this is the welcome screen with the decline in the chat.</p>
+        <section aria-labelledby="desktop-label-4">
+          <span class="board__label" id="desktop-label-4">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Not about travel, 1440 px wide" data-screen="screens/chat-not-travel.html" src="screens/chat-not-travel.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Not about travel, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-4">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Not about travel, 390 px wide, Chat tab" data-screen="screens/chat-not-travel.html" src="screens/chat-not-travel.html#light"></iframe></div></div><div><span class="board__label" id="pt-4">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Not about travel, 390 px wide, Trip tab" data-screen="screens/chat-not-travel.html?tab=trip" src="screens/chat-not-travel.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>One line: the decline and an example in the same sentence. No lecture.</li><li>The canvas still says “Your trip” and shows the illustration: no trip was made, and the top bar has no trip name and no Share trip.</li><li>The four example prompts stay under the decline, so the traveller can pick one.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-5">
+        <h2 class="state__title" id="state-5">5. Lost connection</h2>
+        <p class="state__line">The message could not be sent. It keeps its text and is marked “Not sent”, and the chat offers Try again.</p>
+        <section aria-labelledby="desktop-label-5">
+          <span class="board__label" id="desktop-label-5">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Lost connection, 1440 px wide" data-screen="screens/chat-lost-connection.html" src="screens/chat-lost-connection.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Lost connection, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-5">390 px</span><div class="frame frame--phone"><iframe title="Lost connection, 390 px wide" data-screen="screens/chat-lost-connection.html" src="screens/chat-lost-connection.html#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>“Not sent” is a word and an icon on a dashed outline: the traveller’s text is not lost.</li><li>The notice is in the chat, uses the warning colour with words and has one action, Try again. It is not a browser alert.</li><li>The canvas stays readable: it shows what was there.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-6">
+        <h2 class="state__title" id="state-6">6. New trip</h2>
+        <p class="state__line">New trip asks for confirmation inside the page and says what happens to the current trip.</p>
+        <section aria-labelledby="desktop-label-6">
+          <span class="board__label" id="desktop-label-6">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="New trip, 1440 px wide" data-screen="screens/chat-new-trip.html" src="screens/chat-new-trip.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="New trip, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-6">390 px</span><div class="frame frame--phone"><iframe title="New trip, 390 px wide" data-screen="screens/chat-new-trip.html" src="screens/chat-new-trip.html#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>It says the current trip stays at its working link. It makes no promise about how long, because how long links last is not decided yet.</li><li>Cancel and Start new trip are two clear choices with words. The scrim shows the page is waiting.</li><li>On a phone the dialog sits at the bottom, where a thumb reaches it.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-7">
+        <h2 class="state__title" id="state-7">7. Share trip</h2>
+        <p class="state__line">Share trip makes a frozen, read-only copy without the chat, and shows its link with a Copy button.</p>
+        <section aria-labelledby="desktop-label-7">
+          <span class="board__label" id="desktop-label-7">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Share trip, 1440 px wide" data-screen="screens/chat-share.html" src="screens/chat-share.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Share trip, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-7">390 px</span><div class="frame frame--phone"><iframe title="Share trip, 390 px wide" data-screen="screens/chat-share.html" src="screens/chat-share.html#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>It says what the copy is: frozen, read-only, no chat, “as of 18 Nov 2026”.</li><li>The link is a sample (layover.example/s/sample-share-link) and the dialog says so.</li><li>Copy is a button with a word. Done closes the step.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</body>
+</html>
