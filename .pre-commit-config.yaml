@@ -16,6 +16,8 @@ repos:
       - id: check-toml
       - id: check-added-large-files
         args: [--maxkb=1024]
+        # Floorplan gate snapshots bundle their layout engine and fonts (about 2.2 MB); owner: "Allow it for snapshots (Recommended)", 20 Nov 2026 (#39)
+        exclude: ^docs/floorplan/[^/]+\.html$
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
