@@ -11,12 +11,11 @@ The repository holds documents and their checks only until the design is approve
 | # | Issue | Item | Notes |
 |---|---|---|---|
 | 05 | #9 | Create the `task` label used by the Task issue form | `noticed` issue, owner-only (repository settings) |
-| 13 | #25 | Design foundations: brief, information architecture and tokens | PR 1 of the screen and widget design; the boards follow in their own issue |
-| 14 | #28 | Design boards: every screen and widget state | PR 2 of the screen and widget design; after #25 merges |
-| 15 | #26 | Widget kinds for holidays, time difference, fares to anywhere and TfL | `noticed`; settled in the boards PR and plan 1 |
-| 16 | #27 | CodeQL scans Actions only; Python in `tools/` is not scanned | `noticed`; template-owned workflow |
+| 15 | #28 | Design boards: every screen and widget state | PR 2 of the screen and widget design; the screen checklist is in the issue |
+| 16 | #26 | Widget kinds for holidays, time difference, fares to anywhere and TfL | `noticed`; settled in the boards PR and plan 1 |
+| 17 | #27 | CodeQL scans Actions only; Python in `tools/` is not scanned | `noticed`; template-owned workflow |
 
-Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[06]` #10, decision 0011 accepted; `[07]` #11, data sources and the earnings decision; `[08]` #14, free APIs chosen for integration; `[09]` #16, simple-english and Floorplan adopted; `[10]` #18, prompt-window rule and rules from homescout; `[11]` #20, the main journey design and decision 0012; `[12]` #22, evaluations at each stage gate.
+Done: `[01]` #4, `[02]` #5, `[03]` #6 and `[04]` #7, closed by the PR that adopted Vestagraph's practices; `[06]` #10, decision 0011 accepted; `[07]` #11, data sources and the earnings decision; `[08]` #14, free APIs chosen for integration; `[09]` #16, simple-english and Floorplan adopted; `[10]` #18, prompt-window rule and rules from homescout; `[11]` #20, the main journey design and decision 0012; `[12]` #22, evaluations at each stage gate; `[13]` #25, design foundations (brief, information architecture and tokens); `[14]` #31, boards readiness (widget state table, sample data, image rules, board checks); `[18]` #33, the owner's reason for decision 0004 recorded in the register.
 
 Next design work (open design questions in [01 §5](../product/01-research-and-direction.md)) gets issues as it starts.
 

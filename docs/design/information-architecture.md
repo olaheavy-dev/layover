@@ -1,6 +1,6 @@
 # Information architecture: Layover
 
-Status: approved by the owner on 19 Nov 2026 ("Approve (Recommended)", prompt window). Issue [#25](https://github.com/olaheavy-dev/layover/issues/25). It follows the approved [design brief](brief.md) and the [journey spec](../superpowers/specs/2026-11-19-layover-journey-design.md).
+Status: approved by the owner on 19 Nov 2026 ("Approve (Recommended)", prompt window). Issue [#25](https://github.com/olaheavy-dev/layover/issues/25). Amended on 20 Nov 2026 for the boards ([#31](https://github.com/olaheavy-dev/layover/issues/31)): one section order for the itinerary-only trip, and one place for pinned answers. It follows the approved [design brief](brief.md) and the [journey spec](../superpowers/specs/2026-11-19-layover-journey-design.md).
 
 The owner's answers here come from prompt windows on 19 Nov 2026. They are quoted as chosen. The agent's own proposals are marked **(agent's call)**.
 
@@ -58,7 +58,8 @@ The canvas holds these sections, in journey order. Earlier sections fold to a sh
 4. Stay: the `hotel_list` widget. The chosen hotel becomes the base for the days.
 5. Days: one `itinerary_day` widget for each day, built from the chosen hotel (spec §5, step 5).
 6. Booking: the `booking_approval` widget, with the sandbox label.
-7. Pinned answers: side answers that the traveller added with "Add to trip", under the place they belong to.
+
+Pinned answers: side answers that the traveller adds with "Add to trip" go at the end of the chosen place section, under the heading "Added from the chat". They have no index entry of their own, because they belong to the place **(agent's call, 20 Nov 2026, #31)**.
 
 The order of the key facts is the agent's call. Cost and fares come first because the brief has a budget, and FCDO advice comes next because it can stop a trip.
 
@@ -115,7 +116,7 @@ The owner chose "Yes, one page (Recommended)":
 ### Itinerary only (`itinerary`)
 
 1. The traveller asks for a plan for a named place, for example "Three days in Porto".
-2. Layover makes a working trip with no Compare section. The canvas starts at the place, then Days and Stay.
+2. Layover makes a working trip with no Compare section. The canvas starts at the place, then Stay and Days, because the days start from the hotel, or from the centre if the traveller skips it (spec §5, step 5).
 
 ### A travel question that Layover does not support (`unsupported_travel`)
 
@@ -143,7 +144,7 @@ The owner chose "Yes, one page (Recommended)":
 | The day plan | Days | Each day is "Day 1", "Day 2" and so on |
 | A hotel chosen as the base | Where you're staying | |
 | The sandbox booking | Try booking | Always with the label "Sandbox: no real booking or payment" |
-| A cached fare | Cached, with its age | For example "Cached, 3 days old" (decision 0011, rule 2) |
+| A cached fare | Cached, with its age | For example "Cached, 3 days old" (decision 0011, rule 2). This is the interface wording; "found 2 days ago" in decision 0004 is the earlier form. The label for each source is in the [brief](brief.md#source-labels) |
 | Missing data | Not known | Never "N/A", "0", "TBC" or a dash |
 | A web search answer | From a web search, not checked by Layover | Spec §5a wording |
 | The shared copy | Shared trip | With "as of" and a date |

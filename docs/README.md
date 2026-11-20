@@ -21,7 +21,8 @@ Planned folders, added when their stage starts: `docs/specs/` for the specificat
 | Document | Owns | Status |
 |---|---|---|
 | [01 Research and direction](product/01-research-and-direction.md) | What Layover is, what it shows, build order, open design questions | Draft |
-| [Design brief](design/brief.md) | Tone, style, benchmark, component inventory, accessibility | Approved |
+| [Design brief](design/brief.md) | Tone, style, benchmark, component inventory, widget states and source labels, images, sample content, accessibility | Approved; amended 20 Nov 2026 (#31) |
+| [Sample data for the boards](design/boards/sample-data.md) | The only source of figures on the design boards, all marked "Sample data, not real" | For the boards |
 | [Information architecture](design/information-architecture.md) | Screens, links, navigation, flows for each intent, interface wording | Approved |
 | [Design tokens](design/tokens.css) | Colours (light and dark), fonts, spacing, shapes, motion; checked for contrast by `make check` | Approved |
 | [Decision register](decisions/README.md) | Every decision's status and record | Current |

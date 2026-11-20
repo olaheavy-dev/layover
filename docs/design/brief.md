@@ -1,6 +1,6 @@
 # Design brief: Layover screens and widgets
 
-Status: approved by the owner on 19 Nov 2026 ("Approve (Recommended)", prompt window). Issue [#25](https://github.com/olaheavy-dev/layover/issues/25). Journey spec: [2026-11-19-layover-journey-design.md](../superpowers/specs/2026-11-19-layover-journey-design.md), §5d.
+Status: approved by the owner on 19 Nov 2026 ("Approve (Recommended)", prompt window). Issue [#25](https://github.com/olaheavy-dev/layover/issues/25). Amended on 20 Nov 2026 for the boards ([#31](https://github.com/olaheavy-dev/layover/issues/31)): widget states and source labels, images, sample content, the logo and the trip name, and how the fonts are served for the boards. Journey spec: [2026-11-19-layover-journey-design.md](../superpowers/specs/2026-11-19-layover-journey-design.md), §5d.
 
 The owner's answers in this brief come from prompt windows on 19 Nov 2026. They are quoted as chosen. The agent's own proposals are marked **(agent's call)**, and the owner can change them.
 
@@ -24,14 +24,14 @@ The traveller describes the trip they want in a chat. Layover answers in the cha
 - Tone: warm and inspiring. The owner chose "Warm and inspiring" over "Calm and trustworthy", which the agent recommended.
 - Type: Source Serif 4 for place names and headings, and Source Sans 3 for body text and figures. Both are under the SIL Open Font License. The owner compared three pairings on the trip screen and asked for research on the fonts that the benchmark sites use. The owner then chose "Source Serif 4 + Source Sans 3". The agent recommended Fraunces and DM Sans.
 - Font research: the agent observed the fonts in each site's page source on 19 Nov 2026. Airbnb uses its own font, Airbnb Cereal. Google Flights uses Google Sans and Roboto. Lonely Planet uses paid fonts (ABC Arizona Flare, ABC Monument Grotesk and American Grotesk). Mindtrip uses Inter. Layla uses the fonts of the device. Skyscanner refused the request, so its font, Skyscanner Relative, comes from its public design-system code ([backpack-ios](https://github.com/Skyscanner/backpack-ios)).
-- How the fonts are served is open. Google's font servers receive each visitor's IP address, and spec §5c treats an IP address as personal data. The OFL allows self-hosting. The agent recommends self-hosting, and the owner decides in the frontend plan.
+- How the fonts are served: Google's font servers receive each visitor's IP address, and spec §5c treats an IP address as personal data. The OFL allows self-hosting. For the boards, the owner chose "Commit font files (Recommended)" on 20 Nov 2026: the WOFF2 files and their OFL text are committed and registered in `docs/assets/README.md`. The frontend plan reuses them unless it records a reason not to.
 - Colour: the Harbour palette in [tokens.css](tokens.css). It has blue-grey neutrals, one deep harbour blue for actions, one lighter blue for small markers, and one warning colour for problems only. The owner rejected a first round of palettes: "the colros make it look all iver the place and not something that was designed intentionally". The owner then said "Harbour feels like a very good start", saw three refined versions, and chose "Harbour as before". Warmth comes from the photos and the type, not from the interface colours.
 - Source labels: Live and Cached use the normal text colours with different dot shapes. Fallback and Unavailable use the warning colour. Not known uses quiet italic text. Words always name the state, so colour never carries the meaning alone.
 - Unavailable and Not known **(agent's call)**: "Unavailable" is one of the four labels in decision 0011, rule 2. It means that Layover asked the source and the source failed. "Not known" means that no source Layover uses has the value. Both follow rule 4: neither shows a zero or a favourable value.
 - Highlight: the lighter blue is for small markers only. It is never text, and never the only cue. For example, the current section in the index is also bold.
-- Photos: tall destination photos with the place name over them, from Unsplash, with the photographer credited on the photo ([data sources](../references/data-sources.md)). Text over a photo always sits on a dark gradient (a scrim) so that it meets the contrast target.
+- Photos: tall destination photos with the place name over them, from Unsplash, with the photographer credited on the photo ([data sources](../references/data-sources.md)). Text over a photo always sits on a dark gradient (a scrim) so that it meets the contrast target, in `--color-text-on-photo`, which stays white in both themes. More in "Images" below.
 - Icons: Lucide. The owner chose "Lucide (Recommended)". The licence is ISC, and the icons that come from the Feather project are under MIT. Both allow commercial use when their notices are kept ([licence](https://github.com/lucide-icons/lucide/blob/main/LICENSE), checked 19 Nov 2026).
-- Illustrations: for the welcome screen, empty states and error states. They must be world class and match warm editorial. The owner said: "Our iluustrations have to be wolrd class and match our choice", then chose "Side-by-side test (Recommended)". In the boards phase, the welcome screen is drawn twice. One version uses an illustration drawn for Layover, and the other uses a recoloured free-library illustration whose licence is checked first. The owner picks from the two.
+- Illustrations: for the welcome screen, empty states and error states. They must be world class and match warm editorial. The owner said: "Our iluustrations have to be wolrd class and match our choice", then chose "Side-by-side test (Recommended)". On 20 Nov 2026, after the agent compared homescout's approach, the owner chose "Two own styles + library (Recommended)": the welcome screen is drawn three times, with an isometric illustration drawn for Layover (as homescout uses), an editorial line drawing in a travel-poster style drawn for Layover, and a recoloured free-library illustration. The agent proposes one or two libraries whose licence allows changes and commercial use without credit, with the licence text and the date checked, and the owner picks the library (owner: "Own SVG vs free library (Recommended)"). After the owner picks a style, a one-page style guide (shapes, line, light and colour from the tokens) comes before any more drawings, so that every illustration matches.
 - Reference points: the benchmark below.
 - Anti-references: the owner chose these three:
   - Pushy booking sites: countdown timers, "only 2 left", crossed-out prices and deal banners.
@@ -108,14 +108,14 @@ All components are new. "Widget" means a block that shows one tool result, tagge
 
 | Component | Notes |
 |---|---|
-| Top bar | Logo, trip name, "Share trip" |
+| Top bar | Logo, trip name, "Share trip", "How it works" and "New trip" ([information architecture](information-architecture.md#navigation-model)) |
 | Chat and Trip tabs | Phone only |
 | Chat message | Traveller and Layover messages, streamed |
 | Tool step line | One short line for each tool call, for example "Checked fares for 3 places". It shows the agent work without filling the chat |
 | Compact widget card in chat | Phone: opens the full widget in the Trip tab |
 | Message input | With send, and a stop button while Layover is answering |
 | Source and age label | Shared by every widget: the source name, a link, and Live, Cached (with its age), Fallback or Unavailable (decision 0011, rule 2) |
-| Sample and sandbox label | Marks sandbox bookings and test data |
+| Sample and sandbox label | Marks sandbox bookings and test data. Every board carries "Sample data, not real" (see "Sample content on the boards") |
 | Buttons | Primary, secondary and link |
 | Place photo with credit | Unsplash credit on the photo; a designed fallback when no photo exists |
 | Illustration | Welcome, empty and error states |
@@ -143,12 +143,87 @@ All components are new. "Widget" means a block that shows one tool result, tagge
 | `web_results` | Short quotes with links and the retrieval date, labelled "from a web search, not checked by Layover" |
 | `not_known` | A standalone "not known" answer that says what is missing and why |
 
-Every widget has these four states, and the boards draw each one (spec §5d):
+### Widget states
 
-1. Loading.
-2. Empty.
-3. Error.
-4. Not known.
+Issue [#31](https://github.com/olaheavy-dev/layover/issues/31). The agent drafted this table and the source labels, and the owner approved them on 20 Nov 2026 ("Approve (Recommended)", prompt window). The boards draw every cell that is not "not applicable", and the reviewers test the boards against it.
+
+The states:
+
+- **Filled:** the widget with its data, its source and its label.
+- **Loading:** placeholder shapes in the form of the widget while its tool runs (benchmark rule 12).
+- **Empty:** the source answered, but it has no items for a list widget. For example, OpenStreetMap has no hotels tagged near the place. The widget says what it looked for and what the traveller can do next. A widget that shows one value has no Empty state: a missing value is "Not known".
+- **Error:** Layover asked the source and the source failed. The label says "Unavailable", the widget says what could not be checked, and it offers "Try again" where a retry can help. An error never shows a zero, an old figure as current, or a favourable value (decision 0011, rule 4).
+- **Not known:** no source that Layover uses has the value. It is quiet italic text with an empty dot, and it says what is missing (brief, "Unavailable and Not known"). It can be the whole widget or one row inside it.
+- **Fallback:** Layover used a second recorded source because the first had no data. The label says "Fallback" and names the source. Only `place_intro` has a second source today (Wikipedia when Wikivoyage has no guide). A new fallback needs its own row in [data sources](../references/data-sources.md) first.
+
+| `kind` | Loading | Empty | Error (Unavailable) | Not known | Other states the boards draw |
+|---|---|---|---|---|---|
+| `brief_summary` | Chip shapes while the brief agent writes | Not applicable: the widget appears only when the brief has fields, and the brief agent asks for missing fields in the chat | Not applicable: no outside source. A failed reply is the chat's "Try again" | Not applicable: a missing field is asked for, never guessed | Waiting for confirmation; editing a chip; confirmed; folded row |
+| `comparison_table` | Three card shapes; each fills in when its research agent finishes | No place fits the brief: it says which part of the brief rules places out, and offers "Edit brief" | One card failed, with "Try again"; the other two cards stay | A row in a card says "Not known" | A place swapped for the traveller's own; chosen, folded to "Compared 3 places: you chose Lisbon"; phone cards in a horizontal scroll |
+| `fare_card` | Card shape | Not applicable: no cached fare for the route and month is "Not known" (bar rule 5) | Travelpayouts failed: no figure, "Try again", and the plain Aviasales search link | No cached fare for this route and month; the Aviasales link is still offered | Cached with its age ("Cached, 3 days old"); an old fare shows its age clearly (the plan sets when a fare is too old to show) |
+| `climate_chart` | Chart frame | Not applicable | Open-Meteo failed | One series (temperature or rain) is not known; the other still shows | The table alternative with the same figures |
+| `sea_conditions` | Card shape | Not applicable | Open-Meteo Marine failed | No sea temperature for this coast | Inland place: the widget is not shown at all, with no empty card |
+| `daylight` | Card shape | Not applicable | sunrise-sunset.org failed | No times for this place and date | — |
+| `money` | Card shape | Not applicable | Frankfurter failed | The currency is not in the European Central Bank's reference rates | A conversion of an amount ("£500 is about …"), worked out by tested code |
+| `advice_card` | Card shape | Not applicable | The FCDO page could not be read: the link to it still shows, with "Layover could not read it just now" | No FCDO page for this place: a link to the FCDO travel advice index | Never says "safe" (rule 6) |
+| `place_intro` | Text lines | Not applicable | Wikivoyage failed | Neither Wikivoyage nor Wikipedia has a page | Fallback: the Wikipedia introduction, labelled "Fallback: Wikipedia" |
+| `map` | Map frame | Not applicable | The map could not load: the places show as a list with links, so the map never holds anything the list does not | Not applicable | The place centre only, before a hotel or stops exist |
+| `itinerary_day` | Stop shapes | Too few sourced places for this day: it says so and suggests a wider area | Overpass or Wikivoyage failed, with "Try again" | One stop's opening times are not known | Days start from the centre ("Days start from the centre of Lisbon") when no hotel is chosen; rebuilt after a hotel change |
+| `hotel_list` | List row shapes | No hotels tagged near the place: it says so, and the days start from the centre | Overpass failed, with "Try again" and "Skip" | Stars or website not tagged: "Not known" in that row | One hotel chosen; skipped; changed (the days rebuild) |
+| `cost_estimate` | Row shapes | Not applicable | A source failed: that line says "Unavailable", and the total says it is partial. A partial total never looks complete | Lines that no source covers (local transport, activities) say "Not known" | Over budget, in words ("about £X over your £800 budget"); estimates with their listing count and page date |
+| `booking_approval` | Sandbox search running | No sandbox offer for the route and date | The sandbox failed | Not applicable | Waiting for approval; approved, with the sandbox result; declined (nothing ordered); the price changed at the price check, and Layover asks again; flights only, if Nuitee says no. Always with "Sandbox: no real booking or payment" |
+| `web_results` | The tool step line only | Not applicable: no usable result is the chat line "I can't help with that yet", with no widget (information architecture) | The search failed: the same chat line, with "Try again" | Not applicable | Always labelled "From a web search, not checked by Layover", with the retrieval date; never "Add to trip" |
+| `not_known` | Not applicable: Layover writes it without an outside call | Not applicable | Not applicable | It is the Not known state: it says what is missing, why, and what Layover can do instead | — |
+
+On a phone, every widget that is also on the canvas has a compact card in the chat: the kind's icon, its title and its label, and a tap opens it in the Trip tab.
+
+### Source labels
+
+The label each source carries (agent's draft, approved with the table). Live means fetched for this answer. Cached means stored earlier, by Layover or by the provider, and it always shows the age. On the shared trip, every label adds "as of" and the share date.
+
+| Source | Label |
+|---|---|
+| Travelpayouts fares | Cached, with the fare's age ("Cached, 3 days old") |
+| Frankfurter exchange rate | Live, with the date of the European Central Bank rate |
+| FCDO travel advice (from Layover's index, [0008](../decisions/0008-retrieval-no-knowledge-graph.md)) | Cached, with the age of Layover's copy, and always the FCDO's own "updated" date |
+| Wikivoyage (from Layover's index) | Cached, with the age of Layover's copy and the page's edit date |
+| Wikipedia | Live, or "Fallback: Wikipedia" when it stands in for Wikivoyage |
+| Open-Meteo (climate and marine) | Live, with the period that the averages cover |
+| sunrise-sunset.org | Live |
+| OpenStreetMap through Overpass (hotels and stops) | Live |
+| Foursquare Open Source Places (only if it is added: spec §6 keeps it waiting unless Overpass proves too slow) | Cached, with the dataset's release date |
+| Duffel and Nuitee sandboxes | Live, and always the sandbox label |
+| Tavily web search | Its own label: "From a web search, not checked by Layover", with the retrieval date. Never Live or Cached |
+
+Map tiles (OpenFreeMap, with the OpenStreetMap credit) and photos (Unsplash, with the photographer) carry a credit, not a label: they show no figure or fact. A new source gets its row here and in [data sources](../references/data-sources.md) before it is used.
+
+## Images
+
+Owner's answers on 20 Nov 2026, after the agent compared homescout's image direction. Each image is recorded in `docs/assets/README.md` with its source and terms before it is committed (AGENTS.md), and `make check` fails on an image under `docs/` that is not in the register (`tools/check_boards.py`).
+
+| Role | Where | Source | Rules |
+|---|---|---|---|
+| Place photos | Place cards, the chosen place, the shared trip | Unsplash, real photos of the named place (owner: "Download and register (Recommended)"): three or four, downloaded, resized under 1 MB each, with the photographer, the link and the licence in the register. The Unsplash licence is read again before the first download | A photo shows the place it names. When no photo exists, the designed fallback shows |
+| Mood scenes | Welcome and "How Layover works" only | Made by the owner with ChatGPT (OpenAI) from prompts the agent writes, as in homescout (owner: "AI for mood scenes only") | Never a named or recognisable place, never on a place card or next to a result, so no picture suggests a real place. No readable signs, brand logos or faces. The alt text starts "Illustrative photo:", and the page footer says "Some photos on this site are AI-generated illustrations". OpenAI's sharing and publication policy is read again by hand before Layover goes public |
+| Illustrations | Welcome, empty states, errors, link not found | The style the owner picks in the side-by-side test | Decorative, with a text alternative, and never carrying information that the text does not give (as in homescout) |
+| Sample map | The `map` widget on the boards | Drawn in the illustration style, with no map tiles | Marked as sample. The real `map` widget uses OpenFreeMap tiles |
+
+**Why AI only for mood scenes** **(agent's reason)**: a generated picture of Lisbon would be an invented fact about a real place (decision 0011, rule 1). A generated suitcase by a window is not.
+
+## Sample content on the boards
+
+Owner: "Marked samples, one file (Recommended)", 20 Nov 2026.
+
+- Every board page shows the label "Sample data, not real". `make check` fails on a board page without it.
+- Every fare, price, total, rate, date and place fact on a board comes from [boards/sample-data.md](boards/sample-data.md). A board never has a figure that is not in that file.
+- Links go to real pages (the FCDO page for the country, Aviasales search), so the reviewers can check where each link goes. No "updated" date or age on a board is presented as real.
+- The "How Layover works" board shows "no evaluation results yet", because no scores exist.
+- The limit-reached notice uses wording that needs no figure, because the limits are not set yet (spec §5c).
+
+## Logo and trip name
+
+- Logo: the owner chose "Design a logo mark now" over the agent's text wordmark (20 Nov 2026). The boards PR shows two or three marks inside the real top bar, at both widths and in both themes, and the owner picks one. The mark is recorded in `docs/assets/README.md`.
+- Trip name **(agent's call)**: made from the brief, as the place and the month ("Lisbon, May"). Before a place is chosen, it is the month and the feel ("Warm break, May"). Before the brief has fields, it is "New trip". The name never holds the budget or the number of travellers, because a shared link shows it.
 
 ## Key interactions
 
@@ -169,7 +244,7 @@ Every widget has these four states, and the boards draw each one (spec §5d):
 | Tablet (768 px) | Chat and Trip tabs, or chat as a narrow column, decided in the information architecture |
 | Desktop (1024 px and 1440 px) | Chat column on the left and canvas on the right. The comparison shows three columns |
 
-The boards are drawn at 390 px and 1440 px. The `visual-reviewer` checks 390, 768, 1024 and 1440 px.
+The boards are drawn at 390 px and 1440 px. Each board page shows one theme, with a switch between light and dark, because the dark tokens apply to the whole page. The `visual-reviewer` checks 390, 768, 1024 and 1440 px.
 
 ## Accessibility requirements
 

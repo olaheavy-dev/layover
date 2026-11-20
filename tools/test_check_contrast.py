@@ -57,6 +57,9 @@ SAMPLE = """
   --color-status-info: #000000;
   --color-scrim: #000000;
   --scrim-text-min-opacity: 0.6;
+  --color-text-on-photo: #FFFFFF;
+  --color-chart-1: #000000;
+  --color-chart-2: #000000;
 }
 :root[data-theme="dark"] { DARK }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { DARK } }
@@ -135,6 +138,44 @@ class FailurePaths(unittest.TestCase):
         css = SAMPLE.replace("DARK", DARK_OK) + "\n:root { --color-text-primary: #EEEEEE; }\n"
         found = self.run_check(css)
         self.assertTrue(any("later :root" in p for p in found), found)
+
+    def test_text_on_photo_is_read_from_its_token(self) -> None:
+        # Working: dark text on the scrim. Black at 0.6 over white = 0.4 * 255 = 102 = #666666.
+        # Luminance of #10151B = 0.2126 * 0.00518 + 0.7152 * 0.00750 + 0.0722 * 0.01096 = 0.00726; of #666666
+        # (102 / 255 = 0.4; (0.455 / 1.055) ** 2.4) = 0.1329. Ratio = 0.1829 / 0.05726 = 3.19, under 4.5:1. The old check tested a literal white,
+        # so it could not catch a dark --color-text-on-photo.
+        dark = "--color-text-on-photo: #10151B;"
+        found = self.run_check(SAMPLE.replace("DARK", dark))
+        self.assertTrue(any(p.startswith("dark:") and "photo" in p for p in found), found)
+
+    def test_missing_text_on_photo_fails(self) -> None:
+        css = SAMPLE.replace("DARK", DARK_OK).replace("  --color-text-on-photo: #FFFFFF;\n", "")
+        found = self.run_check(css)
+        self.assertTrue(any("missing" in p and "color-text-on-photo" in p for p in found), found)
+
+    def test_text_on_photo_is_not_tested_on_page_backgrounds(self) -> None:
+        # White on the white sample page is 1:1, but text on a photo never sits on a page background.
+        found = self.run_check(SAMPLE.replace("DARK", DARK_OK))
+        self.assertFalse(any("color-text-on-photo" in p and "color-bg-" in p for p in found), found)
+
+    def test_faint_chart_colour_fails_at_3_to_1(self) -> None:
+        # Working: #CCCCCC on white. Channel 204 / 255 = 0.8; ((0.8 + 0.055) / 1.055) ** 2.4 = 0.6038.
+        # Ratio = 1.05 / (0.6038 + 0.05) = 1.61, under the 3:1 that WCAG 1.4.11 needs for chart marks.
+        # Source: https://www.w3.org/TR/WCAG22/#non-text-contrast
+        css = SAMPLE.replace("DARK", DARK_OK).replace("--color-chart-2: #000000", "--color-chart-2: #CCCCCC")
+        found = self.run_check(css)
+        self.assertTrue(any("color-chart-2" in p and "3.0:1" in p for p in found), found)
+
+    def test_chart_colour_between_3_and_4_5_passes(self) -> None:
+        # Working: #888888 on white. 136 / 255 = 0.5333; ((0.5333 + 0.055) / 1.055) ** 2.4 = 0.2462.
+        # Ratio = 1.05 / (0.2462 + 0.05) = 3.54: enough for a chart mark (3:1), not for text (4.5:1).
+        css = SAMPLE.replace("DARK", DARK_OK).replace("--color-chart-2: #000000", "--color-chart-2: #888888")
+        self.assertEqual(self.run_check(css), [])
+
+    def test_missing_chart_colour_fails(self) -> None:
+        css = SAMPLE.replace("DARK", DARK_OK).replace("  --color-chart-1: #000000;\n", "")
+        found = self.run_check(css)
+        self.assertTrue(any("missing" in p and "color-chart-1" in p for p in found), found)
 
 
 class RealTokens(unittest.TestCase):
