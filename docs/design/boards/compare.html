@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board: comparing · Layover</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="screens-journey.css">
+  <script src="board.js" defer></script>
+</head>
+<body>
+  <p class="sample-pill board__sample">Sample data, not real</p>
+  <div class="board">
+    <header class="board__head">
+      <div class="board__intro">
+        <p class="board__kicker">Layover boards · Comparing</p>
+        <h1 class="board__title">Comparing</h1>
+        <p class="board__lead">Three places side by side after the brief is confirmed: loading, filled with a “Not known” row, one failed card, a swapped place and no place fits. On a phone the cards are one row that scrolls sideways, on the Trip tab; the Chat tab has the trip strip and a compact card.</p>
+      </div>
+      <div class="board__tools">
+        <div class="switch" role="group" aria-label="Theme of all frames"><button class="btn" type="button" data-theme-choice="light" aria-pressed="true"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>Light</button><button class="btn" type="button" data-theme-choice="dark" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>Dark</button></div>
+      </div>
+    </header>
+
+    <div class="board__frames">
+      <article class="state" aria-labelledby="state-1">
+        <h2 class="state__title" id="state-1">1. Loading: one place ready</h2>
+        <p class="state__line">Each card fills in when its research finishes. Lisbon is ready, Valencia and Valletta keep their names and show shapes.</p>
+        <section aria-labelledby="desktop-label-1">
+          <span class="board__label" id="desktop-label-1">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="Loading: one place ready, 1440 px wide" data-screen="screens/compare-loading.html" src="screens/compare-loading.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="Loading: one place ready, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-1">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="Loading: one place ready, 390 px wide, Chat tab" data-screen="screens/compare-loading.html" src="screens/compare-loading.html#light"></iframe></div></div><div><span class="board__label" id="pt-1">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="Loading: one place ready, 390 px wide, Trip tab" data-screen="screens/compare-loading.html?tab=trip" src="screens/compare-loading.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>Lisbon shows figures with their labels (Cached, 3 days old, and Live for the weather). The other two show no figure at all.</li><li>The grouped checks row is open and says what is done and what is still running.</li><li>On a phone the cards sit in one row that scrolls sideways and snaps to each card. The strip says “Checking 3 places, 1 ready”.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-2">
+        <h2 class="state__title" id="state-2">2. All three filled, with a “Not known” row</h2>
+        <p class="state__line">Valencia’s stay says Not known, so its known costs are partial and “Against £800” is also Not known. Nothing is shown as £0.</p>
+        <section aria-labelledby="desktop-label-2">
+          <span class="board__label" id="desktop-label-2">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="All three filled, with a “Not known” row, 1440 px wide" data-screen="screens/compare-filled.html" src="screens/compare-filled.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="All three filled, with a “Not known” row, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-2">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="All three filled, with a “Not known” row, 390 px wide, Chat tab" data-screen="screens/compare-filled.html" src="screens/compare-filled.html#light"></iframe></div></div><div><span class="board__label" id="pt-2">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="All three filled, with a “Not known” row, 390 px wide, Trip tab" data-screen="screens/compare-filled.html?tab=trip" src="screens/compare-filled.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>Valencia’s stay and “Against £800” rows are in the “Not known” style, with the reason. Layover does not guess a stay price.</li><li>Each card has Choose. The Trip tab on the phone shows a “3 new” badge while the Chat tab is open.</li><li>The chat says in words what the card shows in the table.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-3">
+        <h2 class="state__title" id="state-3">3. One card failed</h2>
+        <p class="state__line">Valletta’s card could not load. It says so and offers Try again. The other two stay as they were.</p>
+        <section aria-labelledby="desktop-label-3">
+          <span class="board__label" id="desktop-label-3">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="One card failed, 1440 px wide" data-screen="screens/compare-failed.html" src="screens/compare-failed.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="One card failed, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-3">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="One card failed, 390 px wide, Chat tab" data-screen="screens/compare-failed.html" src="screens/compare-failed.html#light"></iframe></div></div><div><span class="board__label" id="pt-3">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="One card failed, 390 px wide, Trip tab" data-screen="screens/compare-failed.html?tab=trip" src="screens/compare-failed.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The failed card has no figure and no photo, and uses the warning colour with words: it is never shown as a low or free price.</li><li>Try again is on the card only. Choosing Lisbon or Valencia is still possible.</li><li>The checks row marks the failed check in words.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-4">
+        <h2 class="state__title" id="state-4">4. A place swapped for the traveller’s own</h2>
+        <p class="state__line">The traveller swapped Valletta for Porto. The card says “Researching your place”, and shows no figure and no photo for it.</p>
+        <section aria-labelledby="desktop-label-4">
+          <span class="board__label" id="desktop-label-4">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="A place swapped for the traveller’s own, 1440 px wide" data-screen="screens/compare-swapped.html" src="screens/compare-swapped.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="A place swapped for the traveller’s own, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-4">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="A place swapped for the traveller’s own, 390 px wide, Chat tab" data-screen="screens/compare-swapped.html" src="screens/compare-swapped.html#light"></iframe></div></div><div><span class="board__label" id="pt-4">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="A place swapped for the traveller’s own, 390 px wide, Trip tab" data-screen="screens/compare-swapped.html?tab=trip" src="screens/compare-swapped.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>Porto’s card is named by what the traveller typed. Its dashed outline and “Your place” tag set it apart from the places Layover chose.</li><li>“Swap back to Valletta” is on the card. Nothing about Porto is known until its research finishes.</li><li>Lisbon and Valencia keep their figures while Porto loads.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+      <article class="state" aria-labelledby="state-5">
+        <h2 class="state__title" id="state-5">5. No place fits</h2>
+        <p class="state__line">It says which part of the brief rules places out (the budget, marked on its chip) and offers Edit brief.</p>
+        <section aria-labelledby="desktop-label-5">
+          <span class="board__label" id="desktop-label-5">1440 px</span>
+          <div class="frame frame--desktop">
+            <div class="frame__viewport">
+              <iframe title="No place fits, 1440 px wide" data-screen="screens/compare-none.html" src="screens/compare-none.html#light"></iframe>
+            </div>
+          </div>
+        </section>
+        <section class="board__phone-row" aria-label="No place fits, phone">
+          <div class="sj-pair"><div><span class="board__label" id="pc-5">390 px, Chat tab</span><div class="frame frame--phone"><iframe title="No place fits, 390 px wide, Chat tab" data-screen="screens/compare-none.html" src="screens/compare-none.html#light"></iframe></div></div><div><span class="board__label" id="pt-5">390 px, Trip tab</span><div class="frame frame--phone"><iframe title="No place fits, 390 px wide, Trip tab" data-screen="screens/compare-none.html?tab=trip" src="screens/compare-none.html?tab=trip#light"></iframe></div></div></div>
+          <div class="board__notes">
+            <h3>What to look at</h3>
+            <ul>
+            <li>The budget chip is marked “rules places out”, in words as well as colour. The other parts stay plain.</li><li>Edit brief is the one main action. No card, price or photo is shown, so nothing looks like an answer.</li><li>The brief above stays folded to one row, with its own Edit.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

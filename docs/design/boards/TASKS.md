@@ -35,8 +35,8 @@ Each screen follows the checklist in [#28](https://github.com/olaheavy-dev/layov
 - [x] **Welcome screen** (`/`), with the isometric illustration, the four example prompts and the honesty line: `screens/welcome.html` and the board page `welcome.html`.
 - [ ] **Welcome mood scenes**: the prompts are in `mood-scene-prompts.md`. The owner makes the images in ChatGPT; each is registered in `docs/assets/README.md` before it is committed, and the footer line goes on the page with the first one. _Waits for the owner's images._
 - [x] **Vague and unclear messages** (owner, 20 Nov 2026): the brief agent asking for missing details with quick-answer chips; the one clarifying question; "Which Valencia?" with the matches as choices; a side answer before any place is chosen (no "Add to trip"). Shown first as clickable samples.
-- [ ] **Starting a trip**: the empty canvas after the first message; the brief waiting for confirmation, editing a chip and confirmed.
-- [ ] **Comparing**: three loading cards; one failed card with "Try again"; a "Not known" row (Valencia's stay); a swapped place; no place fits.
+- [x] **Starting a trip**: the empty canvas after the first message; the brief waiting for confirmation, editing a chip and confirmed.
+- [x] **Comparing**: three loading cards; one failed card with "Try again"; a "Not known" row (Valencia's stay); a swapped place; no place fits.
 - [ ] **The chosen place, finished**: the remaining place widgets below the first screen; a side answer inline in the chat with "Add to trip", and the same answer pinned under "Added from the chat". _Reuses: the first-look screen._
 - [ ] **Stay and Days**: hotel chosen; hotel skipped (days from the centre); Days with a "Not known" opening time and an empty afternoon; the itinerary-only trip (the place, then Stay and Days, with no Compare section).
 - [ ] **Booking**: waiting for approval, approved, declined and price changed, always with "Sandbox: no real booking or payment".

@@ -156,3 +156,18 @@ Used on `widgets-proposed.html` (proposals for [#26](https://github.com/olaheavy
 | `time_difference`, Valletta | Same check: `Europe/Malta` is CEST, UTC+2. Difference 2 − 1 = 1 hour ahead: 12:00 in the UK is 13:00 in Valletta. The tz data release on the machine was not recorded |
 | `fare_list` | From Bristol (BRS), leaving in March 2027, return, per person, all made up and sorted lowest first: Faro £59 (Cached, 3 days old), Valencia £64 (1 day), Lisbon £71 (2 days), Valletta £98 (5 days). Naples is the "Not known" row: no cached fare. Compact card: "From £59", "Cached, 1 to 5 days old" for the four fares shown. Whether these routes run from Bristol is not claimed |
 | `transport_route` | A made-up journey from Paddington station to Heathrow Terminals 2 and 3: walk to the platform 5 min, Elizabeth line 32 min, walk to departures 6 min. Total 5 + 32 + 6 = 43 min. Planned for Fri 14 May 2027, leaving 09:00 (made up). Station and line names are real places and services, but the times are not TfL's |
+
+## Starting a trip and Comparing
+
+Used on `start.html` and `compare.html`. Sample messages written for the boards; none is a real traveller's message. The figures are the ones above; nothing new is calculated.
+
+| Item | Sample content |
+|---|---|
+| First message | "Somewhere warm in May, about £800 for two, from Manchester". Trip name "Warm break, May" (month and feel, before a place is chosen) |
+| Next missing field | Length. Question "How many nights would you like to go for?" Quick answers: 3 nights, 5 nights, 7 nights, Something else (choices, not facts) |
+| Traveller's answer | "5 nights. Somewhere relaxed, with good food." Layover states how it read the message: "two" as 2 adults and "about £800" as £800 in total, so the traveller can correct it. The brief is then the one in "The brief" above |
+| Brief states | Waiting for your OK, editing the budget chip ("£800 in total"), confirmed ("Confirmed by you") |
+| Confirm question in the chat | "Is that right? Nothing is searched until you confirm." Answers: Yes, that's right; Change something |
+| Strip and card wording | Strip meta: "Brief waiting for your OK", "Editing your brief", "Brief confirmed, checking 3 places", "Checking 3 places, 1 ready", "3 places ready to compare", "2 places ready, 1 did not load", "2 places ready, Porto loading", "No place fits yet". The counts come from the three places above |
+| Card states | Loading: Lisbon filled, the other two shapes. Filled: the three places above, Valencia's stay Not known. Failed: Valletta ("Layover could not check fares, costs or weather for Valletta just now"). Swapped: Porto, "Researching your place", no figure and no photo |
+| No place fits | The budget chip is the part that rules places out. The words use no cost figure: "I could not find a place that fits £800 in total for 2 adults from Manchester in May 2027." |
