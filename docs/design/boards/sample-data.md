@@ -120,3 +120,26 @@ Question: "Can I take a pushchair on Lisbon trams?" Two results, each a made-up 
 ## Sharing
 
 Shared trip "as of" 18 Nov 2026. Every age on the shared board is shown "as of" that date.
+
+## Widget gallery: place widgets
+
+Used on `widgets-place.html`. One extra state needs a figure that the tables above do not hold: Lisbon's cost estimate when the fares source fails.
+
+| Item | Sample content |
+|---|---|
+| Lisbon cost estimate, fares source failed | Flights: Unavailable (no figure). Stay £70 × 5 = £350 and meals £12 × 2 × 5 × 2 = £240, as above. Known costs so far: £350 + £240 = £590, partial (flights, local transport and activities missing). No comparison with the £800 budget, because a missing line could change the answer |
+
+## Widget gallery: journey widgets
+
+Used on `widgets-journey.html`. Only what the gallery needs beyond the sections above. None of it is a real fact.
+
+| Item | Sample content |
+|---|---|
+| Swapped place | The traveller types "Porto" to replace Valletta. The card is named by what they typed, says "Researching your place" and shows no figure and no photo |
+| No place fits | Only the brief above is used: the budget chip "£800 in total" is marked as the part that rules places out. No other figure is shown |
+| Day 1 stops | Only the castle has opening hours (10:00 to 18:00). The viewpoint and the walk show no hours row. The walk comes from Wikivoyage, Lisbon, Cached, 4 days old; the other stops come from OpenStreetMap, Live |
+| Day 2 after a hotel change | The rebuilt-day note uses the Day 2 stops, because Torre de Belém and Mosteiro dos Jerónimos are in Belém, the base of Sample Hotel Belém |
+| Booking, price you saw and price now | £192 for 2 and £204 for 2 (no difference is shown). Declined: "Nothing was ordered" |
+| Web result quotes | Two made-up quotes from `example.org`, retrieved 18 Nov 2026: "Fold the pushchair before you board if the tram is busy." and "Ask the driver where to stand with a pushchair." Each is marked "sample quote" |
+| `not_known` answer | "Layover doesn't know local bus fares in Lisbon: none of its sources has them. It can show the cost estimate without them." |
+| Compact card ages | Compare places: "Cached, 1 to 6 days old" (the fares are 3, 1 and 6 days old). Known costs: Lisbon "3 to 4 days old", Valencia "1 to 2 days old", Valletta "6 to 9 days old" (the flights and the Wikivoyage lines) |
