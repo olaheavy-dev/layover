@@ -7,24 +7,31 @@ docs/
 ├── README.md            this index
 ├── product/             the main product documents (numbered, read in order)
 ├── decisions/           one record per decision, plus the register
+├── assets/              the asset register (every image, font and media file, with its source and terms)
 ├── design/              the design brief, information architecture, design tokens and boards
+├── evaluations/         the evaluation cases and their coverage table
+├── floorplan/           the Floorplan map snapshot from each stage gate
 ├── planning/            the status file, the ordered backlog and working plans
 ├── references/          data sources and official third-party documentation
 ├── reviews/             dated reviews and research
 └── superpowers/         specs and plans written with the Superpowers skills (added when first used)
 ```
 
-Planned folders, added when their stage starts: `docs/specs/` for the specification, `docs/architecture/` for system diagrams, `docs/assets/` with an asset register before any image is committed, and `docs/floorplan/` for the Floorplan map snapshot published at each stage gate.
+Planned folder, added when its stage starts: `docs/architecture/` for system diagrams. Specs and plans live in `docs/superpowers/`.
 
 ## What each document is for
 
 | Document | Owns | Status |
 |---|---|---|
-| [01 Research and direction](product/01-research-and-direction.md) | What Layover is, what it shows, build order, open design questions | Draft |
+| [01 Research and direction](product/01-research-and-direction.md) | What Layover is, what it shows, build order, open design questions | Draft; build order (§4) approved 20 Nov 2026 (#39) |
 | [Design brief](design/brief.md) | Tone, style, benchmark, component inventory, widget states and source labels, images, sample content, accessibility | Approved; amended 20 Nov 2026 (#31) |
 | [Sample data for the boards](design/boards/sample-data.md) | The only source of figures on the design boards, all marked "Sample data, not real" | For the boards |
 | [Information architecture](design/information-architecture.md) | Screens, links, navigation, flows for each intent, interface wording | Approved |
 | [Design tokens](design/tokens.css) | Colours (light and dark), fonts, spacing, shapes, motion; checked for contrast by `make check` | Approved |
+| [Journey design](superpowers/specs/2026-11-19-layover-journey-design.md) | The traveller's journey, intents, agent team, widgets and first evaluation cases | Approved |
+| [Design boards](design/boards/index.html) | Every screen and widget state, drawn | Approved (#37) |
+| [Evaluation cases](evaluations/cases.md) | Every evaluation case ID and the coverage table | Current (#39) |
+| [Floorplan snapshot, Design gate](floorplan/design.html) | A blueprint map of the planned code, drawn from the approved design | Snapshot, 20 Nov 2026 |
 | [Decision register](decisions/README.md) | Every decision's status and record | Current |
 | [Ordered backlog](planning/backlog.md) | Every open issue in order, by stage milestone, and the stage gate | Current |
 | [Status](planning/status.md) | Open pull requests, next steps, blockers and the owner's to-dos; overwritten every session | Current |
@@ -34,7 +41,7 @@ Planned folders, added when their stage starts: `docs/specs/` for the specificat
 
 Accepted decision records override anything in the documents that contradicts them. For process, `AGENTS.md` is the rulebook.
 
-**Reading order for someone new:** 01, then the decision register.
+**Reading order for someone new:** 01, then the journey design, then the decision register.
 
 ## Naming conventions
 
