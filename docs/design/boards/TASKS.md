@@ -33,7 +33,7 @@ Every `kind` with every state in the [state table](../brief.md#widget-states) th
 Each screen follows the checklist in [#28](https://github.com/olaheavy-dev/layover/issues/28) and is drawn at 390 px and 1440 px, in both themes.
 
 - [x] **Welcome screen** (`/`), with the isometric illustration, the four example prompts and the honesty line: `screens/welcome.html` and the board page `welcome.html`.
-- [ ] **Welcome mood scenes**: the prompts are in `mood-scene-prompts.md`. The owner makes the images in ChatGPT; each is registered in `docs/assets/README.md` before it is committed, and the footer line goes on the page with the first one. _Waits for the owner's images._
+- [ ] **Welcome mood scenes**: the prompts are in `mood-scene-prompts.md`. The owner makes the images in ChatGPT; each is registered in `docs/assets/README.md` before it is committed, and the footer line goes on the page with the first one. _Waits for the owner's images._ Tracked in #35.
 - [x] **Vague and unclear messages** (owner, 20 Nov 2026): the brief agent asking for missing details with quick-answer chips; the one clarifying question; "Which Valencia?" with the matches as choices; a side answer before any place is chosen (no "Add to trip"). Shown first as clickable samples.
 - [x] **Starting a trip**: the empty canvas after the first message; the brief waiting for confirmation, editing a chip and confirmed.
 - [x] **Comparing**: three loading cards; one failed card with "Try again"; a "Not known" row (Valencia's stay); a swapped place; no place fits.

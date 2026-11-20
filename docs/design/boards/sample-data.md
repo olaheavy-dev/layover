@@ -70,7 +70,7 @@ Used on `trip-lisbon-chat.html`. The labels follow the rule in the [brief](../br
 | Side question: the beach | "The sea is 17°C in May. Typical highs are 22°C, with 5 rainy days." Source line: Live; Sea: Open-Meteo Marine; Weather: Open-Meteo |
 | Side question: what the estimate leaves out | Local transport and activities: Not known, not counted as £0 |
 | Side question: the FCDO date | "The FCDO page for Portugal was updated on 12 Nov 2026." Layover's copy: Cached, 1 day old |
-| Checks rows | 2 checks (fares and weather for 3 places), 4 checks (FCDO advice, exchange rate, sunrise and sunset, Wikivoyage page), 2 checks (sea temperature, typical May weather), 1 check (FCDO advice) |
+| Checks rows | 2 checks (fares and weather for 3 places), 4 checks (FCDO advice, exchange rate, sunrise and sunset, Wikivoyage page), 2 checks (sea temperature, typical May weather), 1 check (FCDO advice); on the Stay and Days boards: 3 checks (hotels near the centre of Lisbon, places to visit, 3 days built from the hotel) and, on the itinerary-only trip, 3 checks (the Wikivoyage page for Lisbon, hotels near the centre, places to visit) |
 
 ## Vague and unclear messages
 

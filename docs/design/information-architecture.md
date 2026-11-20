@@ -100,7 +100,7 @@ The owner chose "Yes, one page (Recommended)":
    - If the traveller picks a hotel, the Days section is built from it.
    - If the traveller skips the hotel, the days start from the centre of the place and say so **(agent's call)**.
    - If the traveller changes the hotel later, the days are rebuilt from the new base **(agent's call)**.
-7. The traveller opens "Try booking". The `booking_approval` widget waits for approval.
+7. The traveller opens "Try booking". If the brief has only a month, Layover first asks which dates to fly and never picks them **(agent's call, 20 Nov 2026)**. The `booking_approval` widget then waits for approval.
    - If the traveller approves, the sandbox order runs, and the widget shows the sandbox result.
    - If the traveller declines, nothing is ordered.
 8. The traveller presses "Share trip" and copies the `/s/{share_id}` link.

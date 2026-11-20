@@ -20,7 +20,7 @@ Settled by the owner on 20 Nov 2026 (each answer is in the [register](../decisio
 
 Reviews: a design review and a visual review (fresh contexts) found 3 P1s and several P2/P3s; all are fixed. `make check` passes (75 tests; the contrast check now also covers text on the tinted surfaces; a board page missing from the index fails the check).
 
-Still open in the boards: the mood scenes, which wait for the owner's images (prompts in [mood-scene-prompts.md](../design/boards/mood-scene-prompts.md)).
+Still open: the mood scenes, which wait for the owner's images, are split out to #35 (prompts in [mood-scene-prompts.md](../design/boards/mood-scene-prompts.md)). Noticed in the reviews: #34 (no source for a place's currency) and #36 (harden the board checks with a real HTML parser).
 
 ## Done on 19 Nov 2026
 
@@ -71,7 +71,7 @@ What the design foundations settled (owner answers in prompt windows; details in
 ## Next steps
 
 1. **The boards PR (#28):** the pre-push review (Opus, fresh context, with the security reviewer), then push, open the PR with `Closes #28`, and request `@codex review`. The owner says when to push.
-2. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage (#9, #26, #27, #34), a map snapshot in `docs/floorplan/`.
+2. The Design gate: a Floorplan blueprint from the approved design, an evaluation coverage table, a whole-repository audit, a tidy-up PR, `noticed` triage (#9, #26, #27, #34, #36), a map snapshot in `docs/floorplan/`.
 3. Build plan 1: the foundation and the data contract (FastAPI template layer, trip-state and widget schemas incl. the four kinds proposed for #26, money types, the commission switch, recorded-response tests, the holidays library as an approved dependency, and the Aspire app host). Then one plan per part, written one at a time. When build plan 1 starts, decide on a GitHub project board (owner: "Wait until build (Recommended)").
 
 ## Blockers
