@@ -184,6 +184,8 @@ On a phone, every widget that is also on the canvas has a compact card in the ch
 
 The label each source carries (agent's draft, approved with the table). Live means fetched for this answer. Cached means stored earlier, by Layover or by the provider, and it always shows the age. On the shared trip, every label adds "as of" and the share date.
 
+How often labels show (owner: "One per card, prices always (Recommended)", 20 Nov 2026): a widget shows its label once, in its source line, when all its figures share one source and age. A row or figure gets its own label only when its source or age differs from the rest of the widget. A price always has its label beside it (bar rule 1). "Live" is drawn more quietly than Cached, Fallback and Unavailable, but it is still written in words. This meets decision 0011, rule 2, because every outside value still has a visible label.
+
 | Source | Label |
 |---|---|
 | Travelpayouts fares | Cached, with the fare's age ("Cached, 3 days old") |
