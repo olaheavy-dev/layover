@@ -81,11 +81,21 @@
     Array.prototype.forEach.call(document.querySelectorAll("[data-goto]"), function (b) {
       b.addEventListener("click", function () {
         showView("trip");
-        var widget = document.getElementById(b.getAttribute("data-goto")).closest(".widget");
+        // The widget may be missing when its section is folded: fall back to the section
+        // named in data-goto-section (its folded row), and never throw.
+        var target = document.getElementById(b.getAttribute("data-goto"));
+        var dest = target ? (target.closest(".widget") || target) : null;
+        if (!dest && b.hasAttribute("data-goto-section")) {
+          dest = document.getElementById(b.getAttribute("data-goto-section"));
+        }
         var canvasEl = document.querySelector(".canvas");
-        var index = canvasEl.querySelector(".section-index");
-        canvasEl.scrollTop = canvasEl.scrollTop + widget.getBoundingClientRect().top - canvasEl.getBoundingClientRect().top - index.offsetHeight - 8;
-        document.getElementById("tab-trip").focus();
+        if (dest && canvasEl) {
+          var index = canvasEl.querySelector(".section-index");
+          var offset = index ? index.offsetHeight : 0;
+          canvasEl.scrollTop = canvasEl.scrollTop + dest.getBoundingClientRect().top - canvasEl.getBoundingClientRect().top - offset - 8;
+        }
+        var tripTab = document.getElementById("tab-trip");
+        if (tripTab) { tripTab.focus(); }
       });
     });
 
