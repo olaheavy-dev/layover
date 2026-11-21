@@ -42,5 +42,10 @@ class CostEstimate(WidgetBase):
                 self.total,
             ],
         )
-        check_budget_gap(self.is_partial, self.budget_gap, self.budget_position)
+        check_budget_gap(
+            has_budget=self.budget is not None,
+            core_lines=[self.flights, self.stay, self.meals],
+            gap=self.budget_gap,
+            position=self.budget_position,
+        )
         return self

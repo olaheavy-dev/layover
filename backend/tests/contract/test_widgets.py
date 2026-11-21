@@ -383,52 +383,86 @@ def test_comparison_card_with_a_missing_line_must_be_partial() -> None:
         TypeAdapter(Widget).validate_python({**base, "cards": [{**card, "is_partial": False}]})
 
 
-def test_budget_gap_is_never_negative_and_pairs_with_a_position() -> None:
-    """Lisbon: budget 800 pounds, complete known costs 782 pounds.
+BUDGET = _money(80000)
 
-    Working: 800 - 782 = 18 pounds under, so exact 1800 minor units, shown about 20 pounds (2000).
-    Source: sample-data.md, "The three places", Lisbon (the sample is partial there; this
-    test uses a complete total to test the rule).
+
+def _core(**over: Any) -> dict[str, Any]:
+    return {"flights": _line(), "stay": _line(), "meals": _line(), "budget": BUDGET, **over}
+
+
+def test_lisbon_is_under_budget_on_the_known_costs() -> None:
+    """Lisbon: a partial total is still compared with the budget on the known costs.
+
+    Working: 80000 - 78200 = 1800 pence under; nearest 10 pounds, half up: 1800 -> 2000.
+    Source: sample-data.md line 36 (Lisbon, 800 - 782 = 18 under).
     """
-    under = {"budget_gap": _estimate(1800, 2000), "budget_position": "under", "is_partial": False}
-    TypeAdapter(Widget).validate_python(_cost(**under))
+    under = {"budget_gap": _estimate(1800, 2000), "budget_position": "under", "is_partial": True}
+    TypeAdapter(Widget).validate_python(_cost(**_core(local_transport={"missing": "x"}), **under))
     with pytest.raises(ValidationError):  # negative gap
         TypeAdapter(Widget).validate_python(
-            _cost(**{**under, "budget_gap": _estimate(-1800, -2000)})
+            _cost(**_core(), **{**under, "budget_gap": _estimate(-1800, -2000)})
         )
     with pytest.raises(ValidationError):  # gap without position
-        TypeAdapter(Widget).validate_python(
-            _cost(budget_gap=_estimate(1800, 2000), is_partial=False)
-        )
+        TypeAdapter(Widget).validate_python(_cost(**_core(), budget_gap=_estimate(1800, 2000)))
     with pytest.raises(ValidationError):  # position without gap
-        TypeAdapter(Widget).validate_python(_cost(budget_position="under", is_partial=False))
+        TypeAdapter(Widget).validate_python(_cost(**_core(), budget_position="under"))
     with pytest.raises(ValidationError):  # "on" needs a gap of exactly zero
-        TypeAdapter(Widget).validate_python(_cost(**{**under, "budget_position": "on"}))
+        TypeAdapter(Widget).validate_python(_cost(**_core(), **{**under, "budget_position": "on"}))
     TypeAdapter(Widget).validate_python(
-        _cost(budget_gap=_estimate(0, 0), budget_position="on", is_partial=False)
+        _cost(**_core(), budget_gap=_estimate(0, 0), budget_position="on")
     )
+    with pytest.raises(ValidationError):  # a gap needs a budget
+        TypeAdapter(Widget).validate_python(_cost(**{**_core(), "budget": None}, **under))
 
 
-def test_partial_total_is_only_compared_when_already_over() -> None:
-    """Valletta: known costs 902 pounds against 800 pounds, 102 over (exact 10200, about 100).
+def test_valletta_is_over_budget_on_the_known_costs() -> None:
+    """Valletta: over on the known costs alone.
 
-    Working: 902 - 800 = 102. Source: sample-data.md, "The three places", Valletta.
-    A partial total cannot be called under or on budget, because a missing line could change it.
+    Working: 90200 - 80000 = 10200 pence over; nearest 10 pounds: 10200 -> 10000.
+    Source: sample-data.md line 36 (Valletta, 902 - 800 = 102 over).
     """
-    missing = {"missing": "no source has activities"}
-    over = {"activities": missing, "is_partial": True}
     TypeAdapter(Widget).validate_python(
-        _cost(**over, budget_gap=_estimate(10200, 10000), budget_position="over")
+        _cost(
+            **_core(), is_partial=True, budget_gap=_estimate(10200, 10000), budget_position="over"
+        )
     )
+
+
+def test_no_comparison_when_the_stay_is_missing() -> None:
+    """Valencia: the stay is Not known, so there is no comparison (sample-data.md line 36)."""
+    stay = {"missing": "too few priced listings"}
+    base = _core(stay=stay, is_partial=True)
+    TypeAdapter(Widget).validate_python(_cost(**base))
     with pytest.raises(ValidationError):
         TypeAdapter(Widget).validate_python(
-            _cost(**over, budget_gap=_estimate(1800, 2000), budget_position="under")
+            _cost(**base, budget_gap=_estimate(1800, 2000), budget_position="under")
+        )
+
+
+def test_no_comparison_when_the_flights_line_is_unavailable() -> None:
+    """Fares source failed: the comparison is withheld (sample-data.md, widget gallery: place)."""
+    flights = {
+        "missing": "fares source unavailable",
+        "source": {"status": "unavailable", "source": "Travelpayouts"},
+    }
+    base = _core(flights=flights, is_partial=True)
+    TypeAdapter(Widget).validate_python(_cost(**base))
+    with pytest.raises(ValidationError):
+        TypeAdapter(Widget).validate_python(
+            _cost(**base, budget_gap=_estimate(5900, 6000), budget_position="under")
         )
 
 
 def test_comparison_card_budget_gap_rules() -> None:
     base = {**_payload("comparison_table"), "state": "filled", "sources": [SOURCE]}
-    card = {"place": "Lisbon", "card_state": "ready", "is_partial": False}
+    card = {
+        "place": "Lisbon",
+        "card_state": "ready",
+        "is_partial": True,
+        "flights": _line(),
+        "stay": _line(),
+        "meals": _line(),
+    }
     TypeAdapter(Widget).validate_python(
         {
             **base,
@@ -443,3 +477,25 @@ def test_comparison_card_budget_gap_rules() -> None:
 
 def test_fare_list_has_a_slug_for_one_place_not_known() -> None:
     assert "one_place_not_known" in WIDGET_STATES["fare_list"]
+
+
+def test_comparison_card_has_no_comparison_when_the_stay_is_missing() -> None:
+    """Valencia's card: the stay is Not known, so no gap (sample-data.md line 36)."""
+    base = {**_payload("comparison_table"), "state": "filled", "sources": [SOURCE]}
+    card = {
+        "place": "Valencia",
+        "card_state": "ready",
+        "is_partial": True,
+        "flights": _line(),
+        "stay": {"missing": "too few priced listings"},
+        "meals": _line(),
+    }
+    with pytest.raises(ValidationError):
+        TypeAdapter(Widget).validate_python(
+            {
+                **base,
+                "cards": [
+                    {**card, "budget_gap": _estimate(1800, 2000), "budget_position": "under"}
+                ],
+            }
+        )

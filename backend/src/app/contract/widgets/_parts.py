@@ -35,24 +35,31 @@ BudgetPosition = Literal["under", "over", "on"]
 
 
 def check_budget_gap(
-    is_partial: bool, gap: MoneyEstimate | None, position: BudgetPosition | None
+    *,
+    has_budget: bool,
+    core_lines: list["CostLine | None"],
+    gap: MoneyEstimate | None,
+    position: BudgetPosition | None,
 ) -> None:
     """Rules for the budget comparison, shared by cost_estimate and comparison cards.
 
     The gap is never negative: the position says under, over or on. Both are set or both are
-    empty. While a line is missing, only "over" can be said (a missing line can only add cost);
-    "under" or "on" would look complete.
+    empty. They are set only when there is a budget and the core lines (flights, stay and meals)
+    all have amounts; a missing core line could change the answer. Local transport and
+    activities are always unknown, so a partial total is still compared, on the known costs.
     """
     if (gap is None) != (position is None):
         raise ValueError("budget_gap and budget_position are both set or both empty")
     if gap is None or position is None:
         return
+    if not has_budget:
+        raise ValueError("a budget comparison needs a budget")
+    if any(line is None or line.amount is None for line in core_lines):
+        raise ValueError("no budget comparison while flights, stay or meals has no amount")
     if gap.exact.amount_minor < 0 or gap.shown.amount_minor < 0:
         raise ValueError("budget_gap is never negative; use budget_position")
     if (position == "on") != (gap.exact.amount_minor == 0):
         raise ValueError('budget_position "on" means a gap of exactly zero')
-    if is_partial and position != "over":
-        raise ValueError("a partial total can only be compared once it is over budget")
 
 
 class CostLine(Part):

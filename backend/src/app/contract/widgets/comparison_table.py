@@ -41,7 +41,12 @@ class PlaceCard(Part):
     @model_validator(mode="after")
     def _partial_and_budget(self) -> Self:
         check_partial_flag(self.is_partial, [self.flights, self.stay, self.meals, self.known_costs])
-        check_budget_gap(self.is_partial, self.budget_gap, self.budget_position)
+        check_budget_gap(
+            has_budget=True,  # the brief holds the budget; the card only holds the gap
+            core_lines=[self.flights, self.stay, self.meals],
+            gap=self.budget_gap,
+            position=self.budget_position,
+        )
         return self
 
 
