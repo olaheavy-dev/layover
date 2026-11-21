@@ -25,6 +25,8 @@ Makefile
 .github/workflows/scorecard.yml
 .github/workflows/pr-title.yml
 .github/workflows/template-update.yml
+compose.yaml
+.mcp.json
 SECURITY.md
 docs/decisions/0001-record-decisions.md
 docs/decisions/0002-start-from-house-template.md

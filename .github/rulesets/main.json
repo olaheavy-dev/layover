@@ -32,7 +32,9 @@
           { "context": "zizmor" },
           { "context": "Dependency review" },
           { "context": "Conventional Commits title" },
-          { "context": "CodeQL (actions)" }
+          { "context": "CodeQL (actions)" },
+          { "context": "CodeQL (python)" },
+          { "context": "CodeQL (javascript-typescript)" }
         ]
       }
     },

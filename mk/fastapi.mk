@@ -1,0 +1,54 @@
+# Owned by house-template-fastapi. Included by the base Makefile; adds the backend's install and
+# checks to `make install`, `make check` and `make check-fast`.
+
+# The optional parts this project asked for (copier answers), as uv extras: the image and these
+# targets install only them. Add one by answering again (copier update) and running `make lock`.
+EXTRAS := --extra db
+
+BACKEND := uv --directory backend run --locked $(EXTRAS)
+
+INSTALLS += install-fastapi
+CHECKS += check-fastapi
+FAST_CHECKS += check-fast-fastapi
+
+.PHONY: install-fastapi check-fastapi check-fast-fastapi lock dev test db-up migrate migration image up
+
+install-fastapi: ## Install the backend's Python and dependencies (from backend/uv.lock)
+	uv --directory backend sync --locked $(EXTRAS)
+
+check-fastapi: ## Backend: lint, format, types, import contracts and tests (tests need Docker)
+	$(BACKEND) ruff check
+	$(BACKEND) ruff format --check
+	$(BACKEND) mypy src tests migrations
+	$(BACKEND) lint-imports
+	$(BACKEND) pytest
+
+check-fast-fastapi: ## Backend: lint, format and types (the pre-push and stop-hook checks)
+	$(BACKEND) ruff check
+	$(BACKEND) ruff format --check
+	$(BACKEND) mypy src tests migrations
+
+lock: ## Update backend/uv.lock after changing backend/pyproject.toml
+	uv --directory backend lock
+
+dev: ## Run the API with reload on http://127.0.0.1:8000
+	$(BACKEND) fastapi dev
+
+test: ## Run the backend tests
+	$(BACKEND) pytest
+
+db-up: ## Start the local PostgreSQL with pgvector (backend/compose/db/compose.yaml) and wait until it's healthy
+	docker compose up -d --wait db
+
+image: ## Build the API image from backend/Dockerfile
+	docker compose build api
+
+up: ## Run the backend from its image: database, migrations once, then the API on http://127.0.0.1:8000
+	docker compose up -d --build --wait api
+
+migrate: ## Apply migrations to DATABASE_URL (the local db by default)
+	$(BACKEND) alembic upgrade heads
+
+migration: ## Write a migration from model changes: make migration name="add courses"
+	@test -n "$(name)" || { echo 'usage: make migration name="what changed"'; exit 2; }
+	$(BACKEND) alembic revision --autogenerate --head app@head -m "$(name)"

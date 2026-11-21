@@ -1,0 +1,8 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.11.1
+_src_path: gh:olaheavy-dev/house-template-fastapi
+container_images: false
+database: true
+llm: none
+python_version: '3.14'
+storage: false
