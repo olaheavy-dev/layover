@@ -5,6 +5,7 @@ from __future__ import annotations
 import contextlib
 import io
 import re
+import os
 import subprocess
 import sys
 import tempfile
@@ -567,7 +568,9 @@ class Boards(unittest.TestCase):
     # Issue #36: media anywhere in the repository, found with git ls-files
 
     def git_repo(self) -> None:
-        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        # Without GIT_* variables: inside a git hook, GIT_DIR would point this at the real repository.
+        clean_env = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True, env=clean_env)
 
     def test_unusual_media_extensions_anywhere_in_the_repository_fail(self) -> None:
         self.git_repo()

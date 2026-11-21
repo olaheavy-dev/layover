@@ -56,6 +56,7 @@ opening them offline shows a load that fails.
 
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import sys
@@ -441,12 +442,15 @@ def _registered(register: Path) -> tuple[set[str], set[str]]:
 
 def _repo_files(root: Path) -> list[Path]:
     """Every file git tracks or would add (not ignored). Outside a git repository: the files under docs/."""
+    # Drop GIT_DIR and the other GIT_* variables a git hook sets: with them, git ignores `root` and
+    # lists the repository the hook runs in.
+    env = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
     try:
         top = subprocess.run(["git", "-C", str(root), "rev-parse", "--show-toplevel"], capture_output=True,
-                             check=True, timeout=30, text=True).stdout.strip()
+                             check=True, timeout=30, text=True, env=env).stdout.strip()
         if Path(top).resolve() == root.resolve():
             listed = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others",
-                                     "--exclude-standard"], capture_output=True, check=True, timeout=60).stdout
+                                     "--exclude-standard"], capture_output=True, check=True, timeout=60, env=env).stdout
             return [root / name for name in listed.decode("utf-8", errors="replace").split("\0") if name]
     except (OSError, subprocess.SubprocessError):
         pass
