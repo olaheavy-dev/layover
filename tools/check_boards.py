@@ -17,7 +17,7 @@ Fails when:
 - a board page has no "Sample data, not real" label (owner: "Marked samples, one file (Recommended)");
 - a board page in docs/design/boards/ (not index.html, not the screens/ sub-folder) is not linked from
   docs/design/boards/index.html, once index.html exists (the index is how the reviewers check coverage);
-- an image, font, video, audio file or PDF anywhere in the repository (found with `git ls-files`) is not in a table row of
+- an image, font, video, audio file or PDF anywhere in the repository (found with `git ls-files`; generated test screenshots in frontend/e2e/screenshots/ are exempt) is not in a table row of
   docs/assets/README.md, named by its path from the repository root in backticks, with a non-empty Source
   and Licence cell (columns found by the header row of that table; empty, whitespace and a dash do not
   count) (AGENTS.md: "Media is registered first").
@@ -61,6 +61,7 @@ from pathlib import Path
 
 BOARDS = Path("docs/design/boards")
 REGISTER = Path("docs/assets/README.md")
+SCREENSHOTS = Path("frontend/e2e/screenshots")
 LABEL = "Sample data, not real"
 
 PAGE_SUFFIXES = {".html", ".htm", ".xhtml"}
@@ -439,7 +440,11 @@ def _repo_files(root: Path) -> list[Path]:
 
 
 def _register_problems(root: Path) -> list[str]:
-    media = sorted({p for p in _repo_files(root) if p.suffix.lower() in MEDIA_SUFFIXES and p.is_file()})
+    # Generated test screenshots of Layover's own pages are exempt from the register (owner's decision of
+    # 21 Nov 2026: register line in docs/decisions/README.md; AGENTS.md, "Media is registered first").
+    exempt = root / SCREENSHOTS
+    media = sorted({p for p in _repo_files(root) if p.suffix.lower() in MEDIA_SUFFIXES and p.is_file()
+                    and exempt not in p.parents})
     if not media:
         return []
     complete, incomplete = _registered(root / REGISTER)

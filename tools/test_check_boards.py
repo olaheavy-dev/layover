@@ -580,6 +580,14 @@ class Boards(unittest.TestCase):
         self.write("frontend/public/a.jfif", "x")
         self.assertEqual(cb.problems(self.root), [])
 
+    def test_generated_test_screenshots_are_exempt_but_other_media_is_not(self) -> None:
+        # Register line of 21 Nov 2026 (docs/decisions/README.md) and AGENTS.md: test screenshots are exempt.
+        self.git_repo()
+        self.write("frontend/e2e/screenshots/pages.spec.ts/home-dark.png", "x")
+        self.write("frontend/public/home.png", "x")
+        found = cb.problems(self.root)
+        self.assertEqual([p.split(":")[0] for p in found], ["frontend/public/home.png"], found)
+
     def test_ignored_and_dependency_files_are_not_media(self) -> None:
         self.git_repo()
         self.write(".gitignore", "node_modules/\n")
