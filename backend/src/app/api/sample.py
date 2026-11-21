@@ -17,6 +17,9 @@ from app.problems import Problem
 router = APIRouter(prefix="/sample", tags=["sample"])
 
 UNAVAILABLE = "Sample data is not available."
+# Retry-After on a 503 (.claude/rules/fastapi.md). A missing samples folder is a deployment fault,
+# so this is a polite wait before asking again, not a promise that the data is back by then.
+RETRY_AFTER = {"Retry-After": "300"}
 
 
 # Plain `def`: FastAPI runs these in a worker thread, and the first call reads files.
@@ -28,7 +31,7 @@ def sample_trip(request: Request) -> Trip:
     try:
         return load_sample_trip(request.app.state.settings.samples_dir)
     except SamplesUnavailable as exc:
-        raise Problem(503, detail=UNAVAILABLE) from exc
+        raise Problem(503, detail=UNAVAILABLE, headers=RETRY_AFTER) from exc
 
 
 @router.get(
@@ -42,4 +45,4 @@ def sample_widgets(request: Request) -> list[SampleWidget]:
     try:
         return list(load_sample_widgets(request.app.state.settings.samples_dir))
     except SamplesUnavailable as exc:
-        raise Problem(503, detail=UNAVAILABLE) from exc
+        raise Problem(503, detail=UNAVAILABLE, headers=RETRY_AFTER) from exc

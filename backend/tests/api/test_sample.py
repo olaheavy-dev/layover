@@ -37,6 +37,7 @@ async def test_missing_samples_folder_answers_503(route: str, tmp_path: Path) ->
     assert response.status_code == 503
     assert response.headers["content-type"].startswith("application/problem+json")
     assert response.json()["detail"] == "Sample data is not available."
+    assert response.headers["retry-after"] == "300"  # fastapi.md: Retry-After on a 503
 
 
 async def test_routes_use_the_folder_from_the_apps_settings(tmp_path: Path) -> None:
