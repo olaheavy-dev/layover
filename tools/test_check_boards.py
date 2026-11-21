@@ -567,6 +567,20 @@ class Boards(unittest.TestCase):
             with self.subTest(name=name):
                 self.assertEqual(self.page(GOOD_PAGE.replace(label_p, before + label_p)), [])
 
+    def test_nothing_reaches_past_a_template(self) -> None:
+        # Codex P1 on #68: a template is a scope boundary (WHATWG HTML, "has an element in scope"). Nothing
+        # inside it may close an element outside it, and a stray end tag inside it is ignored, so its
+        # content stays hidden. Expected failure before the fix: the inner <p> or </p> popped the template.
+        label_p = f'<p class="sample">{LABEL}</p>'
+        for name, html in {
+            "p inside template inside p": f"<p>Note<template><p>{LABEL}</p></template>",
+            "stray end tag inside template": f"<div><template></div><p>{LABEL}</p></template></div>",
+            "li inside template inside li": f"<ul><li>Item<template><li>{LABEL}</li></template></ul>",
+        }.items():
+            with self.subTest(name=name):
+                found = self.page(GOOD_PAGE.replace(label_p, html))
+                self.assertTrue(any(f'needs the label "{LABEL}"' in p for p in found), found)
+
     def test_label_split_by_inline_markup_or_entities_passes(self) -> None:
         page = GOOD_PAGE.replace(LABEL, "Sample <b>data</b>,&nbsp;not   real")
         self.assertEqual(self.page(page), [])

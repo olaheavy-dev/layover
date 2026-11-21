@@ -125,6 +125,9 @@ P_CLOSERS = {"address", "article", "aside", "blockquote", "details", "dialog", "
              "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "header",
              "hgroup", "hr", "main", "menu", "nav", "ol", "p", "pre", "search", "section", "table", "ul"}
 SELF_CLOSERS = {"li": {"li"}, "dt": {"dt", "dd"}, "dd": {"dt", "dd"}, "option": {"option"}}
+# Elements a search for an open element stops at (WHATWG HTML, "has an element in scope"). A <template> is
+# one, so nothing inside a template can close an element outside it.
+SCOPE_LIMITS = {"html", "template", "table", "td", "th", "caption", "marquee", "object", "applet"}
 
 HEX = re.compile(r"(?<![\w&])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b")
 FUNC = re.compile(r"\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color|color-mix)\s*\(", re.I)
@@ -213,15 +216,24 @@ class _Page(HTMLParser):
         self._open: dict[str, int] = {}
         self._hidden = 0
 
+    def _in_scope(self, tag: str) -> bool:
+        """True if `tag` is open and no scope limit (such as a <template>) sits above it."""
+        for name, _hidden in reversed(self._stack):
+            if name == tag:
+                return True
+            if name in SCOPE_LIMITS:
+                return False
+        return False
+
     def _end_head(self) -> None:
         """Close an open <head> the way a browser does when body content starts. Inside a <template>
         nothing closes the head: the template's content is never shown."""
-        if self._open.get("head") and not self._open.get("template"):
+        if self._in_scope("head"):
             self.handle_endtag("head")
 
     def _close_optional(self, tag: str) -> None:
         """End an open <p>, <li>, <dt>, <dd> or <option> that this start tag ends in a browser."""
-        if tag in P_CLOSERS and self._open.get("p"):
+        if tag in P_CLOSERS and self._in_scope("p"):
             self.handle_endtag("p")
         for open_tag in SELF_CLOSERS.get(tag, ()):
             if self._stack and self._stack[-1][0] == open_tag:
@@ -254,7 +266,9 @@ class _Page(HTMLParser):
         if tag == self._raw:
             (self.styles if tag == "style" else self.scripts).append("".join(self._raw_text))
             self._raw = None
-        if self._open.get(tag):
+        # A browser ignores an end tag whose element is not in scope (for example, one inside a <template>
+        # whose element is outside it), so it never pops the template.
+        if self._in_scope(tag) or tag in SCOPE_LIMITS and self._open.get(tag):
             while self._stack:
                 name, hidden = self._stack.pop()
                 self._open[name] -= 1
@@ -266,7 +280,7 @@ class _Page(HTMLParser):
         if self._raw:
             self._raw_text.append(data)
             return
-        if data.strip() and self._open.get("head") and not (self._open.get("title") or self._open.get("template")):
+        if data.strip() and self._in_scope("head") and not self._open.get("title"):
             self._end_head()
         self.text.append(data)
         if not self._hidden:
