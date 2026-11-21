@@ -11,4 +11,6 @@ owner_github: sunkanmi-olawuwo
 owner_name: Sunkanmi Olawuwo
 project_name: Layover
 project_slug: layover
-stacks: []
+stacks:
+- fastapi
+- nextjs

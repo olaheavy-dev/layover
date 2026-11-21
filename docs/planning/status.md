@@ -2,15 +2,15 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 21 Nov 2026 (build plan 1, #49; the Nuitee decisions merged in #47); the end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
+Last updated: 21 Nov 2026 (PR A, issue #51); the previous end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
 
 ## Stage
 
-Build step 1 is next. The Design stage closed when the Design gate merged (#42, closing issue #39) and its milestone was closed. The repository still holds documents and their checks only. The build order is approved: eight steps in [01 §4](../product/01-research-and-direction.md#4-build-order), each a milestone ("Build 1: Foundation and data contract" to "Build 8: Earnings dashboard").
+Build step 1 is under way. The Design stage closed when the Design gate merged (#42, closing issue #39). The repository now has the FastAPI backend and the Next.js frontend from the house templates (PR A, below). The build order is approved: eight steps in [01 §4](../product/01-research-and-direction.md#4-build-order), each a milestone ("Build 1: Foundation and data contract" to "Build 8: Earnings dashboard").
 
 ## Open pull requests
 
-- The build plan 1 PR (issue #49): the [design](../superpowers/specs/2026-11-21-build-step-1-design.md) and [plan](../superpowers/plans/2026-11-21-build-step-1.md) for build step 1, and the register lines for the owner's step 1 decisions. (#47, the Nuitee decisions, merged on 21 Nov 2026.)
+- **PR A (issue #51):** the template layers, the Next.js 16.4.6 bump, the psycopg licence exception and the project board in the backlog workflow. Owner merges (it changes `.github/rulesets/main.json` and CI workflows), then runs `make repo-settings` so the two new CodeQL checks become required. Upstream issues opened for what it found: house-template-nextjs#25, house-template-base#51 and #52, house-template-fastapi#141. It also opens `noticed` issue #56 (remove the minimatch override later).
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -23,9 +23,9 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 
 ## Next steps
 
-1. **Merge the build plan 1 PR**, then open issues `[29]` to `[33]` (one per PR in the plan) in the Build 1 milestone and the backlog.
-2. **PR A:** apply the template layers, and add the [project board](https://github.com/orgs/olaheavy-dev/projects/5) (created 21 Nov 2026) to the backlog workflow.
-3. **PR B:** the data contract, the shared samples and the sample endpoints. Then PRs C (backend) and D (website) in parallel, then E (join and Aspire), then the step 1 gate.
+1. **Merge PR A** (owner), then run `make repo-settings`.
+2. **PR B (#52):** the data contract, the shared samples and the sample endpoints.
+3. **PRs C (#53, backend) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #51 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
 
 ## Blockers
 
