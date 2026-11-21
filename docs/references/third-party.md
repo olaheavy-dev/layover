@@ -23,7 +23,7 @@ Official documentation for the tools and services Layover uses. Pinned versions 
 
 ## Approved with the template sets (owner, 21 Nov 2026)
 
-The owner approved the packages that `house-template-fastapi` v0.11.1 and `house-template-nextjs` v0.3.0 bring, at those tagged versions, as a set. Versions are the ones in `backend/uv.lock` (Python) and the exact pins in `frontend/package.json` (npm). Each licence was read from the package's PyPI or npm page for that version on 21 Nov 2026. Rows marked "Locked in `uv.lock`, not installed" belong to extras that the answers `llm: none` and `storage: false` leave out. `psycopg` and `psycopg-pool` are LGPL-3.0-only, which is not in the allow list in `.github/workflows/dependency-review.yml`.
+The owner approved the packages that `house-template-fastapi` v0.11.1 and `house-template-nextjs` v0.3.0 bring, at those tagged versions, as a set. Versions are the ones in `backend/uv.lock` (Python) and the exact pins in `frontend/package.json` (npm). Each licence was read from the package's PyPI or npm page for that version on 21 Nov 2026. Rows marked "Locked in `uv.lock`, not installed" belong to extras that the answers `llm: none` and `storage: false` leave out. `psycopg` and `psycopg-pool` are LGPL-3.0-only, which the dependency review now allows by package name (`.github/workflows/dependency-review.yml`; owner's decision, 21 Nov 2026). `next` and `eslint-config-next` are 16.4.6, one step ahead of the template's 16.4.3 pin (security fixes; see the decision register).
 
 | Package and version | Official documentation | Used for, group and licence |
 |---|---|---|
@@ -66,7 +66,7 @@ The owner approved the packages that `house-template-fastapi` v0.11.1 and `house
 | @opentelemetry/sdk-metrics 2.12.0 | https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/sdk-metrics | OpenTelemetry metrics SDK (frontend). Apache-2.0 ([npm](https://www.npmjs.com/package/@opentelemetry/sdk-metrics/v/2.12.0)) |
 | @opentelemetry/sdk-trace-base 2.12.0 | https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-sdk-trace-base | OpenTelemetry tracing SDK (frontend). Apache-2.0 ([npm](https://www.npmjs.com/package/@opentelemetry/sdk-trace-base/v/2.12.0)) |
 | @vercel/otel 2.1.3 | https://github.com/vercel/otel#readme | OpenTelemetry set-up for Next.js (frontend). MIT ([npm](https://www.npmjs.com/package/@vercel/otel/v/2.1.3)) |
-| next 16.4.3 | https://nextjs.org | Frontend framework (frontend). MIT ([npm](https://www.npmjs.com/package/next/v/16.4.3)) |
+| next 16.4.6 | https://nextjs.org | Frontend framework (frontend). MIT ([npm](https://www.npmjs.com/package/next/v/16.4.6)) |
 | openapi-fetch 0.17.0 | https://openapi-ts.dev | Typed API client generated from the backend's OpenAPI (frontend). MIT ([npm](https://www.npmjs.com/package/openapi-fetch/v/0.17.0)) |
 | react 19.3.1 | https://react.dev/ | UI library (frontend). MIT ([npm](https://www.npmjs.com/package/react/v/19.3.1)) |
 | react-dom 19.3.1 | https://react.dev/ | React for the browser (frontend). MIT ([npm](https://www.npmjs.com/package/react-dom/v/19.3.1)) |
@@ -81,7 +81,7 @@ The owner approved the packages that `house-template-fastapi` v0.11.1 and `house
 | @types/react-dom 19.3.0 | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom | React DOM types (frontend dev). MIT ([npm](https://www.npmjs.com/package/@types/react-dom/v/19.3.0)) |
 | @vitejs/plugin-react 6.1.2 | https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#readme | React support in Vitest (frontend dev). MIT ([npm](https://www.npmjs.com/package/@vitejs/plugin-react/v/6.1.2)) |
 | eslint 9.39.5 | https://eslint.org | Linting (frontend dev). MIT ([npm](https://www.npmjs.com/package/eslint/v/9.39.5)) |
-| eslint-config-next 16.4.3 | https://nextjs.org/docs/app/api-reference/config/eslint | Next.js lint rules (frontend dev). MIT ([npm](https://www.npmjs.com/package/eslint-config-next/v/16.4.3)) |
+| eslint-config-next 16.4.6 | https://nextjs.org/docs/app/api-reference/config/eslint | Next.js lint rules (frontend dev). MIT ([npm](https://www.npmjs.com/package/eslint-config-next/v/16.4.6)) |
 | jsdom 30.1.3 | https://github.com/jsdom/jsdom#readme | Browser-like DOM for unit tests (frontend dev). MIT ([npm](https://www.npmjs.com/package/jsdom/v/30.1.3)) |
 | openapi-typescript 7.13.0 | https://openapi-ts.dev | Generates API types from the OpenAPI file (frontend dev). MIT ([npm](https://www.npmjs.com/package/openapi-typescript/v/7.13.0)) |
 | prettier 3.9.10 | https://prettier.io | Formatting (frontend dev). MIT ([npm](https://www.npmjs.com/package/prettier/v/3.9.10)) |
