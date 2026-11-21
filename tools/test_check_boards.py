@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import contextlib
+import io
 import re
 import subprocess
 import sys
@@ -51,6 +53,9 @@ class Boards(unittest.TestCase):
         self.root = Path(self._tmp.name)
         self.boards = self.root / "docs" / "design" / "boards"
         self.boards.mkdir(parents=True)
+        quiet = contextlib.redirect_stderr(io.StringIO())  # the "not a git repository" note, in every test
+        quiet.__enter__()
+        self.addCleanup(quiet.__exit__, None, None, None)
 
     def tearDown(self) -> None:
         self._tmp.cleanup()
@@ -587,6 +592,32 @@ class Boards(unittest.TestCase):
         self.write("frontend/public/home.png", "x")
         found = cb.problems(self.root)
         self.assertEqual([p.split(":")[0] for p in found], ["frontend/public/home.png"], found)
+
+    def test_safe_split_by_tags_after_a_block_is_found(self) -> None:
+        # Expected failure before the fix: all text is joined with nothing between blocks, so "Lisbon" and
+        # "sa<b>fe" read as "Lisbonsafe" and there is no word boundary before "safe".
+        for body in ("<p>Sample data, not real</p><p>Lisbon</p><p>sa<b>fe</b></p>", "<li>A</li><li>sa<i>fe</i></li>",
+                     "<p>Sample data, not real</p><p>sa<!-- x -->fe</p>", "<td>Lisbon</td><td>s<b>a</b>fe</td>",
+                     "<h2>Lisbon</h2>sa<b>fe</b>", "Lisbon<br>sa<b>fe</b>"):
+            with self.subTest(body=body):
+                found = self.page(GOOD_PAGE.replace("<svg>", body + "<svg>"))
+                self.assertTrue(self.safe_found(found), found)
+
+    def test_inline_tags_still_join_words(self) -> None:
+        self.assertEqual(self.page(GOOD_PAGE.replace("Issue #123", "<b>Safety</b> and <i>sa</i><b>vings</b>")), [])
+
+    def test_screenshot_exemption_is_png_only(self) -> None:
+        self.git_repo()
+        self.write("frontend/e2e/screenshots/pages.spec.ts/photo.jpg", "x")
+        self.write("frontend/e2e/screenshots/pages.spec.ts/home.png", "x")
+        found = cb.problems(self.root)
+        self.assertEqual([p.split(":")[0] for p in found], ["frontend/e2e/screenshots/pages.spec.ts/photo.jpg"], found)
+
+    def test_a_fallback_to_docs_only_is_said_on_stderr(self) -> None:
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            cb.problems(self.root)  # not a git repository
+        self.assertIn("not a git repository", err.getvalue())
 
     def test_ignored_and_dependency_files_are_not_media(self) -> None:
         self.git_repo()

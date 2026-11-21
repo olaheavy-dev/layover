@@ -17,7 +17,7 @@ Fails when:
 - a board page has no "Sample data, not real" label (owner: "Marked samples, one file (Recommended)");
 - a board page in docs/design/boards/ (not index.html, not the screens/ sub-folder) is not linked from
   docs/design/boards/index.html, once index.html exists (the index is how the reviewers check coverage);
-- an image, font, video, audio file or PDF anywhere in the repository (found with `git ls-files`; generated test screenshots in frontend/e2e/screenshots/ are exempt) is not in a table row of
+- an image, font, video, audio file or PDF anywhere in the repository (found with `git ls-files`; generated .png test screenshots in frontend/e2e/screenshots/ are exempt) is not in a table row of
   docs/assets/README.md, named by its path from the repository root in backticks, with a non-empty Source
   and Licence cell (columns found by the header row of that table; empty, whitespace and a dash do not
   count) (AGENTS.md: "Media is registered first").
@@ -42,6 +42,10 @@ read the way a browser reads them (tabs and line breaks dropped, "\\" taken as "
 text outside <script> and <style>, hidden or not, and the "Sample data, not real" label must be in text a
 visitor sees (not in a hidden element, <head>, <title>, <template>, an attribute or a script). Media files are
 found with `git ls-files` across the whole repository, so a file outside docs/ is checked too.
+
+Not covered: HTML strings inside inline scripts (their attributes are not scanned for "safe" or for colours);
+hiding by class or opacity (text a stylesheet makes invisible still counts as visible for the label); and
+anything a stylesheet does to a page the check cannot see.
 
 What a static check cannot do: it cannot prove that a script is self-contained. A script can build an address
 from pieces (`import("https://" + host)`), read one from data, or load a file through code the check never
@@ -105,6 +109,9 @@ URL_ATTRS = {"src", "href", "xlink:href", "srcset", "imagesrcset", "poster", "da
              "formaction", "ping", "manifest"}
 VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source",
              "track", "wbr"}
+BLOCK_TAGS = {"p", "div", "li", "ul", "ol", "td", "th", "tr", "table", "h1", "h2", "h3", "h4", "h5", "h6", "br",
+              "hr", "section", "article", "header", "footer", "nav", "main", "aside", "figure", "figcaption",
+              "blockquote", "option", "dt", "dd", "label", "button"}  # a line break between words, unlike <b>
 NOT_SHOWN_TAGS = {"head", "title", "template", "script", "style"}
 
 HEX = re.compile(r"(?<![\w&])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b")
@@ -197,6 +204,7 @@ class _Page(HTMLParser):
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         pairs = [(name.lower(), value or "") for name, value in attrs]
         self.tags.append((tag, pairs))
+        self._break(tag)
         if tag in VOID_TAGS:
             return
         hidden = tag in NOT_SHOWN_TAGS or any(_hides(name, value) for name, value in pairs)
@@ -206,7 +214,14 @@ class _Page(HTMLParser):
         if tag in ("script", "style"):
             self._raw, self._raw_text = tag, []
 
+    def _break(self, tag: str) -> None:
+        if tag in BLOCK_TAGS and not self._raw:
+            self.text.append("\n")
+            if not self._hidden:
+                self.visible.append("\n")
+
     def handle_endtag(self, tag: str) -> None:
+        self._break(tag)
         if tag == self._raw:
             (self.styles if tag == "style" else self.scripts).append("".join(self._raw_text))
             self._raw = None
@@ -435,6 +450,7 @@ def _repo_files(root: Path) -> list[Path]:
             return [root / name for name in listed.decode("utf-8", errors="replace").split("\0") if name]
     except (OSError, subprocess.SubprocessError):
         pass
+    print(f"boards: {root} is not a git repository (or git failed); media checked under docs/ only", file=sys.stderr)
     docs = root / "docs"
     return list(docs.rglob("*")) if docs.is_dir() else []
 
@@ -444,7 +460,7 @@ def _register_problems(root: Path) -> list[str]:
     # 21 Nov 2026: register line in docs/decisions/README.md; AGENTS.md, "Media is registered first").
     exempt = root / SCREENSHOTS
     media = sorted({p for p in _repo_files(root) if p.suffix.lower() in MEDIA_SUFFIXES and p.is_file()
-                    and exempt not in p.parents})
+                    and not (p.suffix.lower() == ".png" and exempt in p.parents)})
     if not media:
         return []
     complete, incomplete = _registered(root / REGISTER)

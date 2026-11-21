@@ -17,10 +17,13 @@ Fails when any file under docs/floorplan/ holds:
 
 The scripts and the policy are found with the standard library's html.parser, which reads tags the way a
 browser does (any letter case, attributes and spaces in a closing tag, comments skipped). The script text is
-the raw text between the tags, exactly the bytes the browser hashes. A script with a src attribute is not
-inline and is not hashed.
+the text between the tags with line ends normalised as a browser does (CRLF and a lone CR become LF before
+tokenising, WHATWG HTML 13.2.3.5 "Preprocessing the input stream"), which is the text the browser hashes.
+Entities are not decoded. A script with a src attribute is not inline and is not hashed, and neither is one
+whose type is not JavaScript (empty, "module" or a JavaScript MIME type), such as a JSON data block.
 
-Limits: the path, address and remote checks are a text search. It doesn't find personal data or private material in names and
+Limits: the "<!--<script>" double-escaped case (a script that opens a comment, where a browser changes how
+it finds the end tag) is not modelled; the path, address and remote checks are a text search. It doesn't find personal data or private material in names and
 descriptions; that check is done by hand before the snapshot is committed. Secrets are caught by gitleaks
 in `make check`. No folder means no snapshot yet, which passes.
 """
@@ -46,6 +49,11 @@ PATTERNS = [
         re.IGNORECASE)),
 ]
 
+# Script types a browser runs as JavaScript (WHATWG MIME Sniffing, "JavaScript MIME type"), plus "module".
+JS_TYPES = {"", "module", "text/javascript", "application/javascript", "application/ecmascript", "text/ecmascript",
+            "application/x-javascript", "application/x-ecmascript", "text/x-javascript", "text/x-ecmascript",
+            "text/javascript1.0", "text/javascript1.1", "text/javascript1.2", "text/javascript1.3",
+            "text/javascript1.4", "text/javascript1.5", "text/jscript", "text/livescript"}
 SHA256 = re.compile(r"'sha256-([A-Za-z0-9+/=]+)'")
 
 
@@ -53,7 +61,7 @@ class _Scripts(HTMLParser):
     """The Content-Security-Policy meta tags and the text of each inline <script> (one without a src)."""
 
     def __init__(self) -> None:
-        super().__init__(convert_charrefs=False)  # script text is raw: nothing is decoded or changed
+        super().__init__(convert_charrefs=False)  # script text is raw: no entity is decoded
         self.policies: list[str] = []
         self.scripts: list[str] = []
         self._current: list[str] | None = None
@@ -62,7 +70,7 @@ class _Scripts(HTMLParser):
         values = {name.lower(): value or "" for name, value in attrs}
         if tag == "meta" and values.get("http-equiv", "").strip().lower() == "content-security-policy":
             self.policies.append(values.get("content", ""))
-        elif tag == "script" and "src" not in values:
+        elif tag == "script" and "src" not in values and values.get("type", "").strip().lower() in JS_TYPES:
             self._current = []
 
     def handle_endtag(self, tag: str) -> None:
@@ -84,7 +92,7 @@ class _Scripts(HTMLParser):
 def blocked_scripts(text: str) -> int:
     """How many inline scripts the page's Content-Security-Policy would block (0 when it has no policy)."""
     parsed = _Scripts()
-    parsed.feed(text)
+    parsed.feed(text.replace("\r\n", "\n").replace("\r", "\n"))  # as a browser reads it, before it hashes
     parsed.close()
     if not parsed.policies:
         return 0
@@ -99,7 +107,7 @@ def main(root: Path) -> int:
     problems: list[str] = []
     if folder.is_dir():
         for path in sorted(p for p in folder.rglob("*") if p.is_file()):
-            text = path.read_bytes().decode("utf-8", errors="replace")  # no line-end changes: the browser hashes raw bytes
+            text = path.read_bytes().decode("utf-8", errors="replace")
             rel = path.relative_to(root).as_posix()
             for what, pattern in PATTERNS:
                 match = pattern.search(text)

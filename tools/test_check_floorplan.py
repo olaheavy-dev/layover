@@ -93,10 +93,24 @@ class Floorplan(unittest.TestCase):
                 self.assertEqual(code, 1, out)
                 self.assertIn("Content-Security-Policy", out)
 
-    def test_script_text_is_hashed_exactly_as_written(self):
-        # Entities and line ends inside a script are not changed (a browser hashes the raw text).
-        body = "var a = '&amp; &#97;'; // end\r\nvar b = '<b>';  \n"
-        self.assertEqual(self.run_check(csp_page([body], [body]))[0], 0)
+    def test_script_text_is_hashed_as_the_browser_reads_it(self):
+        # A browser turns CRLF and a lone CR into LF before it tokenises, and the CSP hash covers that text
+        # (WHATWG HTML, 13.2.3.5 "Preprocessing the input stream"). Entities in a script stay as written.
+        body = "var a = '&amp; &#97;'; // end\nvar b = '<b>';  \n"
+        crlf = body.replace("\n", "\r\n")
+        self.assertEqual(self.run_check(csp_page([body], [crlf]))[0], 0)
+        self.assertEqual(self.run_check(csp_page([body], [body.replace("\n", "\r")]))[0], 0)
+        self.assertEqual(self.run_check(csp_page([crlf], [crlf]))[0], 1)  # a hash of CRLF text never matches
+
+    def test_script_that_is_not_javascript_is_not_hashed(self):
+        for kind in ('type="application/json"', 'type="application/ld+json"', "type='importmap'", 'type="text/template"'):
+            with self.subTest(kind=kind):
+                page = csp_page(["var a = 1;"], ["var a = 1;"]) + f"<script {kind}>{{\"a\": 1}}</script>"
+                self.assertEqual(self.run_check(page)[0], 0)
+        for kind in ('type=""', 'type="module"', 'type="text/javascript"', 'type="application/javascript"', "TYPE=MODULE"):
+            with self.subTest(kind=kind):
+                page = csp_page([], []) + f"<script {kind}>var a = 1;</script>"
+                self.assertEqual(self.run_check(page)[0], 1)
 
     def test_scripts_with_a_source_are_not_inline_and_a_comment_is_not_a_script(self):
         page = csp_page(["var a = 1;"], ["var a = 1;"]) + '<script src="x.js"></script><!-- <script>evil()</script> -->'
