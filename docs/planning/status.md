@@ -10,7 +10,7 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 
 ## Open pull requests
 
-- The Nuitee decisions PR (#46): use the sandbox without asking Nuitee; drop the city price index for now. (The widgets-first PR merged as #44.)
+- The Nuitee decisions PR (#47, issue #46): use the sandbox without asking Nuitee; drop the city price index for now. (The widgets-first PR merged as #44.)
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
