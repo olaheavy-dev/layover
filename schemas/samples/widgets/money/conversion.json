@@ -1,0 +1,26 @@
+{
+  "kind": "money",
+  "state": "filled",
+  "from_currency": "GBP",
+  "to_currency": "EUR",
+  "rate": "1.15",
+  "rate_date": "2026-11-18",
+  "conversion": {
+    "amount": {
+      "amount_minor": 50000,
+      "currency": "GBP"
+    },
+    "converted": {
+      "amount_minor": 57500,
+      "currency": "EUR"
+    }
+  },
+  "sources": [
+    {
+      "status": "live",
+      "source": "Frankfurter",
+      "captured_at": "2026-11-18T09:00:00Z",
+      "data_date": "2026-11-18"
+    }
+  ]
+}

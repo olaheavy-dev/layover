@@ -1,0 +1,11 @@
+{
+  "kind": "hotel_list",
+  "state": "error",
+  "place": "Lisbon",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "OpenStreetMap, through Overpass"
+    }
+  ]
+}

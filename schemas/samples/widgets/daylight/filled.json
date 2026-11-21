@@ -1,0 +1,18 @@
+{
+  "kind": "daylight",
+  "state": "filled",
+  "place": "Lisbon",
+  "day": "2027-05-15",
+  "dates_set": false,
+  "sunrise": "06:20:00",
+  "sunset": "20:40:00",
+  "day_length_minutes": 860,
+  "credit_url": "https://sunrise-sunset.org/",
+  "sources": [
+    {
+      "status": "live",
+      "source": "sunrise-sunset.org",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

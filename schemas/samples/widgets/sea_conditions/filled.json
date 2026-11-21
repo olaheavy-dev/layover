@@ -1,0 +1,14 @@
+{
+  "kind": "sea_conditions",
+  "state": "filled",
+  "place": "Lisbon",
+  "month": 5,
+  "sea_temp_c": 17,
+  "sources": [
+    {
+      "status": "live",
+      "source": "Open-Meteo Marine",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

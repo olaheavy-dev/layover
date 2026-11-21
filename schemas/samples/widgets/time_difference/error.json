@@ -1,0 +1,12 @@
+{
+  "kind": "time_difference",
+  "state": "error",
+  "place": "Lisbon",
+  "dates_set": false,
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "IANA time zone database"
+    }
+  ]
+}

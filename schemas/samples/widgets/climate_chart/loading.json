@@ -1,0 +1,8 @@
+{
+  "kind": "climate_chart",
+  "state": "loading",
+  "place": "Lisbon",
+  "highlight_month": 5,
+  "averages_period": "1991-2020",
+  "sources": []
+}

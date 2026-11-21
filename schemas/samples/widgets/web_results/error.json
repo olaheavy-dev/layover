@@ -1,0 +1,11 @@
+{
+  "kind": "web_results",
+  "state": "error",
+  "question": "Can I take a pushchair on Lisbon trams?",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Tavily web search"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "kind": "time_difference",
+  "state": "not_known",
+  "place": "this place",
+  "dates_set": false,
+  "missing": "a time zone for this place",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "IANA time zone database"
+    }
+  ]
+}

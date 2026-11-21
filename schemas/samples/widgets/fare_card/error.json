@@ -1,0 +1,14 @@
+{
+  "kind": "fare_card",
+  "state": "error",
+  "origin": "Manchester (MAN)",
+  "destination": "Lisbon",
+  "month": "2027-05",
+  "search_url": "https://www.aviasales.com/",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Travelpayouts"
+    }
+  ]
+}

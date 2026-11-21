@@ -1,0 +1,14 @@
+{
+  "kind": "daylight",
+  "state": "not_known",
+  "place": "Lisbon",
+  "day": "2027-05-15",
+  "dates_set": false,
+  "missing": "sunrise and sunset times for this place and date",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "sunrise-sunset.org"
+    }
+  ]
+}

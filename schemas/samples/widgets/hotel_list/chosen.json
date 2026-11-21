@@ -1,0 +1,31 @@
+{
+  "kind": "hotel_list",
+  "state": "filled",
+  "place": "Lisbon",
+  "hotels": [
+    {
+      "name": "Sample Hotel Alfama",
+      "area": "Alfama",
+      "stars": 4
+    },
+    {
+      "name": "Sample Guesthouse Baixa",
+      "area": "Baixa"
+    },
+    {
+      "name": "Sample Hotel Belém",
+      "area": "Belém",
+      "stars": 3,
+      "website": "https://sample.example/"
+    }
+  ],
+  "selection": "chosen",
+  "chosen_hotel": "Sample Hotel Alfama",
+  "sources": [
+    {
+      "status": "live",
+      "source": "OpenStreetMap, through Overpass",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

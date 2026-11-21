@@ -1,0 +1,36 @@
+{
+  "kind": "itinerary_day",
+  "state": "filled",
+  "day_number": 2,
+  "base": "Sample Hotel Belém",
+  "rebuilt": true,
+  "stops": [
+    {
+      "name": "Torre de Belém",
+      "source": {
+        "status": "live",
+        "source": "OpenStreetMap",
+        "captured_at": "2026-11-18T09:00:00Z"
+      },
+      "hours_status": "not_known"
+    },
+    {
+      "name": "Mosteiro dos Jerónimos",
+      "source": {
+        "status": "live",
+        "source": "OpenStreetMap",
+        "captured_at": "2026-11-18T09:00:00Z"
+      },
+      "hours_status": "known",
+      "opens": "10:00:00",
+      "closes": "17:30:00"
+    }
+  ],
+  "sources": [
+    {
+      "status": "live",
+      "source": "OpenStreetMap, through Overpass",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

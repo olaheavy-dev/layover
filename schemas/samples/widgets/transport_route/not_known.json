@@ -1,0 +1,16 @@
+{
+  "kind": "transport_route",
+  "state": "not_known",
+  "origin": "Paddington station",
+  "destination": "Heathrow Terminals 2 and 3",
+  "planned_for": "2027-05-15",
+  "dates_set": false,
+  "leaves_at": "09:00:00",
+  "missing": "a journey: TfL returned none from this start to Heathrow for that day and time",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "TfL Unified API (Journey Planner)"
+    }
+  ]
+}

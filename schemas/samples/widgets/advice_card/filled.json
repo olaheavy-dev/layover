@@ -1,0 +1,16 @@
+{
+  "kind": "advice_card",
+  "state": "filled",
+  "place": "Portugal",
+  "title": "FCDO travel advice: Portugal",
+  "fcdo_url": "https://www.gov.uk/foreign-travel-advice/portugal",
+  "updated_on": "2026-11-12",
+  "sources": [
+    {
+      "status": "cached",
+      "source": "FCDO, gov.uk",
+      "source_url": "https://www.gov.uk/foreign-travel-advice/portugal",
+      "captured_at": "2026-11-17T09:00:00Z"
+    }
+  ]
+}

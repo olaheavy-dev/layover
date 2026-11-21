@@ -1,0 +1,10 @@
+{
+  "kind": "transport_route",
+  "state": "loading",
+  "origin": "Paddington station",
+  "destination": "Heathrow Terminals 2 and 3",
+  "planned_for": "2027-05-15",
+  "dates_set": false,
+  "leaves_at": "09:00:00",
+  "sources": []
+}

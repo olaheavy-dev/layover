@@ -1,0 +1,19 @@
+{
+  "kind": "place_intro",
+  "state": "filled",
+  "place": "Lisbon",
+  "hero_line": "Portugal’s capital, on the river Tagus.",
+  "paragraphs": [
+    "Lisbon is the capital of Portugal, on the river Tagus.",
+    "Alfama is one of its old quarters, above the river."
+  ],
+  "intro_source": "wikivoyage",
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Wikivoyage, Lisbon",
+      "captured_at": "2026-11-14T09:00:00Z",
+      "data_date": "2026-03-01"
+    }
+  ]
+}

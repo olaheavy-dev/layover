@@ -1,0 +1,14 @@
+{
+  "kind": "fare_list",
+  "state": "not_known",
+  "origin": "Bristol (BRS)",
+  "month": "2027-03",
+  "search_url": "https://www.aviasales.com/",
+  "missing": "Travelpayouts has no cached fares from Bristol (BRS) in March 2027",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Travelpayouts"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "kind": "not_known",
+  "state": "not_known",
+  "missing": "Local bus fares in Lisbon",
+  "reason": "None of the sources Layover uses has them",
+  "instead": "Show the cost estimate without them, with local transport marked Not known",
+  "sources": []
+}

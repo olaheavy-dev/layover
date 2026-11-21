@@ -1,0 +1,51 @@
+{
+  "kind": "itinerary_day",
+  "state": "filled",
+  "day_number": 1,
+  "starts_from_centre": true,
+  "stops": [
+    {
+      "name": "Castelo de São Jorge",
+      "source": {
+        "status": "live",
+        "source": "OpenStreetMap",
+        "captured_at": "2026-11-18T09:00:00Z"
+      },
+      "hours_status": "known",
+      "opens": "10:00:00",
+      "closes": "18:00:00"
+    },
+    {
+      "name": "Miradouro de Santa Luzia",
+      "source": {
+        "status": "live",
+        "source": "OpenStreetMap",
+        "captured_at": "2026-11-18T09:00:00Z"
+      },
+      "hours_status": "not_known"
+    },
+    {
+      "name": "A walk through Alfama",
+      "kind": "walk",
+      "hours_status": "not_applicable",
+      "source": {
+        "status": "cached",
+        "source": "Wikivoyage, Lisbon",
+        "captured_at": "2026-11-14T09:00:00Z",
+        "data_date": "2026-03-01"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "status": "live",
+      "source": "OpenStreetMap, through Overpass",
+      "captured_at": "2026-11-18T09:00:00Z"
+    },
+    {
+      "status": "cached",
+      "source": "Wikivoyage, Lisbon",
+      "captured_at": "2026-11-14T09:00:00Z"
+    }
+  ]
+}

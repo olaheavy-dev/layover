@@ -1,0 +1,11 @@
+{
+  "kind": "booking_approval",
+  "state": "error",
+  "sandbox": true,
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Duffel sandbox"
+    }
+  ]
+}

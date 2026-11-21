@@ -1,0 +1,17 @@
+{
+  "kind": "booking_approval",
+  "state": "empty",
+  "sandbox": true,
+  "origin": "MAN",
+  "destination": "LIS",
+  "depart": "2027-05-14",
+  "return_date": "2027-05-19",
+  "adults": 2,
+  "sources": [
+    {
+      "status": "live",
+      "source": "Duffel sandbox",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

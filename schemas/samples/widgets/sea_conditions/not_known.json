@@ -1,0 +1,13 @@
+{
+  "kind": "sea_conditions",
+  "state": "not_known",
+  "place": "Lisbon",
+  "month": 5,
+  "missing": "sea temperature for this coast",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Open-Meteo Marine"
+    }
+  ]
+}

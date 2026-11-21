@@ -1,0 +1,252 @@
+{
+  "kind": "comparison_table",
+  "state": "filled",
+  "cards": [
+    {
+      "place": "Lisbon",
+      "card_state": "ready",
+      "fare": {
+        "price": {
+          "amount_minor": 9600,
+          "currency": "GBP"
+        },
+        "captured_at": "2026-11-15T09:00:00Z",
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-15T09:00:00Z"
+        }
+      },
+      "flights": {
+        "unit": {
+          "amount_minor": 9600,
+          "currency": "GBP"
+        },
+        "amount": {
+          "exact": {
+            "amount_minor": 19200,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 19200,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-15T09:00:00Z"
+        }
+      },
+      "stay": {
+        "unit": {
+          "amount_minor": 7000,
+          "currency": "GBP"
+        },
+        "amount": {
+          "exact": {
+            "amount_minor": 35000,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 35000,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Wikivoyage, Lisbon",
+          "captured_at": "2026-11-14T09:00:00Z",
+          "data_date": "2026-03-01"
+        },
+        "page_edited": "2026-03-01",
+        "listing_count": 6
+      },
+      "meals": {
+        "unit": {
+          "amount_minor": 1200,
+          "currency": "GBP"
+        },
+        "amount": {
+          "exact": {
+            "amount_minor": 24000,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 24000,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Wikivoyage, Lisbon",
+          "captured_at": "2026-11-14T09:00:00Z",
+          "data_date": "2026-03-01"
+        },
+        "page_edited": "2026-03-01"
+      },
+      "known_costs": {
+        "amount": {
+          "exact": {
+            "amount_minor": 78200,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 78000,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts, Wikivoyage, Lisbon",
+          "captured_at": "2026-11-14T09:00:00Z"
+        }
+      },
+      "is_partial": true,
+      "budget_gap": {
+        "exact": {
+          "amount_minor": 1800,
+          "currency": "GBP"
+        },
+        "shown": {
+          "amount_minor": 2000,
+          "currency": "GBP"
+        },
+        "is_estimate": true
+      },
+      "budget_position": "under",
+      "weather": {
+        "high_c": 22,
+        "low_c": 14,
+        "rainy_days": 5,
+        "averages_period": "1991-2020",
+        "source": {
+          "status": "live",
+          "source": "Open-Meteo",
+          "captured_at": "2026-11-18T09:00:00Z"
+        }
+      }
+    },
+    {
+      "place": "Valencia",
+      "card_state": "ready",
+      "fare": {
+        "price": {
+          "amount_minor": 8400,
+          "currency": "GBP"
+        },
+        "captured_at": "2026-11-17T09:00:00Z",
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-17T09:00:00Z"
+        }
+      },
+      "flights": {
+        "unit": {
+          "amount_minor": 8400,
+          "currency": "GBP"
+        },
+        "amount": {
+          "exact": {
+            "amount_minor": 16800,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 16800,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-17T09:00:00Z"
+        }
+      },
+      "stay": {
+        "missing": "too few priced listings"
+      },
+      "meals": {
+        "unit": {
+          "amount_minor": 1100,
+          "currency": "GBP"
+        },
+        "amount": {
+          "exact": {
+            "amount_minor": 22000,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 22000,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Wikivoyage, Valencia",
+          "captured_at": "2026-11-16T09:00:00Z",
+          "data_date": "2026-02-01"
+        },
+        "page_edited": "2026-02-01",
+        "listing_count": 5
+      },
+      "known_costs": {
+        "amount": {
+          "exact": {
+            "amount_minor": 38800,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 39000,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts, Wikivoyage, Valencia",
+          "captured_at": "2026-11-16T09:00:00Z"
+        }
+      },
+      "is_partial": true,
+      "weather": {
+        "high_c": 24,
+        "low_c": 15,
+        "rainy_days": 4,
+        "averages_period": "1991-2020",
+        "source": {
+          "status": "live",
+          "source": "Open-Meteo",
+          "captured_at": "2026-11-18T09:00:00Z"
+        }
+      }
+    },
+    {
+      "place": "Porto",
+      "card_state": "swapped"
+    }
+  ],
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-15T09:00:00Z"
+    },
+    {
+      "status": "cached",
+      "source": "Wikivoyage",
+      "captured_at": "2026-11-14T09:00:00Z"
+    },
+    {
+      "status": "live",
+      "source": "Open-Meteo",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "kind": "cost_estimate",
+  "state": "filled",
+  "place": "Lisbon",
+  "budget": {
+    "amount_minor": 80000,
+    "currency": "GBP"
+  },
+  "nights": 5,
+  "people": 2,
+  "is_partial": true,
+  "local_transport": {
+    "missing": "no source Layover uses has it"
+  },
+  "activities": {
+    "missing": "no source Layover uses has it"
+  },
+  "flights": {
+    "unit": {
+      "amount_minor": 9600,
+      "currency": "GBP"
+    },
+    "amount": {
+      "exact": {
+        "amount_minor": 19200,
+        "currency": "GBP"
+      },
+      "shown": {
+        "amount_minor": 19200,
+        "currency": "GBP"
+      },
+      "is_estimate": true
+    },
+    "source": {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-15T09:00:00Z"
+    }
+  },
+  "stay": {
+    "unit": {
+      "amount_minor": 7000,
+      "currency": "GBP"
+    },
+    "amount": {
+      "exact": {
+        "amount_minor": 35000,
+        "currency": "GBP"
+      },
+      "shown": {
+        "amount_minor": 35000,
+        "currency": "GBP"
+      },
+      "is_estimate": true
+    },
+    "source": {
+      "status": "cached",
+      "source": "Wikivoyage, Lisbon",
+      "captured_at": "2026-11-14T09:00:00Z",
+      "data_date": "2026-03-01"
+    },
+    "page_edited": "2026-03-01",
+    "listing_count": 6
+  },
+  "meals": {
+    "unit": {
+      "amount_minor": 1200,
+      "currency": "GBP"
+    },
+    "amount": {
+      "exact": {
+        "amount_minor": 24000,
+        "currency": "GBP"
+      },
+      "shown": {
+        "amount_minor": 24000,
+        "currency": "GBP"
+      },
+      "is_estimate": true
+    },
+    "source": {
+      "status": "cached",
+      "source": "Wikivoyage, Lisbon",
+      "captured_at": "2026-11-14T09:00:00Z",
+      "data_date": "2026-03-01"
+    },
+    "page_edited": "2026-03-01"
+  },
+  "total": {
+    "amount": {
+      "exact": {
+        "amount_minor": 78200,
+        "currency": "GBP"
+      },
+      "shown": {
+        "amount_minor": 78000,
+        "currency": "GBP"
+      },
+      "is_estimate": true
+    },
+    "source": {
+      "status": "cached",
+      "source": "Travelpayouts, Wikivoyage, Lisbon",
+      "captured_at": "2026-11-14T09:00:00Z"
+    }
+  },
+  "budget_gap": {
+    "exact": {
+      "amount_minor": 1800,
+      "currency": "GBP"
+    },
+    "shown": {
+      "amount_minor": 2000,
+      "currency": "GBP"
+    },
+    "is_estimate": true
+  },
+  "budget_position": "under",
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-15T09:00:00Z"
+    },
+    {
+      "status": "cached",
+      "source": "Wikivoyage, Lisbon",
+      "captured_at": "2026-11-14T09:00:00Z"
+    }
+  ]
+}

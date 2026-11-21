@@ -1,0 +1,11 @@
+{
+  "kind": "place_intro",
+  "state": "error",
+  "place": "Lisbon",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Wikivoyage, Lisbon"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "kind": "web_results",
+  "state": "filled",
+  "question": "Can I take a pushchair on Lisbon trams?",
+  "retrieved_at": "2026-11-18T09:00:00Z",
+  "results": [
+    {
+      "title": "Trams with a pushchair (sample page one)",
+      "url": "https://example.org/sample-page-one",
+      "quote": "Fold the pushchair before you board if the tram is busy."
+    },
+    {
+      "title": "Getting around with children (sample page two)",
+      "url": "https://example.org/sample-page-two",
+      "quote": "Ask the driver where to stand with a pushchair."
+    }
+  ],
+  "sources": [
+    {
+      "status": "live",
+      "source": "Tavily web search",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

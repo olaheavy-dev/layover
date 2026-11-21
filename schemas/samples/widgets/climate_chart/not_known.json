@@ -1,0 +1,32 @@
+{
+  "kind": "climate_chart",
+  "state": "not_known",
+  "place": "Lisbon",
+  "highlight_month": 5,
+  "averages_period": "1991-2020",
+  "missing": "rainy days: no source Layover uses has them for this place and period",
+  "months": [
+    {
+      "month": 4,
+      "high_c": 20,
+      "low_c": 12
+    },
+    {
+      "month": 5,
+      "high_c": 22,
+      "low_c": 14
+    },
+    {
+      "month": 6,
+      "high_c": 25,
+      "low_c": 16
+    }
+  ],
+  "sources": [
+    {
+      "status": "live",
+      "source": "Open-Meteo",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

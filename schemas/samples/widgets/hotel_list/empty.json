@@ -1,0 +1,13 @@
+{
+  "kind": "hotel_list",
+  "state": "empty",
+  "place": "Lisbon",
+  "hotels": [],
+  "sources": [
+    {
+      "status": "live",
+      "source": "OpenStreetMap, through Overpass",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}
