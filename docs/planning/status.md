@@ -10,7 +10,7 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 
 ## Open pull requests
 
-- The widgets-first PR (build order change, owner's choice "Widgets in Build 1 (Recommended)").
+- The Nuitee decisions PR (#46): use the sandbox without asking Nuitee; drop the city price index for now. (The widgets-first PR merged as #44.)
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -29,7 +29,6 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 
 None. Owner decisions still open, needed later:
 
-- Nuitee's terms for sandbox and price-index use (ask Nuitee before step 6), and approving the price-index spend before its switch is turned on.
 - How long a working trip link and a shared trip link last (before step 7).
 - The cost-cap figures, after step 4 measures a whole trip's cost.
 - The vector database (step 3), and hosting and the database (step 7).
@@ -40,7 +39,6 @@ None. Owner decisions still open, needed later:
 
 ## Owner to-dos
 
-- Ask Nuitee whether a portfolio project may use its sandbox and price index.
 - Make the mood scenes in ChatGPT from the prompts in [mood-scene-prompts.md](../design/boards/mood-scene-prompts.md) (welcome and "How Layover works" only), and send them to the agent to register before they are committed ([#35](https://github.com/olaheavy-dev/layover/issues/35)).
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
@@ -50,7 +48,7 @@ None. Owner decisions still open, needed later:
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Tavily: create a free account and API key when the web-search step is built.
-- Nuitee: create an account and sandbox key once Nuitee agrees to portfolio use.
+- Nuitee: create an account and sandbox key before build step 6 (owner's call, 21 Nov 2026: use the sandbox without asking Nuitee, #46).
 - Before build step 4: read the Travelpayouts partner agreement (or ask the agent to read it in a browser) to confirm fares may link to Aviasales without a partner marker.
 - Travelpayouts project: create it once Layover has a site (Travelpayouts asks for a link to a traffic source). It is needed before commission is switched on, not before.
 - Travelpayouts payouts: set up the payout method yourself when earnings start (agents never enter payment details).

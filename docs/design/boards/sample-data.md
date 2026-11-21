@@ -112,7 +112,7 @@ The chosen state uses Sample Hotel Alfama. The skipped state says "Days start fr
 | Sandbox price | £192 for 2. The sandbox price lines say "Sandbox price, not the fare above" and never show "£96 × 2 adults", so a sandbox price is not read as the cached fare |
 | Price-changed state | £204 for 2, and Layover asks again |
 | Approved state | Sandbox order SANDBOX-0001, "Sandbox: no real booking or payment" |
-| Hotel | Flights only on the boards, until Nuitee agrees to sandbox use (status file) |
+| Hotel | Flights only on the boards; the Nuitee sandbox hotel is built in step 6 (owner, 21 Nov 2026, #46) |
 
 ## Web results
 
