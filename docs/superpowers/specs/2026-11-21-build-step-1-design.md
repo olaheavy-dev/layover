@@ -112,7 +112,7 @@ A TypeScript Aspire app host starts the FastAPI backend, the Next.js frontend an
 
 ### 6. Project board
 
-A GitHub Projects board for the Build milestones, with columns To do, In progress, In review and Done. The owner creates it, because turning on Projects is a repository setting (register, 19 Nov 2026). Every issue in a Build milestone is on it. `docs/planning/backlog.md` stays the ordered list, and the board shows progress. The agent that opens, closes or moves an issue updates both. For agents to add items, the owner gives the GitHub CLI the `project` scope (`gh auth refresh -s project`).
+A GitHub Projects board for the Build milestones, with columns To do, In progress, In review and Done. It exists: [Layover build](https://github.com/orgs/olaheavy-dev/projects/5), created by the agent on 21 Nov 2026 at the owner's word ("you can cerate the board"), with every open Build issue on it. Every issue in a Build milestone is on it. `docs/planning/backlog.md` stays the ordered list, and the board shows progress. The agent that opens, closes or moves an issue updates both.
 
 ### 7. How the work ships
 

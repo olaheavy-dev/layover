@@ -24,7 +24,7 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 ## Next steps
 
 1. **Merge the build plan 1 PR**, then open issues `[29]` to `[33]` (one per PR in the plan) in the Build 1 milestone and the backlog.
-2. **PR A:** apply the template layers and create the project board (the owner may need to run `gh auth refresh -s project`).
+2. **PR A:** apply the template layers, and add the [project board](https://github.com/orgs/olaheavy-dev/projects/5) (created 21 Nov 2026) to the backlog workflow.
 3. **PR B:** the data contract, the shared samples and the sample endpoints. Then PRs C (backend) and D (website) in parallel, then E (join and Aspire), then the step 1 gate.
 
 ## Blockers
@@ -44,7 +44,6 @@ None. Owner decisions still open, needed later:
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
 - Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked), [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes), [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options) and [#39](https://github.com/olaheavy-dev/agent-workflows/issues/39) (generated files changed by commit hooks; check them in a browser).
-- Create the GitHub project board "Layover build" (an organisation project linked to the repository), and run `! gh auth refresh -s project` so agents can add issues to it (build plan 1, Task 2).
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Delete the merged branch `docs/design-gate` on GitHub (the PR page's button); the agent's push hook doesn't allow deleting branches.
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
