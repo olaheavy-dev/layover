@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 21 Nov 2026 (the Nuitee decisions, #46); the end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
+Last updated: 21 Nov 2026 (build plan 1, #49; the Nuitee decisions merged in #47); the end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
 
 ## Stage
 
@@ -37,7 +37,6 @@ None. Owner decisions still open, needed later:
 - Before build step 2 (the first model calls): Anthropic's terms for a public app, its data retention and its prices (spending needs the owner's approval; the prices also feed the cost cap); and LangSmith's region (US or EU), retention and terms, because its traces would hold travellers' messages (UK GDPR). Build step 1 makes no model calls, so neither blocks it.
 - Build step 4: Layover's own token figures for the agent team against the single-agent baseline (`TRIP-01`); any outside figure quoted before then cites its source.
 - Build step 7: how to stop scripts from starting trips. ALTCHA (a free, open-source bot check that doesn't track visitors) is one option to weigh alongside the hashed-address limit (spec §5c).
-- How the fonts are served in the app: the boards commit the font files (owner, 20 Nov 2026), and the frontend plan reuses them unless it records a reason not to.
 
 ## Owner to-dos
 
@@ -45,6 +44,7 @@ None. Owner decisions still open, needed later:
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
 - Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked), [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes), [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options) and [#39](https://github.com/olaheavy-dev/agent-workflows/issues/39) (generated files changed by commit hooks; check them in a browser).
+- Create the GitHub project board "Layover build" (an organisation project linked to the repository), and run `! gh auth refresh -s project` so agents can add issues to it (build plan 1, Task 2).
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Delete the merged branch `docs/design-gate` on GitHub (the PR page's button); the agent's push hook doesn't allow deleting branches.
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
