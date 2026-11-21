@@ -1,9 +1,8 @@
 """Small models that more than one widget uses."""
 
-from datetime import date
 from typing import Annotated, Literal, Self
 
-from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
 from app.contract.common import MoneyEstimate, MoneyValue, SourceLabel
 
@@ -62,6 +61,9 @@ def check_budget_gap(
         raise ValueError('budget_position "on" means a gap of exactly zero')
 
 
+YearMonth = Annotated[str, StringConstraints(pattern=r"^\d{4}-(0[1-9]|1[0-2])$")]  # "2026-03"
+
+
 class CostLine(Part):
     """One line of a cost estimate. A line with no amount says why (decision 0011, rule 4)."""
 
@@ -70,7 +72,7 @@ class CostLine(Part):
     source: SourceLabel | None = None
     missing: str | None = None
     listing_count: int | None = Field(default=None, ge=0)  # Wikivoyage lines
-    page_edited: date | None = None  # Wikivoyage lines
+    page_edited: YearMonth | None = None  # Wikivoyage lines: the boards give a month, no day
 
     @model_validator(mode="after")
     def _amount_or_reason(self) -> Self:

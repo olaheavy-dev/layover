@@ -106,8 +106,13 @@ def test_estimate_is_marked() -> None:
     with pytest.raises(ValidationError):
         MoneyEstimate(exact=exact, shown=shown)  # type: ignore[call-arg]
     with pytest.raises(ValidationError):
-        MoneyEstimate(exact=exact, shown=shown, is_estimate=False)
+        MoneyEstimate(exact=exact, shown=shown, is_estimate=False)  # an exact value shows as is
     assert MoneyEstimate(exact=exact, shown=shown, is_estimate=True).is_estimate is True
+    same = MoneyEstimate(exact=exact, shown=exact, is_estimate=False)
+    assert same.is_estimate is False
+    other_currency = MoneyValue(amount_minor=12345, currency="EUR")
+    with pytest.raises(ValidationError):
+        MoneyEstimate(exact=exact, shown=other_currency, is_estimate=False)
 
 
 def test_estimate_currencies_must_match() -> None:

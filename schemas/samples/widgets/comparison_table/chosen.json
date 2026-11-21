@@ -31,7 +31,7 @@
             "amount_minor": 19200,
             "currency": "GBP"
           },
-          "is_estimate": true
+          "is_estimate": false
         },
         "source": {
           "status": "cached",
@@ -58,10 +58,9 @@
         "source": {
           "status": "cached",
           "source": "Wikivoyage, Lisbon",
-          "captured_at": "2026-11-14T09:00:00Z",
-          "data_date": "2026-03-01"
+          "captured_at": "2026-11-14T09:00:00Z"
         },
-        "page_edited": "2026-03-01",
+        "page_edited": "2026-03",
         "listing_count": 6
       },
       "meals": {
@@ -83,10 +82,9 @@
         "source": {
           "status": "cached",
           "source": "Wikivoyage, Lisbon",
-          "captured_at": "2026-11-14T09:00:00Z",
-          "data_date": "2026-03-01"
+          "captured_at": "2026-11-14T09:00:00Z"
         },
-        "page_edited": "2026-03-01"
+        "page_edited": "2026-03"
       },
       "known_costs": {
         "amount": {
@@ -160,7 +158,7 @@
             "amount_minor": 16800,
             "currency": "GBP"
           },
-          "is_estimate": true
+          "is_estimate": false
         },
         "source": {
           "status": "cached",
@@ -190,10 +188,9 @@
         "source": {
           "status": "cached",
           "source": "Wikivoyage, Valencia",
-          "captured_at": "2026-11-16T09:00:00Z",
-          "data_date": "2026-02-01"
+          "captured_at": "2026-11-16T09:00:00Z"
         },
-        "page_edited": "2026-02-01",
+        "page_edited": "2026-02",
         "listing_count": 5
       },
       "known_costs": {
@@ -256,7 +253,7 @@
             "amount_minor": 24200,
             "currency": "GBP"
           },
-          "is_estimate": true
+          "is_estimate": false
         },
         "source": {
           "status": "cached",
@@ -283,10 +280,9 @@
         "source": {
           "status": "cached",
           "source": "Wikivoyage, Valletta",
-          "captured_at": "2026-11-09T09:00:00Z",
-          "data_date": "2026-01-01"
+          "captured_at": "2026-11-09T09:00:00Z"
         },
-        "page_edited": "2026-01-01",
+        "page_edited": "2026-01",
         "listing_count": 5
       },
       "meals": {
@@ -308,10 +304,9 @@
         "source": {
           "status": "cached",
           "source": "Wikivoyage, Valletta",
-          "captured_at": "2026-11-09T09:00:00Z",
-          "data_date": "2026-01-01"
+          "captured_at": "2026-11-09T09:00:00Z"
         },
-        "page_edited": "2026-01-01"
+        "page_edited": "2026-01"
       },
       "known_costs": {
         "amount": {

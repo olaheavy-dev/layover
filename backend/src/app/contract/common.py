@@ -65,16 +65,18 @@ class MoneyValue(BaseModel):
 
 
 class MoneyEstimate(BaseModel):
-    """A rounded money figure that is always shown as an estimate."""
+    """A money figure: an estimate rounded for display, or an exact value shown as it is."""
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     exact: MoneyValue
     shown: MoneyValue
-    is_estimate: Literal[True]
+    is_estimate: bool  # required: False only for an exact value, such as a cached fare
 
     @model_validator(mode="after")
     def _same_currency(self) -> Self:
         if self.exact.currency != self.shown.currency:
             raise ValueError("exact and shown must use the same currency")
+        if not self.is_estimate and self.exact != self.shown:
+            raise ValueError("a value that is not an estimate must show its exact amount")
         return self

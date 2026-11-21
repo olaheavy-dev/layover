@@ -7,8 +7,9 @@
   "rows": [],
   "sources": [
     {
-      "status": "unavailable",
-      "source": "Travelpayouts"
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-15T09:00:00Z"
     }
   ]
 }

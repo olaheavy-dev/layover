@@ -1,7 +1,7 @@
 """Loaders for the shared sample files in `schemas/samples`.
 
 The files are samples: invented or copied from the design boards' sample data, never real
-figures. They feed tests, the sample API endpoints and the website's widget gallery.
+figures. They feed tests, the sample API endpoints (still to come) and the website's widget gallery.
 """
 
 from pathlib import Path

@@ -29,7 +29,7 @@
         "amount_minor": 16800,
         "currency": "GBP"
       },
-      "is_estimate": true
+      "is_estimate": false
     },
     "source": {
       "status": "cached",
@@ -59,10 +59,9 @@
     "source": {
       "status": "cached",
       "source": "Wikivoyage, Valencia",
-      "captured_at": "2026-11-16T09:00:00Z",
-      "data_date": "2026-02-01"
+      "captured_at": "2026-11-16T09:00:00Z"
     },
-    "page_edited": "2026-02-01",
+    "page_edited": "2026-02",
     "listing_count": 5
   },
   "total": {
