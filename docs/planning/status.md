@@ -10,7 +10,7 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 
 ## Open pull requests
 
-- The Nuitee decisions PR (#47, issue #46): use the sandbox without asking Nuitee; drop the city price index for now. (The widgets-first PR merged as #44.)
+- The build plan 1 PR (issue #49): the [design](../superpowers/specs/2026-11-21-build-step-1-design.md) and [plan](../superpowers/plans/2026-11-21-build-step-1.md) for build step 1, and the register lines for the owner's step 1 decisions. (#47, the Nuitee decisions, merged on 21 Nov 2026.)
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -23,7 +23,9 @@ Build step 1 is next. The Design stage closed when the Design gate merged (#42, 
 
 ## Next steps
 
-1. **Build plan 1** ([01 §4](../product/01-research-and-direction.md#4-build-order), step 1): brainstorm, then write the plan, fixing the data contract first. Widgets first (owner, 20 Nov 2026): once the schemas are fixed, the website and all 20 widget components are built in parallel with the backend foundation, from the boards and sample data. Decide on a GitHub project board when it starts (owner: "Wait until build (Recommended)").
+1. **Merge the build plan 1 PR**, then open issues `[29]` to `[33]` (one per PR in the plan) in the Build 1 milestone and the backlog.
+2. **PR A:** apply the template layers and create the project board (the owner may need to run `gh auth refresh -s project`).
+3. **PR B:** the data contract, the shared samples and the sample endpoints. Then PRs C (backend) and D (website) in parallel, then E (join and Aspire), then the step 1 gate.
 
 ## Blockers
 
