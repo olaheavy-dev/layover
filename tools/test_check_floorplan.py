@@ -103,7 +103,7 @@ class Floorplan(unittest.TestCase):
         self.assertEqual(self.run_check(csp_page([crlf], [crlf]))[0], 1)  # a hash of CRLF text never matches
 
     def test_script_that_is_not_javascript_is_not_hashed(self):
-        for kind in ('type="application/json"', 'type="application/ld+json"', "type='importmap'", 'type="text/template"'):
+        for kind in ('type="application/json"', 'type="application/ld+json"', 'type="text/template"'):
             with self.subTest(kind=kind):
                 page = csp_page(["var a = 1;"], ["var a = 1;"]) + f"<script {kind}>{{\"a\": 1}}</script>"
                 self.assertEqual(self.run_check(page)[0], 0)
@@ -111,6 +111,14 @@ class Floorplan(unittest.TestCase):
             with self.subTest(kind=kind):
                 page = csp_page([], []) + f"<script {kind}>var a = 1;</script>"
                 self.assertEqual(self.run_check(page)[0], 1)
+
+    def test_import_map_is_hashed(self):
+        # A browser applies the CSP to an inline import map, so an unhashed one is blocked.
+        page = csp_page(["var a = 1;"], ["var a = 1;"]) + '<script type="importmap">{"imports": {}}</script>'
+        code, out = self.run_check(page)
+        self.assertEqual(code, 1)
+        self.assertIn("1 inline script(s)", out)
+        self.assertEqual(self.run_check(csp_page(['{"imports": {}}'], ['{"imports": {}}']).replace("<script>", '<script type="importmap">'))[0], 0)
 
     def test_scripts_with_a_source_are_not_inline_and_a_comment_is_not_a_script(self):
         page = csp_page(["var a = 1;"], ["var a = 1;"]) + '<script src="x.js"></script><!-- <script>evil()</script> -->'

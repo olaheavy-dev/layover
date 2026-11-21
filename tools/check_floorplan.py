@@ -20,7 +20,7 @@ browser does (any letter case, attributes and spaces in a closing tag, comments 
 the text between the tags with line ends normalised as a browser does (CRLF and a lone CR become LF before
 tokenising, WHATWG HTML 13.2.3.5 "Preprocessing the input stream"), which is the text the browser hashes.
 Entities are not decoded. A script with a src attribute is not inline and is not hashed, and neither is one
-whose type is not JavaScript (empty, "module" or a JavaScript MIME type), such as a JSON data block.
+whose type is not JavaScript (empty, "module", "importmap" or a JavaScript MIME type), such as a JSON data block.
 
 Limits: the "<!--<script>" double-escaped case (a script that opens a comment, where a browser changes how
 it finds the end tag) is not modelled; the path, address and remote checks are a text search. It doesn't find personal data or private material in names and
@@ -49,8 +49,9 @@ PATTERNS = [
         re.IGNORECASE)),
 ]
 
-# Script types a browser runs as JavaScript (WHATWG MIME Sniffing, "JavaScript MIME type"), plus "module".
-JS_TYPES = {"", "module", "text/javascript", "application/javascript", "application/ecmascript", "text/ecmascript",
+# Script types a browser runs as JavaScript (WHATWG MIME Sniffing, "JavaScript MIME type"), plus "module" and
+# "importmap": a browser applies the Content-Security-Policy to an inline import map, so it is hashed too.
+JS_TYPES = {"", "module", "importmap", "text/javascript", "application/javascript", "application/ecmascript", "text/ecmascript",
             "application/x-javascript", "application/x-ecmascript", "text/x-javascript", "text/x-ecmascript",
             "text/javascript1.0", "text/javascript1.1", "text/javascript1.2", "text/javascript1.3",
             "text/javascript1.4", "text/javascript1.5", "text/jscript", "text/livescript"}
