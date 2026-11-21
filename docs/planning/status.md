@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 21 Nov 2026 (PR A, issue #51); the previous end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
+Last updated: 21 Nov 2026 (PR B, issue #52); the previous end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
 
 ## Stage
 
@@ -10,7 +10,7 @@ Build step 1 is under way. The Design stage closed when the Design gate merged (
 
 ## Open pull requests
 
-- **PR A (issue #51):** the template layers, the Next.js 16.4.6 bump, the psycopg licence exception and the project board in the backlog workflow. Owner merges (it changes `.github/rulesets/main.json` and CI workflows), then runs `make repo-settings` so the two new CodeQL checks become required. Upstream issues opened for what it found: house-template-nextjs#25, house-template-base#51 and #52, house-template-fastapi#141. It also opens `noticed` issue #56 (remove the minimatch override later).
+- **PR B (issue #52, also closes #26):** the data contract (Pydantic models for the source labels, all 20 widget kinds and the trip in `backend/src/app/contract/`), 102 shared widget samples and the Lisbon sample trip in `schemas/samples/`, the JSON Schema export with `make check-contract` (in a new `mk/contract.mk`), `GET /v1/sample/trip` and `GET /v1/sample/widgets`, and the regenerated frontend API types. The board figures now follow the owner's estimate rule (about £780, £390 and £900; about £20 under and about £100 over). PR A (#57) merged on 21 Nov 2026.
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -23,9 +23,10 @@ Build step 1 is under way. The Design stage closed when the Design gate merged (
 
 ## Next steps
 
-1. **Merge PR A** (owner), then run `make repo-settings`.
-2. **PR B (#52):** the data contract, the shared samples and the sample endpoints.
-3. **PRs C (#53, backend) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #51 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
+1. **Merge PR B (#52)** after Codex's review.
+2. **PRs C (#53, backend) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
+3. **Carry into PR C (#53):** the `round_estimate` tests need a case that lands exactly on £5 (half up); PR B's samples never do, and they are worked by hand in `schemas/samples/README.md`.
+4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints fail there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template).
 
 ## Blockers
 
