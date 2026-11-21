@@ -2,16 +2,25 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 21 Nov 2026 (PR B, issue #52, after the CodeQL fix #68 merged); the previous end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
+Last updated: 21 Nov 2026, end-of-session overwrite (after PR A #57, the CodeQL fix #68 and PR B #67 merged).
 
 ## Stage
 
-Build step 1 is under way. The Design stage closed when the Design gate merged (#42, closing issue #39). The repository now has the FastAPI backend and the Next.js frontend from the house templates (PR A, below). The build order is approved: eight steps in [01 §4](../product/01-research-and-direction.md#4-build-order), each a milestone ("Build 1: Foundation and data contract" to "Build 8: Earnings dashboard").
+Build step 1 is under way ("Build 1: Foundation and data contract"). Done today:
+
+- **PR A (#57):** the FastAPI backend and the Next.js website from the house templates.
+- **#68:** the board checks read pages with `html.parser` (#36), and the CodeQL warnings on `main` are cleared.
+- **PR B (#67):** the data contract, the shared samples and the sample endpoints.
+
+`make repo-settings` was run on 21 Nov 2026, so CodeQL for Python and TypeScript is now a required check. The build order is in [01 §4](../product/01-research-and-direction.md#4-build-order): eight steps, each a milestone.
 
 ## Open pull requests
 
-- **PR B (issue #52, also closes #26):** the data contract (Pydantic models for the source labels, all 20 widget kinds and the trip in `backend/src/app/contract/`), 102 shared widget samples and the Lisbon sample trip in `schemas/samples/`, the JSON Schema export with `make check-contract` (in a new `mk/contract.mk`), `GET /v1/sample/trip` and `GET /v1/sample/widgets`, and the regenerated frontend API types. The board figures now follow the owner's estimate rule (about £780, £390 and £900; about £20 under and about £100 over). PR A (#57) merged on 21 Nov 2026.
-- **Merged on 21 Nov 2026:** PR A (#57, the template layers) and #68 (the board checks read pages with `html.parser`, issue #36, and CodeQL warnings 7 to 15 on `main` are fixed).
+- **Six Dependabot updates (#58 to #63)**, opened when PR A added the backend and frontend:
+  - small updates, which merge on green checks: #58 (pnpm action), #59 (frontend minor and patch), #61 (backend minor and patch) and #63 (types-pyyaml);
+  - #60, a major frontend update, which needs its migration notes read;
+  - #62 (`agent-framework-anthropic`, a `0.`-style beta), where a minor bump counts as major.
+- No other PR is open.
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -24,10 +33,10 @@ Build step 1 is under way. The Design stage closed when the Design gate merged (
 
 ## Next steps
 
-1. **Merge PR B (#52, #67)** once CodeQL on `main` shows alerts 7 to 15 closed and alert 16 is dismissed (the owner: Floorplan snapshot, kept byte-for-byte). Run `make repo-settings` if not done yet, so the two new CodeQL checks become required.
-2. **PRs C (#53, backend) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
+1. **Dependabot:** triage #58 to #63 (above) before starting new work, so PRs C and D begin from current packages.
+2. **PRs C (#53, backend foundation) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
 3. **Carry into PR C (#53):** the `round_estimate` tests need a case that lands exactly on £5 (half up); PR B's samples never do, and they are worked by hand in `schemas/samples/README.md`.
-4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints fail there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template).
+4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints answer 503 there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template).
 
 ## Blockers
 
@@ -45,9 +54,8 @@ None. Owner decisions still open, needed later:
 - Make the mood scenes in ChatGPT from the prompts in [mood-scene-prompts.md](../design/boards/mood-scene-prompts.md) (welcome and "How Layover works" only), and send them to the agent to register before they are committed ([#35](https://github.com/olaheavy-dev/layover/issues/35)).
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
-- Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked), [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes), [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options) and [#39](https://github.com/olaheavy-dev/agent-workflows/issues/39) (generated files changed by commit hooks; check them in a browser).
+- Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked), [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes), [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options) and [#39](https://github.com/olaheavy-dev/agent-workflows/issues/39) (generated files changed by commit hooks; check them in a browser) and [#41](https://github.com/olaheavy-dev/agent-workflows/issues/41) (the alert check before merging missed alerts that a newly turned-on CodeQL language brings in).
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
-- Delete the merged branch `docs/design-gate` on GitHub (the PR page's button); the agent's push hook doesn't allow deleting branches.
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Tavily: create a free account and API key when the web-search step is built.
@@ -55,4 +63,5 @@ None. Owner decisions still open, needed later:
 - Before build step 4: read the Travelpayouts partner agreement (or ask the agent to read it in a browser) to confirm fares may link to Aviasales without a partner marker.
 - Travelpayouts project: create it once Layover has a site (Travelpayouts asks for a link to a traffic source). It is needed before commission is switched on, not before.
 - Travelpayouts payouts: set up the payout method yourself when earnings start (agents never enter payment details).
-- Run `make repo-settings` if not done yet. Five OpenSSF Scorecard alerts are open on `main` (branch protection, code review, maintained, fuzzing, CII best practices). They are repository-health grades and don't block merges (owner: "Exempt Scorecard grades (Recommended)"); improve them when possible.
+- Six OpenSSF Scorecard alerts are open on `main`: branch protection, code review, maintained, fuzzing, CII best practices, and pinned dependencies (in the template's `frontend/Dockerfile`). They are repository-health grades and don't block merges (owner: "Exempt Scorecard grades (Recommended)"); improve them when possible.
+- Template updates: add `TEMPLATE_UPDATE_TOKEN` to the `template-update` environment in the repository settings (a fine-grained token with contents and pull-requests write on this repository). Without it, template updates arrive as an issue instead of a pull request.
