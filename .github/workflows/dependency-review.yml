@@ -29,10 +29,12 @@ jobs:
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
         with:
           fail-on-severity: low
-          allow-licenses: MIT, MIT-0, Apache-2.0, BSD-2-Clause, BSD-2-Clause-Views, BSD-3-Clause, ISC, 0BSD, Zlib, Unlicense, CC0-1.0, CC-BY-4.0, MPL-2.0, BlueOak-1.0.0, Python-2.0, PSF-2.0
+          allow-licenses: MIT, MIT-0, Apache-2.0, BSD-2-Clause, BSD-2-Clause-Views, BSD-3-Clause, ISC, 0BSD, Zlib, Unlicense, CC0-1.0, CC-BY-4.0, MPL-2.0, BlueOak-1.0.0, Python-2.0, Python-2.0.1, CNRI-Python, PSF-2.0
+          # protobuf is BSD-3-Clause plus Google's protobuf text, reported with a custom label that
+          # can't be listed as a licence. Allowed by name. Owner's decision, 21 Nov 2026.
           # Next.js installs sharp's prebuilt libvips binaries (LGPL-3.0-or-later) for image
           # optimisation. They're used unmodified and dynamically linked, which the LGPL permits.
           # psycopg, psycopg-pool and psycopg-binary (the FastAPI layer's PostgreSQL driver) are
           # LGPL-3.0-only. They are used unmodified as installed libraries, which the LGPL permits.
           # Owner's decision, 21 Nov 2026.
-          allow-dependencies-licenses: pkg:pypi/psycopg, pkg:pypi/psycopg-pool, pkg:pypi/psycopg-binary, pkg:npm/%40img/sharp-libvips-darwin-arm64, pkg:npm/%40img/sharp-libvips-darwin-x64, pkg:npm/%40img/sharp-libvips-linux-arm, pkg:npm/%40img/sharp-libvips-linux-arm64, pkg:npm/%40img/sharp-libvips-linux-ppc64, pkg:npm/%40img/sharp-libvips-linux-riscv64, pkg:npm/%40img/sharp-libvips-linux-s390x, pkg:npm/%40img/sharp-libvips-linux-x64, pkg:npm/%40img/sharp-libvips-linuxmusl-arm64, pkg:npm/%40img/sharp-libvips-linuxmusl-x64, pkg:npm/%40img/sharp-wasm32, pkg:npm/%40img/sharp-win32-arm64, pkg:npm/%40img/sharp-win32-ia32, pkg:npm/%40img/sharp-win32-x64
+          allow-dependencies-licenses: pkg:pypi/protobuf, pkg:pypi/psycopg, pkg:pypi/psycopg-pool, pkg:pypi/psycopg-binary, pkg:npm/%40img/sharp-libvips-darwin-arm64, pkg:npm/%40img/sharp-libvips-darwin-x64, pkg:npm/%40img/sharp-libvips-linux-arm, pkg:npm/%40img/sharp-libvips-linux-arm64, pkg:npm/%40img/sharp-libvips-linux-ppc64, pkg:npm/%40img/sharp-libvips-linux-riscv64, pkg:npm/%40img/sharp-libvips-linux-s390x, pkg:npm/%40img/sharp-libvips-linux-x64, pkg:npm/%40img/sharp-libvips-linuxmusl-arm64, pkg:npm/%40img/sharp-libvips-linuxmusl-x64, pkg:npm/%40img/sharp-wasm32, pkg:npm/%40img/sharp-win32-arm64, pkg:npm/%40img/sharp-win32-ia32, pkg:npm/%40img/sharp-win32-x64
