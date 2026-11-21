@@ -57,6 +57,11 @@ class Boards(unittest.TestCase):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text)
 
+    def assertOutside(self, found: list[str], url: str, name: str = "welcome.html") -> None:
+        """The exact message for one outside address, so a host name is never matched as a substring."""
+        folder = "docs/design/boards/"
+        self.assertIn(f"{folder}{name}: loads an outside file ({url}); commit and register it instead", found)
+
     def page(self, text: str, name: str = "welcome.html") -> list[str]:
         self.write(f"docs/design/boards/{name}", text)
         return cb.problems(self.root)
@@ -138,20 +143,20 @@ class Boards(unittest.TestCase):
     def test_outside_stylesheet_fails(self) -> None:
         page = GOOD_PAGE.replace('href="../tokens.css"', 'href="https://fonts.googleapis.com/css2?family=Source+Serif+4"')
         found = self.page(page)
-        self.assertTrue(any("outside" in p and "fonts.googleapis.com" in p for p in found), found)
+        self.assertOutside(found, "https://fonts.googleapis.com/css2?family=Source+Serif+4")
 
     def test_outside_script_fails(self) -> None:
         found = self.page(GOOD_PAGE.replace("</body>", '<script src="//unpkg.com/x.js"></script></body>'))
-        self.assertTrue(any("outside" in p and "unpkg.com" in p for p in found), found)
+        self.assertOutside(found, "//unpkg.com/x.js")
 
     def test_hot_linked_image_fails(self) -> None:
         found = self.page(GOOD_PAGE.replace("<svg>", '<img alt="" src="https://images.unsplash.com/photo-1"><svg>'))
-        self.assertTrue(any("outside" in p and "images.unsplash.com" in p for p in found), found)
+        self.assertOutside(found, "https://images.unsplash.com/photo-1")
 
     def test_outside_font_in_css_fails(self) -> None:
         page = GOOD_PAGE.replace("<style>", "<style>\n  @font-face { src: url(https://example.com/f.woff2); }")
         found = self.page(page)
-        self.assertTrue(any("outside" in p and "example.com" in p for p in found), found)
+        self.assertOutside(found, "https://example.com/f.woff2")
 
     def test_outside_link_to_a_page_passes(self) -> None:
         self.assertEqual(self.page(GOOD_PAGE.replace("FCDO travel advice", "FCDO travel advice (opens GOV.UK)")), [])
@@ -184,30 +189,32 @@ class Boards(unittest.TestCase):
 
     def test_outside_srcset_fails(self) -> None:
         found = self.page(GOOD_PAGE.replace("<svg>", '<img alt="" src="a.jpg" srcset="b.jpg 1x, https://images.unsplash.com/p 2x"><svg>'))
-        self.assertTrue(any("outside" in p and "images.unsplash.com" in p for p in found), found)
+        self.assertOutside(found, "https://images.unsplash.com/p")
 
     def test_outside_poster_and_object_data_fail(self) -> None:
         page = GOOD_PAGE.replace("<svg>", '<video poster="https://x.test/p.jpg"></video><object data="https://y.test/o"></object><svg>')
         found = self.page(page)
-        self.assertTrue(any("x.test" in p for p in found) and any("y.test" in p for p in found), found)
+        self.assertOutside(found, "https://x.test/p.jpg")
+        self.assertOutside(found, "https://y.test/o")
 
     def test_unquoted_and_spaced_outside_src_fail(self) -> None:
         page = GOOD_PAGE.replace("</body>", '<script src=https://unpkg.com/x.js></script><img alt="" src=" https://z.test/i.jpg"></body>')
         found = self.page(page)
-        self.assertTrue(any("unpkg.com" in p for p in found) and any("z.test" in p for p in found), found)
+        self.assertOutside(found, "https://unpkg.com/x.js")
+        self.assertOutside(found, "https://z.test/i.jpg")
 
     def test_outside_import_in_inline_script_fails(self) -> None:
         found = self.page(GOOD_PAGE.replace("</body>", '<script type="module">import x from "https://esm.sh/x";</script></body>'))
-        self.assertTrue(any("esm.sh" in p for p in found), found)
+        self.assertOutside(found, "https://esm.sh/x")
 
     def test_outside_image_set_fails(self) -> None:
         found = self.page(GOOD_PAGE.replace(".clear {", '.hero { background-image: image-set("https://cdn.test/a.jpg" 1x); }\n  .clear {'))
-        self.assertTrue(any("cdn.test" in p for p in found), found)
+        self.assertOutside(found, "https://cdn.test/a.jpg")
 
     def test_outside_address_in_js_file_fails(self) -> None:
         self.write("docs/design/boards/switch.js", 'const u = "https://cdn.test/lib.js"; // a comment // is fine')
         found = cb.problems(self.root)
-        self.assertTrue(any("switch.js" in p and "cdn.test" in p for p in found), found)
+        self.assertOutside(found, "https://cdn.test/lib.js", "switch.js")
 
     def test_upper_case_and_htm_pages_are_checked(self) -> None:
         bad = GOOD_PAGE.replace('<p class="sample">', '<p class="sample" style="color: #fff">')
@@ -297,12 +304,12 @@ class Boards(unittest.TestCase):
     def test_js_comment_looking_text_in_a_string_does_not_hide_an_outside_address(self) -> None:
         # The string below contains "/*" and then "*/" later, so stripping /* */ would remove the address.
         found = self.js('const a = "/*"; const u = "https://cdn.test/lib.js"; const b = "*/";')
-        self.assertTrue(any("switch.js" in p and "cdn.test" in p for p in found), found)
+        self.assertOutside(found, "https://cdn.test/lib.js", "switch.js")
 
     def test_inline_script_outside_address_after_slash_star_string_fails(self) -> None:
         page = GOOD_PAGE.replace("</body>", '<script>const a = "/*"; fetch("https://cdn.test/x"); const b = "*/";</script></body>')
         found = self.page(page)
-        self.assertTrue(any("cdn.test" in p for p in found), found)
+        self.assertOutside(found, "https://cdn.test/x")
 
     # Gap 2: token values live only in tokens.css
 
@@ -372,7 +379,7 @@ class Boards(unittest.TestCase):
     def test_script_closer_with_whitespace_is_still_scanned(self) -> None:
         page = GOOD_PAGE.replace("</body>", '<script>import x from "https://esm.sh/x";</script ></body>')
         found = self.page(page)
-        self.assertTrue(any("esm.sh" in p for p in found), found)
+        self.assertOutside(found, "https://esm.sh/x")
         # the script is not read as visible text either
         page = GOOD_PAGE.replace("</body>", "<script>var s = 'safe';</script\t\n></body>")
         self.assertEqual(self.page(page), [])
