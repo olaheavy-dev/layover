@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 20 Nov 2026, end of the session (the Design gate merged in #42).
+Last updated: 21 Nov 2026 (the Nuitee decisions, #46); the end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
 
 ## Stage
 
