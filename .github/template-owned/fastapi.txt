@@ -1,0 +1,28 @@
+# Files owned by house-template-fastapi. A pull request that changes one gets a CI warning
+# (tools/check_template_owned.py): improve the template first, or label it template-candidate.
+# The product's own code in backend/src/app and backend/tests is the project's, except these files.
+.python-version
+backend/.python-version
+mk/fastapi.mk
+.claude/rules/fastapi.md
+.github/template-owned/fastapi.txt
+backend/.gitignore
+backend/src/app/log.py
+backend/src/app/problems.py
+backend/src/app/health.py
+backend/compose.yaml
+backend/compose/db/compose.yaml
+backend/Dockerfile
+backend/.dockerignore
+backend/migrations/env.py
+backend/migrations/script.py.mako
+backend/migrations/versions/20261025_0001_enable_pgvector.py
+backend/migrations/versions/20261026_0002_llm_budget.py
+backend/migrations/versions/20261026_0003_agent_checkpoints.py
+backend/migrations/versions/20261026_0004_llm_call_details.py
+backend/migrations/versions/20261026_0005_per_user_llm_budget.py
+backend/migrations/versions/20261110_0006_llm_call_redacted_count.py
+backend/migrations/versions/20261112_0007_agent_session.py
+backend/migrations/versions/20261112_0008_workflow_checkpoint.py
+backend/migrations/versions/20261026_app_project_root.py
+backend/tests/db.py

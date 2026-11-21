@@ -8,7 +8,7 @@ Every project needs the same agent workflow, CI, security and governance. Rebuil
 
 ## Decision
 
-Layover starts from `house-template-base`, applied with Copier, each layer with its own answers file (`.copier-answers.<layer>.yml`). Template-owned files are listed in `.github/template-owned/`. Generic improvements go upstream to the template; the weekly template update brings new versions back as a pull request.
+Layover starts from `house-template-base` and `house-template-fastapi` and `house-template-nextjs`, applied with Copier, each layer with its own answers file (`.copier-answers.<layer>.yml`). Template-owned files are listed in `.github/template-owned/`. Generic improvements go upstream to the template; the weekly template update brings new versions back as a pull request.
 
 ## Consequences
 

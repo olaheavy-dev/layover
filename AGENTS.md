@@ -10,7 +10,7 @@ An AI travel planner for UK-based holidaymakers, built as a portfolio project wi
 
 Product integrity rules (decision 0011: no invented facts, labelled outside values, no model arithmetic, missing data never zero, no scraping, FCDO links and never "safe") are in `.claude/rules/product-integrity.md`; every agent and reviewer applies them.
 
-Stack layers: none (base layer only). Decisions are in `docs/decisions/`; don't contradict one, propose a new record instead.
+Stack layers: `fastapi`, `nextjs`. Decisions are in `docs/decisions/`; don't contradict one, propose a new record instead.
 
 ## Rules for every agent
 
