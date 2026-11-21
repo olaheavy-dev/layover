@@ -546,6 +546,27 @@ class Boards(unittest.TestCase):
             with self.subTest(name=name):
                 self.assertEqual(self.page(page), [])
 
+    def test_template_in_the_head_stays_hidden(self) -> None:
+        # Codex P1 on #68: a template's content is never shown, even when it holds body-style tags.
+        # Expected failure before the fix: its <p> closed the head and the template, so the label counted.
+        label_p = f'<p class="sample">{LABEL}</p>'
+        page = GOOD_PAGE.replace(label_p, "").replace("</head>", f"<template><p>{LABEL}</p></template></head>")
+        found = self.page(page)
+        self.assertTrue(any(f'needs the label "{LABEL}"' in p for p in found), found)
+
+    def test_optional_end_tags_close_the_way_a_browser_closes_them(self) -> None:
+        # Codex P1 on #68: a new <p> (or a block such as <div>) ends an open <p>, and a new <li> ends an
+        # open <li> (WHATWG HTML, "Optional tags"). Expected failure before the fix: the hidden element
+        # stayed open and hid the label after it.
+        label_p = f'<p class="sample">{LABEL}</p>'
+        for name, before in {
+            "p then p": "<p hidden>Internal note",
+            "p then div": "<p hidden>Internal note<div></div>",
+            "li then li": "<ul><li hidden>Internal note<li>Shown</ul>",
+        }.items():
+            with self.subTest(name=name):
+                self.assertEqual(self.page(GOOD_PAGE.replace(label_p, before + label_p)), [])
+
     def test_label_split_by_inline_markup_or_entities_passes(self) -> None:
         page = GOOD_PAGE.replace(LABEL, "Sample <b>data</b>,&nbsp;not   real")
         self.assertEqual(self.page(page), [])

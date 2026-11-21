@@ -45,7 +45,9 @@ found with `git ls-files` across the whole repository, so a file outside docs/ i
 
 Not covered: HTML strings inside inline scripts (their attributes are not scanned for "safe" or for colours);
 hiding by class or opacity (text a stylesheet makes invisible still counts as visible for the label); and
-anything a stylesheet does to a page the check cannot see.
+anything a stylesheet does to a page the check cannot see. For hidden text, the check copies only the browser's
+commonest optional-tag rules (an unclosed <head>, <p>, <li>, <dt>, <dd> and <option>), not its whole tree
+builder: rarer cases, such as tables repairing bad nesting, may still read differently.
 
 What a static check cannot do: it cannot prove that a script is self-contained. A script can build an address
 from pieces (`import("https://" + host)`), read one from data, or load a file through code the check never
@@ -117,6 +119,12 @@ NOT_SHOWN_TAGS = {"head", "title", "template", "script", "style"}
 # Tags that may sit in <head>. Any other tag, or visible text, ends the head even without </head>
 # (WHATWG HTML, "Optional tags" and the "in head" insertion mode).
 HEAD_TAGS = {"html", "head", "title", "meta", "link", "style", "script", "base", "noscript", "template"}
+# Start tags that end an open <p> (WHATWG HTML, "Optional tags": "A p element's end tag may be omitted if
+# ... immediately followed by" one of these), and tags that end an open element of the same kind.
+P_CLOSERS = {"address", "article", "aside", "blockquote", "details", "dialog", "div", "dl", "fieldset",
+             "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "header",
+             "hgroup", "hr", "main", "menu", "nav", "ol", "p", "pre", "search", "section", "table", "ul"}
+SELF_CLOSERS = {"li": {"li"}, "dt": {"dt", "dd"}, "dd": {"dt", "dd"}, "option": {"option"}}
 
 HEX = re.compile(r"(?<![\w&])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b")
 FUNC = re.compile(r"\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color|color-mix)\s*\(", re.I)
@@ -206,13 +214,23 @@ class _Page(HTMLParser):
         self._hidden = 0
 
     def _end_head(self) -> None:
-        """Close an open <head> the way a browser does when body content starts."""
-        if self._open.get("head"):
+        """Close an open <head> the way a browser does when body content starts. Inside a <template>
+        nothing closes the head: the template's content is never shown."""
+        if self._open.get("head") and not self._open.get("template"):
             self.handle_endtag("head")
+
+    def _close_optional(self, tag: str) -> None:
+        """End an open <p>, <li>, <dt>, <dd> or <option> that this start tag ends in a browser."""
+        if tag in P_CLOSERS and self._open.get("p"):
+            self.handle_endtag("p")
+        for open_tag in SELF_CLOSERS.get(tag, ()):
+            if self._stack and self._stack[-1][0] == open_tag:
+                self.handle_endtag(open_tag)
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag not in HEAD_TAGS:
             self._end_head()
+        self._close_optional(tag)
         pairs = [(name.lower(), value or "") for name, value in attrs]
         self.tags.append((tag, pairs))
         self._break(tag)
@@ -248,7 +266,7 @@ class _Page(HTMLParser):
         if self._raw:
             self._raw_text.append(data)
             return
-        if data.strip() and self._open.get("head") and not self._open.get("title"):
+        if data.strip() and self._open.get("head") and not (self._open.get("title") or self._open.get("template")):
             self._end_head()
         self.text.append(data)
         if not self._hidden:
