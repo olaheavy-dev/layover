@@ -6,14 +6,20 @@
   var root = document.documentElement;
   var buttons = Array.prototype.slice.call(document.querySelectorAll("[data-theme-choice]"));
   var frames = Array.prototype.slice.call(document.querySelectorAll("iframe[data-screen]"));
+  // Only a board screen (screens/name.html, with optional ?name=value pairs) is loaded, and only with a known theme.
+  // Anything else leaves the frame as it is, so a changed attribute cannot point a frame at another page.
+  var THEMES = ["light", "dark"];
+  var SCREEN = /^screens\/[a-z0-9-]+\.html(\?[a-z]+=[a-z0-9-]+(&[a-z]+=[a-z0-9-]+)*)?$/;
 
   function setTheme(theme) {
+    if (THEMES.indexOf(theme) === -1) { return; }
     root.setAttribute("data-theme", theme);
     buttons.forEach(function (button) {
       button.setAttribute("aria-pressed", button.getAttribute("data-theme-choice") === theme ? "true" : "false");
     });
     frames.forEach(function (frame) {
-      frame.src = frame.getAttribute("data-screen") + "#" + theme;
+      var screen = frame.getAttribute("data-screen");
+      if (SCREEN.test(screen)) { frame.src = screen + "#" + theme; }
     });
     try { history.replaceState(null, "", "#" + theme); } catch (e) { /* some browsers refuse on disk */ }
   }

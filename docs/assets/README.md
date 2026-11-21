@@ -1,6 +1,6 @@
 # Asset register
 
-Every image, font, icon and illustration committed to this repository is listed here, with its source and terms. A file is recorded here before it is committed (AGENTS.md, "Media is registered first"). `make check` fails when a media file under `docs/` is missing from this table (`tools/check_boards.py`).
+Every image, font, icon and illustration committed to this repository is listed here, with its source and terms. A file is recorded here before it is committed (AGENTS.md, "Media is registered first"). `make check` fails when a media file anywhere in the repository (found with `git ls-files`) is missing from this table (`tools/check_boards.py`).
 
 Each row names the file by its path from the repository root. "Date checked" is the day the source and its terms were read.
 
@@ -96,3 +96,16 @@ Drawings written as SVG inside HTML pages, not as separate files. `make check` d
 |---|---|---|---|---|---|
 | `docs/design/boards/screens/welcome.html` (symbol `illus`) | The welcome scene: the suitcase character and a small suitcase, a ticket, an umbrella, a plane with a dotted trail, a sun and clouds, on a quay in the sea | Drawn for Layover by the agent, 20 Nov 2026; owner's choice: isometric ("1: Isometric") | The agent, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 20 Nov 2026 |
 | `docs/design/boards/illustration-guide.html` (the `defs` block and the do and don't examples) | The same pieces, shown one by one, and small example blocks that show the rules | Drawn for Layover by the agent, 20 Nov 2026; owner's choice: isometric ("1: Isometric") | The agent, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 20 Nov 2026 |
+
+## Test screenshots
+
+Pictures that Layover's own end-to-end tests take of its own pages and compare on each run (`make screenshots-frontend` remakes them). They show only Layover's pages. Each new one needs a row here before it is committed.
+
+| File | What it is | Source | Author or owner | Licence and terms | Date checked |
+|---|---|---|---|---|---|
+| `frontend/e2e/screenshots/pages.spec.ts/a-page-that-does-not-exist-dark.png` | Test screenshot: the page for an address that does not exist, dark view | Made by Layover's own Playwright test `frontend/e2e/pages.spec.ts` (`make screenshots-frontend`), 21 Nov 2026 | The test run, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 21 Nov 2026 |
+| `frontend/e2e/screenshots/pages.spec.ts/a-page-that-does-not-exist-light.png` | Test screenshot: the page for an address that does not exist, light view | Made by Layover's own Playwright test `frontend/e2e/pages.spec.ts` (`make screenshots-frontend`), 21 Nov 2026 | The test run, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 21 Nov 2026 |
+| `frontend/e2e/screenshots/pages.spec.ts/a-page-that-does-not-exist-mobile.png` | Test screenshot: the page for an address that does not exist, mobile view | Made by Layover's own Playwright test `frontend/e2e/pages.spec.ts` (`make screenshots-frontend`), 21 Nov 2026 | The test run, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 21 Nov 2026 |
+| `frontend/e2e/screenshots/pages.spec.ts/home-dark.png` | Test screenshot: the home page, dark view | Made by Layover's own Playwright test `frontend/e2e/pages.spec.ts` (`make screenshots-frontend`), 21 Nov 2026 | The test run, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 21 Nov 2026 |
+| `frontend/e2e/screenshots/pages.spec.ts/home-light.png` | Test screenshot: the home page, light view | Made by Layover's own Playwright test `frontend/e2e/pages.spec.ts` (`make screenshots-frontend`), 21 Nov 2026 | The test run, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 21 Nov 2026 |
+| `frontend/e2e/screenshots/pages.spec.ts/home-mobile.png` | Test screenshot: the home page, mobile view | Made by Layover's own Playwright test `frontend/e2e/pages.spec.ts` (`make screenshots-frontend`), 21 Nov 2026 | The test run, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 21 Nov 2026 |

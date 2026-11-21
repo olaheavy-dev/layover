@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 21 Nov 2026 (PR A, issue #51); the previous end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
+Last updated: 21 Nov 2026 (the CodeQL warnings and issue #36, branch `fix/codeql-alerts`; before that PR A, issue #51); the previous end-of-session overwrite was 20 Nov 2026, after the Design gate merged in #42.
 
 ## Stage
 
@@ -10,7 +10,8 @@ Build step 1 is under way. The Design stage closed when the Design gate merged (
 
 ## Open pull requests
 
-- **PR A (issue #51):** the template layers, the Next.js 16.4.6 bump, the psycopg licence exception and the project board in the backlog workflow. Owner merges (it changes `.github/rulesets/main.json` and CI workflows), then runs `make repo-settings` so the two new CodeQL checks become required. Upstream issues opened for what it found: house-template-nextjs#25, house-template-base#51 and #52, house-template-fastapi#141. It also opens `noticed` issue #56 (remove the minimatch override later).
+- **This PR (issue #36, branch `fix/codeql-alerts`), merges first:** the board checks (`tools/check_boards.py`) and the Floorplan check (`tools/check_floorplan.py`) now read pages with the standard library's `html.parser`, each gap listed in #36 has a regression test, and media is found with `git ls-files` across the repository (so the six Playwright screenshots under `frontend/e2e/screenshots/` are now registered in `docs/assets/README.md`). It also clears the CodeQL warnings opened on `main` when Python and JavaScript scanning started: alerts 7 to 12 (test assertions), 13 and 14 (tag regexes) and 15 (`docs/design/boards/board.js` now sets a frame's address only from a board screen path and a known theme). Alert 16 is in the exported Floorplan snapshot, which stays byte-for-byte, so the owner dismisses it in GitHub with a reason. The five Scorecard alerts stay (exempt).
+- **PR B (#67)** merges after this PR. PR A is merged (#57).
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -18,13 +19,13 @@ Build step 1 is under way. The Design stage closed when the Design gate merged (
 - **Build order:** approved by the owner ("Approve, parallel per step (Recommended)"): each step is a vertical slice; its plan fixes the data contract, then backend and frontend are built in parallel and joined. The cost cap's figures now come after step 4, the first step that runs a whole trip ([register](../decisions/README.md#register)).
 - **Floorplan:** version 0.11.0 reviewed (runs locally; its only outside call is an opt-in waitlist, turned off; files match the published checksums), then a blueprint drawn and exported to [docs/floorplan/design.html](../floorplan/design.html) after the owner checked the map ("Accurate enough"). The 2.2 MB file is exempt from the 1 MB large-file check (owner: "Allow it for snapshots (Recommended)") and from the whitespace hooks, so it stays byte-for-byte as exported (Codex found that a trimmed script broke the map; fixed and checked in headless Chrome). `tools/check_floorplan.py` fails on common local-path, `file://` and git-remote forms, and on any inline script that no longer matches the page's Content-Security-Policy. The blueprint's working files stay local in `floorplan/` (git-ignored), so build step 1 can turn it into a map of the real code.
 - **Audit:** a fresh-context whole-repository audit found 20 items (4 P1, 7 P2, 9 P3). Fixed in the PR, except two `noticed` issues (#40, #41) and two left on purpose (accepted records 0003 and 0004 aren't rewritten; the model named in the snapshot comes from 0007 and is confirmed in the step 2 plan).
-- **Triage:** #9, #26, #27, #36 and #40 in Build 1; #35 and #41 in Build 2; #34 in Build 3. No open `review-followup` issue.
+- **Triage:** #9, #26, #27, #36 (done in this PR) and #40 in Build 1; #35 and #41 in Build 2; #34 in Build 3. No open `review-followup` issue.
 - **Reviews:** the audit, a pre-push review and a security review (Opus, fresh contexts), then Codex: one P1 (the snapshot's blocked script), fixed; the re-review found nothing.
 
 ## Next steps
 
-1. **Merge PR A** (owner), then run `make repo-settings`.
-2. **PR B (#52):** the data contract, the shared samples and the sample endpoints.
+1. **Merge this PR**, then **PR B (#67)**. Dismiss CodeQL alert 16 (Floorplan snapshot) in GitHub. Run `make repo-settings` if not done yet (the two new CodeQL checks must become required).
+2. **PR B (#52, #67):** the data contract, the shared samples and the sample endpoints.
 3. **PRs C (#53, backend) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #51 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
 
 ## Blockers

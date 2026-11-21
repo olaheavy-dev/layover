@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import re
+import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -415,6 +418,206 @@ class Boards(unittest.TestCase):
         self.index("https://example.org/welcome.html")
         found = cb.problems(self.root)
         self.assertTrue(any("welcome.html" in p and "not linked" in p for p in found), found)
+
+    # Issue #36: the checks read the page with html.parser, so tags, entities and escapes cannot hide anything
+
+    def safe_found(self, found: list[str]) -> bool:
+        return any('says "safe"' in p for p in found)
+
+    def test_safe_split_by_tags_or_entities_fails(self) -> None:
+        # Expected failure before the fix: the visible text is found by stripping tags with a regex and
+        # entities are never decoded, so "sa</b>fe", "s&#97;fe" and "saf&shy;e" do not read as "safe".
+        for text in ("Lisbon is <b>sa</b>fe", "Lisbon is s&#97;fe", "Lisbon is saf&shy;e", "Lisbon is s&#x61;fe",
+                     "Lisbon is sa<span>f</span><i>e</i>", "Lisbon is sa&#8203;fe", "Lisbon is <b>sa</b><!-- x -->fe"):
+            with self.subTest(text=text):
+                self.assertTrue(self.safe_found(self.page(GOOD_PAGE.replace("Issue #123", text + ". Issue #123"))))
+
+    def test_safe_in_more_attributes_fails(self) -> None:
+        for attr in ("aria-description", "aria-valuetext", "label", "data-note", "aria-roledescription"):
+            with self.subTest(attr=attr):
+                found = self.page(GOOD_PAGE.replace("<svg>", f'<option {attr}="A safe choice"></option><svg>'))
+                self.assertTrue(self.safe_found(found), found)
+
+    def test_safe_in_title_and_svg_title_fails(self) -> None:
+        found = self.page(GOOD_PAGE.replace("<svg>", "<svg><title>Safe place</title>"))
+        self.assertTrue(self.safe_found(found), found)
+
+    def test_safe_with_a_css_escape_in_content_fails(self) -> None:
+        for content in (r"\73 afe", r"\000073afe", r"s\61 fe", "sa\\\nfe"):
+            with self.subTest(content=content):
+                found = self.page(GOOD_PAGE.replace(".clear {", '.x::after { content: "%s"; }\n  .clear {' % content))
+                self.assertTrue(self.safe_found(found), found)
+
+    def test_words_that_only_touch_the_word_safe_pass(self) -> None:
+        # "Safety", "unsafely"-like split words across separate sentences are judged on whole words only.
+        page = GOOD_PAGE.replace("Issue #123", "<b>Safety</b> and security. The <i>sa</i> <i>fe</i> are separate words")
+        self.assertEqual(self.page(page), [])
+
+    def test_entity_and_escaped_colours_fail(self) -> None:
+        cases = (('<p class="sample" style="color:&#35;ff0000">', "#ff0000"),
+                 ('<p class="sample" style="color:&num;ff0000">', "#ff0000"),
+                 ('<p class="sample" style="color:r&#101;d">', "red"),
+                 ('<p class="sample" style="background:&#x23;fff">', "#fff"))
+        for opening, needle in cases:
+            with self.subTest(opening=opening):
+                found = self.page(GOOD_PAGE.replace('<p class="sample">', opening))
+                self.assertTrue(any("literal colour" in p and needle in p for p in found), found)
+        for css, needle in ((r"color: r\65 d;", "red"), (r"color: \23 ff0000;", "#ff0000"), (r"color: \72 gb(1 2 3);", "rgb(")):
+            with self.subTest(css=css):
+                found = self.page(GOOD_PAGE.replace("transparent;", css))
+                self.assertTrue(any("literal colour" in p and needle in p for p in found), found)
+
+    def test_entity_in_a_style_block_is_not_a_colour(self) -> None:
+        # A browser does not decode entities inside <style>, so "&#35;fff" there is not a colour.
+        self.assertEqual(self.page(GOOD_PAGE.replace(".clear {", '.x::before { content: "&#35;fff"; }\n  .clear {')), [])
+
+    def test_more_colour_properties_and_old_colour_attributes_fail(self) -> None:
+        found = self.page(GOOD_PAGE.replace(".clear {", ".x { text-emphasis: red; caret-color: blue; accent-color: green; }\n  .clear {"))
+        self.assertTrue(any("literal colour" in p and "red" in p and "blue" in p and "green" in p for p in found), found)
+        for attr in ("text", "link", "vlink", "alink", "bgcolor"):
+            with self.subTest(attr=attr):
+                found = self.page(GOOD_PAGE.replace("<body>", f'<body {attr}="#ff0000">'))
+                self.assertTrue(any("literal colour" in p and "#ff0000" in p for p in found), found)
+
+    def test_outside_loads_hidden_by_entities_or_slashes_fail(self) -> None:
+        cases = (('<link rel="stylesheet" href="&#104;ttps://x.test/a.css">', "https://x.test/a.css"),
+                 ('<script src="&#x2f;&#x2f;x.test/a.js"></script>', "//x.test/a.js"),
+                 ('<script src="\\\\x.test/a.js"></script>', "//x.test/a.js"),
+                 ('<img alt="" src="ht\ntps://x.test/a.jpg">', "https://x.test/a.jpg"),
+                 ('<img alt="" src="\thttps://x.test/a.jpg">', "https://x.test/a.jpg"),
+                 ('<img alt="" src="HTTPS://x.test/a.jpg">', "HTTPS://x.test/a.jpg"))
+        for tag, url in cases:
+            with self.subTest(tag=tag):
+                self.assertOutside(self.page(GOOD_PAGE.replace("<svg>", tag + "<svg>")), url)
+
+    def test_outside_url_with_a_css_escape_fails(self) -> None:
+        page = GOOD_PAGE.replace(".clear {", ".x { background: url(\\68 ttps://x.test/a.png); }\n  .clear {")
+        self.assertOutside(self.page(page), "https://x.test/a.png")
+
+    def test_meta_refresh_and_ping_fail(self) -> None:
+        for head, url in (('<meta http-equiv="refresh" content="0; url=https://x.test/go">', "https://x.test/go"),
+                          ('<meta http-equiv="Refresh" content="5;URL=\'//x.test/go\'">', "//x.test/go")):
+            with self.subTest(head=head):
+                self.assertOutside(self.page(GOOD_PAGE.replace("</head>", head + "</head>")), url)
+        found = self.page(GOOD_PAGE.replace("<svg>", '<a href="#x" ping="https://x.test/p https://y.test/q">x</a><svg>'))
+        self.assertOutside(found, "https://x.test/p")
+        self.assertOutside(found, "https://y.test/q")
+
+    def test_meta_refresh_to_a_board_page_passes(self) -> None:
+        self.assertEqual(self.page(GOOD_PAGE.replace("</head>", '<meta http-equiv="refresh" content="0; url=index.html"></head>')), [])
+
+    def test_outside_address_in_an_event_handler_fails(self) -> None:
+        found = self.page(GOOD_PAGE.replace("<svg>", """<button onclick="fetch('https://x.test/hit')">go</button><svg>"""))
+        self.assertOutside(found, "https://x.test/hit")
+
+    def test_label_must_be_visible(self) -> None:
+        # Expected failure before the fix: the label is looked for in the text left after stripping tags,
+        # so a hidden element, a <title> or a <template> still counts.
+        label_p = f'<p class="sample">{LABEL}</p>'
+        cases = {
+            "hidden attribute": GOOD_PAGE.replace(label_p, f'<p class="sample" hidden>{LABEL}</p>'),
+            "hidden parent": GOOD_PAGE.replace(label_p, f'<div hidden><p class="sample">{LABEL}</p></div>'),
+            "display none": GOOD_PAGE.replace(label_p, f'<p style="display: none">{LABEL}</p>'),
+            "visibility hidden": GOOD_PAGE.replace(label_p, f'<p style="visibility:hidden">{LABEL}</p>'),
+            "title only": GOOD_PAGE.replace(label_p, "").replace("<head>", f"<head><title>{LABEL}</title>"),
+            "template": GOOD_PAGE.replace(label_p, f"<template><p>{LABEL}</p></template>"),
+            "attribute only": GOOD_PAGE.replace(label_p, f'<img alt="{LABEL}" src="a.jpg">'),
+            "script string": GOOD_PAGE.replace(label_p, f'<script>var s = "{LABEL}";</script>'),
+        }
+        for name, page in cases.items():
+            with self.subTest(name=name):
+                found = self.page(page)
+                self.assertTrue(any("welcome.html" in p and f'needs the label "{LABEL}"' in p for p in found), found)
+
+    def test_label_split_by_inline_markup_or_entities_passes(self) -> None:
+        page = GOOD_PAGE.replace(LABEL, "Sample <b>data</b>,&nbsp;not   real")
+        self.assertEqual(self.page(page), [])
+
+    def test_tricky_but_valid_tags_are_still_scanned(self) -> None:
+        # A closing tag may carry attributes and odd spacing and any case (the old regex missed these).
+        page = GOOD_PAGE.replace("</body>", "<SCRIPT>import x from 'https://esm.sh/x';</SCRIPT\t\n bar></body>")
+        self.assertOutside(self.page(page), "https://esm.sh/x")
+        page = GOOD_PAGE.replace("</style>", "</STYLE\n>").replace("var(--color-bg-primary)", "#F7F6F3", 1)
+        found = self.page(page)
+        self.assertTrue(any("literal colour" in p and "#F7F6F3" in p for p in found), found)
+
+    def test_a_comment_hides_nothing_and_shows_nothing(self) -> None:
+        # Text inside an HTML comment is not on the page: it can say "safe" and cannot supply the label.
+        self.assertEqual(self.page(GOOD_PAGE.replace("Issue #123", "<!-- safe, #ffffff, https://x.test/a.js --> Issue #123")), [])
+        found = self.page(GOOD_PAGE.replace(LABEL, "<!-- %s -->" % LABEL))
+        self.assertTrue(any(f'needs the label "{LABEL}"' in p for p in found), found)
+
+    def test_checks_finish_fast_on_pathological_input(self) -> None:
+        # Expected failure before the fix: the tag regex took about 26 s on "<a " * 20000 (issue #36).
+        for name, junk in (("open tags", "<a " * 20000), ("open comments", "<!--" * 20000),
+                           ("open css comments", "<style>" + "/*" * 20000 + "</style>"),
+                           ("open url functions", "<style>" + "url(" * 20000 + "</style>"),
+                           ("open quotes", '<p title="' + "'" * 20000), ("open braces", "<style>" + "{" * 20000 + "</style>"),
+                           ("unclosed script", "<script>" + "'" * 20000)):
+            with self.subTest(name=name):
+                start = time.monotonic()
+                self.page(GOOD_PAGE.replace("</body>", junk + "</body>"))
+                self.assertLess(time.monotonic() - start, 3.0)
+
+    # Issue #36: media anywhere in the repository, found with git ls-files
+
+    def git_repo(self) -> None:
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+
+    def test_unusual_media_extensions_anywhere_in_the_repository_fail(self) -> None:
+        self.git_repo()
+        names = ("a.jfif", "b.svgz", "c.m4v", "d.flac", "e.opus", "f.psd", "G.PNG")
+        for name in names:
+            self.write(f"frontend/public/{name}", "x")
+        found = cb.problems(self.root)
+        for name in names:
+            with self.subTest(name=name):
+                self.assertTrue(any(p.startswith(f"frontend/public/{name}:") and "docs/assets/README.md" in p for p in found), found)
+
+    def test_registered_media_outside_docs_passes(self) -> None:
+        self.git_repo()
+        self.write("docs/assets/README.md", REG_HEAD + reg_row("frontend/public/a.jfif"))
+        self.write("frontend/public/a.jfif", "x")
+        self.assertEqual(cb.problems(self.root), [])
+
+    def test_ignored_and_dependency_files_are_not_media(self) -> None:
+        self.git_repo()
+        self.write(".gitignore", "node_modules/\n")
+        self.write("frontend/node_modules/pkg/logo.png", "x")
+        self.assertEqual(cb.problems(self.root), [])
+
+
+class BoardScript(unittest.TestCase):
+    """docs/design/boards/board.js sets a frame's address only from a board screen path (CodeQL alert 15)."""
+
+    root = Path(__file__).resolve().parent.parent
+    boards = root / "docs" / "design" / "boards"
+
+    def pattern(self) -> re.Pattern[str]:
+        source = (self.boards / "board.js").read_text()
+        match = re.search(r"var SCREEN = /(.+)/;", source)
+        self.assertIsNotNone(match, "board.js needs a SCREEN pattern for data-screen")
+        return re.compile(match.group(1).replace("\\/", "/"))
+
+    def test_every_data_screen_on_the_boards_is_accepted(self) -> None:
+        pattern = self.pattern()
+        screens = [value for page in self.boards.glob("*.html")
+                   for tag, attrs in cb._parse(page.read_text()).tags for name, value in attrs if name == "data-screen"]
+        self.assertGreater(len(screens), 50)
+        self.assertEqual([s for s in screens if not pattern.fullmatch(s)], [])
+
+    def test_other_addresses_are_refused(self) -> None:
+        pattern = self.pattern()
+        for bad in ("javascript:alert(1)", "https://example.org/x.html", "//example.org/x.html", "/screens/a.html",
+                    "../screens/a.html", "screens/../a.html", "screens/a.html#x", "screens/a.html?x=<b>",
+                    "screens/A.html", "screens/a.js", "data:text/html,x", "screens/a.html\n", ""):
+            with self.subTest(bad=bad):
+                self.assertIsNone(pattern.fullmatch(bad))
+
+    def test_the_theme_comes_from_a_fixed_list(self) -> None:
+        source = (self.boards / "board.js").read_text()
+        self.assertIn('var THEMES = ["light", "dark"];', source)
+        self.assertIn("THEMES.indexOf(theme) === -1", source)
 
 
 class RealRepository(unittest.TestCase):
