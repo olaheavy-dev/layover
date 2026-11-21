@@ -1,0 +1,15 @@
+{
+  "kind": "public_holidays",
+  "state": "not_known",
+  "place": "Lisbon",
+  "country": "Portugal",
+  "year": 2027,
+  "month": 5,
+  "missing": "a holiday list for this place, so Layover cannot say if any fall in May 2027",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Python holidays library"
+    }
+  ]
+}

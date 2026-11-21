@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import os
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic import Field, SecretStr, model_validator
@@ -16,6 +17,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # The local development values (backend/compose/); production must set its own.
 LOCAL_DATABASE_URL = "postgresql+psycopg://app:app@localhost:5432/app"
+# The repository's shared sample files, found from this file and not from the working directory.
+# Only a source checkout has them: the API image holds the installed package alone, so a
+# deployment that serves samples must set SAMPLES_DIR.
+DEFAULT_SAMPLES_DIR = Path(__file__).resolve().parents[3] / "schemas" / "samples"
 
 
 class Settings(BaseSettings):
@@ -38,6 +43,9 @@ class Settings(BaseSettings):
     max_request_bytes: int = Field(default=1_048_576, gt=0)
     # Interactive API docs at /docs. Unset means on everywhere except production.
     docs_enabled: bool | None = None
+
+    # Where the sample widget and trip files are (schemas/samples in the repository).
+    samples_dir: Path = DEFAULT_SAMPLES_DIR
 
     # SQLAlchemy URL with the psycopg 3 driver. The default matches the local db in
     # backend/compose/db/compose.yaml.

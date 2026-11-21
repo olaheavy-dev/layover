@@ -1,0 +1,6 @@
+{
+  "kind": "booking_approval",
+  "state": "loading",
+  "sandbox": true,
+  "sources": []
+}

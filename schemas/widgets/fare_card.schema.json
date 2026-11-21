@@ -1,0 +1,204 @@
+{
+  "$defs": {
+    "Fare": {
+      "additionalProperties": false,
+      "description": "A cached return fare per person. It always carries when it was captured.\n\nNo \"too old\" limit lives here; build step 4 sets it.",
+      "properties": {
+        "captured_at": {
+          "format": "date-time",
+          "title": "Captured At",
+          "type": "string"
+        },
+        "price": {
+          "$ref": "#/$defs/MoneyValue"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceLabel"
+        }
+      },
+      "required": [
+        "price",
+        "captured_at",
+        "source"
+      ],
+      "title": "Fare",
+      "type": "object"
+    },
+    "MoneyValue": {
+      "additionalProperties": false,
+      "description": "An amount in integer minor units (pence, cents) and a currency code.",
+      "properties": {
+        "amount_minor": {
+          "title": "Amount Minor",
+          "type": "integer"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount_minor",
+        "currency"
+      ],
+      "title": "MoneyValue",
+      "type": "object"
+    },
+    "SourceLabel": {
+      "additionalProperties": false,
+      "description": "Where a value came from, and how fresh it is.",
+      "properties": {
+        "captured_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Captured At"
+        },
+        "data_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Date"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "status": {
+          "enum": [
+            "live",
+            "cached",
+            "fallback",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "source"
+      ],
+      "title": "SourceLabel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "destination": {
+      "title": "Destination",
+      "type": "string"
+    },
+    "fare": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Fare"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "kind": {
+      "const": "fare_card",
+      "title": "Kind",
+      "type": "string"
+    },
+    "missing": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Missing"
+    },
+    "month": {
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+      "title": "Month",
+      "type": "string"
+    },
+    "origin": {
+      "title": "Origin",
+      "type": "string"
+    },
+    "search_url": {
+      "anyOf": [
+        {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Search Url"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceLabel"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "state": {
+      "enum": [
+        "loading",
+        "filled",
+        "empty",
+        "error",
+        "not_known"
+      ],
+      "title": "State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "state",
+    "sources",
+    "kind",
+    "origin",
+    "destination",
+    "month"
+  ],
+  "title": "FareCard",
+  "type": "object"
+}

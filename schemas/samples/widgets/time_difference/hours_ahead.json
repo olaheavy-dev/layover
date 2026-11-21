@@ -1,0 +1,18 @@
+{
+  "kind": "time_difference",
+  "state": "filled",
+  "place": "Valletta",
+  "place_zone": "Europe/Malta",
+  "on_date": "2027-05-15",
+  "dates_set": false,
+  "uk_offset_minutes": 60,
+  "place_offset_minutes": 120,
+  "difference_minutes": 60,
+  "sources": [
+    {
+      "status": "cached",
+      "source": "IANA time zone database",
+      "data_date": "2026-11-01"
+    }
+  ]
+}

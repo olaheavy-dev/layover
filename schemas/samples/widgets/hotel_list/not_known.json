@@ -1,0 +1,30 @@
+{
+  "kind": "hotel_list",
+  "state": "not_known",
+  "place": "Lisbon",
+  "missing": "stars and website for Sample Guesthouse Baixa: OpenStreetMap does not tag them",
+  "hotels": [
+    {
+      "name": "Sample Hotel Alfama",
+      "area": "Alfama",
+      "stars": 4
+    },
+    {
+      "name": "Sample Guesthouse Baixa",
+      "area": "Baixa"
+    },
+    {
+      "name": "Sample Hotel Belém",
+      "area": "Belém",
+      "stars": 3,
+      "website": "https://sample.example/"
+    }
+  ],
+  "sources": [
+    {
+      "status": "live",
+      "source": "OpenStreetMap, through Overpass",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

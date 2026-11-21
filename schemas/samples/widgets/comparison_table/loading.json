@@ -1,0 +1,158 @@
+{
+  "kind": "comparison_table",
+  "state": "loading",
+  "cards": [
+    {
+      "place": "Lisbon",
+      "card_state": "ready",
+      "fare": {
+        "price": {
+          "amount_minor": 9600,
+          "currency": "GBP"
+        },
+        "captured_at": "2026-11-15T09:00:00Z",
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-15T09:00:00Z"
+        }
+      },
+      "flights": {
+        "unit": {
+          "amount_minor": 9600,
+          "currency": "GBP"
+        },
+        "amount": {
+          "exact": {
+            "amount_minor": 19200,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 19200,
+            "currency": "GBP"
+          },
+          "is_estimate": false
+        },
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-15T09:00:00Z"
+        }
+      },
+      "stay": {
+        "unit": {
+          "amount_minor": 7000,
+          "currency": "GBP"
+        },
+        "amount": {
+          "exact": {
+            "amount_minor": 35000,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 35000,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Wikivoyage, Lisbon",
+          "captured_at": "2026-11-14T09:00:00Z"
+        },
+        "page_edited": "2026-03",
+        "listing_count": 6
+      },
+      "meals": {
+        "unit": {
+          "amount_minor": 1200,
+          "currency": "GBP"
+        },
+        "amount": {
+          "exact": {
+            "amount_minor": 24000,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 24000,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Wikivoyage, Lisbon",
+          "captured_at": "2026-11-14T09:00:00Z"
+        },
+        "page_edited": "2026-03"
+      },
+      "known_costs": {
+        "amount": {
+          "exact": {
+            "amount_minor": 78200,
+            "currency": "GBP"
+          },
+          "shown": {
+            "amount_minor": 78000,
+            "currency": "GBP"
+          },
+          "is_estimate": true
+        },
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts, Wikivoyage, Lisbon",
+          "captured_at": "2026-11-14T09:00:00Z"
+        }
+      },
+      "is_partial": true,
+      "budget_gap": {
+        "exact": {
+          "amount_minor": 1800,
+          "currency": "GBP"
+        },
+        "shown": {
+          "amount_minor": 2000,
+          "currency": "GBP"
+        },
+        "is_estimate": true
+      },
+      "budget_position": "under",
+      "weather": {
+        "high_c": 22,
+        "low_c": 14,
+        "rainy_days": 5,
+        "averages_period": "1991-2020",
+        "source": {
+          "status": "live",
+          "source": "Open-Meteo",
+          "captured_at": "2026-11-18T09:00:00Z"
+        }
+      }
+    },
+    {
+      "place": "Valencia",
+      "card_state": "loading"
+    },
+    {
+      "place": "Valletta",
+      "card_state": "loading"
+    }
+  ],
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-15T09:00:00Z"
+    },
+    {
+      "status": "cached",
+      "source": "Wikivoyage",
+      "captured_at": "2026-11-14T09:00:00Z"
+    },
+    {
+      "status": "live",
+      "source": "Open-Meteo",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

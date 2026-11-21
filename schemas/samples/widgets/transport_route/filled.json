@@ -1,0 +1,34 @@
+{
+  "kind": "transport_route",
+  "state": "filled",
+  "origin": "Paddington station",
+  "destination": "Heathrow Terminals 2 and 3",
+  "planned_for": "2027-05-15",
+  "dates_set": false,
+  "leaves_at": "09:00:00",
+  "legs": [
+    {
+      "mode": "walk",
+      "minutes": 5,
+      "description": "Walk to the platform at Paddington station"
+    },
+    {
+      "mode": "Elizabeth line",
+      "minutes": 32,
+      "description": "Elizabeth line from Paddington to Heathrow Terminals 2 and 3"
+    },
+    {
+      "mode": "walk",
+      "minutes": 6,
+      "description": "Walk to departures"
+    }
+  ],
+  "total_minutes": 43,
+  "sources": [
+    {
+      "status": "live",
+      "source": "TfL Unified API (Journey Planner)",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

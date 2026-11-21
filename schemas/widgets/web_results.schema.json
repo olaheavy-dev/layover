@@ -1,0 +1,176 @@
+{
+  "$defs": {
+    "SourceLabel": {
+      "additionalProperties": false,
+      "description": "Where a value came from, and how fresh it is.",
+      "properties": {
+        "captured_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Captured At"
+        },
+        "data_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Date"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "status": {
+          "enum": [
+            "live",
+            "cached",
+            "fallback",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "source"
+      ],
+      "title": "SourceLabel",
+      "type": "object"
+    },
+    "WebResult": {
+      "additionalProperties": false,
+      "properties": {
+        "quote": {
+          "title": "Quote",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "url",
+        "quote"
+      ],
+      "title": "WebResult",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "const": "web_results",
+      "title": "Kind",
+      "type": "string"
+    },
+    "missing": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Missing"
+    },
+    "question": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Question"
+    },
+    "results": {
+      "items": {
+        "$ref": "#/$defs/WebResult"
+      },
+      "title": "Results",
+      "type": "array"
+    },
+    "retrieved_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Retrieved At"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceLabel"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "state": {
+      "enum": [
+        "loading",
+        "filled",
+        "empty",
+        "error",
+        "not_known"
+      ],
+      "title": "State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "state",
+    "sources",
+    "kind"
+  ],
+  "title": "WebResults",
+  "type": "object"
+}

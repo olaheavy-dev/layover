@@ -1,0 +1,23 @@
+{
+  "kind": "map",
+  "state": "filled",
+  "centre": {
+    "name": "Lisbon centre",
+    "lat": 38.7,
+    "lon": -9.1,
+    "url": "https://www.openstreetmap.org/"
+  },
+  "hotel": {
+    "name": "Sample Hotel Alfama",
+    "lat": 38.71,
+    "lon": -9.09,
+    "url": "https://www.openstreetmap.org/"
+  },
+  "sources": [
+    {
+      "status": "live",
+      "source": "Sample",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

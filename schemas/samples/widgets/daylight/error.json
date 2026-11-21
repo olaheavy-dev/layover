@@ -1,0 +1,13 @@
+{
+  "kind": "daylight",
+  "state": "error",
+  "place": "Lisbon",
+  "day": "2027-05-15",
+  "dates_set": false,
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "sunrise-sunset.org"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "kind": "fare_card",
+  "state": "not_known",
+  "origin": "Manchester (MAN)",
+  "destination": "Lisbon",
+  "month": "2027-05",
+  "search_url": "https://www.aviasales.com/",
+  "missing": "there is no cached fare for Manchester (MAN) to Lisbon in May 2027",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Travelpayouts"
+    }
+  ]
+}

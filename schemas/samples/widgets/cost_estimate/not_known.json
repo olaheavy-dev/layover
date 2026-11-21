@@ -1,0 +1,98 @@
+{
+  "kind": "cost_estimate",
+  "state": "not_known",
+  "place": "Valencia",
+  "budget": {
+    "amount_minor": 80000,
+    "currency": "GBP"
+  },
+  "nights": 5,
+  "people": 2,
+  "is_partial": true,
+  "local_transport": {
+    "missing": "no source Layover uses has it"
+  },
+  "activities": {
+    "missing": "no source Layover uses has it"
+  },
+  "flights": {
+    "unit": {
+      "amount_minor": 8400,
+      "currency": "GBP"
+    },
+    "amount": {
+      "exact": {
+        "amount_minor": 16800,
+        "currency": "GBP"
+      },
+      "shown": {
+        "amount_minor": 16800,
+        "currency": "GBP"
+      },
+      "is_estimate": false
+    },
+    "source": {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-17T09:00:00Z"
+    }
+  },
+  "stay": {
+    "missing": "too few priced listings"
+  },
+  "meals": {
+    "unit": {
+      "amount_minor": 1100,
+      "currency": "GBP"
+    },
+    "amount": {
+      "exact": {
+        "amount_minor": 22000,
+        "currency": "GBP"
+      },
+      "shown": {
+        "amount_minor": 22000,
+        "currency": "GBP"
+      },
+      "is_estimate": true
+    },
+    "source": {
+      "status": "cached",
+      "source": "Wikivoyage, Valencia",
+      "captured_at": "2026-11-16T09:00:00Z"
+    },
+    "page_edited": "2026-02",
+    "listing_count": 5
+  },
+  "total": {
+    "amount": {
+      "exact": {
+        "amount_minor": 38800,
+        "currency": "GBP"
+      },
+      "shown": {
+        "amount_minor": 39000,
+        "currency": "GBP"
+      },
+      "is_estimate": true
+    },
+    "source": {
+      "status": "cached",
+      "source": "Travelpayouts, Wikivoyage, Valencia",
+      "captured_at": "2026-11-16T09:00:00Z"
+    }
+  },
+  "missing": "stay: too few priced listings",
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-17T09:00:00Z"
+    },
+    {
+      "status": "cached",
+      "source": "Wikivoyage, Valencia",
+      "captured_at": "2026-11-16T09:00:00Z"
+    }
+  ]
+}

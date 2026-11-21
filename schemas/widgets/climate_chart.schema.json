@@ -1,0 +1,208 @@
+{
+  "$defs": {
+    "ClimateMonth": {
+      "additionalProperties": false,
+      "properties": {
+        "high_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High C"
+        },
+        "low_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low C"
+        },
+        "month": {
+          "maximum": 12,
+          "minimum": 1,
+          "title": "Month",
+          "type": "integer"
+        },
+        "rainy_days": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rainy Days"
+        }
+      },
+      "required": [
+        "month"
+      ],
+      "title": "ClimateMonth",
+      "type": "object"
+    },
+    "SourceLabel": {
+      "additionalProperties": false,
+      "description": "Where a value came from, and how fresh it is.",
+      "properties": {
+        "captured_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Captured At"
+        },
+        "data_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Date"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "status": {
+          "enum": [
+            "live",
+            "cached",
+            "fallback",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "source"
+      ],
+      "title": "SourceLabel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "averages_period": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Averages Period"
+    },
+    "highlight_month": {
+      "anyOf": [
+        {
+          "maximum": 12,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Highlight Month"
+    },
+    "kind": {
+      "const": "climate_chart",
+      "title": "Kind",
+      "type": "string"
+    },
+    "missing": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Missing"
+    },
+    "months": {
+      "items": {
+        "$ref": "#/$defs/ClimateMonth"
+      },
+      "title": "Months",
+      "type": "array"
+    },
+    "place": {
+      "title": "Place",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceLabel"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "state": {
+      "enum": [
+        "loading",
+        "filled",
+        "empty",
+        "error",
+        "not_known"
+      ],
+      "title": "State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "state",
+    "sources",
+    "kind",
+    "place"
+  ],
+  "title": "ClimateChart",
+  "type": "object"
+}

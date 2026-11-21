@@ -1,0 +1,14 @@
+{
+  "kind": "public_holidays",
+  "state": "error",
+  "place": "Lisbon",
+  "country": "Portugal",
+  "year": 2027,
+  "month": 5,
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Python holidays library"
+    }
+  ]
+}

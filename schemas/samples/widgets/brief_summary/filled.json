@@ -1,0 +1,15 @@
+{
+  "kind": "brief_summary",
+  "state": "filled",
+  "trip_name": "Warm break, May",
+  "origin": "Manchester (MAN)",
+  "when": "May 2027",
+  "nights": 5,
+  "adults": 2,
+  "budget": {
+    "amount_minor": 80000,
+    "currency": "GBP"
+  },
+  "feel": "Warm, relaxed, good food",
+  "sources": []
+}

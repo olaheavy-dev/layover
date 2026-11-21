@@ -1,0 +1,15 @@
+{
+  "kind": "fare_list",
+  "state": "empty",
+  "origin": "Bristol (BRS)",
+  "month": "2027-03",
+  "search_url": "https://www.aviasales.com/",
+  "rows": [],
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-15T09:00:00Z"
+    }
+  ]
+}

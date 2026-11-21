@@ -1,0 +1,16 @@
+{
+  "kind": "public_holidays",
+  "state": "empty",
+  "place": "Lisbon",
+  "country": "Portugal",
+  "year": 2027,
+  "month": 5,
+  "holidays": [],
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Python holidays library",
+      "data_date": "2026-11-01"
+    }
+  ]
+}

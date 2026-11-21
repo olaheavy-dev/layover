@@ -1,0 +1,80 @@
+{
+  "kind": "fare_list",
+  "state": "filled",
+  "origin": "Bristol (BRS)",
+  "month": "2027-03",
+  "search_url": "https://www.aviasales.com/",
+  "rows": [
+    {
+      "destination": "Faro",
+      "fare": {
+        "price": {
+          "amount_minor": 5900,
+          "currency": "GBP"
+        },
+        "captured_at": "2026-11-15T09:00:00Z",
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-15T09:00:00Z"
+        }
+      },
+      "search_url": "https://www.aviasales.com/"
+    },
+    {
+      "destination": "Valencia",
+      "fare": {
+        "price": {
+          "amount_minor": 6400,
+          "currency": "GBP"
+        },
+        "captured_at": "2026-11-17T09:00:00Z",
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-17T09:00:00Z"
+        }
+      },
+      "search_url": "https://www.aviasales.com/"
+    },
+    {
+      "destination": "Lisbon",
+      "fare": {
+        "price": {
+          "amount_minor": 7100,
+          "currency": "GBP"
+        },
+        "captured_at": "2026-11-16T09:00:00Z",
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-16T09:00:00Z"
+        }
+      },
+      "search_url": "https://www.aviasales.com/"
+    },
+    {
+      "destination": "Valletta",
+      "fare": {
+        "price": {
+          "amount_minor": 9800,
+          "currency": "GBP"
+        },
+        "captured_at": "2026-11-13T09:00:00Z",
+        "source": {
+          "status": "cached",
+          "source": "Travelpayouts",
+          "captured_at": "2026-11-13T09:00:00Z"
+        }
+      },
+      "search_url": "https://www.aviasales.com/"
+    }
+  ],
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-13T09:00:00Z"
+    }
+  ]
+}

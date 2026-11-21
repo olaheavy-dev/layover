@@ -1,0 +1,14 @@
+{
+  "kind": "itinerary_day",
+  "state": "empty",
+  "day_number": 3,
+  "base": "Sample Hotel Alfama",
+  "stops": [],
+  "sources": [
+    {
+      "status": "live",
+      "source": "OpenStreetMap, through Overpass",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

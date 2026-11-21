@@ -1,0 +1,27 @@
+{
+  "kind": "fare_card",
+  "state": "filled",
+  "origin": "Manchester (MAN)",
+  "destination": "Valletta",
+  "month": "2027-05",
+  "search_url": "https://www.aviasales.com/",
+  "fare": {
+    "price": {
+      "amount_minor": 12100,
+      "currency": "GBP"
+    },
+    "captured_at": "2026-11-12T09:00:00Z",
+    "source": {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-12T09:00:00Z"
+    }
+  },
+  "sources": [
+    {
+      "status": "cached",
+      "source": "Travelpayouts",
+      "captured_at": "2026-11-12T09:00:00Z"
+    }
+  ]
+}

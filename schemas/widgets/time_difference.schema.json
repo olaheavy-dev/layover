@@ -1,0 +1,188 @@
+{
+  "$defs": {
+    "SourceLabel": {
+      "additionalProperties": false,
+      "description": "Where a value came from, and how fresh it is.",
+      "properties": {
+        "captured_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Captured At"
+        },
+        "data_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Date"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "status": {
+          "enum": [
+            "live",
+            "cached",
+            "fallback",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "source"
+      ],
+      "title": "SourceLabel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dates_set": {
+      "title": "Dates Set",
+      "type": "boolean"
+    },
+    "difference_minutes": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Difference Minutes"
+    },
+    "kind": {
+      "const": "time_difference",
+      "title": "Kind",
+      "type": "string"
+    },
+    "missing": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Missing"
+    },
+    "on_date": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "On Date"
+    },
+    "place": {
+      "title": "Place",
+      "type": "string"
+    },
+    "place_offset_minutes": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Place Offset Minutes"
+    },
+    "place_zone": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Place Zone"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceLabel"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "state": {
+      "enum": [
+        "loading",
+        "filled",
+        "empty",
+        "error",
+        "not_known"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "uk_offset_minutes": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Uk Offset Minutes"
+    }
+  },
+  "required": [
+    "state",
+    "sources",
+    "kind",
+    "place",
+    "dates_set"
+  ],
+  "title": "TimeDifference",
+  "type": "object"
+}

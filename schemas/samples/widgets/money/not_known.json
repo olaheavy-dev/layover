@@ -1,0 +1,11 @@
+{
+  "kind": "money",
+  "state": "not_known",
+  "missing": "the local currency is not in the European Central Bank's reference rates",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Frankfurter"
+    }
+  ]
+}

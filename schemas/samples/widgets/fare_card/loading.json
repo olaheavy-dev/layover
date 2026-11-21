@@ -1,0 +1,9 @@
+{
+  "kind": "fare_card",
+  "state": "loading",
+  "origin": "Manchester (MAN)",
+  "destination": "Lisbon",
+  "month": "2027-05",
+  "search_url": "https://www.aviasales.com/",
+  "sources": []
+}

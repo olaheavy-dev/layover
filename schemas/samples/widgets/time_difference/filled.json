@@ -1,0 +1,18 @@
+{
+  "kind": "time_difference",
+  "state": "filled",
+  "place": "Lisbon",
+  "place_zone": "Europe/Lisbon",
+  "on_date": "2027-05-15",
+  "dates_set": false,
+  "uk_offset_minutes": 60,
+  "place_offset_minutes": 60,
+  "difference_minutes": 0,
+  "sources": [
+    {
+      "status": "cached",
+      "source": "IANA time zone database",
+      "data_date": "2026-11-01"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "kind": "money",
+  "state": "error",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Frankfurter"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "kind": "advice_card",
+  "state": "not_known",
+  "place": "this place",
+  "fcdo_url": "https://www.gov.uk/foreign-travel-advice",
+  "missing": "Layover has no FCDO travel advice page for this place",
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "FCDO, gov.uk"
+    }
+  ]
+}

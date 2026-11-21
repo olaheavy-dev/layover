@@ -1,0 +1,3138 @@
+{
+  "$defs": {
+    "AdviceCard": {
+      "additionalProperties": false,
+      "properties": {
+        "fcdo_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Fcdo Url",
+          "type": "string"
+        },
+        "kind": {
+          "const": "advice_card",
+          "title": "Kind",
+          "type": "string"
+        },
+        "layover_copy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Layover Copy"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        },
+        "updated_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Updated On"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place",
+        "fcdo_url"
+      ],
+      "title": "AdviceCard",
+      "type": "object"
+    },
+    "BookingApproval": {
+      "additionalProperties": false,
+      "properties": {
+        "adults": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adults"
+        },
+        "booking_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "waiting",
+                "approved",
+                "declined",
+                "price_changed",
+                "flights_only"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Booking State"
+        },
+        "depart": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Depart"
+        },
+        "destination": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Destination"
+        },
+        "kind": {
+          "const": "booking_approval",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "new_price": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "order_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Order Ref"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Origin"
+        },
+        "return_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Return Date"
+        },
+        "sandbox": {
+          "const": true,
+          "title": "Sandbox",
+          "type": "boolean"
+        },
+        "sandbox_price": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "sandbox"
+      ],
+      "title": "BookingApproval",
+      "type": "object"
+    },
+    "BriefSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "adults": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adults"
+        },
+        "brief_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "waiting",
+                "editing",
+                "confirmed"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Brief State"
+        },
+        "budget": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "feel": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Feel"
+        },
+        "kind": {
+          "const": "brief_summary",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "nights": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nights"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Origin"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "trip_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trip Name"
+        },
+        "when": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "When"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind"
+      ],
+      "title": "BriefSummary",
+      "type": "object"
+    },
+    "ClimateChart": {
+      "additionalProperties": false,
+      "properties": {
+        "averages_period": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Averages Period"
+        },
+        "highlight_month": {
+          "anyOf": [
+            {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Highlight Month"
+        },
+        "kind": {
+          "const": "climate_chart",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "months": {
+          "items": {
+            "$ref": "#/$defs/ClimateMonth"
+          },
+          "title": "Months",
+          "type": "array"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place"
+      ],
+      "title": "ClimateChart",
+      "type": "object"
+    },
+    "ClimateMonth": {
+      "additionalProperties": false,
+      "properties": {
+        "high_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High C"
+        },
+        "low_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low C"
+        },
+        "month": {
+          "maximum": 12,
+          "minimum": 1,
+          "title": "Month",
+          "type": "integer"
+        },
+        "rainy_days": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rainy Days"
+        }
+      },
+      "required": [
+        "month"
+      ],
+      "title": "ClimateMonth",
+      "type": "object"
+    },
+    "ComparisonTable": {
+      "additionalProperties": false,
+      "properties": {
+        "cards": {
+          "items": {
+            "$ref": "#/$defs/PlaceCard"
+          },
+          "title": "Cards",
+          "type": "array"
+        },
+        "chosen_place": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chosen Place"
+        },
+        "kind": {
+          "const": "comparison_table",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "rules_out": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rules Out"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind"
+      ],
+      "title": "ComparisonTable",
+      "type": "object"
+    },
+    "Conversion": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/MoneyValue"
+        },
+        "converted": {
+          "$ref": "#/$defs/MoneyValue"
+        }
+      },
+      "required": [
+        "amount",
+        "converted"
+      ],
+      "title": "Conversion",
+      "type": "object"
+    },
+    "CostEstimate": {
+      "additionalProperties": false,
+      "properties": {
+        "activities": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "budget": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "budget_gap": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyEstimate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "budget_position": {
+          "anyOf": [
+            {
+              "enum": [
+                "under",
+                "over",
+                "on"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Budget Position"
+        },
+        "flights": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "is_partial": {
+          "default": true,
+          "title": "Is Partial",
+          "type": "boolean"
+        },
+        "kind": {
+          "const": "cost_estimate",
+          "title": "Kind",
+          "type": "string"
+        },
+        "local_transport": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "meals": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "nights": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nights"
+        },
+        "people": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "People"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "stay": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "total": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place"
+      ],
+      "title": "CostEstimate",
+      "type": "object"
+    },
+    "CostLine": {
+      "additionalProperties": false,
+      "description": "One line of a cost estimate. A line with no amount says why (decision 0011, rule 4).",
+      "properties": {
+        "amount": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyEstimate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "listing_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Listing Count"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "page_edited": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Edited"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceLabel"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "CostLine",
+      "type": "object"
+    },
+    "Daylight": {
+      "additionalProperties": false,
+      "properties": {
+        "credit_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Url"
+        },
+        "dates_set": {
+          "title": "Dates Set",
+          "type": "boolean"
+        },
+        "day": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Day"
+        },
+        "day_length_minutes": {
+          "anyOf": [
+            {
+              "maximum": 1440,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Day Length Minutes"
+        },
+        "kind": {
+          "const": "daylight",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "sunrise": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sunrise"
+        },
+        "sunset": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sunset"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place",
+        "dates_set"
+      ],
+      "title": "Daylight",
+      "type": "object"
+    },
+    "Fare": {
+      "additionalProperties": false,
+      "description": "A cached return fare per person. It always carries when it was captured.\n\nNo \"too old\" limit lives here; build step 4 sets it.",
+      "properties": {
+        "captured_at": {
+          "format": "date-time",
+          "title": "Captured At",
+          "type": "string"
+        },
+        "price": {
+          "$ref": "#/$defs/MoneyValue"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceLabel"
+        }
+      },
+      "required": [
+        "price",
+        "captured_at",
+        "source"
+      ],
+      "title": "Fare",
+      "type": "object"
+    },
+    "FareCard": {
+      "additionalProperties": false,
+      "properties": {
+        "destination": {
+          "title": "Destination",
+          "type": "string"
+        },
+        "fare": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fare"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "kind": {
+          "const": "fare_card",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "month": {
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+          "title": "Month",
+          "type": "string"
+        },
+        "origin": {
+          "title": "Origin",
+          "type": "string"
+        },
+        "search_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Search Url"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "origin",
+        "destination",
+        "month"
+      ],
+      "title": "FareCard",
+      "type": "object"
+    },
+    "FareList": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "fare_list",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "month": {
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+          "title": "Month",
+          "type": "string"
+        },
+        "origin": {
+          "title": "Origin",
+          "type": "string"
+        },
+        "rows": {
+          "items": {
+            "$ref": "#/$defs/FareRow"
+          },
+          "title": "Rows",
+          "type": "array"
+        },
+        "search_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Search Url"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "origin",
+        "month"
+      ],
+      "title": "FareList",
+      "type": "object"
+    },
+    "FareRow": {
+      "additionalProperties": false,
+      "properties": {
+        "destination": {
+          "title": "Destination",
+          "type": "string"
+        },
+        "fare": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fare"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "search_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Search Url"
+        }
+      },
+      "required": [
+        "destination"
+      ],
+      "title": "FareRow",
+      "type": "object"
+    },
+    "Holiday": {
+      "additionalProperties": false,
+      "properties": {
+        "day": {
+          "format": "date",
+          "title": "Day",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "day",
+        "name"
+      ],
+      "title": "Holiday",
+      "type": "object"
+    },
+    "Hotel": {
+      "additionalProperties": false,
+      "properties": {
+        "area": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Area"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "stars": {
+          "anyOf": [
+            {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stars"
+        },
+        "website": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Website"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Hotel",
+      "type": "object"
+    },
+    "HotelList": {
+      "additionalProperties": false,
+      "properties": {
+        "chosen_hotel": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chosen Hotel"
+        },
+        "hotels": {
+          "items": {
+            "$ref": "#/$defs/Hotel"
+          },
+          "title": "Hotels",
+          "type": "array"
+        },
+        "kind": {
+          "const": "hotel_list",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "selection": {
+          "default": "undecided",
+          "enum": [
+            "undecided",
+            "chosen",
+            "skipped",
+            "changed"
+          ],
+          "title": "Selection",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place"
+      ],
+      "title": "HotelList",
+      "type": "object"
+    },
+    "ItineraryDay": {
+      "additionalProperties": false,
+      "properties": {
+        "base": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base"
+        },
+        "day": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Day"
+        },
+        "day_number": {
+          "minimum": 1,
+          "title": "Day Number",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "itinerary_day",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "rebuilt": {
+          "default": false,
+          "title": "Rebuilt",
+          "type": "boolean"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "starts_from_centre": {
+          "default": false,
+          "title": "Starts From Centre",
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "stops": {
+          "items": {
+            "$ref": "#/$defs/Stop"
+          },
+          "title": "Stops",
+          "type": "array"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "day_number"
+      ],
+      "title": "ItineraryDay",
+      "type": "object"
+    },
+    "Leg": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "minutes": {
+          "minimum": 0,
+          "title": "Minutes",
+          "type": "integer"
+        },
+        "mode": {
+          "title": "Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "minutes"
+      ],
+      "title": "Leg",
+      "type": "object"
+    },
+    "Map": {
+      "additionalProperties": false,
+      "properties": {
+        "centre": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MapPlace"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hotel": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MapPlace"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "kind": {
+          "const": "map",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "stops": {
+          "items": {
+            "$ref": "#/$defs/MapPlace"
+          },
+          "title": "Stops",
+          "type": "array"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind"
+      ],
+      "title": "Map",
+      "type": "object"
+    },
+    "MapPlace": {
+      "additionalProperties": false,
+      "properties": {
+        "lat": {
+          "maximum": 90,
+          "minimum": -90,
+          "title": "Lat",
+          "type": "number"
+        },
+        "lon": {
+          "maximum": 180,
+          "minimum": -180,
+          "title": "Lon",
+          "type": "number"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "required": [
+        "name",
+        "lat",
+        "lon"
+      ],
+      "title": "MapPlace",
+      "type": "object"
+    },
+    "Money": {
+      "additionalProperties": false,
+      "properties": {
+        "conversion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Conversion"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "from_currency": {
+          "default": "GBP",
+          "pattern": "^[A-Z]{3}$",
+          "title": "From Currency",
+          "type": "string"
+        },
+        "kind": {
+          "const": "money",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "rate": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rate"
+        },
+        "rate_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rate Date"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "to_currency": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "To Currency"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind"
+      ],
+      "title": "Money",
+      "type": "object"
+    },
+    "MoneyEstimate": {
+      "additionalProperties": false,
+      "description": "A money figure: an estimate rounded for display, or an exact value shown as it is.",
+      "properties": {
+        "exact": {
+          "$ref": "#/$defs/MoneyValue"
+        },
+        "is_estimate": {
+          "title": "Is Estimate",
+          "type": "boolean"
+        },
+        "shown": {
+          "$ref": "#/$defs/MoneyValue"
+        }
+      },
+      "required": [
+        "exact",
+        "shown",
+        "is_estimate"
+      ],
+      "title": "MoneyEstimate",
+      "type": "object"
+    },
+    "MoneyValue": {
+      "additionalProperties": false,
+      "description": "An amount in integer minor units (pence, cents) and a currency code.",
+      "properties": {
+        "amount_minor": {
+          "title": "Amount Minor",
+          "type": "integer"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount_minor",
+        "currency"
+      ],
+      "title": "MoneyValue",
+      "type": "object"
+    },
+    "NotKnown": {
+      "additionalProperties": false,
+      "properties": {
+        "instead": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Instead"
+        },
+        "kind": {
+          "const": "not_known",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind"
+      ],
+      "title": "NotKnown",
+      "type": "object"
+    },
+    "PlaceCard": {
+      "additionalProperties": false,
+      "properties": {
+        "budget_gap": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyEstimate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "budget_position": {
+          "anyOf": [
+            {
+              "enum": [
+                "under",
+                "over",
+                "on"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Budget Position"
+        },
+        "card_state": {
+          "enum": [
+            "loading",
+            "ready",
+            "failed",
+            "swapped"
+          ],
+          "title": "Card State",
+          "type": "string"
+        },
+        "fare": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fare"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flights": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "is_partial": {
+          "default": true,
+          "title": "Is Partial",
+          "type": "boolean"
+        },
+        "known_costs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "meals": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "stay": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "weather": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Weather"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "place",
+        "card_state"
+      ],
+      "title": "PlaceCard",
+      "type": "object"
+    },
+    "PlaceIntro": {
+      "additionalProperties": false,
+      "properties": {
+        "hero_line": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hero Line"
+        },
+        "intro_source": {
+          "anyOf": [
+            {
+              "enum": [
+                "wikivoyage",
+                "wikipedia"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Intro Source"
+        },
+        "kind": {
+          "const": "place_intro",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "paragraphs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Paragraphs",
+          "type": "array"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place"
+      ],
+      "title": "PlaceIntro",
+      "type": "object"
+    },
+    "PublicHolidays": {
+      "additionalProperties": false,
+      "properties": {
+        "country": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country"
+        },
+        "holidays": {
+          "items": {
+            "$ref": "#/$defs/Holiday"
+          },
+          "title": "Holidays",
+          "type": "array"
+        },
+        "kind": {
+          "const": "public_holidays",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "month": {
+          "anyOf": [
+            {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Month"
+        },
+        "national_only": {
+          "const": true,
+          "default": true,
+          "title": "National Only",
+          "type": "boolean"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "maximum": 2200,
+              "minimum": 1900,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place"
+      ],
+      "title": "PublicHolidays",
+      "type": "object"
+    },
+    "SeaConditions": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "sea_conditions",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "month": {
+          "anyOf": [
+            {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Month"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "sea_temp_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sea Temp C"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place"
+      ],
+      "title": "SeaConditions",
+      "type": "object"
+    },
+    "ShareSettings": {
+      "additionalProperties": false,
+      "description": "What a shared link shows. Budget and travellers are hidden unless the owner opts in.",
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of"
+        },
+        "include_budget_and_travellers": {
+          "default": false,
+          "title": "Include Budget And Travellers",
+          "type": "boolean"
+        }
+      },
+      "title": "ShareSettings",
+      "type": "object"
+    },
+    "SourceLabel": {
+      "additionalProperties": false,
+      "description": "Where a value came from, and how fresh it is.",
+      "properties": {
+        "captured_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Captured At"
+        },
+        "data_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Date"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "status": {
+          "enum": [
+            "live",
+            "cached",
+            "fallback",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "source"
+      ],
+      "title": "SourceLabel",
+      "type": "object"
+    },
+    "Stop": {
+      "additionalProperties": false,
+      "properties": {
+        "closes": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Closes"
+        },
+        "hours_status": {
+          "default": "not_applicable",
+          "enum": [
+            "known",
+            "not_known",
+            "depends_on_day",
+            "not_applicable"
+          ],
+          "title": "Hours Status",
+          "type": "string"
+        },
+        "kind": {
+          "default": "place",
+          "enum": [
+            "place",
+            "walk"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "opens": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Opens"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceLabel"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Stop",
+      "type": "object"
+    },
+    "TimeDifference": {
+      "additionalProperties": false,
+      "properties": {
+        "dates_set": {
+          "title": "Dates Set",
+          "type": "boolean"
+        },
+        "difference_minutes": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Difference Minutes"
+        },
+        "kind": {
+          "const": "time_difference",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "on_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "On Date"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "place_offset_minutes": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Place Offset Minutes"
+        },
+        "place_zone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Place Zone"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "uk_offset_minutes": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Uk Offset Minutes"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "place",
+        "dates_set"
+      ],
+      "title": "TimeDifference",
+      "type": "object"
+    },
+    "TransportRoute": {
+      "additionalProperties": false,
+      "properties": {
+        "dates_set": {
+          "title": "Dates Set",
+          "type": "boolean"
+        },
+        "destination": {
+          "title": "Destination",
+          "type": "string"
+        },
+        "kind": {
+          "const": "transport_route",
+          "title": "Kind",
+          "type": "string"
+        },
+        "leaves_at": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaves At"
+        },
+        "legs": {
+          "items": {
+            "$ref": "#/$defs/Leg"
+          },
+          "title": "Legs",
+          "type": "array"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "origin": {
+          "title": "Origin",
+          "type": "string"
+        },
+        "planned_for": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Planned For"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "total_minutes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Minutes"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind",
+        "origin",
+        "destination",
+        "dates_set"
+      ],
+      "title": "TransportRoute",
+      "type": "object"
+    },
+    "Weather": {
+      "additionalProperties": false,
+      "description": "Typical weather for the trip month, with its own label (sample-data.md).",
+      "properties": {
+        "averages_period": {
+          "title": "Averages Period",
+          "type": "string"
+        },
+        "high_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High C"
+        },
+        "low_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low C"
+        },
+        "rainy_days": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rainy Days"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceLabel"
+        }
+      },
+      "required": [
+        "averages_period",
+        "source"
+      ],
+      "title": "Weather",
+      "type": "object"
+    },
+    "WebResult": {
+      "additionalProperties": false,
+      "properties": {
+        "quote": {
+          "title": "Quote",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "url",
+        "quote"
+      ],
+      "title": "WebResult",
+      "type": "object"
+    },
+    "WebResults": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "web_results",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "question": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Question"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/WebResult"
+          },
+          "title": "Results",
+          "type": "array"
+        },
+        "retrieved_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieved At"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceLabel"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "loading",
+            "filled",
+            "empty",
+            "error",
+            "not_known"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "sources",
+        "kind"
+      ],
+      "title": "WebResults",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One trip. An empty trip has only its identity and share settings.",
+  "properties": {
+    "booking": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BookingApproval"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "brief": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BriefSummary"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "chosen_place": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Chosen Place"
+    },
+    "comparison": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ComparisonTable"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "days": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ItineraryDay"
+      },
+      "title": "Days",
+      "type": "array"
+    },
+    "is_sample": {
+      "title": "Is Sample",
+      "type": "boolean"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "pinned": {
+      "default": [],
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "advice_card": "#/$defs/AdviceCard",
+            "booking_approval": "#/$defs/BookingApproval",
+            "brief_summary": "#/$defs/BriefSummary",
+            "climate_chart": "#/$defs/ClimateChart",
+            "comparison_table": "#/$defs/ComparisonTable",
+            "cost_estimate": "#/$defs/CostEstimate",
+            "daylight": "#/$defs/Daylight",
+            "fare_card": "#/$defs/FareCard",
+            "fare_list": "#/$defs/FareList",
+            "hotel_list": "#/$defs/HotelList",
+            "itinerary_day": "#/$defs/ItineraryDay",
+            "map": "#/$defs/Map",
+            "money": "#/$defs/Money",
+            "not_known": "#/$defs/NotKnown",
+            "place_intro": "#/$defs/PlaceIntro",
+            "public_holidays": "#/$defs/PublicHolidays",
+            "sea_conditions": "#/$defs/SeaConditions",
+            "time_difference": "#/$defs/TimeDifference",
+            "transport_route": "#/$defs/TransportRoute",
+            "web_results": "#/$defs/WebResults"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/BriefSummary"
+          },
+          {
+            "$ref": "#/$defs/ComparisonTable"
+          },
+          {
+            "$ref": "#/$defs/FareCard"
+          },
+          {
+            "$ref": "#/$defs/ClimateChart"
+          },
+          {
+            "$ref": "#/$defs/SeaConditions"
+          },
+          {
+            "$ref": "#/$defs/Daylight"
+          },
+          {
+            "$ref": "#/$defs/Money"
+          },
+          {
+            "$ref": "#/$defs/AdviceCard"
+          },
+          {
+            "$ref": "#/$defs/PlaceIntro"
+          },
+          {
+            "$ref": "#/$defs/Map"
+          },
+          {
+            "$ref": "#/$defs/ItineraryDay"
+          },
+          {
+            "$ref": "#/$defs/HotelList"
+          },
+          {
+            "$ref": "#/$defs/CostEstimate"
+          },
+          {
+            "$ref": "#/$defs/BookingApproval"
+          },
+          {
+            "$ref": "#/$defs/WebResults"
+          },
+          {
+            "$ref": "#/$defs/NotKnown"
+          },
+          {
+            "$ref": "#/$defs/PublicHolidays"
+          },
+          {
+            "$ref": "#/$defs/TimeDifference"
+          },
+          {
+            "$ref": "#/$defs/FareList"
+          },
+          {
+            "$ref": "#/$defs/TransportRoute"
+          }
+        ]
+      },
+      "title": "Pinned",
+      "type": "array"
+    },
+    "place_widgets": {
+      "default": [],
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "advice_card": "#/$defs/AdviceCard",
+            "booking_approval": "#/$defs/BookingApproval",
+            "brief_summary": "#/$defs/BriefSummary",
+            "climate_chart": "#/$defs/ClimateChart",
+            "comparison_table": "#/$defs/ComparisonTable",
+            "cost_estimate": "#/$defs/CostEstimate",
+            "daylight": "#/$defs/Daylight",
+            "fare_card": "#/$defs/FareCard",
+            "fare_list": "#/$defs/FareList",
+            "hotel_list": "#/$defs/HotelList",
+            "itinerary_day": "#/$defs/ItineraryDay",
+            "map": "#/$defs/Map",
+            "money": "#/$defs/Money",
+            "not_known": "#/$defs/NotKnown",
+            "place_intro": "#/$defs/PlaceIntro",
+            "public_holidays": "#/$defs/PublicHolidays",
+            "sea_conditions": "#/$defs/SeaConditions",
+            "time_difference": "#/$defs/TimeDifference",
+            "transport_route": "#/$defs/TransportRoute",
+            "web_results": "#/$defs/WebResults"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/BriefSummary"
+          },
+          {
+            "$ref": "#/$defs/ComparisonTable"
+          },
+          {
+            "$ref": "#/$defs/FareCard"
+          },
+          {
+            "$ref": "#/$defs/ClimateChart"
+          },
+          {
+            "$ref": "#/$defs/SeaConditions"
+          },
+          {
+            "$ref": "#/$defs/Daylight"
+          },
+          {
+            "$ref": "#/$defs/Money"
+          },
+          {
+            "$ref": "#/$defs/AdviceCard"
+          },
+          {
+            "$ref": "#/$defs/PlaceIntro"
+          },
+          {
+            "$ref": "#/$defs/Map"
+          },
+          {
+            "$ref": "#/$defs/ItineraryDay"
+          },
+          {
+            "$ref": "#/$defs/HotelList"
+          },
+          {
+            "$ref": "#/$defs/CostEstimate"
+          },
+          {
+            "$ref": "#/$defs/BookingApproval"
+          },
+          {
+            "$ref": "#/$defs/WebResults"
+          },
+          {
+            "$ref": "#/$defs/NotKnown"
+          },
+          {
+            "$ref": "#/$defs/PublicHolidays"
+          },
+          {
+            "$ref": "#/$defs/TimeDifference"
+          },
+          {
+            "$ref": "#/$defs/FareList"
+          },
+          {
+            "$ref": "#/$defs/TransportRoute"
+          }
+        ]
+      },
+      "title": "Place Widgets",
+      "type": "array"
+    },
+    "share": {
+      "$ref": "#/$defs/ShareSettings"
+    },
+    "stay": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HotelList"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "trip_id": {
+      "title": "Trip Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "trip_id",
+    "is_sample",
+    "name",
+    "share"
+  ],
+  "title": "Trip",
+  "type": "object"
+}

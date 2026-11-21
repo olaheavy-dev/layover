@@ -1,0 +1,26 @@
+{
+  "kind": "booking_approval",
+  "state": "filled",
+  "sandbox": true,
+  "origin": "MAN",
+  "destination": "LIS",
+  "depart": "2027-05-14",
+  "return_date": "2027-05-19",
+  "adults": 2,
+  "booking_state": "price_changed",
+  "sandbox_price": {
+    "amount_minor": 19200,
+    "currency": "GBP"
+  },
+  "new_price": {
+    "amount_minor": 20400,
+    "currency": "GBP"
+  },
+  "sources": [
+    {
+      "status": "live",
+      "source": "Duffel sandbox",
+      "captured_at": "2026-11-18T09:00:00Z"
+    }
+  ]
+}

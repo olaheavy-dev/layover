@@ -1,0 +1,12 @@
+{
+  "kind": "sea_conditions",
+  "state": "error",
+  "place": "Lisbon",
+  "month": 5,
+  "sources": [
+    {
+      "status": "unavailable",
+      "source": "Open-Meteo Marine"
+    }
+  ]
+}
