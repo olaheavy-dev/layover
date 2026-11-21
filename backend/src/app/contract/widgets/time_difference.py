@@ -13,7 +13,7 @@ class TimeDifference(WidgetBase):
     place: str
     place_zone: str | None = None  # IANA name, for example "Europe/Lisbon"
     on_date: date | None = None
-    dates_set: bool = True  # False: the day is the middle of the month
+    dates_set: bool  # False: the day is the middle of the month
     uk_offset_minutes: int | None = None  # UTC offset on that day, BST included
     place_offset_minutes: int | None = None
     difference_minutes: int | None = None  # place minus UK; positive is ahead

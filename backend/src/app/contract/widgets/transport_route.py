@@ -20,7 +20,7 @@ class TransportRoute(WidgetBase):
     origin: str
     destination: str
     planned_for: date | None = None
-    dates_set: bool = True
+    dates_set: bool
     leaves_at: time | None = None
     legs: list[Leg] = Field(default_factory=list)
     total_minutes: int | None = Field(default=None, ge=0)

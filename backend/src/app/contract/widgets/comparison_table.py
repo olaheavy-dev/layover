@@ -1,11 +1,28 @@
 """`comparison_table`: the places side by side."""
 
-from typing import Literal
+from typing import Literal, Self
 
-from pydantic import Field
+from pydantic import Field, model_validator
 
-from app.contract.common import MoneyValue, WidgetBase
-from app.contract.widgets._parts import CostLine, Fare, Part
+from app.contract.common import MoneyEstimate, SourceLabel, WidgetBase
+from app.contract.widgets._parts import (
+    BudgetPosition,
+    CostLine,
+    Fare,
+    Part,
+    check_budget_gap,
+    check_partial_flag,
+)
+
+
+class Weather(Part):
+    """Typical weather for the trip month, with its own label (sample-data.md)."""
+
+    high_c: float | None = None
+    low_c: float | None = None
+    rainy_days: int | None = Field(default=None, ge=0)
+    averages_period: str  # "1991-2020"
+    source: SourceLabel
 
 
 class PlaceCard(Part):
@@ -17,12 +34,15 @@ class PlaceCard(Part):
     meals: CostLine | None = None
     known_costs: CostLine | None = None
     is_partial: bool = False
-    # known costs minus budget, in minor units: negative is under, positive is over.
-    # None when it cannot be worked out (a missing line could change the answer).
-    over_budget_by: MoneyValue | None = None
-    high_c: float | None = None
-    low_c: float | None = None
-    rainy_days: int | None = Field(default=None, ge=0)
+    budget_gap: MoneyEstimate | None = None  # how far from the budget; never negative
+    budget_position: BudgetPosition | None = None
+    weather: Weather | None = None
+
+    @model_validator(mode="after")
+    def _partial_and_budget(self) -> Self:
+        check_partial_flag(self.is_partial, [self.flights, self.stay, self.meals, self.known_costs])
+        check_budget_gap(self.is_partial, self.budget_gap, self.budget_position)
+        return self
 
 
 class ComparisonTable(WidgetBase):

@@ -113,7 +113,7 @@ WIDGET_STATES: dict[str, tuple[str, ...]] = {
     "not_known": ("not_known",),
     "public_holidays": ("filled", "loading", "empty", "error", "not_known"),
     "time_difference": ("filled", "loading", "error", "not_known", "same_time", "hours_ahead"),
-    "fare_list": ("filled", "loading", "empty", "error", "not_known"),
+    "fare_list": ("filled", "loading", "empty", "error", "not_known", "one_place_not_known"),
     "transport_route": ("filled", "loading", "error", "not_known"),
 }
 

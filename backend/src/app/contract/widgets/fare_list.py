@@ -2,7 +2,7 @@
 
 from typing import Literal, Self
 
-from pydantic import Field, model_validator
+from pydantic import Field, HttpUrl, model_validator
 
 from app.contract.common import WidgetBase
 from app.contract.widgets._parts import Fare, Part
@@ -11,6 +11,7 @@ from app.contract.widgets._parts import Fare, Part
 class FareRow(Part):
     destination: str
     fare: Fare | None = None
+    search_url: HttpUrl | None = None  # "Check live price" link for this row
     missing: str | None = None  # a row with no fare says why
 
     @model_validator(mode="after")
@@ -24,6 +25,7 @@ class FareList(WidgetBase):
     kind: Literal["fare_list"]
     origin: str
     month: str  # "2027-03"
+    search_url: HttpUrl | None = None  # "Search flights on Aviasales" (error and empty)
     rows: list[FareRow] = Field(default_factory=list)
 
     @model_validator(mode="after")

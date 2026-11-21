@@ -12,7 +12,7 @@ class Daylight(WidgetBase):
     kind: Literal["daylight"]
     place: str
     day: date | None = None
-    dates_set: bool = True  # False: the day is the middle of the month
+    dates_set: bool  # False: the day is the middle of the month
     sunrise: time | None = None
     sunset: time | None = None
     day_length_minutes: int | None = Field(default=None, ge=0, le=1440)

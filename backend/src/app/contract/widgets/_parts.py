@@ -1,7 +1,7 @@
 """Small models that more than one widget uses."""
 
 from datetime import date
-from typing import Annotated, Self
+from typing import Annotated, Literal, Self
 
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
 
@@ -24,6 +24,36 @@ class Fare(Part):
     captured_at: AwareDatetime
     source: SourceLabel
 
+    @model_validator(mode="after")
+    def _times_agree(self) -> Self:
+        if self.source.captured_at is not None and self.source.captured_at != self.captured_at:
+            raise ValueError("fare captured_at and its source label captured_at must match")
+        return self
+
+
+BudgetPosition = Literal["under", "over", "on"]
+
+
+def check_budget_gap(
+    is_partial: bool, gap: MoneyEstimate | None, position: BudgetPosition | None
+) -> None:
+    """Rules for the budget comparison, shared by cost_estimate and comparison cards.
+
+    The gap is never negative: the position says under, over or on. Both are set or both are
+    empty. While a line is missing, only "over" can be said (a missing line can only add cost);
+    "under" or "on" would look complete.
+    """
+    if (gap is None) != (position is None):
+        raise ValueError("budget_gap and budget_position are both set or both empty")
+    if gap is None or position is None:
+        return
+    if gap.exact.amount_minor < 0 or gap.shown.amount_minor < 0:
+        raise ValueError("budget_gap is never negative; use budget_position")
+    if (position == "on") != (gap.exact.amount_minor == 0):
+        raise ValueError('budget_position "on" means a gap of exactly zero')
+    if is_partial and position != "over":
+        raise ValueError("a partial total can only be compared once it is over budget")
+
 
 class CostLine(Part):
     """One line of a cost estimate. A line with no amount says why (decision 0011, rule 4)."""
@@ -42,6 +72,12 @@ class CostLine(Part):
         if self.amount is None and not (self.missing and self.missing.strip()):
             raise ValueError("a cost line with no amount needs a missing reason")
         return self
+
+
+def check_partial_flag(is_partial: bool, lines: list[CostLine | None]) -> None:
+    """A total with a line that has no amount must say it is partial (decision 0011, rule 4)."""
+    if not is_partial and any(line is not None and line.amount is None for line in lines):
+        raise ValueError("a line has no amount, so is_partial must be True")
 
 
 Latitude = Annotated[float, Field(ge=-90, le=90)]

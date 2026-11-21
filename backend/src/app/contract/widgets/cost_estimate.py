@@ -1,11 +1,16 @@
 """`cost_estimate`: known costs for a place, always an estimate and often partial."""
 
-from typing import Literal
+from typing import Literal, Self
 
-from pydantic import Field
+from pydantic import Field, model_validator
 
-from app.contract.common import MoneyValue, WidgetBase
-from app.contract.widgets._parts import CostLine
+from app.contract.common import MoneyEstimate, MoneyValue, WidgetBase
+from app.contract.widgets._parts import (
+    BudgetPosition,
+    CostLine,
+    check_budget_gap,
+    check_partial_flag,
+)
 
 
 class CostEstimate(WidgetBase):
@@ -19,7 +24,23 @@ class CostEstimate(WidgetBase):
     total: CostLine | None = None
     is_partial: bool = True
     budget: MoneyValue | None = None
-    # total minus budget: negative is under, positive is over. None while a line is missing.
-    over_budget_by: MoneyValue | None = None
+    budget_gap: MoneyEstimate | None = None  # how far from the budget; never negative
+    budget_position: BudgetPosition | None = None
     nights: int | None = Field(default=None, ge=1)
     people: int | None = Field(default=None, ge=1)
+
+    @model_validator(mode="after")
+    def _partial_and_budget(self) -> Self:
+        check_partial_flag(
+            self.is_partial,
+            [
+                self.flights,
+                self.stay,
+                self.meals,
+                self.local_transport,
+                self.activities,
+                self.total,
+            ],
+        )
+        check_budget_gap(self.is_partial, self.budget_gap, self.budget_position)
+        return self
