@@ -535,6 +535,17 @@ class Boards(unittest.TestCase):
                 found = self.page(page)
                 self.assertTrue(any("welcome.html" in p and f'needs the label "{LABEL}"' in p for p in found), found)
 
+    def test_head_closes_without_its_end_tag(self) -> None:
+        # Codex P1 on #68: </head> is optional (WHATWG HTML, "Optional tags"), and a browser shows the body.
+        # Expected failure before the fix: the open <head> kept everything after it hidden.
+        self.assertIn("</head>", GOOD_PAGE)
+        for name, page in {
+            "body start tag": GOOD_PAGE.replace("</head>", ""),
+            "no body tag": GOOD_PAGE.replace("</head>", "").replace("<body>", ""),
+        }.items():
+            with self.subTest(name=name):
+                self.assertEqual(self.page(page), [])
+
     def test_label_split_by_inline_markup_or_entities_passes(self) -> None:
         page = GOOD_PAGE.replace(LABEL, "Sample <b>data</b>,&nbsp;not   real")
         self.assertEqual(self.page(page), [])

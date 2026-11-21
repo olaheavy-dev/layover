@@ -114,6 +114,9 @@ BLOCK_TAGS = {"p", "div", "li", "ul", "ol", "td", "th", "tr", "table", "h1", "h2
               "hr", "section", "article", "header", "footer", "nav", "main", "aside", "figure", "figcaption",
               "blockquote", "option", "dt", "dd", "label", "button"}  # a line break between words, unlike <b>
 NOT_SHOWN_TAGS = {"head", "title", "template", "script", "style"}
+# Tags that may sit in <head>. Any other tag, or visible text, ends the head even without </head>
+# (WHATWG HTML, "Optional tags" and the "in head" insertion mode).
+HEAD_TAGS = {"html", "head", "title", "meta", "link", "style", "script", "base", "noscript", "template"}
 
 HEX = re.compile(r"(?<![\w&])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b")
 FUNC = re.compile(r"\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color|color-mix)\s*\(", re.I)
@@ -202,7 +205,14 @@ class _Page(HTMLParser):
         self._open: dict[str, int] = {}
         self._hidden = 0
 
+    def _end_head(self) -> None:
+        """Close an open <head> the way a browser does when body content starts."""
+        if self._open.get("head"):
+            self.handle_endtag("head")
+
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag not in HEAD_TAGS:
+            self._end_head()
         pairs = [(name.lower(), value or "") for name, value in attrs]
         self.tags.append((tag, pairs))
         self._break(tag)
@@ -238,6 +248,8 @@ class _Page(HTMLParser):
         if self._raw:
             self._raw_text.append(data)
             return
+        if data.strip() and self._open.get("head") and not self._open.get("title"):
+            self._end_head()
         self.text.append(data)
         if not self._hidden:
             self.visible.append(data)
