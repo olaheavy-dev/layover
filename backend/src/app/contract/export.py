@@ -48,6 +48,12 @@ def expected_files() -> dict[str, str]:
     return files
 
 
+def _leftovers(out: Path, files: dict[str, str]) -> list[str]:
+    """Schema files in the output folder that no model produces. `samples/` is never looked at."""
+    found = [*out.glob("*.schema.json"), *out.glob("widgets/*.schema.json")]
+    return sorted(name for path in found if (name := path.relative_to(out).as_posix()) not in files)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--check", action="store_true", help="compare, write nothing")
@@ -59,8 +65,10 @@ def main(argv: list[str] | None = None) -> int:
         stale = [
             name
             for name, text in files.items()
-            if not (args.out / name).is_file() or (args.out / name).read_text() != text
+            if not (args.out / name).is_file()
+            or (args.out / name).read_text(encoding="utf-8") != text
         ]
+        stale += _leftovers(args.out, files)
         for name in stale:
             print(name)
         if stale:
@@ -70,7 +78,7 @@ def main(argv: list[str] | None = None) -> int:
     for name, text in files.items():
         path = args.out / name
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text)
+        path.write_text(text, encoding="utf-8", newline="\n")
     print(f"wrote {len(files)} files to {args.out}")
     return 0
 

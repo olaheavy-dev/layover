@@ -368,7 +368,9 @@ def test_cost_estimate_with_a_missing_line_must_be_partial() -> None:
     TypeAdapter(Widget).validate_python(_cost(local_transport=missing, is_partial=True))
     with pytest.raises(ValidationError):
         TypeAdapter(Widget).validate_python(_cost(local_transport=missing, is_partial=False))
-    TypeAdapter(Widget).validate_python(_cost(flights=_line(), is_partial=False))
+    # An omitted line counts as missing, so a cost estimate with only flights is still partial.
+    with pytest.raises(ValidationError):
+        TypeAdapter(Widget).validate_python(_cost(flights=_line(), is_partial=False))
 
 
 def test_comparison_card_with_a_missing_line_must_be_partial() -> None:
@@ -498,4 +500,147 @@ def test_comparison_card_has_no_comparison_when_the_stay_is_missing() -> None:
                     {**card, "budget_gap": _estimate(1800, 2000), "budget_position": "under"}
                 ],
             }
+        )
+
+
+def _all_lines(**over: Any) -> dict[str, Any]:
+    return {
+        "flights": _line(),
+        "stay": _line(),
+        "meals": _line(),
+        "local_transport": _line(),
+        "activities": _line(),
+        **over,
+    }
+
+
+def test_complete_cost_estimate_may_say_it_is_not_partial() -> None:
+    TypeAdapter(Widget).validate_python(_cost(**_all_lines(), is_partial=False))
+    with pytest.raises(ValidationError):  # one line omitted
+        TypeAdapter(Widget).validate_python(
+            _cost(**{**_all_lines(), "activities": None}, is_partial=False)
+        )
+
+
+def test_comparison_card_with_known_costs_is_always_partial() -> None:
+    """A card has no local transport or activities lines, so its known costs are partial.
+
+    Working: Lisbon known costs 78200 pence cover flights, stay and meals only.
+    Source: sample-data.md line 36, "Known costs" (local transport and activities not known).
+    """
+    base = {**_payload("comparison_table"), "state": "filled", "sources": [SOURCE]}
+    card = {
+        "place": "Lisbon",
+        "card_state": "ready",
+        "flights": _line(),
+        "stay": _line(),
+        "meals": _line(),
+        "known_costs": _line(),
+    }
+    TypeAdapter(Widget).validate_python({**base, "cards": [card]})  # defaults to partial
+    with pytest.raises(ValidationError):
+        TypeAdapter(Widget).validate_python({**base, "cards": [{**card, "is_partial": False}]})
+
+
+def _total(exact: int, *, estimate: bool = True) -> dict[str, Any]:
+    amount = (
+        _estimate(exact, exact) if estimate else {**_estimate(exact, exact), "is_estimate": False}
+    )
+    return {"amount": amount, "source": SOURCE}
+
+
+def test_budget_gap_must_match_the_budget_and_total() -> None:
+    """Lisbon: budget 80000, total 78200.
+
+    Working: 80000 - 78200 = 1800 pence, under budget. A total of 90200 gives 10200 over.
+    Source: sample-data.md line 36 (Lisbon 800 - 782 = 18 under; Valletta 902 - 800 = 102 over).
+    """
+    core = _core(local_transport={"missing": "x"})
+    good = {"total": _total(78200), "budget_gap": _estimate(1800, 2000), "budget_position": "under"}
+    TypeAdapter(Widget).validate_python(_cost(**core, **good))
+    over = {
+        "total": _total(90200),
+        "budget_gap": _estimate(10200, 10000),
+        "budget_position": "over",
+    }
+    TypeAdapter(Widget).validate_python(_cost(**core, **over))
+    on = {"total": _total(80000), "budget_gap": _estimate(0, 0), "budget_position": "on"}
+    TypeAdapter(Widget).validate_python(_cost(**core, **on))
+    wrong_gap = {**good, "budget_gap": _estimate(50000, 50000), "budget_position": "over"}
+    with pytest.raises(ValidationError):  # 50000 is not |80000 - 78200|
+        TypeAdapter(Widget).validate_python(_cost(**core, **wrong_gap))
+    with pytest.raises(ValidationError):  # right figure, wrong direction
+        TypeAdapter(Widget).validate_python(_cost(**core, **{**good, "budget_position": "over"}))
+    euro = {
+        **good,
+        "budget_gap": {
+            **_estimate(1800, 2000),
+            "exact": {"amount_minor": 1800, "currency": "EUR"},
+            "shown": {"amount_minor": 2000, "currency": "EUR"},
+        },
+    }
+    with pytest.raises(ValidationError):  # currency differs from the budget
+        TypeAdapter(Widget).validate_python(_cost(**core, **euro))
+
+
+def test_total_of_estimates_must_be_an_estimate() -> None:
+    """Working: the stay line is an estimate, so a total that includes it is an estimate."""
+    with pytest.raises(ValidationError):
+        TypeAdapter(Widget).validate_python(
+            _cost(flights=_line(), stay=_line(), total=_total(38400, estimate=False))
+        )
+
+
+def test_advice_card_links_only_to_the_fcdo_page() -> None:
+    for url in (
+        "https://example.com/foreign-travel-advice/portugal",
+        "https://gov-uk.example.com/foreign-travel-advice/portugal",
+        "https://www.gov.uk.example.com/foreign-travel-advice/portugal",
+        "http://www.gov.uk/foreign-travel-advice/portugal",
+        "https://www.gov.uk/other/portugal",
+    ):
+        with pytest.raises(ValidationError):
+            TypeAdapter(Widget).validate_python(_advice(fcdo_url=url, updated_on="2026-11-20"))
+    TypeAdapter(Widget).validate_python(_advice(updated_on="2026-11-20"))
+    TypeAdapter(Widget).validate_python(
+        _advice(fcdo_url="https://www.gov.uk/foreign-travel-advice", updated_on="2026-11-20")
+    )
+
+
+@pytest.mark.parametrize("kind", ["fare_card", "fare_list"])
+def test_month_must_be_a_year_and_month(kind: str) -> None:
+    for bad in ("May 2027", "2027-13", "2027-5"):
+        with pytest.raises(ValidationError):
+            TypeAdapter(Widget).validate_python({**_payload(kind), "month": bad})
+
+
+def test_hotel_list_chosen_needs_a_hotel() -> None:
+    base = {**_payload("hotel_list"), "state": "filled", "sources": [SOURCE]}
+    for selection in ("chosen", "changed"):
+        with pytest.raises(ValidationError):
+            TypeAdapter(Widget).validate_python({**base, "selection": selection})
+        TypeAdapter(Widget).validate_python(
+            {**base, "selection": selection, "chosen_hotel": "Sample Hotel Alfama"}
+        )
+    TypeAdapter(Widget).validate_python({**base, "selection": "skipped"})
+
+
+def test_itinerary_day_base_and_centre_must_agree() -> None:
+    base = {**_payload("itinerary_day"), "state": "filled", "sources": [SOURCE]}
+    TypeAdapter(Widget).validate_python({**base, "base": "Sample Hotel Alfama"})
+    TypeAdapter(Widget).validate_python({**base, "starts_from_centre": True})
+    with pytest.raises(ValidationError):
+        TypeAdapter(Widget).validate_python(
+            {**base, "base": "Sample Hotel Alfama", "starts_from_centre": True}
+        )
+
+
+def test_stop_hours_can_depend_on_the_day() -> None:
+    """The board with no dates set: opening times depend on the day (sample-data.md line 252)."""
+    base = {**_payload("itinerary_day"), "state": "filled", "sources": [SOURCE]}
+    stop = {"name": "Castelo de São Jorge", "hours_status": "depends_on_day"}
+    TypeAdapter(Widget).validate_python({**base, "stops": [stop]})
+    with pytest.raises(ValidationError):  # no one set of hours when they depend on the day
+        TypeAdapter(Widget).validate_python(
+            {**base, "stops": [{**stop, "opens": "10:00:00", "closes": "18:00:00"}]}
         )

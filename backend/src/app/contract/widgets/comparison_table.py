@@ -33,7 +33,7 @@ class PlaceCard(Part):
     stay: CostLine | None = None
     meals: CostLine | None = None
     known_costs: CostLine | None = None
-    is_partial: bool = False
+    is_partial: bool = True  # a card has no local transport or activities lines: always partial
     budget_gap: MoneyEstimate | None = None  # how far from the budget; never negative
     budget_position: BudgetPosition | None = None
     weather: Weather | None = None
@@ -41,6 +41,8 @@ class PlaceCard(Part):
     @model_validator(mode="after")
     def _partial_and_budget(self) -> Self:
         check_partial_flag(self.is_partial, [self.flights, self.stay, self.meals, self.known_costs])
+        if self.known_costs is not None and not self.is_partial:
+            raise ValueError("a card has no local transport or activities, so is_partial is True")
         check_budget_gap(
             has_budget=True,  # the brief holds the budget; the card only holds the gap
             core_lines=[self.flights, self.stay, self.meals],

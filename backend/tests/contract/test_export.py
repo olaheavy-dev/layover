@@ -35,3 +35,18 @@ def test_export_check_catches_drift(tmp_path: Path) -> None:
     assert result.returncode == 1
     assert "widgets/money.schema.json" in result.stdout
     assert "trip.schema.json" in result.stdout
+
+
+def test_export_check_reports_leftover_schema_files(tmp_path: Path) -> None:
+    """A schema file no model produces is stale. Expected failure before: --check exited 0."""
+    copy = tmp_path / "schemas"
+    shutil.copytree(default_out_dir(), copy, ignore=shutil.ignore_patterns("samples"))
+    (copy / "widgets" / "old_kind.schema.json").write_text("{}")
+    (copy / "old.schema.json").write_text("{}")
+    (copy / "samples").mkdir()
+    (copy / "samples" / "ignored.schema.json").write_text("{}")
+    result = _run("--check", "--out", str(copy))
+    assert result.returncode == 1
+    assert "widgets/old_kind.schema.json" in result.stdout
+    assert "old.schema.json" in result.stdout
+    assert "ignored" not in result.stdout

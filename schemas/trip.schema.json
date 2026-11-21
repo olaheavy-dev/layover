@@ -1099,6 +1099,7 @@
           "title": "Missing"
         },
         "month": {
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
           "title": "Month",
           "type": "string"
         },
@@ -1172,6 +1173,7 @@
           "title": "Missing"
         },
         "month": {
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
           "title": "Month",
           "type": "string"
         },
@@ -1970,7 +1972,7 @@
           "default": null
         },
         "is_partial": {
-          "default": false,
+          "default": true,
           "title": "Is Partial",
           "type": "boolean"
         },
@@ -2415,6 +2417,7 @@
           "enum": [
             "known",
             "not_known",
+            "depends_on_day",
             "not_applicable"
           ],
           "title": "Hours Status",

@@ -5,7 +5,7 @@ from typing import Literal, Self
 from pydantic import Field, HttpUrl, model_validator
 
 from app.contract.common import WidgetBase
-from app.contract.widgets._parts import Fare, Part
+from app.contract.widgets._parts import Fare, Part, YearMonth
 
 
 class FareRow(Part):
@@ -24,7 +24,7 @@ class FareRow(Part):
 class FareList(WidgetBase):
     kind: Literal["fare_list"]
     origin: str
-    month: str  # "2027-03"
+    month: YearMonth  # "2027-03"
     search_url: HttpUrl | None = None  # "Search flights on Aviasales" (error and empty)
     rows: list[FareRow] = Field(default_factory=list)
 

@@ -83,9 +83,18 @@ class CostLine(Part):
         return self
 
 
-def check_partial_flag(is_partial: bool, lines: list[CostLine | None]) -> None:
-    """A total with a line that has no amount must say it is partial (decision 0011, rule 4)."""
-    if not is_partial and any(line is not None and line.amount is None for line in lines):
+def check_partial_flag(
+    is_partial: bool, lines: list[CostLine | None], *, omitted_counts_as_missing: bool = False
+) -> None:
+    """A total with a line that has no amount must say it is partial (decision 0011, rule 4).
+
+    With `omitted_counts_as_missing`, a line that is not there at all counts as having no amount.
+    """
+    missing = any(
+        (line is None and omitted_counts_as_missing) or (line is not None and line.amount is None)
+        for line in lines
+    )
+    if not is_partial and missing:
         raise ValueError("a line has no amount, so is_partial must be True")
 
 

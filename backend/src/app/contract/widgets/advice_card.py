@@ -3,7 +3,7 @@
 from datetime import date
 from typing import Literal, Self
 
-from pydantic import HttpUrl, model_validator
+from pydantic import HttpUrl, field_validator, model_validator
 
 from app.contract.common import WidgetBase
 
@@ -15,6 +15,17 @@ class AdviceCard(WidgetBase):
     fcdo_url: HttpUrl  # always shown, even when the page could not be read
     updated_on: date | None = None  # the FCDO's own update date
     layover_copy: str | None = None
+
+    @field_validator("fcdo_url")
+    @classmethod
+    def _is_the_fcdo_page(cls, url: HttpUrl) -> HttpUrl:
+        if (
+            url.scheme != "https"
+            or url.host != "www.gov.uk"
+            or not (url.path or "").startswith("/foreign-travel-advice")
+        ):
+            raise ValueError("fcdo_url must be an https://www.gov.uk/foreign-travel-advice page")
+        return url
 
     @model_validator(mode="after")
     def _filled_shows_its_date(self) -> Self:

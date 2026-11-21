@@ -12,15 +12,21 @@ from typing import Any
 import pytest
 from pydantic import TypeAdapter
 
-from app.contract.samples import load_sample_trip, load_sample_widgets, samples_dir
+from app.contract.samples import (
+    SamplesUnavailable,
+    load_sample_trip,
+    load_sample_widgets,
+)
 from app.contract.widgets import WIDGET_KINDS, WIDGET_STATES, CostEstimate, Widget
+from app.settings import DEFAULT_SAMPLES_DIR
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
+ROOT = DEFAULT_SAMPLES_DIR
 PLACEHOLDER_STRINGS = {"", "N/A", "TBC", "-", "—"}
 
 
 def _widget_files() -> list[Path]:
-    return sorted((samples_dir() / "widgets").glob("*/*.json"))
+    return sorted((ROOT / "widgets").glob("*/*.json"))
 
 
 def _walk(value: Any) -> list[Any]:
@@ -40,7 +46,7 @@ def _strings(path: Path) -> list[str]:
 
 
 def test_every_kind_has_every_state() -> None:
-    root = samples_dir() / "widgets"
+    root = ROOT / "widgets"
     assert {p.name for p in root.iterdir() if p.is_dir()} == set(WIDGET_KINDS)
     for kind in WIDGET_KINDS:
         found = {p.stem for p in (root / kind).glob("*.json")}
@@ -57,10 +63,10 @@ def test_every_sample_validates() -> None:
 
 
 def test_sample_trip_is_marked() -> None:
-    trip = load_sample_trip()
+    trip = load_sample_trip(ROOT)
     assert trip.is_sample is True
     assert trip.trip_id == "sample-lisbon"
-    assert len(load_sample_widgets()) == len(_widget_files())
+    assert len(load_sample_widgets(ROOT)) == len(_widget_files())
 
 
 def _missing_objects(document: Any) -> list[Any]:
@@ -74,7 +80,7 @@ def _missing_objects(document: Any) -> list[Any]:
 
 def test_no_zero_for_missing() -> None:
     checked = 0
-    paths = [*_widget_files(), *(samples_dir() / "trip").glob("*.json")]
+    paths = [*_widget_files(), *(ROOT / "trip").glob("*.json")]
     for path in paths:
         for obj in _missing_objects(json.loads(path.read_text("utf-8"))):
             checked += 1
@@ -88,8 +94,8 @@ def test_no_zero_for_missing() -> None:
 
 
 def test_trip_matches_widget_samples() -> None:
-    by_name = {(s.kind, s.state): s.widget for s in load_sample_widgets()}
-    trip = load_sample_trip()
+    by_name = {(s.kind, s.state): s.widget for s in load_sample_widgets(ROOT)}
+    trip = load_sample_trip(ROOT)
     assert trip.comparison == by_name[("comparison_table", "chosen")]
     assert trip.stay == by_name[("hotel_list", "chosen")]
     assert trip.booking == by_name[("booking_approval", "waiting")]
@@ -116,7 +122,7 @@ def test_trip_matches_widget_samples() -> None:
 
 
 def test_exact_flights_are_not_estimates() -> None:
-    by_name = {(s.kind, s.state): s.widget for s in load_sample_widgets()}
+    by_name = {(s.kind, s.state): s.widget for s in load_sample_widgets(ROOT)}
     cost = by_name[("cost_estimate", "filled")]
     assert isinstance(cost, CostEstimate)
     assert cost.flights is not None
@@ -144,7 +150,7 @@ def test_no_safe_wording(monkeypatch: pytest.MonkeyPatch) -> None:
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     safe = module.SAFE
-    files = [*_widget_files(), *(samples_dir() / "trip").glob("*.json")]
+    files = [*_widget_files(), *(ROOT / "trip").glob("*.json")]
     assert files
     for path in files:
         for text in _strings(path):
@@ -155,3 +161,16 @@ def test_samples_dir_is_overridable(tmp_path: Path) -> None:
     from app.settings import Settings
 
     assert Settings(samples_dir=tmp_path).samples_dir == tmp_path
+
+
+def test_loaders_fail_clearly_when_the_folder_is_missing(tmp_path: Path) -> None:
+    """Expected failure before the fix: the widgets loader returned [] and the trip loader raised
+    FileNotFoundError, not SamplesUnavailable."""
+    with pytest.raises(SamplesUnavailable):
+        load_sample_trip(tmp_path)
+    with pytest.raises(SamplesUnavailable):
+        load_sample_widgets(tmp_path)
+
+
+def test_every_widget_sample_is_marked_as_a_sample() -> None:
+    assert all(item.is_sample is True for item in load_sample_widgets(ROOT))

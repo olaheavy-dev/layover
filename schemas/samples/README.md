@@ -2,16 +2,16 @@
 
 These files are **samples**. They are not real data. Layover never uses them for a real figure: no fare, rate, forecast, advice date or total a traveller sees comes from here.
 
-They exist so that every widget has one example in every state. They feed the backend tests, the sample API endpoints (they come in a later task) and the website's widget gallery.
+They exist so that every widget has one example in every state. They feed the backend tests, the sample API endpoints (`GET /v1/sample/trip` and `GET /v1/sample/widgets`) and the website's widget gallery.
 
 - `widgets/<kind>/<state>.json`: one file for each widget kind and state in `WIDGET_STATES` (`backend/src/app/contract/widgets/__init__.py`). The file name is the state, for example `swapped.json`. The widget's own `state` field can differ: `swapped` is a `filled` comparison with one swapped card.
 - `trip/sample-lisbon.json`: the sample Lisbon trip, with `is_sample` set to `true`.
 
-Load them with `app.contract.samples` (`load_sample_trip`, `load_sample_widgets`). The folder is the `SAMPLES_DIR` setting; it defaults to this folder.
+Load them with `app.contract.samples` (`load_sample_trip(root)`, `load_sample_widgets(root)`), passing the folder. The API gets the folder from the `SAMPLES_DIR` setting; it defaults to this folder.
 
 ## Where each value comes from
 
-Every value is copied from [`docs/design/boards/sample-data.md`](../../docs/design/boards/sample-data.md) and the design boards that use it. Nothing here was typed fresh. Dates are the boards' sample dates: "today" is 18 Nov 2026, and an age of "3 days old" is a `captured_at` of 15 Nov 2026 at 09:00 UTC.
+Every value is copied from [`docs/design/boards/sample-data.md`](../../docs/design/boards/sample-data.md) and the design boards that use it. Apart from the values the notes below call out (made-up map coordinates, the `fare_list` empty age and the made-up fares, holidays, times and journeys), nothing here was typed fresh. Dates are the boards' sample dates: "today" is 18 Nov 2026, and an age of "3 days old" is a `captured_at` of 15 Nov 2026 at 09:00 UTC.
 
 | Samples | Section of `sample-data.md` |
 |---|---|

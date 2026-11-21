@@ -640,7 +640,7 @@ export interface components {
             known_costs?: components["schemas"]["CostLine"] | null;
             /**
              * Is Partial
-             * @default false
+             * @default true
              */
             is_partial: boolean;
             budget_gap?: components["schemas"]["MoneyEstimate"] | null;
@@ -711,6 +711,12 @@ export interface components {
          * @description One sample file: a widget kind, the state the file shows, and the parsed widget.
          */
         SampleWidget: {
+            /**
+             * Is Sample
+             * @default true
+             * @constant
+             */
+            is_sample: true;
             /** Kind */
             kind: string;
             /** State */
@@ -788,7 +794,7 @@ export interface components {
              * @default not_applicable
              * @enum {string}
              */
-            hours_status: "known" | "not_known" | "not_applicable";
+            hours_status: "known" | "not_known" | "depends_on_day" | "not_applicable";
             /** Opens */
             opens?: string | null;
             /** Closes */

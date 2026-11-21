@@ -89,6 +89,7 @@
           "enum": [
             "known",
             "not_known",
+            "depends_on_day",
             "not_applicable"
           ],
           "title": "Hours Status",

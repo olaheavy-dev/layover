@@ -12,7 +12,9 @@ from app.contract.widgets._parts import Part
 class Stop(Part):
     name: str
     kind: Literal["place", "walk"] = "place"
-    hours_status: Literal["known", "not_known", "not_applicable"] = "not_applicable"
+    hours_status: Literal["known", "not_known", "depends_on_day", "not_applicable"] = (
+        "not_applicable"
+    )
     opens: time | None = None
     closes: time | None = None
     source: SourceLabel | None = None
@@ -34,3 +36,9 @@ class ItineraryDay(WidgetBase):
     starts_from_centre: bool = False
     rebuilt: bool = False  # rebuilt after a hotel change
     stops: list[Stop] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _base_and_centre_agree(self) -> Self:
+        if self.starts_from_centre and self.base is not None:
+            raise ValueError("a day that starts from the centre has no base hotel")
+        return self
