@@ -32,8 +32,8 @@ The cost lines use one rule for every place, so the boards stay consistent: flig
 | Stay for 5 nights | £70 × 5 = £350 | Not known | £80 × 5 = £400 |
 | Meal estimate, one person | about £12 (estimate from the same Wikivoyage page, Cached, 4 days old) | about £11 (estimate from 5 Wikivoyage listings, page edited February 2026, Cached, 2 days old) | about £13 (estimate from the same Wikivoyage page, Cached, 9 days old) |
 | Meals | £12 × 2 × 5 × 2 = £240 | £11 × 2 × 5 × 2 = £220 | £13 × 2 × 5 × 2 = £260 |
-| Known costs | £192 + £350 + £240 = £782, partial (local transport and activities not known) | £168 + £220 = £388, partial (stay, local transport and activities not known) | £242 + £400 + £260 = £902, partial (local transport and activities not known) |
-| Against £800 | £800 − £782 = £18 under on the known costs; the costs that are not known could take it over | Not known: stay is missing | £902 − £800 = £102 over on the known costs alone |
+| Known costs | £192 + £350 + £240 = £782 exact, shown as about £780 (nearest £10, half up), partial (local transport and activities not known) | £168 + £220 = £388 exact, shown as about £390, partial (stay, local transport and activities not known) | £242 + £400 + £260 = £902 exact, shown as about £900, partial (local transport and activities not known) |
+| Against £800 | £800 − £782 = £18 under on the known costs, shown as about £20 under; the costs that are not known could take it over | Not known: stay is missing | £902 − £800 = £102 over on the known costs alone, shown as about £100 over |
 | Local transport, activities | Not known | Not known | Not known |
 | May temperature, typical high and low | 22°C and 14°C | 24°C and 15°C | 23°C and 16°C |
 | Rainy days in May, typical | 5 | 4 | 2 |
@@ -66,7 +66,7 @@ Used on `trip-lisbon-chat.html`. The labels follow the rule in the [brief](../br
 |---|---|
 | Trip strip | "Lisbon, May", "5 facts ready" (fare, cost estimate, advice, weather, money), "View trip" |
 | Trip tab badge | "3 new" |
-| Compact cards | Flights: £96 return per person, Cached, 3 days old. Cost estimate: about £782, estimate, partial, Cached, 3 to 4 days old (the flights are 3 days old and the Wikivoyage lines 4). Travel advice: FCDO advice for Portugal, updated 12 Nov 2026, Cached, 1 day old. Weather in May: highs of 22°C, lows of 14°C, 5 rainy days, Live. Money: £1 = €1.15, rate for 18 Nov 2026, Live |
+| Compact cards | Flights: £96 return per person, Cached, 3 days old. Cost estimate: about £780, estimate, partial, Cached, 3 to 4 days old (the flights are 3 days old and the Wikivoyage lines 4). Travel advice: FCDO advice for Portugal, updated 12 Nov 2026, Cached, 1 day old. Weather in May: highs of 22°C, lows of 14°C, 5 rainy days, Live. Money: £1 = €1.15, rate for 18 Nov 2026, Live |
 | Side question: the beach | "The sea is 17°C in May. Typical highs are 22°C, with 5 rainy days." Source line: Live; Sea: Open-Meteo Marine; Weather: Open-Meteo |
 | Side question: what the estimate leaves out | Local transport and activities: Not known, not counted as £0 |
 | Side question: the FCDO date | "The FCDO page for Portugal was updated on 12 Nov 2026." Layover's copy: Cached, 1 day old |
@@ -128,7 +128,7 @@ Used on `widgets-place.html`. One extra state needs a figure that the tables abo
 
 | Item | Sample content |
 |---|---|
-| Lisbon cost estimate, fares source failed | Flights: Unavailable (no figure). Stay £70 × 5 = £350 and meals £12 × 2 × 5 × 2 = £240, as above. Known costs so far: £350 + £240 = £590, partial (flights, local transport and activities missing). No comparison with the £800 budget, because a missing line could change the answer |
+| Lisbon cost estimate, fares source failed | Flights: Unavailable (no figure). Stay £70 × 5 = £350 and meals £12 × 2 × 5 × 2 = £240, as above. Known costs so far: £350 + £240 = £590 exact, shown as about £590 (already a whole ten), partial (flights, local transport and activities missing). No comparison with the £800 budget, because a missing line could change the answer |
 
 ## Widget gallery: journey widgets
 
@@ -231,7 +231,7 @@ Used on the comparison cards (`comparison_table` and the `compare-*` screens). E
 | Flights for 2 | £192, "£96 × 2 adults", Cached, 3 days old | £168, "£84 × 2 adults", Cached, 1 day old | £242, "£121 × 2 adults", Cached, 6 days old |
 | Stay, 5 nights | about £350, "£70 × 5 nights, an estimate from 6 Wikivoyage listings, page edited March 2026", Cached, 4 days old | Not known: too few priced listings | about £400, "£80 × 5 nights, an estimate from 5 Wikivoyage listings, page edited January 2026", Cached, 9 days old |
 | Meals, 5 days | about £240, "£12 × 2 people × 5 days × 2 meals, an estimate", Cached, 4 days old | about £220, "£11 × 2 people × 5 days × 2 meals, an estimate", Cached, 2 days old | about £260, "£13 × 2 people × 5 days × 2 meals, an estimate", Cached, 9 days old |
-| Known costs | about £782: "£192 + £350 + £240. Partial: local transport and activities are not known" | about £388: "£168 + £220. Partial: stay, local transport and activities are not known" | about £902: "£242 + £400 + £260. Partial: local transport and activities are not known" |
+| Known costs | about £780: "£192 + £350 + £240. Partial: local transport and activities are not known" | about £390: "£168 + £220. Partial: stay, local transport and activities are not known" | about £900: "£242 + £400 + £260. Partial: local transport and activities are not known" |
 | Weather in May | "Typically 22°C high, 14°C low, 5 rainy days, averages 1991 to 2020", Live | "Typically 24°C high, 15°C low, 4 rainy days, averages 1991 to 2020", Live | "Typically 23°C high, 16°C low, 2 rainy days, averages 1991 to 2020", Live |
 
 The chat line after the comparison is neutral. It does not say places "fit": "Here are three places side by side. Lisbon is under your £800 on known costs, Valletta is over, and Valencia’s stay is not known." The strip says "Checking 3 places" and "3 places ready to compare".
