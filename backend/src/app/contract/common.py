@@ -45,6 +45,8 @@ class WidgetBase(BaseModel):
 
     @model_validator(mode="after")
     def _check_state(self) -> Self:
+        if self.missing is not None and not self.missing.strip():
+            raise ValueError("missing must say what is missing, never an empty string")
         if self.state == "not_known" and not self.missing:
             raise ValueError("a not_known widget needs a missing reason")
         kind = getattr(self, "kind", None)

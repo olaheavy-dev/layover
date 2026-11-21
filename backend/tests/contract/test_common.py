@@ -117,3 +117,9 @@ def test_estimate_currencies_must_match() -> None:
             shown=MoneyValue(amount_minor=100, currency="EUR"),
             is_estimate=True,
         )
+
+
+@pytest.mark.parametrize("state", ["loading", "filled", "empty", "error", "not_known"])
+def test_missing_is_never_an_empty_string(state: str) -> None:
+    with pytest.raises(ValidationError):
+        _Widget(kind="x", state=state, sources=[_label()], missing="")
