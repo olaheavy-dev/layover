@@ -1,0 +1,475 @@
+{
+  "$defs": {
+    "CostLine": {
+      "additionalProperties": false,
+      "description": "One line of a cost estimate. A line with no amount says why (decision 0011, rule 4).",
+      "properties": {
+        "amount": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyEstimate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "listing_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Listing Count"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing"
+        },
+        "page_edited": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Edited"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceLabel"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "CostLine",
+      "type": "object"
+    },
+    "Fare": {
+      "additionalProperties": false,
+      "description": "A cached return fare per person. It always carries when it was captured.\n\nNo \"too old\" limit lives here; build step 4 sets it.",
+      "properties": {
+        "captured_at": {
+          "format": "date-time",
+          "title": "Captured At",
+          "type": "string"
+        },
+        "price": {
+          "$ref": "#/$defs/MoneyValue"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceLabel"
+        }
+      },
+      "required": [
+        "price",
+        "captured_at",
+        "source"
+      ],
+      "title": "Fare",
+      "type": "object"
+    },
+    "MoneyEstimate": {
+      "additionalProperties": false,
+      "description": "A money figure: an estimate rounded for display, or an exact value shown as it is.",
+      "properties": {
+        "exact": {
+          "$ref": "#/$defs/MoneyValue"
+        },
+        "is_estimate": {
+          "title": "Is Estimate",
+          "type": "boolean"
+        },
+        "shown": {
+          "$ref": "#/$defs/MoneyValue"
+        }
+      },
+      "required": [
+        "exact",
+        "shown",
+        "is_estimate"
+      ],
+      "title": "MoneyEstimate",
+      "type": "object"
+    },
+    "MoneyValue": {
+      "additionalProperties": false,
+      "description": "An amount in integer minor units (pence, cents) and a currency code.",
+      "properties": {
+        "amount_minor": {
+          "title": "Amount Minor",
+          "type": "integer"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount_minor",
+        "currency"
+      ],
+      "title": "MoneyValue",
+      "type": "object"
+    },
+    "PlaceCard": {
+      "additionalProperties": false,
+      "properties": {
+        "budget_gap": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MoneyEstimate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "budget_position": {
+          "anyOf": [
+            {
+              "enum": [
+                "under",
+                "over",
+                "on"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Budget Position"
+        },
+        "card_state": {
+          "enum": [
+            "loading",
+            "ready",
+            "failed",
+            "swapped"
+          ],
+          "title": "Card State",
+          "type": "string"
+        },
+        "fare": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fare"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flights": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "is_partial": {
+          "default": false,
+          "title": "Is Partial",
+          "type": "boolean"
+        },
+        "known_costs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "meals": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "stay": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "weather": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Weather"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "place",
+        "card_state"
+      ],
+      "title": "PlaceCard",
+      "type": "object"
+    },
+    "SourceLabel": {
+      "additionalProperties": false,
+      "description": "Where a value came from, and how fresh it is.",
+      "properties": {
+        "captured_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Captured At"
+        },
+        "data_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Date"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "status": {
+          "enum": [
+            "live",
+            "cached",
+            "fallback",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "source"
+      ],
+      "title": "SourceLabel",
+      "type": "object"
+    },
+    "Weather": {
+      "additionalProperties": false,
+      "description": "Typical weather for the trip month, with its own label (sample-data.md).",
+      "properties": {
+        "averages_period": {
+          "title": "Averages Period",
+          "type": "string"
+        },
+        "high_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High C"
+        },
+        "low_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low C"
+        },
+        "rainy_days": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rainy Days"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceLabel"
+        }
+      },
+      "required": [
+        "averages_period",
+        "source"
+      ],
+      "title": "Weather",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "cards": {
+      "items": {
+        "$ref": "#/$defs/PlaceCard"
+      },
+      "title": "Cards",
+      "type": "array"
+    },
+    "chosen_place": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Chosen Place"
+    },
+    "kind": {
+      "const": "comparison_table",
+      "title": "Kind",
+      "type": "string"
+    },
+    "missing": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Missing"
+    },
+    "rules_out": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rules Out"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceLabel"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "state": {
+      "enum": [
+        "loading",
+        "filled",
+        "empty",
+        "error",
+        "not_known"
+      ],
+      "title": "State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "state",
+    "sources",
+    "kind"
+  ],
+  "title": "ComparisonTable",
+  "type": "object"
+}

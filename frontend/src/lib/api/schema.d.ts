@@ -55,14 +55,891 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/sample/trip": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Sample Trip
+         * @description Returns the sample Lisbon trip. This is sample data, not a real trip.
+         */
+        get: operations["sample_trip_v1_sample_trip_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/sample/widgets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Sample Widgets
+         * @description Returns every sample widget, one per kind and state. This is sample data, not real fares, prices or advice.
+         */
+        get: operations["sample_widgets_v1_sample_widgets_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AdviceCard */
+        AdviceCard: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "advice_card";
+            /** Place */
+            place: string;
+            /** Title */
+            title?: string | null;
+            /**
+             * Fcdo Url
+             * Format: uri
+             */
+            fcdo_url: string;
+            /** Updated On */
+            updated_on?: string | null;
+            /** Layover Copy */
+            layover_copy?: string | null;
+        };
+        /** BookingApproval */
+        BookingApproval: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "booking_approval";
+            /**
+             * Sandbox
+             * @constant
+             */
+            sandbox: true;
+            /** Booking State */
+            booking_state?: ("waiting" | "approved" | "declined" | "price_changed" | "flights_only") | null;
+            /** Origin */
+            origin?: string | null;
+            /** Destination */
+            destination?: string | null;
+            /** Depart */
+            depart?: string | null;
+            /** Return Date */
+            return_date?: string | null;
+            /** Adults */
+            adults?: number | null;
+            sandbox_price?: components["schemas"]["MoneyValue"] | null;
+            new_price?: components["schemas"]["MoneyValue"] | null;
+            /** Order Ref */
+            order_ref?: string | null;
+        };
+        /** BriefSummary */
+        BriefSummary: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "brief_summary";
+            /** Trip Name */
+            trip_name?: string | null;
+            /** Origin */
+            origin?: string | null;
+            /** When */
+            when?: string | null;
+            /** Nights */
+            nights?: number | null;
+            /** Adults */
+            adults?: number | null;
+            budget?: components["schemas"]["MoneyValue"] | null;
+            /** Feel */
+            feel?: string | null;
+            /** Brief State */
+            brief_state?: ("waiting" | "editing" | "confirmed") | null;
+        };
+        /** ClimateChart */
+        ClimateChart: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "climate_chart";
+            /** Place */
+            place: string;
+            /** Highlight Month */
+            highlight_month?: number | null;
+            /** Averages Period */
+            averages_period?: string | null;
+            /** Months */
+            months?: components["schemas"]["ClimateMonth"][];
+        };
+        /** ClimateMonth */
+        ClimateMonth: {
+            /** Month */
+            month: number;
+            /** High C */
+            high_c?: number | null;
+            /** Low C */
+            low_c?: number | null;
+            /** Rainy Days */
+            rainy_days?: number | null;
+        };
+        /** ComparisonTable */
+        ComparisonTable: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "comparison_table";
+            /** Cards */
+            cards?: components["schemas"]["PlaceCard"][];
+            /** Chosen Place */
+            chosen_place?: string | null;
+            /** Rules Out */
+            rules_out?: string | null;
+        };
+        /** Conversion */
+        Conversion: {
+            amount: components["schemas"]["MoneyValue"];
+            converted: components["schemas"]["MoneyValue"];
+        };
+        /** CostEstimate */
+        CostEstimate: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "cost_estimate";
+            /** Place */
+            place: string;
+            flights?: components["schemas"]["CostLine"] | null;
+            stay?: components["schemas"]["CostLine"] | null;
+            meals?: components["schemas"]["CostLine"] | null;
+            local_transport?: components["schemas"]["CostLine"] | null;
+            activities?: components["schemas"]["CostLine"] | null;
+            total?: components["schemas"]["CostLine"] | null;
+            /**
+             * Is Partial
+             * @default true
+             */
+            is_partial: boolean;
+            budget?: components["schemas"]["MoneyValue"] | null;
+            budget_gap?: components["schemas"]["MoneyEstimate"] | null;
+            /** Budget Position */
+            budget_position?: ("under" | "over" | "on") | null;
+            /** Nights */
+            nights?: number | null;
+            /** People */
+            people?: number | null;
+        };
+        /**
+         * CostLine
+         * @description One line of a cost estimate. A line with no amount says why (decision 0011, rule 4).
+         */
+        CostLine: {
+            unit?: components["schemas"]["MoneyValue"] | null;
+            amount?: components["schemas"]["MoneyEstimate"] | null;
+            source?: components["schemas"]["SourceLabel"] | null;
+            /** Missing */
+            missing?: string | null;
+            /** Listing Count */
+            listing_count?: number | null;
+            /** Page Edited */
+            page_edited?: string | null;
+        };
+        /** Daylight */
+        Daylight: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "daylight";
+            /** Place */
+            place: string;
+            /** Day */
+            day?: string | null;
+            /** Dates Set */
+            dates_set: boolean;
+            /** Sunrise */
+            sunrise?: string | null;
+            /** Sunset */
+            sunset?: string | null;
+            /** Day Length Minutes */
+            day_length_minutes?: number | null;
+            /** Credit Url */
+            credit_url?: string | null;
+        };
+        /**
+         * Fare
+         * @description A cached return fare per person. It always carries when it was captured.
+         *
+         *     No "too old" limit lives here; build step 4 sets it.
+         */
+        Fare: {
+            price: components["schemas"]["MoneyValue"];
+            /**
+             * Captured At
+             * Format: date-time
+             */
+            captured_at: string;
+            source: components["schemas"]["SourceLabel"];
+        };
+        /** FareCard */
+        FareCard: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "fare_card";
+            /** Origin */
+            origin: string;
+            /** Destination */
+            destination: string;
+            /** Month */
+            month: string;
+            fare?: components["schemas"]["Fare"] | null;
+            /** Search Url */
+            search_url?: string | null;
+        };
+        /** FareList */
+        FareList: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "fare_list";
+            /** Origin */
+            origin: string;
+            /** Month */
+            month: string;
+            /** Search Url */
+            search_url?: string | null;
+            /** Rows */
+            rows?: components["schemas"]["FareRow"][];
+        };
+        /** FareRow */
+        FareRow: {
+            /** Destination */
+            destination: string;
+            fare?: components["schemas"]["Fare"] | null;
+            /** Search Url */
+            search_url?: string | null;
+            /** Missing */
+            missing?: string | null;
+        };
+        /** Holiday */
+        Holiday: {
+            /**
+             * Day
+             * Format: date
+             */
+            day: string;
+            /** Name */
+            name: string;
+        };
+        /** Hotel */
+        Hotel: {
+            /** Name */
+            name: string;
+            /** Area */
+            area?: string | null;
+            /** Stars */
+            stars?: number | null;
+            /** Website */
+            website?: string | null;
+        };
+        /** HotelList */
+        HotelList: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "hotel_list";
+            /** Place */
+            place: string;
+            /** Hotels */
+            hotels?: components["schemas"]["Hotel"][];
+            /**
+             * Selection
+             * @default undecided
+             * @enum {string}
+             */
+            selection: "undecided" | "chosen" | "skipped" | "changed";
+            /** Chosen Hotel */
+            chosen_hotel?: string | null;
+        };
+        /** ItineraryDay */
+        ItineraryDay: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "itinerary_day";
+            /** Day Number */
+            day_number: number;
+            /** Day */
+            day?: string | null;
+            /** Base */
+            base?: string | null;
+            /**
+             * Starts From Centre
+             * @default false
+             */
+            starts_from_centre: boolean;
+            /**
+             * Rebuilt
+             * @default false
+             */
+            rebuilt: boolean;
+            /** Stops */
+            stops?: components["schemas"]["Stop"][];
+        };
+        /** Leg */
+        Leg: {
+            /** Mode */
+            mode: string;
+            /** Minutes */
+            minutes: number;
+            /** Description */
+            description?: string | null;
+        };
+        /** Map */
+        Map: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "map";
+            centre?: components["schemas"]["MapPlace"] | null;
+            hotel?: components["schemas"]["MapPlace"] | null;
+            /** Stops */
+            stops?: components["schemas"]["MapPlace"][];
+        };
+        /** MapPlace */
+        MapPlace: {
+            /** Name */
+            name: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Url */
+            url?: string | null;
+        };
         /** MeOut */
         MeOut: {
             /** Id */
             id: string;
+        };
+        /** Money */
+        Money: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "money";
+            /**
+             * From Currency
+             * @default GBP
+             */
+            from_currency: string;
+            /** To Currency */
+            to_currency?: string | null;
+            /** Rate */
+            rate?: string | null;
+            /** Rate Date */
+            rate_date?: string | null;
+            conversion?: components["schemas"]["Conversion"] | null;
+        };
+        /**
+         * MoneyEstimate
+         * @description A money figure: an estimate rounded for display, or an exact value shown as it is.
+         */
+        MoneyEstimate: {
+            exact: components["schemas"]["MoneyValue"];
+            shown: components["schemas"]["MoneyValue"];
+            /** Is Estimate */
+            is_estimate: boolean;
+        };
+        /**
+         * MoneyValue
+         * @description An amount in integer minor units (pence, cents) and a currency code.
+         */
+        MoneyValue: {
+            /** Amount Minor */
+            amount_minor: number;
+            /** Currency */
+            currency: string;
+        };
+        /** NotKnown */
+        NotKnown: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "not_known";
+            /** Reason */
+            reason?: string | null;
+            /** Instead */
+            instead?: string | null;
+        };
+        /** PlaceCard */
+        PlaceCard: {
+            /** Place */
+            place: string;
+            /**
+             * Card State
+             * @enum {string}
+             */
+            card_state: "loading" | "ready" | "failed" | "swapped";
+            fare?: components["schemas"]["Fare"] | null;
+            flights?: components["schemas"]["CostLine"] | null;
+            stay?: components["schemas"]["CostLine"] | null;
+            meals?: components["schemas"]["CostLine"] | null;
+            known_costs?: components["schemas"]["CostLine"] | null;
+            /**
+             * Is Partial
+             * @default false
+             */
+            is_partial: boolean;
+            budget_gap?: components["schemas"]["MoneyEstimate"] | null;
+            /** Budget Position */
+            budget_position?: ("under" | "over" | "on") | null;
+            weather?: components["schemas"]["Weather"] | null;
+        };
+        /** PlaceIntro */
+        PlaceIntro: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "place_intro";
+            /** Place */
+            place: string;
+            /** Hero Line */
+            hero_line?: string | null;
+            /** Paragraphs */
+            paragraphs?: string[];
+            /** Intro Source */
+            intro_source?: ("wikivoyage" | "wikipedia") | null;
+        };
+        /** PublicHolidays */
+        PublicHolidays: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "public_holidays";
+            /** Place */
+            place: string;
+            /** Country */
+            country?: string | null;
+            /** Year */
+            year?: number | null;
+            /** Month */
+            month?: number | null;
+            /** Holidays */
+            holidays?: components["schemas"]["Holiday"][];
+            /**
+             * National Only
+             * @default true
+             * @constant
+             */
+            national_only: true;
+        };
+        /**
+         * SampleWidget
+         * @description One sample file: a widget kind, the state the file shows, and the parsed widget.
+         */
+        SampleWidget: {
+            /** Kind */
+            kind: string;
+            /** State */
+            state: string;
+            /** Widget */
+            widget: components["schemas"]["BriefSummary"] | components["schemas"]["ComparisonTable"] | components["schemas"]["FareCard"] | components["schemas"]["ClimateChart"] | components["schemas"]["SeaConditions"] | components["schemas"]["Daylight"] | components["schemas"]["Money"] | components["schemas"]["AdviceCard"] | components["schemas"]["PlaceIntro"] | components["schemas"]["Map"] | components["schemas"]["ItineraryDay"] | components["schemas"]["HotelList"] | components["schemas"]["CostEstimate"] | components["schemas"]["BookingApproval"] | components["schemas"]["WebResults"] | components["schemas"]["NotKnown"] | components["schemas"]["PublicHolidays"] | components["schemas"]["TimeDifference"] | components["schemas"]["FareList"] | components["schemas"]["TransportRoute"];
+        };
+        /** SeaConditions */
+        SeaConditions: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "sea_conditions";
+            /** Place */
+            place: string;
+            /** Month */
+            month?: number | null;
+            /** Sea Temp C */
+            sea_temp_c?: number | null;
+        };
+        /**
+         * ShareSettings
+         * @description What a shared link shows. Budget and travellers are hidden unless the owner opts in.
+         */
+        ShareSettings: {
+            /** As Of */
+            as_of?: string | null;
+            /**
+             * Include Budget And Travellers
+             * @default false
+             */
+            include_budget_and_travellers: boolean;
+        };
+        /**
+         * SourceLabel
+         * @description Where a value came from, and how fresh it is.
+         */
+        SourceLabel: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "live" | "cached" | "fallback" | "unavailable";
+            /** Source */
+            source: string;
+            /** Source Url */
+            source_url?: string | null;
+            /** Captured At */
+            captured_at?: string | null;
+            /** Data Date */
+            data_date?: string | null;
+        };
+        /** Stop */
+        Stop: {
+            /** Name */
+            name: string;
+            /**
+             * Kind
+             * @default place
+             * @enum {string}
+             */
+            kind: "place" | "walk";
+            /**
+             * Hours Status
+             * @default not_applicable
+             * @enum {string}
+             */
+            hours_status: "known" | "not_known" | "not_applicable";
+            /** Opens */
+            opens?: string | null;
+            /** Closes */
+            closes?: string | null;
+            source?: components["schemas"]["SourceLabel"] | null;
+        };
+        /** TimeDifference */
+        TimeDifference: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "time_difference";
+            /** Place */
+            place: string;
+            /** Place Zone */
+            place_zone?: string | null;
+            /** On Date */
+            on_date?: string | null;
+            /** Dates Set */
+            dates_set: boolean;
+            /** Uk Offset Minutes */
+            uk_offset_minutes?: number | null;
+            /** Place Offset Minutes */
+            place_offset_minutes?: number | null;
+            /** Difference Minutes */
+            difference_minutes?: number | null;
+        };
+        /** TransportRoute */
+        TransportRoute: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "transport_route";
+            /** Origin */
+            origin: string;
+            /** Destination */
+            destination: string;
+            /** Planned For */
+            planned_for?: string | null;
+            /** Dates Set */
+            dates_set: boolean;
+            /** Leaves At */
+            leaves_at?: string | null;
+            /** Legs */
+            legs?: components["schemas"]["Leg"][];
+            /** Total Minutes */
+            total_minutes?: number | null;
+        };
+        /**
+         * Trip
+         * @description One trip. An empty trip has only its identity and share settings.
+         */
+        Trip: {
+            /** Trip Id */
+            trip_id: string;
+            /** Is Sample */
+            is_sample: boolean;
+            /** Name */
+            name: string;
+            brief?: components["schemas"]["BriefSummary"] | null;
+            comparison?: components["schemas"]["ComparisonTable"] | null;
+            /** Chosen Place */
+            chosen_place?: string | null;
+            /**
+             * Place Widgets
+             * @default []
+             */
+            place_widgets: (components["schemas"]["BriefSummary"] | components["schemas"]["ComparisonTable"] | components["schemas"]["FareCard"] | components["schemas"]["ClimateChart"] | components["schemas"]["SeaConditions"] | components["schemas"]["Daylight"] | components["schemas"]["Money"] | components["schemas"]["AdviceCard"] | components["schemas"]["PlaceIntro"] | components["schemas"]["Map"] | components["schemas"]["ItineraryDay"] | components["schemas"]["HotelList"] | components["schemas"]["CostEstimate"] | components["schemas"]["BookingApproval"] | components["schemas"]["WebResults"] | components["schemas"]["NotKnown"] | components["schemas"]["PublicHolidays"] | components["schemas"]["TimeDifference"] | components["schemas"]["FareList"] | components["schemas"]["TransportRoute"])[];
+            stay?: components["schemas"]["HotelList"] | null;
+            /**
+             * Days
+             * @default []
+             */
+            days: components["schemas"]["ItineraryDay"][];
+            booking?: components["schemas"]["BookingApproval"] | null;
+            /**
+             * Pinned
+             * @default []
+             */
+            pinned: (components["schemas"]["BriefSummary"] | components["schemas"]["ComparisonTable"] | components["schemas"]["FareCard"] | components["schemas"]["ClimateChart"] | components["schemas"]["SeaConditions"] | components["schemas"]["Daylight"] | components["schemas"]["Money"] | components["schemas"]["AdviceCard"] | components["schemas"]["PlaceIntro"] | components["schemas"]["Map"] | components["schemas"]["ItineraryDay"] | components["schemas"]["HotelList"] | components["schemas"]["CostEstimate"] | components["schemas"]["BookingApproval"] | components["schemas"]["WebResults"] | components["schemas"]["NotKnown"] | components["schemas"]["PublicHolidays"] | components["schemas"]["TimeDifference"] | components["schemas"]["FareList"] | components["schemas"]["TransportRoute"])[];
+            share: components["schemas"]["ShareSettings"];
+        };
+        /**
+         * Weather
+         * @description Typical weather for the trip month, with its own label (sample-data.md).
+         */
+        Weather: {
+            /** High C */
+            high_c?: number | null;
+            /** Low C */
+            low_c?: number | null;
+            /** Rainy Days */
+            rainy_days?: number | null;
+            /** Averages Period */
+            averages_period: string;
+            source: components["schemas"]["SourceLabel"];
+        };
+        /** WebResult */
+        WebResult: {
+            /** Title */
+            title: string;
+            /**
+             * Url
+             * Format: uri
+             */
+            url: string;
+            /** Quote */
+            quote: string;
+        };
+        /** WebResults */
+        WebResults: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "loading" | "filled" | "empty" | "error" | "not_known";
+            /** Sources */
+            sources: components["schemas"]["SourceLabel"][];
+            /** Missing */
+            missing?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "web_results";
+            /** Question */
+            question?: string | null;
+            /** Results */
+            results?: components["schemas"]["WebResult"][];
+            /** Retrieved At */
+            retrieved_at?: string | null;
         };
     };
     responses: never;
@@ -138,6 +1015,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MeOut"];
+                };
+            };
+        };
+    };
+    sample_trip_v1_sample_trip_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Trip"];
+                };
+            };
+        };
+    };
+    sample_widgets_v1_sample_widgets_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SampleWidget"][];
                 };
             };
         };

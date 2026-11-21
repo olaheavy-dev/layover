@@ -29,6 +29,7 @@ Every value is copied from [`docs/design/boards/sample-data.md`](../../docs/desi
 Notes on values the boards give only in part:
 
 - **Cached ages** use the age on the board. A label that covers several lines (known costs, "3 to 4 days old") uses the oldest of them.
+- The `fare_list` `empty` sample's "3 days old" is a sample value the boards don't give. It matches the Faro row's age.
 - **Wikivoyage "page edited March 2026"** gives a month and no day on the boards, so `page_edited` holds the month only (`2026-03`) and no sample invents a day.
 - **Sample coordinates.** The boards have no map coordinates (their map is drawn, and the position is "not real"). The `map` samples use made-up coordinates with the source name **"Sample"**, and the map is **not** part of the sample trip.
 - **Fares, holidays, times and journeys** in `fare_list`, `public_holidays`, `time_difference` and `transport_route` are made up for the boards, as `sample-data.md` says. The two holiday rows are named "Sample holiday". The release date `2026-11-01` is the boards' "sample date".
