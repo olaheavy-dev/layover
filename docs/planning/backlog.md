@@ -1,6 +1,8 @@
 # Ordered backlog
 
-Every open issue, in the order it is worked on (AGENTS.md, "How work flows"). Each issue's title starts with its order number (for example `[01]`) and the issue sits in its stage's milestone. When an issue's plan changes, update the issue, not this list; the list changes when an issue opens, closes or moves, in the PR that does it.
+Every open issue, in the order it is worked on (AGENTS.md, "How work flows"). Each issue's title starts with its order number (for example `[01]`) and the issue sits in its stage's milestone. When an issue's plan changes, update the issue, not this list.
+
+The [Layover build](https://github.com/orgs/olaheavy-dev/projects/5) board (To do, In progress, In review, Done) shows progress. This list stays the ordered list. Whoever opens, closes or moves an issue updates both: the list changes in the PR that does it.
 
 Each stage ends with a gate (`AGENTS.md`, "Review rounds and debt"): a whole-repository audit, its findings cleared in a tidy-up PR, `noticed` issues triaged, no open `review-followup` issue, a Floorplan map snapshot, and evaluations (a coverage table at the Design gate, a score report at build gates once evaluation cases exist).
 
@@ -23,6 +25,11 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 | 17 | #27 | CodeQL scans Actions only; Python in `tools/` is not scanned | Build 1 | `noticed`; template-owned workflow; fix when the FastAPI layer adds Python |
 | 21 | #36 | Harden the board checks with a real HTML parser | Build 1 | `noticed` in the boards PR's security review |
 | 23 | #40 | Move the Floorplan snapshot exemption into house-template-base | Build 1 | `noticed` in the Design gate audit |
+| 29 | #51 | Build 1 PR A: apply the FastAPI and Next.js template layers | Build 1 | Build plan 1, PR A |
+| 30 | #52 | Build 1 PR B: data contract, shared samples and sample endpoints | Build 1 | Build plan 1, PR B |
+| 31 | #53 | Build 1 PR C: backend foundation | Build 1 | Build plan 1, PR C |
+| 32 | #54 | Build 1 PR D: website, widgets and gallery | Build 1 | Build plan 1, PR D |
+| 33 | #55 | Build 1 PR E: join the website to the API and add Aspire | Build 1 | Build plan 1, PR E |
 | 20 | #35 | Mood scenes for the welcome and How Layover works pages | Build 2 | Waits for the owner's images |
 | 24 | #41 | How Layover works board leaves out Nuitee Connect | Build 2 | `noticed` in the Design gate audit |
 | 19 | #34 | No chosen source for a place's currency | Build 3 | `noticed` in the boards PR; pick a source before the `money` widget shows a currency line |
