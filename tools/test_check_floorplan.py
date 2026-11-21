@@ -80,6 +80,59 @@ class Floorplan(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("Content-Security-Policy", out)
 
+    def test_upper_case_and_odd_script_tags_are_checked(self):
+        # Expected failure before the fix: the regex looked for a lower-case "<script>" and a plain "</script>"
+        # only, so these scripts were never hashed (CodeQL alert 14, "py/bad-tag-filter").
+        body = "var a = 1;\n"
+        for opening, closing in (("<SCRIPT>", "</SCRIPT>"), ("<Script>", "</script >"), ("<script>", "</script\t\n bar>"),
+                                 ("<script >", "</SCRIPT\n>"), ("<script type='text/javascript'>", "</script>")):
+            with self.subTest(opening=opening, closing=closing):
+                allowed = csp_page([body], [])
+                self.assertEqual(self.run_check(allowed + f"{opening}{body}{closing}")[0], 0)
+                code, out = self.run_check(allowed + f"{opening}{body}changed{closing}")
+                self.assertEqual(code, 1, out)
+                self.assertIn("Content-Security-Policy", out)
+
+    def test_script_text_is_hashed_as_the_browser_reads_it(self):
+        # A browser turns CRLF and a lone CR into LF before it tokenises, and the CSP hash covers that text
+        # (WHATWG HTML, 13.2.3.5 "Preprocessing the input stream"). Entities in a script stay as written.
+        body = "var a = '&amp; &#97;'; // end\nvar b = '<b>';  \n"
+        crlf = body.replace("\n", "\r\n")
+        self.assertEqual(self.run_check(csp_page([body], [crlf]))[0], 0)
+        self.assertEqual(self.run_check(csp_page([body], [body.replace("\n", "\r")]))[0], 0)
+        self.assertEqual(self.run_check(csp_page([crlf], [crlf]))[0], 1)  # a hash of CRLF text never matches
+
+    def test_script_that_is_not_javascript_is_not_hashed(self):
+        for kind in ('type="application/json"', 'type="application/ld+json"', 'type="text/template"'):
+            with self.subTest(kind=kind):
+                page = csp_page(["var a = 1;"], ["var a = 1;"]) + f"<script {kind}>{{\"a\": 1}}</script>"
+                self.assertEqual(self.run_check(page)[0], 0)
+        for kind in ('type=""', 'type="module"', 'type="text/javascript"', 'type="application/javascript"', "TYPE=MODULE"):
+            with self.subTest(kind=kind):
+                page = csp_page([], []) + f"<script {kind}>var a = 1;</script>"
+                self.assertEqual(self.run_check(page)[0], 1)
+
+    def test_import_map_is_hashed(self):
+        # A browser applies the CSP to an inline import map, so an unhashed one is blocked.
+        page = csp_page(["var a = 1;"], ["var a = 1;"]) + '<script type="importmap">{"imports": {}}</script>'
+        code, out = self.run_check(page)
+        self.assertEqual(code, 1)
+        self.assertIn("1 inline script(s)", out)
+        self.assertEqual(self.run_check(csp_page(['{"imports": {}}'], ['{"imports": {}}']).replace("<script>", '<script type="importmap">'))[0], 0)
+
+    def test_scripts_with_a_source_are_not_inline_and_a_comment_is_not_a_script(self):
+        page = csp_page(["var a = 1;"], ["var a = 1;"]) + '<script src="x.js"></script><!-- <script>evil()</script> -->'
+        self.assertEqual(self.run_check(page)[0], 0)
+
+    def test_csp_meta_in_any_case_and_order_is_read(self):
+        body = "var a = 1;"
+        digest = base64.b64encode(hashlib.sha256(body.encode("utf-8")).digest()).decode()
+        page = (f"<META CONTENT=\"script-src 'sha256-{digest}'\" HTTP-EQUIV='content-security-policy'>"
+                f"<script>{body}</script><script>other()</script>")
+        code, out = self.run_check(page)
+        self.assertEqual(code, 1)
+        self.assertIn("1 inline script(s)", out)
+
     def test_page_without_csp_skips_hash_check(self):
         self.assertEqual(self.run_check("<script>var a = 1;</script>")[0], 0)
 
