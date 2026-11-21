@@ -1,6 +1,6 @@
 # Asset register
 
-Every image, font, icon and illustration committed to this repository is listed here, with its source and terms. A file is recorded here before it is committed (AGENTS.md, "Media is registered first"). `make check` fails when a media file under `docs/` is missing from this table (`tools/check_boards.py`).
+Every image, font, icon and illustration committed to this repository is listed here, with its source and terms. A file is recorded here before it is committed (AGENTS.md, "Media is registered first"). `make check` fails when a media file anywhere in the repository (found with `git ls-files`) is missing from this table (`tools/check_boards.py`). Generated test screenshots of Layover's own pages (`frontend/e2e/screenshots/`) are exempt (owner's decision, 21 Nov 2026); any photo, illustration or icon they show is registered at its source.
 
 Each row names the file by its path from the repository root. "Date checked" is the day the source and its terms were read.
 
