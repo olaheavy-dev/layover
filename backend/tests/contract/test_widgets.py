@@ -398,7 +398,12 @@ def test_lisbon_is_under_budget_on_the_known_costs() -> None:
     Working: 80000 - 78200 = 1800 pence under; nearest 10 pounds, half up: 1800 -> 2000.
     Source: sample-data.md line 36 (Lisbon, 800 - 782 = 18 under).
     """
-    under = {"budget_gap": _estimate(1800, 2000), "budget_position": "under", "is_partial": True}
+    under = {
+        "budget_gap": _estimate(1800, 2000),
+        "budget_position": "under",
+        "is_partial": True,
+        "total": _total(78200),
+    }
     TypeAdapter(Widget).validate_python(_cost(**_core(local_transport={"missing": "x"}), **under))
     with pytest.raises(ValidationError):  # negative gap
         TypeAdapter(Widget).validate_python(
@@ -411,7 +416,7 @@ def test_lisbon_is_under_budget_on_the_known_costs() -> None:
     with pytest.raises(ValidationError):  # "on" needs a gap of exactly zero
         TypeAdapter(Widget).validate_python(_cost(**_core(), **{**under, "budget_position": "on"}))
     TypeAdapter(Widget).validate_python(
-        _cost(**_core(), budget_gap=_estimate(0, 0), budget_position="on")
+        _cost(**_core(), total=_total(80000), budget_gap=_estimate(0, 0), budget_position="on")
     )
     with pytest.raises(ValidationError):  # a gap needs a budget
         TypeAdapter(Widget).validate_python(_cost(**{**_core(), "budget": None}, **under))
@@ -425,7 +430,11 @@ def test_valletta_is_over_budget_on_the_known_costs() -> None:
     """
     TypeAdapter(Widget).validate_python(
         _cost(
-            **_core(), is_partial=True, budget_gap=_estimate(10200, 10000), budget_position="over"
+            **_core(),
+            is_partial=True,
+            total=_total(90200),
+            budget_gap=_estimate(10200, 10000),
+            budget_position="over",
         )
     )
 
@@ -637,10 +646,54 @@ def test_itinerary_day_base_and_centre_must_agree() -> None:
 
 def test_stop_hours_can_depend_on_the_day() -> None:
     """The board with no dates set: opening times depend on the day (sample-data.md line 252)."""
-    base = {**_payload("itinerary_day"), "state": "filled", "sources": [SOURCE]}
+    base = {
+        **_payload("itinerary_day"),
+        "state": "filled",
+        "sources": [SOURCE],
+        "base": "Sample Hotel",
+    }
     stop = {"name": "Castelo de São Jorge", "hours_status": "depends_on_day"}
     TypeAdapter(Widget).validate_python({**base, "stops": [stop]})
     with pytest.raises(ValidationError):  # no one set of hours when they depend on the day
         TypeAdapter(Widget).validate_python(
             {**base, "stops": [{**stop, "opens": "10:00:00", "closes": "18:00:00"}]}
         )
+
+
+def test_filled_itinerary_day_needs_base_or_centre() -> None:
+    """A day that is not loading says where it starts: a base hotel or the centre."""
+    base = {**_payload("itinerary_day"), "state": "filled", "sources": [SOURCE]}
+    with pytest.raises(ValidationError):  # no base and not from the centre
+        TypeAdapter(Widget).validate_python({**base, "starts_from_centre": False})
+    TypeAdapter(Widget).validate_python({**base, "starts_from_centre": True})
+    TypeAdapter(Widget).validate_python({**base, "base": "Sample Hotel Alfama"})
+    loading = {**base, "state": "loading", "sources": []}
+    TypeAdapter(Widget).validate_python(loading)
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://www.gov.uk:8443/foreign-travel-advice/portugal",
+        "https://www.gov.uk/foreign-travel-advicex",
+    ],
+)
+def test_advice_card_rejects_other_ports_and_path_lookalikes(url: str) -> None:
+    with pytest.raises(ValidationError):
+        TypeAdapter(Widget).validate_python(_advice(fcdo_url=url, updated_on="2026-11-20"))
+    TypeAdapter(Widget).validate_python(
+        _advice(
+            fcdo_url="https://www.gov.uk:443/foreign-travel-advice/portugal",
+            updated_on="2026-11-20",
+        )
+    )
+
+
+def test_budget_gap_needs_a_total() -> None:
+    """Working: Lisbon 80000 - 78200 = 1800 under (sample-data.md line 36); with no total the
+    gap cannot be checked against its figures, so it is refused."""
+    core = _core(local_transport={"missing": "x"})
+    gap = {"budget_gap": _estimate(1800, 2000), "budget_position": "under"}
+    with pytest.raises(ValidationError):
+        TypeAdapter(Widget).validate_python(_cost(**core, **gap))
+    TypeAdapter(Widget).validate_python(_cost(**core, **gap, total=_total(78200)))

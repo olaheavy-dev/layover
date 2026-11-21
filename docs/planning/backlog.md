@@ -30,7 +30,10 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 | 20 | #35 | Mood scenes for the welcome and How Layover works pages | Build 2 | Waits for the owner's images |
 | 24 | #41 | How Layover works board leaves out Nuitee Connect | Build 2 | `noticed` in the Design gate audit |
 | 19 | #34 | No chosen source for a place's currency | Build 3 | `noticed` in the boards PR; pick a source before the `money` widget shows a currency line |
+| 35 | #64 | No contract state for the pounds-only money card | Build 3 | `noticed` in PR B |
+| 36 | #65 | No contract state for the booking widget asking for dates | Build 6 | `noticed` in PR B |
 | 27 | #48 | No privacy notice page in the site map | Build 7 | `noticed` in the build step 1 brainstorm |
+| 37 | #66 | Rate limits for the public API routes | Build 7 | `noticed` in PR B's security review |
 
 Milestones: Build 1: Foundation and data contract; Build 2: Chat, intents and the brief; Build 3: Facts about one place; Build 4: Fares and compare; Build 5: Itinerary and where to stay; Build 6: Sandbox booking; Build 7: Trip links and going public; Build 8: Earnings dashboard.
 

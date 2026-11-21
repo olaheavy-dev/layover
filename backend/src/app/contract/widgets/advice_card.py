@@ -22,7 +22,11 @@ class AdviceCard(WidgetBase):
         if (
             url.scheme != "https"
             or url.host != "www.gov.uk"
-            or not (url.path or "").startswith("/foreign-travel-advice")
+            or url.port not in (None, 443)
+            or (
+                (url.path or "") != "/foreign-travel-advice"
+                and not (url.path or "").startswith("/foreign-travel-advice/")
+            )
         ):
             raise ValueError("fcdo_url must be an https://www.gov.uk/foreign-travel-advice page")
         return url

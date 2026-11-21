@@ -41,4 +41,6 @@ class ItineraryDay(WidgetBase):
     def _base_and_centre_agree(self) -> Self:
         if self.starts_from_centre and self.base is not None:
             raise ValueError("a day that starts from the centre has no base hotel")
+        if self.state != "loading" and self.starts_from_centre != (self.base is None):
+            raise ValueError("a day needs a base hotel, or starts_from_centre set to true")
         return self

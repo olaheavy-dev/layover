@@ -45,8 +45,11 @@ class CostEstimate(WidgetBase):
             gap=self.budget_gap,
             position=self.budget_position,
         )
-        if self.budget is not None and total is not None and self.budget_gap is not None:
-            self._check_gap_figures(self.budget, total)
+        if self.budget_gap is not None:
+            if total is None:
+                raise ValueError("a budget comparison needs a total with an amount")
+            if self.budget is not None:
+                self._check_gap_figures(self.budget, total)
         return self
 
     def _check_gap_figures(self, budget: MoneyValue, total: MoneyEstimate) -> None:
