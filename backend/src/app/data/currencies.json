@@ -1,0 +1,9 @@
+{
+  "source": "https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml",
+  "source_note": "ISO 4217 current currency list (List One), published by SIX Group, the ISO 4217 maintenance agency; the list was published on 2026-09-17. CcyMnrUnts is the exponent.",
+  "checked": "2026-11-22",
+  "minor_unit_exponents": {
+    "GBP": 2,
+    "EUR": 2
+  }
+}
