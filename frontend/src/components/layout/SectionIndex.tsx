@@ -1,7 +1,7 @@
 export type SectionId = "brief" | "compare" | "place" | "stay" | "days" | "booking";
 
 // The journey order (information architecture, "Navigation model").
-const ORDER: SectionId[] = ["brief", "compare", "place", "stay", "days", "booking"];
+export const ORDER: SectionId[] = ["brief", "compare", "place", "stay", "days", "booking"];
 
 const LABELS: Record<Exclude<SectionId, "place">, string> = {
   brief: "Brief",
