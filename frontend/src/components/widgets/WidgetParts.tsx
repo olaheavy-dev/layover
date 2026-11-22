@@ -17,23 +17,30 @@ export function ActionButton({
   label,
   icon,
   onClick,
+  iconOnlyOnPhone = false,
   children,
 }: {
   variant: keyof typeof VARIANTS;
   label?: string;
   icon?: ReactNode;
   onClick?: () => void;
+  // Below `sm` only the icon shows, in a 44 px square; the words stay as the accessible name.
+  iconOnlyOnPhone?: boolean;
   children: ReactNode;
 }) {
   return (
     <button
       type="button"
-      className={`${BASE} ${VARIANTS[variant]}`}
+      className={`${BASE} ${iconOnlyOnPhone ? `min-w-11 ${VARIANTS[variant].replace("px-4", "px-0 sm:px-4")}` : VARIANTS[variant]}`}
       aria-label={label}
       onClick={onClick}
     >
       {icon}
-      {children}
+      {iconOnlyOnPhone ? (
+        <span className="sr-only whitespace-nowrap sm:not-sr-only">{children}</span>
+      ) : (
+        children
+      )}
     </button>
   );
 }

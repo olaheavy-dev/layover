@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import { TopBar } from "./TopBar";
 
@@ -13,6 +13,25 @@ describe("TopBar", () => {
       "/how-it-works",
     );
     expect(screen.getByRole("button", { name: "New trip" })).toBeInTheDocument();
+  });
+
+  it("shows only the icon on a phone and keeps the words as the name, one line wide above that", () => {
+    render(<TopBar tripName="Warm break, May" />);
+    for (const name of ["Share trip", "New trip"]) {
+      const button = screen.getByRole("button", { name });
+      expect(button).toHaveClass("min-w-11");
+      const label = within(button).getByText(name);
+      expect(label).toHaveClass("sr-only", "sm:not-sr-only", "whitespace-nowrap");
+    }
+    const how = screen.getByRole("link", { name: "How it works" });
+    expect(how).toHaveClass("min-w-11");
+    expect(within(how).getByText("How it works")).toHaveClass("sr-only", "sm:not-sr-only");
+  });
+
+  it("leaves out the How it works link on its own page", () => {
+    render(<TopBar action="plan-a-trip" hideHowItWorks />);
+    expect(screen.queryByRole("link", { name: "How it works" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Plan a trip" })).toBeInTheDocument();
   });
 
   it("has no Share trip on a shared trip", () => {

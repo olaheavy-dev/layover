@@ -38,7 +38,7 @@ const LINK = "text-text-link underline";
 export default function HowItWorks() {
   return (
     <div className="flex min-h-dvh flex-col">
-      <TopBar action="plan-a-trip" />
+      <TopBar action="plan-a-trip" hideHowItWorks />
       <nav
         aria-label="Sections of this page"
         className="bg-bg-primary border-border-primary sticky top-0 z-10 shrink-0 overflow-x-auto border-b"

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import HowItWorks from "./page";
 
@@ -15,6 +15,13 @@ describe("/how-it-works", () => {
       "5. How well it works",
       "6. Read the code",
     ]);
+  });
+
+  it("does not link to itself in the top bar, and still offers Plan a trip", () => {
+    render(<HowItWorks />);
+    const bar = within(screen.getByRole("navigation", { name: "Layover" }));
+    expect(bar.queryByRole("link", { name: "How it works" })).not.toBeInTheDocument();
+    expect(bar.getByRole("link", { name: "Plan a trip" })).toHaveAttribute("href", "/");
   });
 
   it("says there are no evaluation results yet and invents none", () => {

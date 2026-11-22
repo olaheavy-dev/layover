@@ -11,6 +11,7 @@ export function TopBar({
   nameAs: Name = "p",
   shared = false,
   action = "new-trip",
+  hideHowItWorks = false,
   onShare,
   onNewTrip,
   children,
@@ -22,6 +23,8 @@ export function TopBar({
   // The button at the end: "New trip" (the default), a link to start a trip (shared trip, How it
   // works), or nothing (the welcome screen, which is already a new trip).
   action?: "new-trip" | "plan-your-own-trip" | "plan-a-trip" | "none";
+  // The How it works page itself leaves its own link out.
+  hideHowItWorks?: boolean;
   onShare?: () => void;
   onNewTrip?: () => void;
   // Room for the sample label.
@@ -39,17 +42,20 @@ export function TopBar({
       )}
       {children}
       <nav aria-label="Layover" className="flex items-center gap-2">
-        <Link
-          href="/how-it-works"
-          className="text-text-link inline-flex min-h-11 items-center gap-1.5 px-1 text-sm underline"
-        >
-          <CircleHelp className="size-4" aria-hidden="true" />
-          How it works
-        </Link>
+        {hideHowItWorks ? null : (
+          <Link
+            href="/how-it-works"
+            className="text-text-link inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 px-1 text-sm underline"
+          >
+            <CircleHelp className="size-4" aria-hidden="true" />
+            <span className="sr-only whitespace-nowrap sm:not-sr-only">How it works</span>
+          </Link>
+        )}
         {tripName && !shared ? (
           <ActionButton
             variant="secondary"
             onClick={onShare}
+            iconOnlyOnPhone
             icon={<Share2 className="size-4" aria-hidden="true" />}
           >
             Share trip
@@ -59,6 +65,7 @@ export function TopBar({
           <ActionButton
             variant="secondary"
             onClick={onNewTrip}
+            iconOnlyOnPhone
             icon={<Plus className="size-4" aria-hidden="true" />}
           >
             New trip
@@ -67,7 +74,7 @@ export function TopBar({
         {action === "plan-your-own-trip" || action === "plan-a-trip" ? (
           <Link
             href="/"
-            className="border-border-control text-text-primary inline-flex min-h-11 items-center justify-center gap-1.5 rounded-md border px-4 text-sm font-medium"
+            className="border-border-control text-text-primary inline-flex min-h-11 items-center justify-center gap-1.5 rounded-md border px-4 text-sm font-medium whitespace-nowrap"
           >
             <Plus className="size-4" aria-hidden="true" />
             {action === "plan-a-trip" ? "Plan a trip" : "Plan your own trip"}
