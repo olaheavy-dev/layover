@@ -75,6 +75,7 @@ describe("Daylight", () => {
       screen.getByText("Layover could not check sunrise and sunset just now. No times are shown."),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
+    expect(within(screen.getByRole("alert")).getByText("Unavailable")).toBeInTheDocument();
     expect(container.textContent).not.toMatch(/\d{2}:\d{2}/);
   });
 });

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import { AdviceCard } from "./AdviceCard";
 import { sampleOf, sampleStates, TEST_NOW } from "./testing";
@@ -31,12 +31,17 @@ describe("AdviceCard", () => {
       "https://www.gov.uk/foreign-travel-advice/portugal",
     );
     expect(screen.getByText("Cached, 1 day old")).toBeInTheDocument();
+    expect(screen.getByText("Layover’s copy")).toBeInTheDocument();
     expect(screen.getByText("FCDO, gov.uk")).toBeInTheDocument();
   });
 
   it("filled with no update date still links, and says the date is Not known", async () => {
     const widget = { ...(await sampleOf("advice_card", "filled")), updated_on: null };
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
     render(<AdviceCard widget={widget} />);
+    // No <div> inside a <p> (React logs this as a hydration error).
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
     expect(screen.queryByText(/^Updated/)).not.toBeInTheDocument();
     expect(screen.getByText("Not known")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Read the FCDO advice/ })).toBeInTheDocument();
@@ -58,6 +63,7 @@ describe("AdviceCard", () => {
     );
     expect(screen.queryByText(/^Updated/)).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
+    expect(within(screen.getByRole("alert")).getByText("Unavailable")).toBeInTheDocument();
   });
 
   it("not_known: the reason and the link to the FCDO index", async () => {

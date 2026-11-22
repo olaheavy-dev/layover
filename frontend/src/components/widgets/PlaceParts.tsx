@@ -14,10 +14,11 @@ export function frameState(state: WidgetState): WidgetState {
 export function ErrorNote({ message, children }: { message: string; children?: React.ReactNode }) {
   return (
     <div className="flex flex-col items-start gap-2" role="alert">
-      <p className="text-status-warning inline-flex items-center gap-1.5 text-sm">
+      <p className="text-status-warning inline-flex items-center gap-1.5 text-sm font-medium">
         <CircleAlert className="size-4" aria-hidden="true" />
-        <span>{message}</span>
+        <span>Unavailable</span>
       </p>
+      <p className="text-sm">{message}</p>
       {children}
       <ActionButton variant="secondary" icon={<RefreshCw className="size-4" aria-hidden="true" />}>
         Try again

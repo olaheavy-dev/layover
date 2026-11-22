@@ -75,7 +75,7 @@ describe("ClimateChart", () => {
       ),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
-    expect(screen.getAllByText("Unavailable").length).toBeGreaterThan(0);
+    expect(within(screen.getByRole("alert")).getByText("Unavailable")).toBeInTheDocument();
     expect(container.textContent).not.toMatch(/°C/);
   });
 

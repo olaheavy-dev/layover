@@ -76,7 +76,7 @@ describe("MapWidget", () => {
     expect(items).toHaveLength(2);
     expect(items[1]).toHaveTextContent("Sample Hotel Alfama");
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
-    expect(screen.getAllByText("Unavailable").length).toBeGreaterThan(0);
+    expect(within(screen.getByRole("alert")).getByText("Unavailable")).toBeInTheDocument();
   });
 
   it("loading: a busy status and no places", async () => {

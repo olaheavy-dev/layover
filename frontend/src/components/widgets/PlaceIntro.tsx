@@ -13,7 +13,7 @@ export function PlaceIntro({ widget }: { widget: Intro }) {
   let body: React.ReactNode = null;
   if (widget.state === "error") {
     body = (
-      <ErrorNote message="Layover could not read the introduction just now. No introduction is shown." />
+      <ErrorNote message="Layover could not read the Wikivoyage guide just now. No introduction is shown." />
     );
   } else if (widget.state === "filled") {
     body =

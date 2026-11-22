@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import { PlaceIntro } from "./PlaceIntro";
 import { sampleOf, sampleStates, TEST_NOW } from "./testing";
@@ -78,10 +78,11 @@ describe("PlaceIntro", () => {
     const { container } = render(<PlaceIntro widget={await sampleOf("place_intro", "error")} />);
     expect(
       screen.getByText(
-        "Layover could not read the introduction just now. No introduction is shown.",
+        "Layover could not read the Wikivoyage guide just now. No introduction is shown.",
       ),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
+    expect(within(screen.getByRole("alert")).getByText("Unavailable")).toBeInTheDocument();
     expect(container.textContent).not.toMatch(/capital/);
   });
 });

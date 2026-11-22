@@ -41,15 +41,16 @@ export function AdviceCard({ widget }: { widget: Advice }) {
   } else if (widget.state === "filled") {
     body = (
       <div className="flex flex-col gap-2">
-        <p>
-          {widget.title ? <strong>{widget.title}</strong> : null}
-          {widget.title ? <br /> : null}
-          {updated ? (
-            <span>Updated {updated}</span>
-          ) : (
-            <NotKnown missing="the date the FCDO last updated this advice" />
-          )}
-        </p>
+        {widget.title ? (
+          <p>
+            <strong>{widget.title}</strong>
+          </p>
+        ) : null}
+        {updated ? (
+          <p>Updated {updated}</p>
+        ) : (
+          <NotKnown missing="the date the FCDO last updated this advice" />
+        )}
         {widget.layover_copy ? <p className="text-sm">{widget.layover_copy}</p> : null}
         {readLink}
       </div>
@@ -61,6 +62,11 @@ export function AdviceCard({ widget }: { widget: Advice }) {
       state={widget.state === "error" || widget.state === "not_known" ? "filled" : widget.state}
       sources={widget.sources}
       missing={widget.missing}
+      footerNote={
+        widget.state === "filled" ? (
+          <span className="text-text-secondary text-xs">Layover’s copy</span>
+        ) : undefined
+      }
     >
       {body}
     </WidgetFrame>

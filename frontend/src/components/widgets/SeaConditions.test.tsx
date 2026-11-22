@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import { SeaConditions } from "./SeaConditions";
 import { sampleOf, sampleStates, TEST_NOW } from "./testing";
@@ -64,6 +64,7 @@ describe("SeaConditions", () => {
       screen.getByText("Layover could not check the sea temperature just now. No figure is shown."),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
+    expect(within(screen.getByRole("alert")).getByText("Unavailable")).toBeInTheDocument();
     expect(container.textContent).not.toMatch(/°C/);
   });
 });

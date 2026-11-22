@@ -19,6 +19,7 @@ export function WidgetFrame({
   emptyText = "Nothing to show yet",
   now,
   notice,
+  footerNote,
   children,
 }: {
   title: string;
@@ -29,6 +30,8 @@ export function WidgetFrame({
   now?: Date;
   // A line that stays above the body in every state, such as "Sandbox: no real booking or payment".
   notice?: React.ReactNode;
+  // A short fixed label that sits in the footer beside the source labels.
+  footerNote?: React.ReactNode;
   children?: React.ReactNode;
 }) {
   let body: React.ReactNode;
@@ -68,11 +71,12 @@ export function WidgetFrame({
       <h3 className="font-display text-lg font-semibold">{title}</h3>
       {notice}
       {body}
-      {sources.length > 0 ? (
+      {sources.length > 0 || footerNote ? (
         <footer className="border-border-primary flex flex-wrap gap-x-4 gap-y-1 border-t pt-2">
           {sources.map((label, index) => (
             <SourceLabel key={`${label.source}-${index}`} label={label} now={now} />
           ))}
+          {footerNote}
         </footer>
       ) : null}
     </section>

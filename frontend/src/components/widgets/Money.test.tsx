@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import { Money } from "./Money";
 import { sampleOf, sampleStates, TEST_NOW } from "./testing";
@@ -68,6 +68,7 @@ describe("Money", () => {
       screen.getByText("Layover could not check the exchange rate just now. No rate is shown."),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
+    expect(within(screen.getByRole("alert")).getByText("Unavailable")).toBeInTheDocument();
     expect(container.textContent).not.toMatch(/=/);
   });
 });
