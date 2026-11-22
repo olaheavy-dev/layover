@@ -23,3 +23,11 @@ describe("the error page", () => {
     expect(retry).toHaveBeenCalledOnce();
   });
 });
+
+describe("the error page title", () => {
+  it("has a title, so the page has a name for screen readers", () => {
+    render(<ErrorMessage error={new Error("x")} retry={() => {}} />);
+    const title = document.querySelector("title");
+    expect(title).toHaveTextContent("Something went wrong · Layover");
+  });
+});

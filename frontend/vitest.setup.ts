@@ -37,10 +37,11 @@ vi.mock("@/lib/api/server", async () => {
   }
   return {
     serverApi: async () => ({
-      GET: async (url: string) => ({
-        data:
-          url === "/v1/sample/trip" ? await read("trip", "sample-lisbon.json") : await widgets(),
-      }),
+      GET: async (url: string) => {
+        if (url === "/v1/sample/trip") return { data: await read("trip", "sample-lisbon.json") };
+        if (url === "/v1/sample/widgets") return { data: await widgets() };
+        throw new Error(`vitest.setup: no stand-in for ${url}`);
+      },
     }),
   };
 });
