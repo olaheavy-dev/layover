@@ -23,7 +23,7 @@ from app.money import (
     total,
 )
 
-SAMPLES = Path(__file__).resolve().parents[2] / "schemas" / "samples" / "widgets" / "cost_estimate"
+SAMPLES = Path(__file__).resolve().parents[2] / "schemas" / "samples"
 
 
 def gbp(minor: int) -> MoneyValue:
@@ -144,13 +144,14 @@ def test_estimate_rounds_once_from_exact() -> None:
 
 
 def test_sample_estimates_round_once() -> None:
-    """In every cost_estimate sample, each estimate's shown value is round_estimate of its exact.
+    """In every sample file (widgets and trip), each estimate's shown is round_estimate(exact).
 
     Working: each exact is read from the file, rounded to the nearest 10 pounds, half up, as in
     the table in schemas/samples/README.md (for example 78200 pence -> 78000).
     Source: schemas/samples/README.md, "Rounding working for MoneyEstimate.shown".
     """
     checked = 0
+    in_trip = 0
 
     def walk(node: object) -> None:
         nonlocal checked
@@ -167,9 +168,13 @@ def test_sample_estimates_round_once() -> None:
             for child in node:
                 walk(child)
 
-    for path in sorted(SAMPLES.glob("*.json")):
+    for path in sorted(SAMPLES.rglob("*.json")):
+        before = checked
         walk(json.loads(path.read_text(encoding="utf-8")))
+        if path.parent.name == "trip":
+            in_trip += checked - before
     assert checked > 0
+    assert in_trip > 0, "the walk must reach the estimates in the trip sample"
 
 
 def test_unknown_currency_raises() -> None:
