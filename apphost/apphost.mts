@@ -5,12 +5,13 @@ import { createBuilder, OtlpProtocol, refExpr } from "./.aspire/modules/aspire.m
 
 const builder = await createBuilder();
 
-// The same image as backend/compose/db/compose.yaml (it has the pgvector extension the first
-// migration enables). Keep the two in step when Dependabot moves one.
+// The same image, tag and digest as backend/compose/db/compose.yaml (it has the pgvector extension
+// the first migration enables). tools/check_apphost_image.py fails `make check` when they differ.
 const postgres = await builder
   .addPostgres("postgres")
   .withImage("pgvector/pgvector")
-  .withImageTag("0.8.7-pg18-trixie");
+  .withImageTag("0.8.7-pg18-trixie")
+  .withImageSHA256("5895949dfcdf308eb0cd31c950c93c14895c77f33fbedfecf1fa511ab1d4bcd2");
 const database = await postgres.addDatabase("app");
 
 // The URL in the form the backend's settings read (psycopg 3 through SQLAlchemy).

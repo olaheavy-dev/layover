@@ -25,7 +25,7 @@ To run the whole app on your computer with traces, install Docker and the [Aspir
 make dev-all   # PostgreSQL, the backend and the website, under Aspire
 ```
 
-Aspire prints the address of its dashboard, and the website has its own address in the dashboard's resource list. Open the website's `/trip/sample-lisbon` page, then open **Traces** in the dashboard. You see one trace that starts in the website and goes on into the backend. The database queries are traced too, but no page asks the database for anything yet, so you will see them from the next build step. Press Ctrl+C to stop everything. `make check` and CI never need Aspire.
+Aspire prints the address of its dashboard, and the website has its own address in the dashboard's resource list. Open the website's `/trip/sample-lisbon` page, then open **Traces** in the dashboard. You see one trace that starts in the website and goes on into the backend. The database queries are traced too, but no page asks the database for anything yet, so you will see them from the next build step. The dashboard's environment view shows the generated database password. It is for the local database only and changes on each run. Press Ctrl+C to stop everything. `make check` and CI never need Aspire.
 
 ## Security
 

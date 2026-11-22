@@ -31,7 +31,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.sessionmaker = db.create_sessionmaker(engine)
     # Query spans only when a trace export is set up (or a provider was passed in, as tests do).
     provider = app.state.tracer_provider
-    app.state.database_traced = provider is not None or export_requested(os.environ)
+    app.state.database_traced = provider is not None or (
+        app.state.settings.app_env != "test" and export_requested(os.environ)
+    )
     uninstrument = instrument_database(provider) if app.state.database_traced else None
     try:
         yield

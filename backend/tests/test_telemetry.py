@@ -53,16 +53,27 @@ async def test_no_export_without_endpoint(monkeypatch: pytest.MonkeyPatch) -> No
     async with LifespanManager(app):
         assert app.state.database_traced is False
         assert trace.get_tracer_provider() is before
+        assert isinstance(trace.get_tracer_provider(), trace.ProxyTracerProvider)
         assert not PsycopgInstrumentor().is_instrumented_by_opentelemetry
 
 
-def test_export_requested_only_with_an_endpoint() -> None:
+def test_export_requested_only_when_fastapi_will_export() -> None:
+    on = {"FASTAPI_OTEL_AUTO_CONFIGURE": "true"}
     assert export_requested({}) is False
-    assert export_requested({"OTEL_EXPORTER_OTLP_ENDPOINT": ""}) is False
-    assert export_requested({"OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4318"}) is True
-    assert export_requested({"OTEL_EXPORTER_OTLP_TRACES_ENDPOINT": "http://x/v1/traces"}) is True
-    # Switching auto-configure on without an endpoint exports nothing, so nothing is traced.
-    assert export_requested({"FASTAPI_OTEL_AUTO_CONFIGURE": "true"}) is False
+    assert export_requested({**on, "OTEL_EXPORTER_OTLP_ENDPOINT": ""}) is False
+    assert export_requested({**on, "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4318"}) is True
+    assert export_requested({**on, "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT": "http://x/v1/traces"})
+    # An endpoint without auto-configure, or auto-configure without an endpoint, exports nothing.
+    assert export_requested({"OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4318"}) is False
+    assert export_requested(on) is False
+
+
+async def test_no_database_spans_in_the_test_environment(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("FASTAPI_OTEL_AUTO_CONFIGURE", "true")
+    monkeypatch.setenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4318")
+    app = create_app(Settings(_env_file=None, app_env="test"))
+    async with LifespanManager(app):
+        assert app.state.database_traced is False
 
 
 async def test_database_queries_create_spans(database_url: str) -> None:
@@ -76,7 +87,10 @@ async def test_database_queries_create_spans(database_url: str) -> None:
     async with LifespanManager(app):
         assert app.state.database_traced is True
         await db.ping(app.state.engine)
-    spans = [s for s in exporter.get_finished_spans() if s.attributes]
-    selects = [s for s in spans if s.attributes and s.attributes.get("db.system") == "postgresql"]
+    selects = [
+        s
+        for s in exporter.get_finished_spans()
+        if s.attributes and s.attributes.get("db.system") == "postgresql"
+    ]
     assert any(s.name == "SELECT" for s in selects)
     assert not PsycopgInstrumentor().is_instrumented_by_opentelemetry
