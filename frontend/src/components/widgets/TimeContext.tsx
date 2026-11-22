@@ -15,7 +15,7 @@ export function TimeProvider({
   asOf = false,
   children,
 }: {
-  now: Date;
+  now: Date | null;
   asOf?: boolean;
   children: React.ReactNode;
 }) {
