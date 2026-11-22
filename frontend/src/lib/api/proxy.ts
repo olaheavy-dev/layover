@@ -60,7 +60,7 @@ export function problem(status: number, title: string, detail: string): Response
 }
 
 /** A path segment that could climb out of the API's base path, or address no resource. */
-function unsafe(segment: string): boolean {
+function badSegment(segment: string): boolean {
   return segment === "" || segment === "." || segment === ".." || /[/\\]/.test(segment);
 }
 
@@ -73,7 +73,7 @@ export async function forward(
   if (!baseUrl) {
     return problem(503, "Service Unavailable", "The API is not configured: set API_BASE_URL.");
   }
-  if (path.length === 0 || path.some(unsafe)) {
+  if (path.length === 0 || path.some(badSegment)) {
     return problem(404, "Not Found", "No such API path.");
   }
 

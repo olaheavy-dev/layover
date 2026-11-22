@@ -11,6 +11,8 @@ test.describe("security headers", () => {
   for (const [path, status] of [
     ["/", 200],
     ["/a-page-that-does-not-exist", 404],
+    ["/trip/abc", 404],
+    ["/trip/sample-lisbon", 200],
   ] as const) {
     test(`${path} answers ${status} with the security headers`, async ({ request }) => {
       const response = await request.get(path);

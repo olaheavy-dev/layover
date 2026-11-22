@@ -1,3 +1,5 @@
+import path from "node:path";
+
 import { defineConfig, devices } from "@playwright/test";
 
 const CI = Boolean(process.env.CI);
@@ -30,13 +32,22 @@ export default defineConfig({
   projects: [
     { name: "light", use: { ...devices["Desktop Chrome"], colorScheme: "light" } },
     { name: "dark", use: { ...devices["Desktop Chrome"], colorScheme: "dark" } },
-    { name: "mobile", use: { ...devices["Pixel 7"] } },
+    // 390 px is the narrowest width the product supports (WCAG 1.4.10 reflow starts at 320 CSS px).
+    { name: "mobile", use: { ...devices["Pixel 7"], viewport: { width: 390, height: 844 } } },
   ],
   webServer: {
     // The standalone server serves .next/static only once it is copied in (the image does the same).
     command: "cp -R .next/static .next/standalone/.next/ && node .next/standalone/server.js",
     url: `http://127.0.0.1:${PORT}`,
-    env: { PORT: String(PORT), HOSTNAME: "127.0.0.1", NEXT_TELEMETRY_DISABLED: "1" },
+    env: {
+      PORT: String(PORT),
+      HOSTNAME: "127.0.0.1",
+      NEXT_TELEMETRY_DISABLED: "1",
+      ENABLE_WIDGET_GALLERY: "1",
+      // The sample pages read the shared sample files. The standalone server changes its working
+      // folder to .next/standalone, so the default `../schemas/samples` would not find them.
+      SAMPLES_DIR: path.resolve(__dirname, "..", "schemas", "samples"),
+    },
     reuseExistingServer: !CI,
     timeout: 30_000,
   },

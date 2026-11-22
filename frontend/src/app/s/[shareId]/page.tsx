@@ -1,0 +1,43 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+import { SampleBanner } from "@/components/layout/SampleBanner";
+import { TopBar } from "@/components/layout/TopBar";
+import { SharedTrip } from "@/components/trip/SharedTrip";
+import { getSampleTrip, SAMPLE_TODAY, SAMPLE_TRIP_ID } from "@/lib/samples";
+
+async function sampleTrip() {
+  "use cache";
+  return getSampleTrip();
+}
+
+// A shared link is a frozen copy of a trip. Layover keeps none yet, so only the sample id works.
+export function generateStaticParams() {
+  return [{ shareId: SAMPLE_TRIP_ID }];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ shareId: string }>;
+}): Promise<Metadata> {
+  const { shareId } = await params;
+  if (shareId !== SAMPLE_TRIP_ID) notFound();
+  return { title: `Shared trip: ${(await sampleTrip()).name}` };
+}
+
+export default async function SharedPage({ params }: { params: Promise<{ shareId: string }> }) {
+  const { shareId } = await params;
+  if (shareId !== SAMPLE_TRIP_ID) notFound();
+  const trip = await sampleTrip();
+  return (
+    <div className="relative flex h-dvh flex-col overflow-hidden">
+      <TopBar tripName={trip.name} nameAs="h1" shared action="plan-your-own-trip">
+        <SampleBanner />
+      </TopBar>
+      <main className="mx-auto flex min-h-0 w-full max-w-3xl flex-1 flex-col">
+        <SharedTrip trip={trip} asOf={trip.is_sample ? SAMPLE_TODAY : trip.share.as_of} />
+      </main>
+    </div>
+  );
+}

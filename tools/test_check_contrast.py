@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import contextlib
+import io
 import sys
 import tempfile
 import unittest
@@ -383,6 +385,34 @@ class RealTokens(unittest.TestCase):
     def test_layover_tokens_pass(self) -> None:
         path = Path(__file__).resolve().parent.parent / "docs" / "design" / "tokens.css"
         self.assertEqual(cc.problems(path), [])
+
+
+class BothTokenFiles(unittest.TestCase):
+    ROOT = Path(__file__).resolve().parent.parent
+
+    def test_the_frontend_tokens_pass(self) -> None:
+        self.assertEqual(cc.problems(self.ROOT / "frontend" / "src" / "styles" / "tokens.css"), [])
+
+    def test_the_default_checks_both_files(self) -> None:
+        self.assertEqual(cc.DEFAULT_PATHS, [Path("docs/design/tokens.css"), Path("frontend/src/styles/tokens.css")])
+
+    def test_main_checks_every_path_it_is_given(self) -> None:
+        # The first file is fine; the second has a failing pair. Both must be read, so the failure is reported
+        # and names the second file.
+        good = SAMPLE.replace("DARK", DARK_OK)
+        bad = good.replace("--color-text-secondary: #000000;", "--color-text-secondary: #EEEEEE;", 1)
+        self.assertNotEqual(good, bad)
+        with tempfile.TemporaryDirectory() as tmp:
+            a, b = Path(tmp) / "a.css", Path(tmp) / "b.css"
+            a.write_text(good)
+            b.write_text(bad)
+            self.assertEqual(cc.main(["check_contrast.py", str(a)]), 0)
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err), contextlib.redirect_stdout(io.StringIO()):
+                code = cc.main(["check_contrast.py", str(a), str(b)])
+            self.assertEqual(code, 1)
+            self.assertIn("b.css", err.getvalue())
+            self.assertNotIn("a.css", err.getvalue())
 
 
 class RealTintTokens(unittest.TestCase):

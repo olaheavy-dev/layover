@@ -1,16 +1,65 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
 
+/*
+ * The Tailwind theme. The values live in styles/tokens.css (a copy of docs/design/tokens.css), as plain
+ * custom properties, so the light and dark themes switch them. `inline` makes each utility read the
+ * token's own variable (bg-bg-primary is background-color: var(--color-bg-primary)) instead of a copy.
+ * Docs: https://tailwindcss.com/docs/theme#referencing-other-variables
+ */
+@theme inline {
+  /* Each line below names a variable that tokens.css also defines (--color-bg-primary: var(--color-bg-primary)).
+     That reads as a loop, and it works only because tokens.css is imported above, outside any @layer:
+     the browser then resolves the var() to tokens.css's own value. Import it inside a layer, or
+     rename one side, and every colour, radius and font below turns invalid. */
+  --color-*: initial;
+
+  --color-bg-primary: var(--color-bg-primary);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-tertiary: var(--color-bg-tertiary);
+  --color-bg-inverse: var(--color-bg-inverse);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-disabled: var(--color-text-disabled);
+  --color-text-inverse: var(--color-text-inverse);
+  --color-text-link: var(--color-text-link);
+  --color-text-on-accent: var(--color-text-on-accent);
+  --color-text-on-photo: var(--color-text-on-photo);
+  --color-border-primary: var(--color-border-primary);
+  --color-border-control: var(--color-border-control);
+  --color-border-focus: var(--color-border-focus);
+  --color-accent-primary: var(--color-accent-primary);
+  --color-accent-primary-hover: var(--color-accent-primary-hover);
+  --color-accent-primary-active: var(--color-accent-primary-active);
+  --color-highlight: var(--color-highlight);
+  --color-status-warning: var(--color-status-warning);
+  --color-status-live: var(--color-status-live);
+  --color-status-cached: var(--color-status-cached);
+  --color-status-not-known: var(--color-status-not-known);
+  --color-status-info: var(--color-status-info);
+  --color-chart-1: var(--color-chart-1);
+  --color-chart-2: var(--color-chart-2);
+
+  --font-display: var(--font-family-display);
+  --font-sans: var(--font-family-body);
+  --font-mono: var(--font-family-mono);
+
+  --radius-sm: var(--border-radius-sm);
+  --radius-md: var(--border-radius-md);
+  --radius-lg: var(--border-radius-lg);
+  --radius-full: var(--border-radius-full);
+}
+
 @layer base {
   html {
     color-scheme: light dark;
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
-    font-family: var(--font-sans);
+    font-family: var(--font-family-body);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-focus-ring);
+    outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
   }
 }
