@@ -32,6 +32,34 @@ test.describe("the sample trip", () => {
     });
   }
 
+  for (const path of ["/trip/sample-lisbon", "/s/sample-lisbon"]) {
+    test(`${path} index click marks the last section and keeps the top bar on screen`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+      const index = page.getByRole("navigation", { name: "Sections of the trip" });
+      if (await page.getByRole("tab", { name: "Trip" }).isVisible()) {
+        await page.getByRole("tab", { name: "Trip" }).click();
+      }
+      const last = index.getByRole("link").last();
+      const name = (await last.textContent()) ?? "";
+      await last.click();
+      await expect(index.locator('a[aria-current="true"]')).toHaveCount(1);
+      await expect(index.locator('a[aria-current="true"]')).toHaveText(name);
+      const top = await page.getByRole("banner").evaluate((el) => el.getBoundingClientRect().top);
+      expect(top).toBe(0);
+    });
+  }
+
+  test("the trip name is not clipped on a phone", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "the clipping shows on a phone");
+    await page.goto("/trip/sample-lisbon");
+    const clipped = await page
+      .getByRole("heading", { level: 1 })
+      .evaluate((el) => el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight);
+    expect(clipped).toBe(false);
+  });
+
   test("/s/sample-lisbon is a read-only copy with the as-of header", async ({ page }) => {
     const response = await page.goto("/s/sample-lisbon");
     expect(response?.status()).toBe(200);
