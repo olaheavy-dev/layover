@@ -4,7 +4,14 @@ import { expect, test } from "@playwright/test";
 // Every page of the product, so each is checked for accessibility, CSP violations and errors in
 // light, dark and mobile, and compared with its screenshot. Add each new page here (with real ids
 // for dynamic routes), then make its screenshots with `make screenshots-frontend`.
-const PAGES = ["/", "/trip/sample-lisbon", "/s/sample-lisbon", "/how-it-works", "/trip/abc"];
+const PAGES = [
+  "/",
+  "/trip/sample-lisbon",
+  "/s/sample-lisbon",
+  "/how-it-works",
+  "/trip/abc",
+  "/dev/widgets",
+];
 
 // WCAG 2.2 A and AA, as axe tags them.
 const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
@@ -44,6 +51,9 @@ for (const path of PAGES) {
     expect(await page.evaluate(() => window.cspViolations)).toEqual([]);
     expect(errors).toEqual([]);
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+    // The development gallery has no screenshot: it is a very tall page of every widget state, and
+    // each image would pass the repository's 1 MB file limit.
+    if (path === "/dev/widgets") return;
     // Compared only in Playwright's Linux image (see playwright.config.ts).
     await expect(page).toHaveScreenshot(`${screenshotName(path)}.png`, { fullPage: true });
   });

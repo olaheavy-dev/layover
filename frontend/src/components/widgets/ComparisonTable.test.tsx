@@ -52,9 +52,7 @@ describe("ComparisonTable", () => {
     expect(lisbon.getByText("Cached, 3 days old")).toBeInTheDocument();
     expect(lisbon.getByText("Live")).toBeInTheDocument();
     expect(lisbon.getByRole("button", { name: "Choose Lisbon" })).toBeInTheDocument();
-    expect(
-      lisbon.getByRole("button", { name: "Swap Lisbon for a place of your own" }),
-    ).toBeInTheDocument();
+    expect(lisbon.getByRole("button", { name: "Swap place (Lisbon)" })).toBeInTheDocument();
 
     const valletta = within(card("Valletta"));
     expect(valletta.getByText("£242")).toBeInTheDocument();

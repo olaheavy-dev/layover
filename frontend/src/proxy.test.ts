@@ -53,6 +53,22 @@ describe("the proxy", () => {
     },
   );
 
+  it("answers /dev/widgets with 404 and the policy when the gallery setting is unset", () => {
+    for (const path of ["/dev/widgets", "/dev/widgets/"]) {
+      const response = proxy(new NextRequest(`http://app.test${path}`));
+      expect(response.status).toBe(404);
+      expect(response.headers.get("x-middleware-rewrite")).toBe("http://app.test/link-not-found");
+      expect(policyOf(response)).toContain("frame-ancestors 'none'");
+    }
+  });
+
+  it("lets /dev/widgets through when the gallery setting is on, and only that path is guarded", () => {
+    vi.stubEnv("ENABLE_WIDGET_GALLERY", "1");
+    expect(proxy(new NextRequest("http://app.test/dev/widgets")).status).toBe(200);
+    vi.stubEnv("ENABLE_WIDGET_GALLERY", "");
+    expect(proxy(new NextRequest("http://app.test/dev/other")).status).toBe(200);
+  });
+
   it("adds CSP_CONNECT_SRC's origins, read per request", () => {
     vi.stubEnv("CSP_CONNECT_SRC", "https://files.example.com");
     expect(policyOf(proxy(new NextRequest("http://app.test/")))).toContain(

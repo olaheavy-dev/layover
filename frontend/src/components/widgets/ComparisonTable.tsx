@@ -179,7 +179,7 @@ function Ready({ card, sources }: { card: PlaceCard; sources: Table["sources"] }
         <ActionButton variant="secondary">Choose {card.place}</ActionButton>
         <ActionButton
           variant="link"
-          label={`Swap ${card.place} for a place of your own`}
+          label={`Swap place (${card.place})`}
           icon={<Repeat2 className="size-4" aria-hidden="true" />}
         >
           Swap place

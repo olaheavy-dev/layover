@@ -42,6 +42,7 @@ export default defineConfig({
       PORT: String(PORT),
       HOSTNAME: "127.0.0.1",
       NEXT_TELEMETRY_DISABLED: "1",
+      ENABLE_WIDGET_GALLERY: "1",
       // The sample pages read the shared sample files. The standalone server changes its working
       // folder to .next/standalone, so the default `../schemas/samples` would not find them.
       SAMPLES_DIR: path.resolve(__dirname, "..", "schemas", "samples"),

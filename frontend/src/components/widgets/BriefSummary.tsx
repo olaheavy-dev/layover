@@ -3,6 +3,7 @@ import { CircleCheck, Pencil } from "lucide-react";
 import type { components } from "@/lib/api/schema";
 
 import { formatMoney, plural } from "./format";
+import { PreviewForm } from "./PreviewForm";
 import { ActionButton, Actions, CHIP, Chips } from "./WidgetParts";
 import { WidgetFrame } from "./WidgetFrame";
 
@@ -76,10 +77,7 @@ export function BriefSummary({ widget }: { widget: Brief }) {
               {chips.map((chip) =>
                 briefState === "editing" && chip.key === "budget" ? (
                   <li key={chip.key} className="basis-full">
-                    <form
-                      className="flex flex-col gap-2"
-                      onSubmit={(event) => event.preventDefault()}
-                    >
+                    <PreviewForm className="flex flex-col gap-2">
                       <label htmlFor="brief-budget" className="text-sm font-medium">
                         Budget
                       </label>
@@ -97,7 +95,7 @@ export function BriefSummary({ widget }: { widget: Brief }) {
                       <p className="text-text-secondary text-xs">
                         Press Enter to save. The brief updates before any search starts.
                       </p>
-                    </form>
+                    </PreviewForm>
                   </li>
                 ) : (
                   <li key={chip.key}>
