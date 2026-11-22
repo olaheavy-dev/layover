@@ -66,6 +66,10 @@ class Settings(BaseSettings):
     # Host headers the API answers to, e.g. ["api.example.com"]; ["*"] accepts any.
     allowed_hosts: list[str] = ["*"]
 
+    # Commission (partner links and the earnings dashboard) stays off until the owner switches it
+    # on; see the "Commission is built but switched off" row in docs/decisions/README.md#register.
+    commission_enabled: bool = False
+
     @model_validator(mode="after")
     def no_local_defaults_in_production(self) -> Settings:
         """Refuse to start in production on the local development credentials: a missing secret
