@@ -20,7 +20,7 @@ Why it matters: Layover is a portfolio project for AI and agent engineering jobs
 
 ## Non-goals
 
-- No model calls, no LangChain or LangGraph, no agents (step 2).
+- No model calls, no agent framework code (Microsoft Agent Framework, [0013](../../decisions/0013-microsoft-agent-framework.md)), no agents (step 2).
 - No outside API calls: no fares, weather, FCDO or any other source (steps 3 to 6).
 - The chat doesn't talk to the server (step 2). The message box shows, and says it isn't connected yet.
 - No hosting, no public site, no real trip links (step 7).
