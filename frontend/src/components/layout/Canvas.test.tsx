@@ -112,3 +112,35 @@ describe("readingBand", () => {
     expect(readingBand(height)).toBe(margin);
   });
 });
+
+describe("Canvas index links", () => {
+  function setup() {
+    // jsdom has no scrollTo on elements.
+    HTMLElement.prototype.scrollTo = vi.fn();
+    render(
+      <Canvas sections={["brief", "compare"]}>
+        <section id="brief">Brief content</section>
+        <section id="compare">Compare content</section>
+      </Canvas>,
+    );
+    return screen.getByRole("link", { name: "Compare" });
+  }
+
+  it("takes over a plain click", () => {
+    const link = setup();
+    expect(fireEvent.click(link)).toBe(false); // false: preventDefault was called
+  });
+
+  it.each([["metaKey"], ["ctrlKey"], ["shiftKey"], ["altKey"]])(
+    "leaves a click with %s to the browser",
+    (modifier) => {
+      const link = setup();
+      expect(fireEvent.click(link, { [modifier]: true })).toBe(true);
+    },
+  );
+
+  it("leaves a middle-button click to the browser", () => {
+    const link = setup();
+    expect(fireEvent.click(link, { button: 1 })).toBe(true);
+  });
+});

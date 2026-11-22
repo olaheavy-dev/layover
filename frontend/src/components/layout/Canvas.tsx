@@ -110,6 +110,10 @@ export function Canvas({
   }, [key]);
 
   function onIndexClick(event: React.MouseEvent<HTMLElement>) {
+    // Let the browser handle a modified or non-primary click (new tab, new window, download).
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
     const root = scroller.current;
     const link = (event.target as HTMLElement).closest("nav a[href^='#']");
     if (!root || !link) return;
