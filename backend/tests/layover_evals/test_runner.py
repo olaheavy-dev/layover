@@ -74,7 +74,8 @@ def test_widget_schema_check_runs() -> None:
     steps = build_step_map(DIRECTION_MD)
     for n in range(1, 21):
         result = run_case(_by_id()[f"WIDGET-{n:02d}"], steps)
-        assert result.outcome is Outcome.PASS, (n, result.detail)
+        assert result.outcome is Outcome.SCHEMA_PASS, (n, result.detail)
+        assert result.line() == f"SCHEMA PASS (full case needs step {steps[f'WIDGET-{n:02d}']})"
 
 
 def test_widget_check_fails_when_a_state_is_missing(tmp_path: Path) -> None:
@@ -97,8 +98,9 @@ def test_every_case_has_a_result_and_a_step() -> None:
     results = run_cases(parse_cases(CASES_MD), build_step_map(DIRECTION_MD))
     assert len(results) == 53
     assert not [r for r in results if r.outcome is Outcome.FAIL]
-    passed = [r.case.case_id for r in results if r.outcome is Outcome.PASS]
-    assert passed == [f"WIDGET-{n:02d}" for n in range(1, 21)]
+    assert not [r for r in results if r.outcome is Outcome.PASS]  # no case is fully checked yet
+    schema_passed = [r.case.case_id for r in results if r.outcome is Outcome.SCHEMA_PASS]
+    assert schema_passed == [f"WIDGET-{n:02d}" for n in range(1, 21)]
 
 
 def test_traveller_files_parse() -> None:

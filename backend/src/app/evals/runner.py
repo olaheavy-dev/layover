@@ -1,7 +1,9 @@
 """Run the evaluation cases: `python -m app.evals.runner [--case ID]`.
 
-Prints one line per case (`PASS`, `FAIL` or `NOT RUN (needs step N)`) and a total; exits 1 on any
-`FAIL`. In step 1 only the schema part of WIDGET-01 to WIDGET-20 runs; there are no model calls.
+Prints one line per case (`PASS`, `SCHEMA PASS (full case needs step N)`, `FAIL` or
+`NOT RUN (needs step N)`) and a total; exits 1 on any `FAIL`. In step 1 only the schema part of
+WIDGET-01 to WIDGET-20 runs, and it reports `SCHEMA PASS`, never `PASS`: the case's other rules
+(labels, "Not known", never "safe") are not checked yet. There are no model calls.
 
 N is the build step that adds the case, read from the "Evaluation cases it adds" column of the
 build-order table in docs/product/01-research-and-direction.md section 4. A case listed in more than
@@ -25,7 +27,9 @@ _RANGE = re.compile(r"`([A-Z]+)-(\d+)`(?:\s+to\s+`([A-Z]+)-(\d+)`)?")
 
 
 class Outcome(Enum):
-    PASS = "PASS"  # noqa: S105  # an outcome name, not a password
+    # S105: these are outcome names, not passwords
+    SCHEMA_PASS = "SCHEMA PASS"  # noqa: S105
+    PASS = "PASS"  # noqa: S105
     FAIL = "FAIL"
     NOT_RUN = "NOT RUN"
     WITHDRAWN = "WITHDRAWN"
@@ -41,6 +45,8 @@ class Result:
     def line(self) -> str:
         if self.outcome is Outcome.NOT_RUN:
             return f"NOT RUN (needs step {self.step})"
+        if self.outcome is Outcome.SCHEMA_PASS:
+            return f"SCHEMA PASS (full case needs step {self.step})"
         return str(self.outcome.value)
 
 
@@ -74,7 +80,9 @@ def run_case(case: Case, steps: dict[str, int]) -> Result:
         if kind is None:
             return Result(case, Outcome.FAIL, "no widget kind in the case title")
         ok, detail = check_widget_samples(kind)
-        return Result(case, Outcome.PASS if ok else Outcome.FAIL, detail)
+        if not ok:
+            return Result(case, Outcome.FAIL, detail)
+        return Result(case, Outcome.SCHEMA_PASS, detail, steps.get(case.case_id))
     step = steps.get(case.case_id)
     if step is None:
         return Result(case, Outcome.FAIL, "no build step lists this case in 01 section 4")
@@ -101,7 +109,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{r.case.case_id:<12} {r.line()}{extra}")
     count = {o: sum(r.outcome is o for r in results) for o in Outcome}
     print(
-        f"total {len(results)}: {count[Outcome.PASS]} PASS, {count[Outcome.FAIL]} FAIL, "
+        f"total {len(results)}: {count[Outcome.PASS]} PASS, "
+        f"{count[Outcome.SCHEMA_PASS]} SCHEMA PASS, {count[Outcome.FAIL]} FAIL, "
         f"{count[Outcome.NOT_RUN]} NOT RUN, {count[Outcome.WITHDRAWN]} WITHDRAWN"
     )
     return 1 if count[Outcome.FAIL] else 0
