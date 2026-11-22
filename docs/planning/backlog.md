@@ -47,6 +47,7 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 | 19 | #34 | No chosen source for a place's currency | Build 3 | `noticed` in the boards PR; pick a source before the `money` widget shows a currency line |
 | 35 | #64 | No contract state for the pounds-only money card | Build 3 | `noticed` in PR B |
 | 46 | #80 | Holidays adapter: regional lists, the error state and holiday-name language | Build 3 | `noticed` in PR C's final review |
+| 58 | #93 | Draw the map widget with MapLibre GL JS and OpenFreeMap tiles | Build 3 | Owner's choice, 22 Nov 2026 (register) |
 | 47 | #81 | `money.py` has no function that rounds a part to the pound | Build 4 | `noticed` in PR C's final review |
 | 36 | #65 | No contract state for the booking widget asking for dates | Build 6 | `noticed` in PR B |
 | 44 | #78 | Booking idempotency: key the order on Layover's own booking-attempt ID, not MAF's `request_id` | Build 6 | `noticed` in PR C's final review |
