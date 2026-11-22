@@ -27,6 +27,9 @@ dependencies = [
 # `maf` conflict (see [tool.uv] below): a project installs one.
 db = [
     "alembic>=1.20.1",
+    # Query spans at the psycopg 3 driver (the SQLAlchemy instrumentation does not yet cover
+    # SQLAlchemy 2.1); only switched on when OpenTelemetry export is configured (src/app/tracing.py).
+    "opentelemetry-instrumentation-psycopg>=0.66b0",
     "pgvector>=0.5.1",
     "psycopg[binary,pool]>=3.3.6",
     "psycopg-pool>=3.3.3",

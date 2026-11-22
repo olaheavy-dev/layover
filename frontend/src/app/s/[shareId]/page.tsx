@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { SampleBanner } from "@/components/layout/SampleBanner";
 import { TopBar } from "@/components/layout/TopBar";
 import { SharedTrip } from "@/components/trip/SharedTrip";
 import { getSampleTrip, SAMPLE_TODAY, SAMPLE_TRIP_ID } from "@/lib/samples";
 
-async function sampleTrip() {
-  "use cache";
-  return getSampleTrip();
-}
+// One API call per request, shared by the title and the page.
+const sampleTrip = cache(getSampleTrip);
 
-// A shared link is a frozen copy of a trip. Layover keeps none yet, so only the sample id works.
-export function generateStaticParams() {
-  return [{ shareId: SAMPLE_TRIP_ID }];
-}
+// The page reads the API, which is not there at build, so it renders on each request.
+// The status and headers are sent at once; the body waits for the API, so an API error shows the
+// error page and not a half-drawn trip.
+export const instant = false;
 
 export async function generateMetadata({
   params,
@@ -22,6 +21,7 @@ export async function generateMetadata({
   params: Promise<{ shareId: string }>;
 }): Promise<Metadata> {
   const { shareId } = await params;
+  // A shared link is a frozen copy of a trip. Layover keeps none yet, so only the sample id works.
   if (shareId !== SAMPLE_TRIP_ID) notFound();
   return { title: `Shared trip: ${(await sampleTrip()).name}` };
 }

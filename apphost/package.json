@@ -1,0 +1,20 @@
+{
+  "name": "layover-apphost",
+  "private": true,
+  "type": "module",
+  "description": "The Aspire app host: runs PostgreSQL, the backend and the website together, with traces.",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.apphost.json"
+  },
+  "dependencies": {
+    "vscode-jsonrpc": "8.2.1"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3"
+  }
+}

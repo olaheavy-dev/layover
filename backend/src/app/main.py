@@ -6,6 +6,7 @@ process (the database engine) are opened and closed in lifespan.
 
 from __future__ import annotations
 
+import os
 from collections.abc import AsyncIterator, MutableMapping
 from contextlib import asynccontextmanager
 from typing import Any
@@ -20,6 +21,7 @@ from app.limits import BodyLimit, SecurityHeaders
 from app.log import REQUEST_ID_HEADER, configure_logging, request_context
 from app.problems import UnhandledErrors, install_problem_handlers
 from app.settings import Settings, get_settings
+from app.tracing import export_requested, instrument_database
 
 
 @asynccontextmanager
@@ -27,9 +29,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     engine = db.create_engine(app.state.settings)
     app.state.engine = engine
     app.state.sessionmaker = db.create_sessionmaker(engine)
+    # Query spans only when a trace export is set up (or a provider was passed in, as tests do).
+    provider = app.state.tracer_provider
+    app.state.database_traced = provider is not None or (
+        app.state.settings.app_env != "test" and export_requested(os.environ)
+    )
+    uninstrument = instrument_database(provider) if app.state.database_traced else None
     try:
         yield
     finally:
+        if uninstrument:
+            uninstrument()
         await engine.dispose()
 
 
@@ -68,6 +78,7 @@ def create_app(
         telemetry=telemetry_config(settings, telemetry),
     )
     app.state.settings = settings
+    app.state.tracer_provider = (telemetry or {}).get("tracer_provider")
     app.state.readiness_checks = {}
     install_problem_handlers(app)
     # Registered before request_context, which therefore wraps it: a 413 still gets an access line.

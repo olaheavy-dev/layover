@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { Canvas } from "@/components/layout/Canvas";
 import { TopBar } from "@/components/layout/TopBar";
@@ -10,17 +11,13 @@ import { Workspace } from "@/components/trip/Workspace";
 import { TimeProvider } from "@/components/widgets/TimeContext";
 import { getSampleTrip, SAMPLE_TODAY, SAMPLE_TRIP_ID } from "@/lib/samples";
 
-// The sample trip's samples are read once, at build.
-async function sampleTrip() {
-  "use cache";
-  return getSampleTrip();
-}
+// One API call per request, shared by the title and the page.
+const sampleTrip = cache(getSampleTrip);
 
-// Layover keeps no trips yet, so only the sample id is a trip; any other id is a link that does
-// not work. Listing the id here makes Next.js prerender it.
-export function generateStaticParams() {
-  return [{ tripId: SAMPLE_TRIP_ID }];
-}
+// The page reads the API, which is not there at build, so it renders on each request.
+// The status and headers are sent at once; the body waits for the API, so an API error shows the
+// error page and not a half-drawn trip.
+export const instant = false;
 
 export async function generateMetadata({
   params,
@@ -28,6 +25,8 @@ export async function generateMetadata({
   params: Promise<{ tripId: string }>;
 }): Promise<Metadata> {
   const { tripId } = await params;
+  // Layover keeps no trips yet, so only the sample id is a trip; any other id is a link that does
+  // not work.
   if (tripId !== SAMPLE_TRIP_ID) notFound();
   return { title: (await sampleTrip()).name };
 }

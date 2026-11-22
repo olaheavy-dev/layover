@@ -10,8 +10,9 @@ import { getSampleWidgets, SAMPLE_TODAY, type SampleWidget } from "@/lib/samples
 
 export const metadata: Metadata = { title: "Widget gallery", robots: { index: false } };
 
-// The page waits for the request (the setting is read per request), so nothing is sent early and
-// notFound() gives a real 404 status, not only the words. A development page, so no placeholder.
+// The page reads the setting and the API on each request. The status and headers are sent at once;
+// the body waits, so an API error shows the error page and not a half-drawn page. A development
+// page, so no placeholder.
 export const instant = false;
 
 // Every widget in every sample state, for development. On only with ENABLE_WIDGET_GALLERY; the

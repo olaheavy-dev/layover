@@ -104,3 +104,11 @@ Drawings written as SVG inside HTML pages, not as separate files. `make check` d
 |---|---|---|---|---|---|
 | `docs/design/boards/screens/welcome.html` (symbol `illus`) | The welcome scene: the suitcase character and a small suitcase, a ticket, an umbrella, a plane with a dotted trail, a sun and clouds, on a quay in the sea | Drawn for Layover by the agent, 20 Nov 2026; owner's choice: isometric ("1: Isometric") | The agent, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 20 Nov 2026 |
 | `docs/design/boards/illustration-guide.html` (the `defs` block and the do and don't examples) | The same pieces, shown one by one, and small example blocks that show the rules | Drawn for Layover by the agent, 20 Nov 2026; owner's choice: isometric ("1: Isometric") | The agent, for the owner | The project's own work, under the repository's `LICENSE` (copyright Sunkanmi Olawuwo, all rights reserved; no licence granted to others) | 20 Nov 2026 |
+
+## Screenshots
+
+Screenshots of development tools showing Layover running, kept as evidence for a build step. They hold no local paths and no personal data (checked before committing).
+
+| File | What it is | Source | Author or owner | Licence and terms | Date checked |
+|---|---|---|---|---|---|
+| `docs/assets/screenshots/aspire-trace-build-1.png` | The Aspire dashboard showing one trace for `/trip/sample-lisbon`: the website's request and its call to the backend's `GET /v1/sample/trip` (build step 1, PR E, #55) | Taken by the agent from a local `make dev-all` run, 22 Nov 2026 | The agent, for the owner; the dashboard's interface is part of [Aspire](https://github.com/microsoft/aspire) | The screenshot is the project's own work, under the repository's `LICENSE`; the dashboard interface shown is Microsoft's, released under the [MIT licence](https://github.com/microsoft/aspire/blob/main/LICENSE.TXT) | 22 Nov 2026 |

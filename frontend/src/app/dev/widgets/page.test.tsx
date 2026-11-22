@@ -29,7 +29,6 @@ describe("/dev/widgets", () => {
     "shows one section per kind, 20 in all, under one h1",
     async () => {
       vi.stubEnv("ENABLE_WIDGET_GALLERY", "1");
-      vi.stubEnv("SAMPLES_DIR", `${process.cwd()}/../schemas/samples`);
       await open();
       expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
       const kinds = new Set((await getSampleWidgets()).map((s) => s.kind));
@@ -48,7 +47,6 @@ describe("/dev/widgets", () => {
     "labels each sample state '<kind> · <state>' with a paragraph, not a heading, and shows the limit notice",
     async () => {
       vi.stubEnv("ENABLE_WIDGET_GALLERY", "1");
-      vi.stubEnv("SAMPLES_DIR", `${process.cwd()}/../schemas/samples`);
       await open();
       const samples = await getSampleWidgets();
       for (const { kind, state } of samples) {

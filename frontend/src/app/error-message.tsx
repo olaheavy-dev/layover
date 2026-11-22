@@ -12,6 +12,8 @@ export function ErrorMessage({ error, retry }: { error: unknown; retry: () => vo
       : undefined;
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col justify-center gap-4 px-6">
+      {/* React 19 moves this into <head>; the page needs a name for screen readers. */}
+      <title>Something went wrong · Layover</title>
       <h1 className="text-3xl font-semibold tracking-tight">Something went wrong</h1>
       <p className="text-text-secondary">
         This page couldn&apos;t be shown. Try again; if it keeps happening, tell us what you were

@@ -36,6 +36,8 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 | 55 | #90 | A shared trip can still reveal how many people are travelling | Build 1 | `noticed` in PR D's reviews; owner's privacy decision |
 | 56 | #91 | Template drift from PR D: proxy, the API proxy rename and the e2e page list | Build 1 | `noticed` in PR D's reviews; template candidate |
 | 57 | #92 | Website layout drift from the approved boards | Build 1 | `noticed` in PR D's visual review |
+| 59 | #96 | Aspire hosting packages in apphost/aspire.config.json get no update alerts | Build 1 | `noticed` in PR E's final review |
+| 60 | #97 | Local end-to-end runs can reuse a stale server from another worktree | Build 1 | `noticed` in PR E's final review; template candidate |
 | 20 | #35 | Mood scenes for the welcome and How Layover works pages | Build 2 | Waits for the owner's images |
 | 24 | #41 | How Layover works board leaves out Nuitee Connect | Build 2 | `noticed` in the Design gate audit |
 | 48 | #82 | ScriptedTraveller answers keys are not checked against the brief's fields | Build 2 | `noticed` in PR C's final review |

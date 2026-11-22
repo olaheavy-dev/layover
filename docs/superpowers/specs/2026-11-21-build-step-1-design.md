@@ -16,7 +16,7 @@ Why it matters: Layover is a portfolio project for AI and agent engineering jobs
 4. The website's pages are built and show the sample Lisbon trip, marked as a sample.
 5. A development-only gallery shows every widget in every state.
 6. Money types, the commission switch (off), recorded-response tests and the evaluation runner exist and are tested.
-7. Aspire starts the backend, the frontend and PostgreSQL together, and shows traces across them.
+7. Aspire starts the backend, the frontend and PostgreSQL together, and shows traces from the website through the backend (the database leg is proved by a test now and checked end to end in step 2).
 
 ## Non-goals
 
@@ -77,7 +77,7 @@ Each goes into the register in the plan's PR.
 - **Fare age (agent's call):** `fare_card` and `fare_list` carry each fare's capture date and age; when a fare is too old to show is set in step 4, with its source.
 - **Money:** integer minor units with an ISO 4217 currency code; exchange rates as `Decimal` strings. Never a float (enforced by a lint rule on the money and contract modules).
 - **Exports:** `make check` writes each model to `schemas/widgets/<kind>.schema.json` and the trip state to `schemas/trip.schema.json`, and fails if a committed file differs. The models are also in the OpenAPI schema, so the template's `make api-types` gives the frontend its TypeScript types.
-- **Sample data:** the boards' sample data ([sample-data.md](../../design/boards/sample-data.md)) becomes fixture files under `schemas/samples/` (next to the exported schemas, so both the backend and the frontend read the same files), one per widget state, each checked against its model. The same files feed the frontend. They are labelled as samples, and they never feed a figure that could reach a traveller as real.
+- **Sample data:** the boards' sample data ([sample-data.md](../../design/boards/sample-data.md)) becomes fixture files under `schemas/samples/` (next to the exported schemas, so the backend reads them), one per widget state, each checked against its model. The backend serves them to the frontend through `/v1/sample/*`. They are labelled as samples, and they never feed a figure that could reach a traveller as real.
 
 ### 3. Backend foundation
 
@@ -108,7 +108,7 @@ Each goes into the register in the plan's PR.
 
 ### 5. Aspire
 
-A TypeScript Aspire app host starts the FastAPI backend, the Next.js frontend and PostgreSQL, and shows traces across them in its dashboard ([register](../../decisions/README.md#register), 19 Nov 2026). The backend sends traces with FastAPI's built-in OpenTelemetry (`fastapi.telemetry`, used by the FastAPI layer's `backend/src/app/main.py`), plus PostgreSQL query instrumentation (approved 21 Nov 2026); the frontend uses the Next.js layer's `@vercel/otel`. Traces stay on the local machine. `make check` and CI never need Aspire. The plan checks the official documentation for the version in use and adds its pinned version to `third-party.md`.
+A TypeScript Aspire app host starts the FastAPI backend, the Next.js frontend and PostgreSQL, and shows traces from the website through the backend in its dashboard ([register](../../decisions/README.md#register), 19 Nov 2026). The backend sends traces with FastAPI's built-in OpenTelemetry (`fastapi.telemetry`, used by the FastAPI layer's `backend/src/app/main.py`), plus PostgreSQL query instrumentation (approved 21 Nov 2026; OpenTelemetry's psycopg one, because the SQLAlchemy one does not support SQLAlchemy 2.1); the frontend uses the Next.js layer's `@vercel/otel`. No route queries the database in step 1, so a backend test proves queries create spans, and the full website-to-database trace is checked in step 2, the first step with a database route (register, 22 Nov 2026). Traces stay on the local machine. `make check` and CI never need Aspire. The plan checks the official documentation for the version in use and adds its pinned version to `third-party.md`.
 
 ### 6. Project board
 

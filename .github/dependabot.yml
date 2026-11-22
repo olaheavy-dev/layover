@@ -1,7 +1,7 @@
 # Owned by house-template-base. Weekly updates with a 7-day cooldown (new releases wait a week, so
 # a compromised release is usually caught before it lands), minor and patch updates grouped, majors
 # separate. Security updates skip the cooldown. Stack directories follow the layer conventions:
-# backend/ (fastapi), frontend/ (nextjs).
+# backend/ (fastapi), frontend/ (nextjs); apphost/ is Layover's own (the Aspire app host).
 # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 version: 2
 
@@ -45,6 +45,9 @@ updates:
       prefix: chore
       include: scope
     groups:
+      # The contrib instrumentations (beta versions only) move in step with opentelemetry-api and -sdk.
+      opentelemetry:
+        patterns: ["opentelemetry-*"]
       python-minor-and-patch:
         update-types: [minor, patch]
       python-major:
@@ -64,4 +67,20 @@ updates:
       npm-minor-and-patch:
         update-types: [minor, patch]
       npm-major:
+        update-types: [major]
+
+  - package-ecosystem: npm
+    directory: /apphost
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    labels: [dependencies]
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      apphost-minor-and-patch:
+        update-types: [minor, patch]
+      apphost-major:
         update-types: [major]

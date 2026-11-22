@@ -1,9 +1,9 @@
-import path from "node:path";
-
 import { defineConfig, devices } from "@playwright/test";
 
 const CI = Boolean(process.env.CI);
 const PORT = 3100;
+// The backend the sample pages read their samples from (GET /v1/sample/*).
+const API_PORT = 8100;
 // Set by scripts/e2e-docker.sh (CI, make screenshots-frontend): Chromium in Playwright's Linux
 // image, the one place screenshots are compared, because fonts and rendering differ by machine.
 const BROWSER_SERVER = process.env.PLAYWRIGHT_BROWSER_SERVER;
@@ -35,20 +35,31 @@ export default defineConfig({
     // 390 px is the narrowest width the product supports (WCAG 1.4.10 reflow starts at 320 CSS px).
     { name: "mobile", use: { ...devices["Pixel 7"], viewport: { width: 390, height: 844 } } },
   ],
-  webServer: {
-    // The standalone server serves .next/static only once it is copied in (the image does the same).
-    command: "cp -R .next/static .next/standalone/.next/ && node .next/standalone/server.js",
-    url: `http://127.0.0.1:${PORT}`,
-    env: {
-      PORT: String(PORT),
-      HOSTNAME: "127.0.0.1",
-      NEXT_TELEMETRY_DISABLED: "1",
-      ENABLE_WIDGET_GALLERY: "1",
-      // The sample pages read the shared sample files. The standalone server changes its working
-      // folder to .next/standalone, so the default `../schemas/samples` would not find them.
-      SAMPLES_DIR: path.resolve(__dirname, "..", "schemas", "samples"),
+  webServer: [
+    {
+      // The backend, from source, as `make dev` runs it (uv is installed in CI). The sample routes
+      // need no database: it connects lazily, so only /health/ready would fail without one.
+      // An empty ENV_FILE keeps a developer's own backend settings file (and its keys) out.
+      command: `uv --directory ../backend run --locked --extra db uvicorn app.main:app --host 127.0.0.1 --port ${API_PORT} --no-access-log`,
+      url: `http://127.0.0.1:${API_PORT}/health/live`,
+      env: { APP_ENV: "local", ENV_FILE: "" },
+      reuseExistingServer: !CI,
+      timeout: 60_000,
     },
-    reuseExistingServer: !CI,
-    timeout: 30_000,
-  },
+    {
+      // The standalone server serves .next/static only once it is copied in (the image does the same).
+      command: "cp -R .next/static .next/standalone/.next/ && node .next/standalone/server.js",
+      url: `http://127.0.0.1:${PORT}`,
+      env: {
+        PORT: String(PORT),
+        HOSTNAME: "127.0.0.1",
+        NEXT_TELEMETRY_DISABLED: "1",
+        ENABLE_WIDGET_GALLERY: "1",
+        // The sample pages read the samples through the API, on every request.
+        API_BASE_URL: `http://127.0.0.1:${API_PORT}`,
+      },
+      reuseExistingServer: !CI,
+      timeout: 30_000,
+    },
+  ],
 });
