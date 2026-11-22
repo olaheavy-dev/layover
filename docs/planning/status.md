@@ -15,16 +15,15 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done:
   - the Dependabot updates (#58, #61, #62, #63) and the website's minor and patch updates (#75); the major upgrades wait in #71;
   - decision 0013, Microsoft Agent Framework in Python (#77);
   - **PR C (#84):** the backend foundation: money, recordings, holidays and the evaluation runner. The runner's total is "53: 0 PASS, 20 SCHEMA PASS, 0 FAIL, 33 NOT RUN, 0 WITHDRAWN";
+  - the owner's map choice: MapLibre GL JS with OpenFreeMap's free tiles, recorded in the [register](../decisions/README.md#register); the map is drawn in #93 (Build 3), and the widget lists its places with links until then;
+  - #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then [a comparison of the two published wheels](https://github.com/olaheavy-dev/layover/pull/62#discussion_r4658085468), because MAF's GitHub repository returned 404;
   - **PR D (#94):** the website (home, trip, shared trip, How Layover works, link not found), the 20 widgets in every state and the development gallery, with axe, page titles, fonts, a 390 px phone width and screenshots in Playwright's Linux image.
 
 `make repo-settings` was run on 21 Nov 2026, so CodeQL for Python and TypeScript is now a required check. The build order is in [01 §4](../product/01-research-and-direction.md#4-build-order): eight steps, each a milestone.
 
 ## Open pull requests
 
-None. (This handover PR only.)
-
-- **Map choice (owner, 22 Nov 2026):** MapLibre GL JS with OpenFreeMap's free tiles, recorded in the [register](../decisions/README.md#register); the map is drawn in #93 (Build 3), and the widget lists its places with links until then.
-- #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then [a comparison of the two published wheels](https://github.com/olaheavy-dev/layover/pull/62#discussion_r4658085468), because MAF's GitHub repository returned 404.
+None apart from this handover PR.
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -40,7 +39,7 @@ None. (This handover PR only.)
 1. **PR E (#55): join the website to the API and add Aspire** (plan Tasks 19 and 20), then the **step 1 gate** (a whole-repository review, a tidy-up PR, `noticed` issues triaged, a Floorplan snapshot, and the first evaluation report). Issues are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
 2. **The progress ledger** for build plan 1 is in `.superpowers/sdd/2026-11-21-build-step-1/progress.md` (git-ignored, on the owner's machine): Tasks 8 to 18 are done; PR E's tasks 19 and 20 remain. It lists every ruling made and every deferred review item.
 3. **Keep the template answer `llm: none` in step 1:** step 2's first PR changes it to `llm: maf` (0013 point 1). (The £5 half-up case that PR B's samples never hit is now covered by `test_estimate_nearest_ten` and `test_round_estimate_ten_pound_boundaries`.)
-4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints answer 503 there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template). The website's Docker image has the same gap: it can't reach `schemas/samples`, so it needs `SAMPLES_DIR` or a copy of the folder (see the comment on #55). The website's `samples.ts` reads the sample files without validating them until the API does.
+4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints answer 503 there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template). The website's Docker image doesn't build at all (`make image-frontend` fails, because `frontend/Dockerfile` builds from a `frontend/`-only context and `next build` prerenders the sample pages from `../schemas/samples`), so PR E gives both images the samples and checks that both build (see the comment on #55). The website's `samples.ts` reads the sample files without validating them until the API does.
 5. **Watch for upstream support (#71):** OpenTelemetry SDK 3 (waits for `@vercel/otel`), ESLint 10 (waits for the plugins in `eslint-config-next`) and TypeScript 7 (waits for typescript-eslint and openapi-typescript). jsdom 31 isn't blocked; it moves with that batch for one review.
 
 ## Blockers
