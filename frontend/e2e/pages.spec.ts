@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 // Every page of the product, so each is checked for accessibility, CSP violations and errors in
 // light, dark and mobile, and compared with its screenshot. Add each new page here (with real ids
 // for dynamic routes), then make its screenshots with `make screenshots-frontend`.
-const PAGES = ["/", "/a-page-that-does-not-exist"];
+const PAGES = ["/", "/trip/sample-lisbon", "/s/sample-lisbon", "/how-it-works", "/trip/abc"];
 
 // WCAG 2.2 A and AA, as axe tags them.
 const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];

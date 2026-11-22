@@ -10,7 +10,7 @@ type Brief = components["schemas"]["BriefSummary"];
 
 // The chips come only from fields the brief has. A missing field gets no chip: the chat asks for
 // it, and the widget never guesses one (journey board, "Your brief").
-function chipsOf(brief: Brief): { key: string; text: string }[] {
+export function chipsOf(brief: Brief): { key: string; text: string }[] {
   const chips: { key: string; text: string }[] = [];
   if (brief.origin) chips.push({ key: "origin", text: `From ${brief.origin}` });
   const trip = [

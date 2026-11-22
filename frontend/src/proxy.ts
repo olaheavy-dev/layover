@@ -3,6 +3,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { connectOrigins, contentSecurityPolicy, usesNonce } from "@/lib/csp";
+import { isDeadLink } from "@/lib/links";
 
 const CSP = "content-security-policy";
 
@@ -12,6 +13,13 @@ export function proxy(request: NextRequest) {
     // Read per request, like API_BASE_URL, so one build serves every environment.
     connectSrc: connectOrigins(process.env.CSP_CONNECT_SRC),
   };
+  if (isDeadLink(request.nextUrl.pathname)) {
+    // A link that does not work: show the not-found page at this address, with status 404, before
+    // any streaming starts. No route has this path, so Next.js renders app/not-found.tsx.
+    const response = NextResponse.rewrite(new URL("/link-not-found", request.url), { status: 404 });
+    response.headers.set(CSP, contentSecurityPolicy(options));
+    return response;
+  }
   if (!usesNonce(request.nextUrl.pathname)) {
     const response = NextResponse.next();
     response.headers.set(CSP, contentSecurityPolicy(options));

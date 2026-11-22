@@ -41,3 +41,25 @@ describe("TopBar", () => {
     expect(home.innerHTML).not.toMatch(/#[0-9a-fA-F]{6}/);
   });
 });
+
+describe("TopBar on the pages", () => {
+  it("makes the trip name the page's h1 when the page asks", () => {
+    render(<TopBar tripName="Lisbon, May" nameAs="h1" />);
+    expect(screen.getByRole("heading", { level: 1, name: "Lisbon, May" })).toBeInTheDocument();
+  });
+
+  it("shows a Plan your own trip link, not New trip, on a shared trip", () => {
+    render(<TopBar tripName="Lisbon, May" shared action="plan-your-own-trip" />);
+    expect(screen.getByRole("link", { name: "Plan your own trip" })).toHaveAttribute("href", "/");
+    expect(screen.queryByRole("button", { name: "New trip" })).not.toBeInTheDocument();
+  });
+
+  it("shows a Plan a trip link on How it works, and no action on the welcome screen", () => {
+    const { unmount } = render(<TopBar action="plan-a-trip" />);
+    expect(screen.getByRole("link", { name: "Plan a trip" })).toHaveAttribute("href", "/");
+    unmount();
+    render(<TopBar action="none" />);
+    expect(screen.queryByRole("button", { name: "New trip" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /plan/i })).not.toBeInTheDocument();
+  });
+});

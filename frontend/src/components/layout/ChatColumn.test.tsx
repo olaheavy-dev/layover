@@ -76,4 +76,16 @@ describe("ChatColumn", () => {
     expect(log).toContainElement(screen.getByText("Hello"));
     expect(log).toContainElement(screen.getByText("The chat isn't connected yet"));
   });
+
+  it("makes the scrolling chat a focusable region, so the keyboard can scroll it", () => {
+    render(<ChatColumn />);
+    const region = screen.getByRole("region", { name: "Chat messages and examples" });
+    expect(region).toHaveAttribute("tabindex", "0");
+    expect(region).toContainElement(screen.getByRole("group", { name: "Or try one of these" }));
+    expect(region).toContainElement(screen.getByRole("log"));
+    // The message box stays outside it, always visible.
+    expect(region).not.toContainElement(screen.getByLabelText("Message to Layover"));
+    region.focus();
+    expect(region).toHaveFocus();
+  });
 });

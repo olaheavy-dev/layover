@@ -8,13 +8,20 @@ import { Logo } from "./Logo";
 // A shared trip has no "Share trip", and neither does a screen with no trip yet.
 export function TopBar({
   tripName,
+  nameAs: Name = "p",
   shared = false,
+  action = "new-trip",
   onShare,
   onNewTrip,
   children,
 }: {
   tripName?: string;
+  // The page decides which element holds the one h1: the trip name on a trip, or nothing here.
+  nameAs?: "p" | "h1";
   shared?: boolean;
+  // The button at the end: "New trip" (the default), a link to start a trip (shared trip, How it
+  // works), or nothing (the welcome screen, which is already a new trip).
+  action?: "new-trip" | "plan-your-own-trip" | "plan-a-trip" | "none";
   onShare?: () => void;
   onNewTrip?: () => void;
   // Room for the sample label.
@@ -26,7 +33,7 @@ export function TopBar({
         <Logo />
       </Link>
       {tripName ? (
-        <p className="min-w-0 flex-1 truncate text-sm font-medium">{tripName}</p>
+        <Name className="min-w-0 flex-1 truncate text-sm font-medium">{tripName}</Name>
       ) : (
         <span className="flex-1" />
       )}
@@ -48,13 +55,24 @@ export function TopBar({
             Share trip
           </ActionButton>
         ) : null}
-        <ActionButton
-          variant="secondary"
-          onClick={onNewTrip}
-          icon={<Plus className="size-4" aria-hidden="true" />}
-        >
-          New trip
-        </ActionButton>
+        {action === "new-trip" ? (
+          <ActionButton
+            variant="secondary"
+            onClick={onNewTrip}
+            icon={<Plus className="size-4" aria-hidden="true" />}
+          >
+            New trip
+          </ActionButton>
+        ) : null}
+        {action === "plan-your-own-trip" || action === "plan-a-trip" ? (
+          <Link
+            href="/"
+            className="border-border-control text-text-primary inline-flex min-h-11 items-center justify-center gap-1.5 rounded-md border px-4 text-sm font-medium"
+          >
+            <Plus className="size-4" aria-hidden="true" />
+            {action === "plan-a-trip" ? "Plan a trip" : "Plan your own trip"}
+          </Link>
+        ) : null}
       </nav>
     </header>
   );

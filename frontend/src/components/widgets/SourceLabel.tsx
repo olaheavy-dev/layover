@@ -1,6 +1,10 @@
+"use client";
+
 import { Circle, Contrast, OctagonAlert, TriangleAlert } from "lucide-react";
 
 import type { components } from "@/lib/api/schema";
+
+import { useTime } from "./TimeContext";
 
 type Label = components["schemas"]["SourceLabel"];
 
@@ -33,7 +37,10 @@ function cachedText(label: Label, now: Date): string {
 
 // Live and Cached use normal text colours with different dot shapes. Fallback and Unavailable use
 // the warning colour with their own shapes. The words always name the state.
-export function SourceLabel({ label, now = new Date() }: { label: Label; now?: Date }) {
+export function SourceLabel({ label, now: given }: { label: Label; now?: Date }) {
+  // The `now` prop wins, then the page's TimeProvider, then the clock.
+  const time = useTime();
+  const now = given ?? time.now ?? new Date();
   let text: string;
   let icon: React.ReactNode;
   let colour: string;
@@ -58,6 +65,9 @@ export function SourceLabel({ label, now = new Date() }: { label: Label; now?: D
       icon = <OctagonAlert className="size-3" aria-hidden="true" />;
       colour = "text-status-warning";
       break;
+  }
+  if (time.asOf && (label.status === "live" || label.status === "cached")) {
+    text = `${text}, as of ${formatDate(now.toISOString())}`;
   }
   return (
     <span className="inline-flex items-center gap-1.5 text-xs">

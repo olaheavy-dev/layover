@@ -40,7 +40,13 @@ export function ChatColumn({
 
   return (
     <section aria-label="Chat" className="bg-bg-secondary flex min-h-0 flex-1 flex-col">
-      <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
+      {/* Focusable, so the keyboard can scroll the chat once the prompts scroll away. */}
+      <div
+        role="region"
+        aria-label="Chat messages and examples"
+        tabIndex={0}
+        className="flex flex-1 flex-col gap-3 overflow-y-auto p-4"
+      >
         <Heading className="font-display text-3xl font-semibold">Where to next?</Heading>
         <p className="text-text-secondary text-base">
           Tell me about the trip you have in mind, in your own words.

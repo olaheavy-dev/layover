@@ -28,7 +28,7 @@ export function SectionIndex({
   return (
     <nav
       aria-label="Sections of the trip"
-      className="bg-bg-primary border-border-primary sticky top-0 z-10 overflow-x-auto border-b"
+      className="bg-bg-primary border-border-primary sticky top-0 z-10 shrink-0 overflow-x-auto border-b"
     >
       <ul className="flex gap-1 px-4">
         {shown.map((id) => {
