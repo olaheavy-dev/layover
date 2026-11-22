@@ -1,0 +1,7 @@
+{
+  "provider": "sample",
+  "captured_at": "2026-11-22",
+  "source": "https://example.org/",
+  "request": {"method": "GET", "path": "/things"},
+  "response": {"things": []}
+}

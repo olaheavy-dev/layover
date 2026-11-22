@@ -10,6 +10,9 @@ requires-python = ">=3.12"
 dependencies = [
     # FastAPI 0.x minors can break, so stay on one minor and move deliberately.
     "fastapi[standard-no-fastapi-cloud-cli]>=0.162.0,<0.163",
+    # A Dependabot bump must also update src/app/data/holidays_release.json in the same PR (the
+    # release-record test fails until it does).
+    "holidays>=0.108",
     "pydantic-settings>=2.16.1",
     "structlog>=26.1.0",
 ]
@@ -130,9 +133,13 @@ files = ["src", "tests"]
 
 [tool.pytest]
 testpaths = ["tests"]
-# Evals call the real model, so only `make eval` selects them.
-addopts = ["-q", "--strict-markers", "--strict-config", "-m", "not eval"]
-markers = ["eval: calls the real model; run with make eval"]
+# Evals call the real model, so only `make eval` selects them. Live tests call a real outside
+# service, so the merge check leaves them out (AGENTS.md, "Live services stay out of the merge check").
+addopts = ["-q", "--strict-markers", "--strict-config", "-m", "not eval and not live"]
+markers = [
+    "eval: calls the real model; run with make eval",
+    "live: calls a real outside service; never part of make check",
+]
 xfail_strict = true
 filterwarnings = [
     "error",
