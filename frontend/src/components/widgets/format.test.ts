@@ -1,0 +1,76 @@
+import { dateRange, formatMoney, longDate, monthYear, plural, shownMoney } from "./format";
+
+// Expected values are worked out by hand. Source: the contract's MoneyValue (integer minor units,
+// two decimal places for GBP, EUR and CHF) and sample-data.md for the Lisbon figures.
+describe("formatMoney", () => {
+  it("shows whole pounds without pence", () => {
+    // Working: 80000 pence / 100 = 800 remainder 0, so "£800".
+    expect(formatMoney({ amount_minor: 80000, currency: "GBP" })).toBe("£800");
+  });
+
+  it("shows pence when there are some, padded to two digits", () => {
+    // Working: 1250 / 100 = 12 remainder 50 -> "£12.50"; 5 / 100 = 0 remainder 5 -> "£0.05".
+    expect(formatMoney({ amount_minor: 1250, currency: "GBP" })).toBe("£12.50");
+    expect(formatMoney({ amount_minor: 5, currency: "GBP" })).toBe("£0.05");
+  });
+
+  it("never rounds: the exact figure is shown as given", () => {
+    // Working: 78200 / 100 = 782 remainder 0. 78249 / 100 = 782 remainder 49, kept, not rounded.
+    expect(formatMoney({ amount_minor: 78200, currency: "GBP" })).toBe("£782");
+    expect(formatMoney({ amount_minor: 78249, currency: "GBP" })).toBe("£782.49");
+  });
+
+  it("groups thousands and stays exact above the float comfort zone", () => {
+    // Working: 123456789 / 100 = 1234567 remainder 89.
+    expect(formatMoney({ amount_minor: 123456789, currency: "GBP" })).toBe("£1,234,567.89");
+  });
+
+  it("puts the sign before the symbol", () => {
+    // Working: -1800 -> sign, then 1800 / 100 = 18 remainder 0.
+    expect(formatMoney({ amount_minor: -1800, currency: "GBP" })).toBe("-£18");
+  });
+
+  it("uses the currency's own symbol, or its code with a space", () => {
+    // Working: 2100 / 100 = 21 remainder 0. CHF has no one-character symbol in en-GB.
+    expect(formatMoney({ amount_minor: 2100, currency: "EUR" })).toBe("€21");
+    expect(formatMoney({ amount_minor: 1000, currency: "CHF" })).toBe("CHF 10");
+  });
+});
+
+describe("shownMoney", () => {
+  it("adds 'about' only for an estimate and uses the shown value, never the exact one", () => {
+    // Source: cost_estimate/filled.json total: exact 78200, shown 78000, estimate.
+    const total = {
+      exact: { amount_minor: 78200, currency: "GBP" },
+      shown: { amount_minor: 78000, currency: "GBP" },
+      is_estimate: true,
+    };
+    expect(shownMoney(total)).toBe("about £780");
+    // Source: cost_estimate/filled.json flights: not an estimate.
+    const flights = {
+      exact: { amount_minor: 19200, currency: "GBP" },
+      shown: { amount_minor: 19200, currency: "GBP" },
+      is_estimate: false,
+    };
+    expect(shownMoney(flights)).toBe("£192");
+  });
+});
+
+describe("dates and counts", () => {
+  it("formats a month and a day", () => {
+    expect(monthYear("2026-03")).toBe("March 2026");
+    expect(monthYear("nonsense")).toBeNull();
+    expect(longDate("2027-05-14")).toBe("14 May 2027");
+    expect(longDate("nonsense")).toBeNull();
+  });
+
+  it("joins two dates in one month, and keeps both in full when the months differ", () => {
+    expect(dateRange("2027-05-14", "2027-05-19")).toBe("14 to 19 May 2027");
+    expect(dateRange("2027-05-30", "2027-06-04")).toBe("30 May 2027 to 4 June 2027");
+  });
+
+  it("says one or many", () => {
+    expect(plural(1, "night")).toBe("1 night");
+    expect(plural(5, "night")).toBe("5 nights");
+  });
+});

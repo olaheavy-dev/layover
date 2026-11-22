@@ -46,3 +46,18 @@ describe("WidgetFrame", () => {
     expect(screen.getByText("The rate")).toBeInTheDocument();
   });
 });
+
+describe("WidgetFrame notice", () => {
+  it("shows a notice above the body in every state, including loading", () => {
+    render(
+      <WidgetFrame
+        title="Try booking"
+        state="loading"
+        sources={[]}
+        notice={<p>A standing notice</p>}
+      />,
+    );
+    expect(screen.getByText("A standing notice")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("Loading Try booking");
+  });
+});
