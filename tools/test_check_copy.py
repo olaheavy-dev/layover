@@ -12,6 +12,8 @@ import check_copy as cc  # noqa: E402
 
 BOARD_FONTS = Path("docs/design/boards/fonts")
 APP_FONTS = Path("frontend/src/fonts")
+APP_TOKENS = Path("frontend/src/styles/tokens.css")
+DESIGN_TOKENS = Path("docs/design/tokens.css")
 
 
 class CheckCopy(unittest.TestCase):
@@ -53,6 +55,23 @@ class CheckCopy(unittest.TestCase):
         self.write("frontend/src/lib/csp.ts", "export const s = \"script-src 'unsafe-inline' 'unsafe-eval'\";\n")
         self.assertEqual(cc.problems(self.root), [])
 
+    def test_safe_inline_is_not_a_csp_keyword(self) -> None:
+        # Only the exact keywords are allowed: "safe-inline" is a destination claim with a suffix.
+        self.write("frontend/src/app/card.tsx", 'export const A = () => <p>A safe-inline stay</p>;\n')
+        found = cc.problems(self.root)
+        self.assertTrue(any("card.tsx" in p and "safe" in p for p in found), found)
+
+    def test_unsafe_hashes_is_allowed_and_unsafe_eval_with_a_suffix_is_not(self) -> None:
+        self.write("frontend/src/lib/csp.ts", "export const s = \"script-src 'unsafe-hashes'\";\n")
+        self.assertEqual(cc.problems(self.root), [])
+        self.write("frontend/src/lib/other.ts", 'export const s = "unsafe-evaluation";\n')
+        self.assertTrue(cc.problems(self.root))
+
+    def test_a_nested_tsx_file_is_scanned(self) -> None:
+        self.write("frontend/src/components/trip/deep/card.tsx", "export const A = () => <p>Safe to go</p>;\n")
+        found = cc.problems(self.root)
+        self.assertTrue(any("deep/card.tsx" in p for p in found), found)
+
     def test_unsafe_on_its_own_still_fails(self) -> None:
         self.write("frontend/src/lib/csp.ts", 'export const s = "unsafe to visit";\n')
         self.assertTrue(cc.problems(self.root))
@@ -92,6 +111,22 @@ class CheckCopy(unittest.TestCase):
         self.write(f"{APP_FONTS}/OFL-X.txt", "licence two")
         found = cc.problems(self.root)
         self.assertTrue(any("OFL-X.txt" in p and "differs" in p for p in found), found)
+
+    def test_identical_token_files_pass(self) -> None:
+        self.write(f"{APP_TOKENS}", ":root { --a: 1; }\n")
+        self.write(f"{DESIGN_TOKENS}", ":root { --a: 1; }\n")
+        self.assertEqual(cc.problems(self.root), [])
+
+    def test_token_files_that_differ_fail(self) -> None:
+        self.write(f"{APP_TOKENS}", ":root { --a: 1; }\n")
+        self.write(f"{DESIGN_TOKENS}", ":root { --a: 2; }\n")
+        found = cc.problems(self.root)
+        self.assertTrue(any("tokens.css" in p and "differs" in p for p in found), found)
+
+    def test_a_frontend_token_file_with_no_design_original_fails(self) -> None:
+        self.write(f"{APP_TOKENS}", ":root { --a: 1; }\n")
+        found = cc.problems(self.root)
+        self.assertTrue(any("tokens.css" in p and "no copy" in p for p in found), found)
 
     def test_the_real_repository_passes(self) -> None:
         self.assertEqual(cc.problems(Path(__file__).resolve().parent.parent), [])
