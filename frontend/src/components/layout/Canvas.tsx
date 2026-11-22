@@ -96,6 +96,8 @@ export function Canvas({
     root.scrollTo({ top });
     pinnedTop.current = root.scrollTop;
     setPinned(id);
+    // The anchor jump would have moved focus to the section; do it here without scrolling again.
+    root.querySelector<HTMLElement>(`#${id}-title`)?.focus({ preventScroll: true });
     history.replaceState(null, "", `#${id}`);
   }
 

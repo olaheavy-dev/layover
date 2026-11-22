@@ -68,7 +68,7 @@ export function Section({
       {kicker ? (
         <p className="text-text-secondary text-xs font-medium tracking-wide uppercase">{kicker}</p>
       ) : null}
-      <h2 id={`${id}-title`} className="font-display text-2xl font-semibold">
+      <h2 id={`${id}-title`} tabIndex={-1} className="font-display text-2xl font-semibold">
         {title}
       </h2>
       {children}

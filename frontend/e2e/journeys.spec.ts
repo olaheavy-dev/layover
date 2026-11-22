@@ -51,6 +51,25 @@ test.describe("the sample trip", () => {
     });
   }
 
+  for (const path of ["/trip/sample-lisbon", "/s/sample-lisbon"]) {
+    test(`${path} index link activated by keyboard moves focus to the section heading`, async ({
+      page,
+      isMobile,
+    }) => {
+      test.skip(isMobile, "a keyboard journey: desktop only");
+      await page.goto(path);
+      const index = page.getByRole("navigation", { name: "Sections of the trip" });
+      const link = index.getByRole("link").nth(1);
+      const target = ((await link.getAttribute("href")) ?? "").slice(1);
+      await link.focus();
+      await page.keyboard.press("Enter");
+      await expect(page.locator(`#${target}-title`)).toBeFocused();
+      await expect(link).toHaveAttribute("aria-current", "true");
+      const top = await page.getByRole("banner").evaluate((el) => el.getBoundingClientRect().top);
+      expect(top).toBe(0);
+    });
+  }
+
   test("the trip name is not clipped on a phone", async ({ page, isMobile }) => {
     test.skip(!isMobile, "the clipping shows on a phone");
     await page.goto("/trip/sample-lisbon");
