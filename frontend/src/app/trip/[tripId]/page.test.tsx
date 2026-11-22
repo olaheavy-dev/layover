@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 
-import TripPage, { generateStaticParams } from "./page";
+import TripPage, { generateMetadata, generateStaticParams } from "./page";
 
 async function open(tripId: string) {
   return render(await TripPage({ params: Promise.resolve({ tripId }) }));
@@ -44,19 +44,33 @@ describe("/trip/{trip_id}", () => {
     expect(screen.getByRole("button", { name: "Share trip" })).toBeInTheDocument();
   });
 
-  it("switches between the Chat and Trip tabs on a phone", async () => {
+  it("switches between the Trip and Chat tabs on a phone", async () => {
     await open("sample-lisbon");
-    const tab = screen.getByRole("tab", { name: "Trip" });
+    const tab = screen.getByRole("tab", { name: "Chat" });
     expect(tab).toHaveAttribute("aria-selected", "false");
     fireEvent.click(tab);
     expect(tab).toHaveAttribute("aria-selected", "true");
-    expect(document.getElementById("panel-chat")).toHaveClass("hidden");
+    expect(document.getElementById("panel-trip")).toHaveClass("hidden");
   });
 
   it("rejects any other id as not found", async () => {
     await expect(TripPage({ params: Promise.resolve({ tripId: "abc" }) })).rejects.toMatchObject({
       digest: "NEXT_HTTP_ERROR_FALLBACK;404",
     });
+  });
+
+  it("titles the page from the trip name, with Layover last", async () => {
+    expect(
+      await generateMetadata({ params: Promise.resolve({ tripId: "sample-lisbon" }) }),
+    ).toEqual({
+      title: "Lisbon, May",
+    });
+  });
+
+  it("opens on the Trip tab, because there is a trip to show", async () => {
+    await open("sample-lisbon");
+    expect(screen.getByRole("tab", { name: "Trip" })).toHaveAttribute("aria-selected", "true");
+    expect(document.getElementById("panel-chat")).toHaveClass("hidden");
   });
 
   it("prerenders the sample id", async () => {

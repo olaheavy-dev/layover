@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Canvas } from "@/components/layout/Canvas";
@@ -19,6 +20,16 @@ async function sampleTrip() {
 // not work. Listing the id here makes Next.js prerender it.
 export function generateStaticParams() {
   return [{ tripId: SAMPLE_TRIP_ID }];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ tripId: string }>;
+}): Promise<Metadata> {
+  const { tripId } = await params;
+  if (tripId !== SAMPLE_TRIP_ID) notFound();
+  return { title: (await sampleTrip()).name };
 }
 
 export default async function TripPage({ params }: { params: Promise<{ tripId: string }> }) {

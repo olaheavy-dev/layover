@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import SharedPage, { generateStaticParams } from "./page";
+import SharedPage, { generateMetadata, generateStaticParams } from "./page";
 
 async function open(shareId: string) {
   return render(await SharedPage({ params: Promise.resolve({ shareId }) }));
@@ -65,6 +65,12 @@ describe("/s/{share_id}", () => {
         digest: "NEXT_HTTP_ERROR_FALLBACK;404",
       },
     );
+  });
+
+  it("titles the page from the trip name, with Layover last", async () => {
+    expect(
+      await generateMetadata({ params: Promise.resolve({ shareId: "sample-lisbon" }) }),
+    ).toEqual({ title: "Shared trip: Lisbon, May" });
   });
 
   it("prerenders the sample id", async () => {
