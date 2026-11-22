@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 22 Nov 2026, end-of-session overwrite (after #75, #77, #84 and #94 merged).
+Last updated: 22 Nov 2026, after the final review fixes on PR E (#55).
 
 ## Stage
 
@@ -18,12 +18,13 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done:
   - the owner's map choice: MapLibre GL JS with OpenFreeMap's free tiles, recorded in the [register](../decisions/README.md#register); the map is drawn in #93 (Build 3), and the widget lists its places with links until then;
   - #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then [a comparison of the two published wheels](https://github.com/olaheavy-dev/layover/pull/62#discussion_r4658085468), because MAF's GitHub repository returned 404;
   - **PR D (#94):** the website (home, trip, shared trip, How Layover works, link not found), the 20 widgets in every state and the development gallery, with axe, page titles, fonts, a 390 px phone width and screenshots in Playwright's Linux image.
+- **PR E (#55), in review:** the website reads the samples through the API, and an Aspire app host shows traces across the stack (Next steps, item 4).
 
 `make repo-settings` was run on 21 Nov 2026, so CodeQL for Python and TypeScript is now a required check. The build order is in [01 §4](../product/01-research-and-direction.md#4-build-order): eight steps, each a milestone.
 
 ## Open pull requests
 
-None apart from this handover PR.
+- **PR E (#55), in review:** join the website to the API (Task 19) and add the Aspire app host with tracing (Task 20).
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -36,10 +37,10 @@ None apart from this handover PR.
 
 ## Next steps
 
-1. **PR E (#55): join the website to the API and add Aspire** (plan Tasks 19 and 20), then the **step 1 gate** (a whole-repository review, a tidy-up PR, `noticed` issues triaged, a Floorplan snapshot, and the first evaluation report). Issues are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
+1. **The step 1 gate**, once PR E (#55) has merged (a whole-repository review, a tidy-up PR, `noticed` issues triaged, a Floorplan snapshot, and the first evaluation report). Issues are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
 2. **The progress ledger** for build plan 1 is in `.superpowers/sdd/2026-11-21-build-step-1/progress.md` (git-ignored, on the owner's machine): Tasks 8 to 20 are done (PR E is waiting for review). It lists every ruling made and every deferred review item.
 3. **Keep the template answer `llm: none` in step 1:** step 2's first PR changes it to `llm: maf` (0013 point 1). (The £5 half-up case that PR B's samples never hit is now covered by `test_estimate_nearest_ten` and `test_round_estimate_ten_pound_boundaries`.)
-4. **Done in PR E (#55), tasks 19 and 20:** `make dev-all` runs the Aspire app host (`apphost/`): PostgreSQL, the migrations, the backend and the website, with traces from the website through the backend in the Aspire dashboard. Task 19: the website reads the samples through the API (`GET /v1/sample/trip` and `/v1/sample/widgets`) and renders those pages on each request, so `make image-frontend` builds without the sample files. The backend image gets the samples through a named extra build context (`additional_contexts` in `backend/compose.yaml`, `COPY --from=samples` in `backend/Dockerfile`), and `make image` builds. Both are template-owned files, so the PR is labelled template-candidate. The API checks the samples against the schema; the website no longer reads them from disk.
+4. **Done in PR E (#55), tasks 19 and 20:** `make dev-all` runs the Aspire app host (`apphost/`): PostgreSQL, the migrations, the backend and the website, with traces from the website through the backend in the Aspire dashboard. Task 19: the website reads the samples through the API (`GET /v1/sample/trip` and `/v1/sample/widgets`) and renders those pages on each request, so `make image-frontend` builds without the sample files. The backend image gets the samples through a named extra build context (`additional_contexts` in `backend/compose.yaml`, `COPY --from=samples` in `backend/Dockerfile`), and `make image` builds. Server-side API calls time out after 10 seconds (owner: "10 seconds (Recommended)"), then the error page shows; because Next.js sends the status and headers first, that page answers HTTP 200. The API checks the samples against the schema; the website no longer reads them from disk. Template-owned files this PR changes (listed in `.github/template-owned/`): `backend/Dockerfile`, `backend/compose.yaml`, `frontend/src/lib/api/server.ts`, `frontend/vitest.setup.ts`, `frontend/playwright.config.ts` and `.github/dependabot.yml`, so the PR is labelled template-candidate. `backend/src/app/main.py` (the lifespan hook) and `backend/src/app/tracing.py` are not template-owned but are generic enough to offer upstream.
 5. **Step 2: check the full trace.** The first step with a database route checks that one Aspire trace runs from the website through the backend to PostgreSQL (register, 22 Nov 2026). Step 1 shows website to backend by hand, and `test_database_queries_create_spans` proves queries create spans.
 6. **Watch for upstream support (#71):** OpenTelemetry SDK 3 (waits for `@vercel/otel`), ESLint 10 (waits for the plugins in `eslint-config-next`) and TypeScript 7 (waits for typescript-eslint and openapi-typescript). jsdom 31 isn't blocked; it moves with that batch for one review.
 

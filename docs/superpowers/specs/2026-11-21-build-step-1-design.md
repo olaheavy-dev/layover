@@ -77,7 +77,7 @@ Each goes into the register in the plan's PR.
 - **Fare age (agent's call):** `fare_card` and `fare_list` carry each fare's capture date and age; when a fare is too old to show is set in step 4, with its source.
 - **Money:** integer minor units with an ISO 4217 currency code; exchange rates as `Decimal` strings. Never a float (enforced by a lint rule on the money and contract modules).
 - **Exports:** `make check` writes each model to `schemas/widgets/<kind>.schema.json` and the trip state to `schemas/trip.schema.json`, and fails if a committed file differs. The models are also in the OpenAPI schema, so the template's `make api-types` gives the frontend its TypeScript types.
-- **Sample data:** the boards' sample data ([sample-data.md](../../design/boards/sample-data.md)) becomes fixture files under `schemas/samples/` (next to the exported schemas, so both the backend and the frontend read the same files), one per widget state, each checked against its model. The same files feed the frontend. They are labelled as samples, and they never feed a figure that could reach a traveller as real.
+- **Sample data:** the boards' sample data ([sample-data.md](../../design/boards/sample-data.md)) becomes fixture files under `schemas/samples/` (next to the exported schemas, so the backend reads them), one per widget state, each checked against its model. The backend serves them to the frontend through `/v1/sample/*`. They are labelled as samples, and they never feed a figure that could reach a traveller as real.
 
 ### 3. Backend foundation
 
