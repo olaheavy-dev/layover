@@ -33,9 +33,10 @@ describe("Daylight", () => {
     expect(value("Sunrise")).toHaveTextContent("06:20");
     expect(value("Sunset")).toHaveTextContent("20:40");
     expect(value("Day length")).toHaveTextContent("14 h 20 min");
-    expect(
-      screen.getByRole("link", { name: (name) => name.includes("sunrise-sunset.org") }),
-    ).toHaveAttribute("href", "https://sunrise-sunset.org/");
+    expect(screen.getByRole("link", { name: "Times from sunrise-sunset.org" })).toHaveAttribute(
+      "href",
+      "https://sunrise-sunset.org/",
+    );
     expect(screen.getByText("Live")).toBeInTheDocument();
   });
 
