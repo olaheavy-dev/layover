@@ -6,7 +6,7 @@ Last updated: 22 Nov 2026, during the session that cleared the Dependabot update
 
 ## Stage
 
-Build step 1 is under way ("Build 1: Foundation and data contract"). Done today:
+Build step 1 is under way ("Build 1: Foundation and data contract"). Done on 21 Nov 2026:
 
 - **PR A (#57):** the FastAPI backend and the Next.js website from the house templates.
 - **#68:** the board checks read pages with `html.parser` (#36), and the CodeQL warnings on `main` are cleared.
@@ -17,7 +17,7 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done today:
 ## Open pull requests
 
 - **The website's minor and patch updates (#70)**, which take the parts of Dependabot's #59 that pass the peer check. #59 and #60 are closed in its favour; their major upgrades wait in #71.
-- Dependabot's #58, #61, #62 and #63 merged on 22 Nov 2026. #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then a wheel comparison, because MAF's GitHub repository returned 404.
+- Dependabot's #58, #61, #62 and #63 merged on 22 Nov 2026. #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then [a comparison of the two published wheels](https://github.com/olaheavy-dev/layover/pull/62#discussion_r4658085468), because MAF's GitHub repository returned 404.
 
 ## The Design gate (#42, merged 20 Nov 2026)
 
@@ -34,7 +34,7 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done today:
 2. **PRs C (#53, backend foundation) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
 3. **Carry into PR C (#53):** the `round_estimate` tests need a case that lands exactly on £5 (half up); PR B's samples never do, and they are worked by hand in `schemas/samples/README.md`. PR C also changes the template answer from `llm: none` to `llm: maf` (#74).
 4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints answer 503 there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template).
-5. **Watch for upstream support (#71):** OpenTelemetry SDK 3 (waits for `@vercel/otel`), ESLint 10 (waits for the plugins in `eslint-config-next`) and TypeScript 7 (waits for typescript-eslint and openapi-typescript).
+5. **Watch for upstream support (#71):** OpenTelemetry SDK 3 (waits for `@vercel/otel`), ESLint 10 (waits for the plugins in `eslint-config-next`) and TypeScript 7 (waits for typescript-eslint and openapi-typescript). jsdom 31 isn't blocked; it moves with that batch for one review.
 
 ## Blockers
 
