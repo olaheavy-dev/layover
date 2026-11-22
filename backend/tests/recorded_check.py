@@ -16,7 +16,7 @@ from pydantic import BaseModel, ConfigDict, HttpUrl
 RECORDED_DIR = Path(__file__).parent / "recorded"
 
 # A key name that holds a credential: one of these words standing alone or between "-" and "_"
-# (so `access_token`, `x-api-key` and `Api-Key` match, but `tokens_used` does not). Case-insensitive.
+# (so `access_token`, `x-api-key` and `Api-Key` match, but `tokens_used` does not), any case.
 SECRET_KEY = re.compile(
     r"(^|[-_])((access|refresh|auth)?[-_]?token|api[-_]?key|secret|password|authorization|cookie"
     r"|session|signature|client[-_]secret)($|[-_])",

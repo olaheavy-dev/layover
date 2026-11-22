@@ -13,8 +13,8 @@ from pathlib import Path
 
 import pytest
 
-from app.evals.cases import Case, parse_cases
 from app.evals import runner
+from app.evals.cases import Case, parse_cases
 from app.evals.runner import Outcome, Result, build_step_map, main, run_case, run_cases
 from app.evals.travellers import ScriptedTraveller, load_traveller
 
