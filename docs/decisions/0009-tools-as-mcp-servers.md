@@ -1,6 +1,6 @@
 # 0009. Tools become MCP servers from build step 2
 
-Status: Accepted (19 Nov 2026)
+Status: Accepted (19 Nov 2026). Agents connect to the MCP servers through Microsoft Agent Framework's MCP tools, not `langchain-mcp-adapters` ([0013](0013-microsoft-agent-framework.md)); the decision itself stands.
 
 ## Context
 

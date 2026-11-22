@@ -1,6 +1,6 @@
 # 0005. Python backend with LangGraph
 
-Status: Accepted (19 Nov 2026)
+Status: Accepted (19 Nov 2026). Point 2 (LangGraph) superseded by [0013](0013-microsoft-agent-framework.md) on 22 Nov 2026: Layover uses Microsoft Agent Framework. Point 1 (Python) stands.
 
 ## Context
 

@@ -30,9 +30,9 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done on 21 
 
 ## Next steps
 
-1. **Switch the agent framework to Microsoft Agent Framework (#74)**, owner's choice on 22 Nov 2026 ("Switch to MAF", in Python): check MAF's official docs, write decision 0013 replacing 0005, and update 0007, 0012 and build plan 1. This comes before PR C, because PR C sets up the backend.
+1. **Merge the decision 0013 PR (#74):** Microsoft Agent Framework replaces LangGraph, in Python. Booking uses graph workflows with an approval step and must be safe to run twice; checkpoints go in Layover's own PostgreSQL store (JSON), built in step 6; traces go to Aspire and LangSmith through OpenTelemetry.
 2. **PRs C (#53, backend foundation) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
-3. **Carry into PR C (#53):** the `round_estimate` tests need a case that lands exactly on £5 (half up); PR B's samples never do, and they are worked by hand in `schemas/samples/README.md`. PR C also changes the template answer from `llm: none` to `llm: maf` (#74).
+3. **Carry into PR C (#53):** the `round_estimate` tests need a case that lands exactly on £5 (half up); PR B's samples never do, and they are worked by hand in `schemas/samples/README.md`. The template answer stays `llm: none` in step 1; step 2's first PR changes it to `llm: maf` (0013 point 1).
 4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints answer 503 there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template).
 5. **Watch for upstream support (#71):** OpenTelemetry SDK 3 (waits for `@vercel/otel`), ESLint 10 (waits for the plugins in `eslint-config-next`) and TypeScript 7 (waits for typescript-eslint and openapi-typescript). jsdom 31 isn't blocked; it moves with that batch for one review.
 
@@ -43,7 +43,7 @@ None. Owner decisions still open, needed later:
 - How long a working trip link and a shared trip link last (before step 7).
 - The cost-cap figures, after step 4 measures a whole trip's cost.
 - The vector database (step 3), and hosting and the database (step 7).
-- Before build step 2 (the first model calls): Anthropic's terms for a public app, its data retention and its prices (spending needs the owner's approval; the prices also feed the cost cap); and LangSmith's region (US or EU), retention and terms, because its traces would hold travellers' messages (UK GDPR). Build step 1 makes no model calls, so neither blocks it.
+- Before build step 2 (the first model calls): Anthropic's terms for a public app, its data retention and its prices (spending needs the owner's approval; the prices also feed the cost cap); and LangSmith's region (US or EU), retention and terms, before MAF's sensitive-data setting is turned on, because traces would then hold travellers' messages (UK GDPR; [0013](../decisions/0013-microsoft-agent-framework.md) point 5). Build step 1 makes no model calls, so neither blocks it.
 - Build step 4: Layover's own token figures for the agent team against the single-agent baseline (`TRIP-01`); any outside figure quoted before then cites its source.
 - Build step 7: how to stop scripts from starting trips. ALTCHA (a free, open-source bot check that doesn't track visitors) is one option to weigh alongside the hashed-address limit (spec §5c).
 

@@ -1,6 +1,6 @@
 # 0012. Agent design: a team of agents, measured against a single-agent baseline
 
-Status: Accepted (19 Nov 2026). Supersedes points 1 and 4 of [0007](0007-agent-design.md); its points 2 and 3 stand.
+Status: Accepted (19 Nov 2026). Supersedes points 1 and 4 of [0007](0007-agent-design.md); its points 2 and 3 stand. Built with Microsoft Agent Framework, not LangGraph ([0013](0013-microsoft-agent-framework.md)): the fan-out in point 1 uses MAF's graph workflow edges, not `Send`.
 
 ## Context
 

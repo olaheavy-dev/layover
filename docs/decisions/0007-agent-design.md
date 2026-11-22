@@ -1,6 +1,6 @@
 # 0007. Agent design: one planner agent, a fixed booking flow, and parallel research agents
 
-Status: Accepted (19 Nov 2026). Superseded in part by [0012](0012-agent-team.md): points 1 and 4.
+Status: Accepted (19 Nov 2026). Superseded in part by [0012](0012-agent-team.md): points 1 and 4. Built with Microsoft Agent Framework, not LangGraph ([0013](0013-microsoft-agent-framework.md)): the LangGraph APIs named in points 2 and 3 map to MAF as 0013 shows.
 
 ## Context
 
