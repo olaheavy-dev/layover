@@ -7,11 +7,23 @@ type MoneyEstimate = components["schemas"]["MoneyEstimate"];
 // shows the contract's minor units as given, with integer division only: BigInt keeps it exact.
 // Source: Intl.NumberFormat gives the currency's symbol and number of decimal places
 // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
+// "GBP" -> "£", "EUR" -> "€". A code Intl doesn't know is shown as the code itself.
+export function currencySymbol(code: string): string {
+  try {
+    const parts = new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: code,
+    }).formatToParts(0);
+    return parts.find((part) => part.type === "currency")?.value ?? code;
+  } catch {
+    return code;
+  }
+}
+
 export function formatMoney(money: MoneyValue): string {
   const formatter = new Intl.NumberFormat("en-GB", { style: "currency", currency: money.currency });
   const digits = formatter.resolvedOptions().maximumFractionDigits ?? 2;
-  const symbol =
-    formatter.formatToParts(0).find((part) => part.type === "currency")?.value ?? money.currency;
+  const symbol = currencySymbol(money.currency);
   const total = BigInt(money.amount_minor);
   const negative = total < 0n;
   const abs = negative ? -total : total;
@@ -74,4 +86,53 @@ export function dateRange(from: string, to: string): string | null {
     return `${day} to ${end}`;
   }
   return `${start} to ${end}`;
+}
+
+// 5 -> "May". Anything outside 1 to 12 gives null, never a guess.
+export function monthName(month: number): string | null {
+  if (!Number.isInteger(month) || month < 1 || month > 12) return null;
+  return new Intl.DateTimeFormat("en-GB", { month: "long", timeZone: "UTC" }).format(
+    new Date(Date.UTC(2000, month - 1, 1)),
+  );
+}
+
+// "2027-05-15" -> "15 May"
+export function dayMonth(value: string): string | null {
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(value) ? parseUtc(value) : null;
+  if (!date) return null;
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    timeZone: "UTC",
+  }).format(date);
+}
+
+// "06:20:00" -> "06:20". Anything else gives null.
+export function clockTime(value: string): string | null {
+  return /^(\d{2}:\d{2})(:\d{2})?$/.exec(value)?.[1] ?? null;
+}
+
+// 860 -> "14 h 20 min": whole minutes split into hours and minutes. A unit change only; the
+// minutes themselves come from the contract.
+export function hoursMinutes(minutes: number): string | null {
+  if (!Number.isInteger(minutes) || minutes < 0) return null;
+  return `${Math.floor(minutes / 60)} h ${minutes % 60} min`;
+}
+
+// ["April", "May", "June"] -> "April, May and June"
+export function joinNames(names: string[]): string {
+  if (names.length <= 1) return names.join("");
+  return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+}
+
+// "2026-11-12" -> "12 Nov 2026", the short form the naming conventions use for "updated" dates.
+export function shortDate(value: string): string | null {
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(value) ? parseUtc(value) : null;
+  if (!date) return null;
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
 }

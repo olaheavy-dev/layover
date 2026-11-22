@@ -1,4 +1,18 @@
-import { dateRange, formatMoney, longDate, monthYear, plural, shownMoney } from "./format";
+import {
+  clockTime,
+  currencySymbol,
+  dateRange,
+  dayMonth,
+  hoursMinutes,
+  joinNames,
+  monthName,
+  formatMoney,
+  longDate,
+  monthYear,
+  plural,
+  shortDate,
+  shownMoney,
+} from "./format";
 
 // Expected values are worked out by hand. Source: the contract's MoneyValue (integer minor units,
 // two decimal places for GBP, EUR and CHF) and sample-data.md for the Lisbon figures.
@@ -72,5 +86,44 @@ describe("dates and counts", () => {
   it("says one or many", () => {
     expect(plural(1, "night")).toBe("1 night");
     expect(plural(5, "night")).toBe("5 nights");
+  });
+});
+
+describe("place widget formats", () => {
+  it("names months and rejects numbers outside 1 to 12", () => {
+    // Working: month 5 is the fifth month, May. 0 and 13 are not months.
+    expect(monthName(5)).toBe("May");
+    expect(monthName(0)).toBeNull();
+    expect(monthName(13)).toBeNull();
+  });
+
+  it("shows a day and month, and a clock time without seconds", () => {
+    expect(dayMonth("2027-05-15")).toBe("15 May");
+    expect(dayMonth("May")).toBeNull();
+    expect(clockTime("06:20:00")).toBe("06:20");
+    expect(clockTime("late")).toBeNull();
+  });
+
+  it("splits minutes into hours and minutes", () => {
+    // Working: 860 = 14 x 60 (840) + 20, so "14 h 20 min". 60 = 1 h 0 min.
+    expect(hoursMinutes(860)).toBe("14 h 20 min");
+    expect(hoursMinutes(60)).toBe("1 h 0 min");
+    expect(hoursMinutes(-1)).toBeNull();
+  });
+
+  it("joins names and finds currency symbols", () => {
+    expect(joinNames(["April", "May", "June"])).toBe("April, May and June");
+    expect(joinNames(["May"])).toBe("May");
+    expect(currencySymbol("GBP")).toBe("£");
+    expect(currencySymbol("EUR")).toBe("€");
+    expect(currencySymbol("??")).toBe("??");
+  });
+});
+
+describe("shortDate", () => {
+  it("shows the day, the short month and the year", () => {
+    // Working: 2026-11-12 is day 12, month 11 (Nov), year 2026.
+    expect(shortDate("2026-11-12")).toBe("12 Nov 2026");
+    expect(shortDate("12 November")).toBeNull();
   });
 });
