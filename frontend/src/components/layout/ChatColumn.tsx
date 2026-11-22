@@ -40,13 +40,7 @@ export function ChatColumn({
 
   return (
     <section aria-label="Chat" className="bg-bg-secondary flex min-h-0 flex-1 flex-col">
-      <div
-        role="log"
-        aria-live="polite"
-        aria-label="Conversation with Layover"
-        tabIndex={0}
-        className="flex flex-1 flex-col gap-3 overflow-y-auto p-4"
-      >
+      <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
         <Heading className="font-display text-3xl font-semibold">Where to next?</Heading>
         <p className="text-text-secondary text-base">
           Tell me about the trip you have in mind, in your own words.
@@ -66,18 +60,25 @@ export function ChatColumn({
             </button>
           ))}
         </div>
-        {messages.map((message, index) => (
-          <p
-            key={index}
-            className={
-              message.from === "traveller"
-                ? "bg-bg-tertiary self-end rounded-md px-3 py-2 text-sm"
-                : "text-text-secondary self-start text-sm"
-            }
-          >
-            {message.text}
-          </p>
-        ))}
+        <div
+          role="log"
+          aria-live="polite"
+          aria-label="Conversation with Layover"
+          className="flex flex-col gap-3"
+        >
+          {messages.map((message, index) => (
+            <p
+              key={index}
+              className={
+                message.from === "traveller"
+                  ? "bg-bg-tertiary self-end rounded-md px-3 py-2 text-sm"
+                  : "text-text-secondary self-start text-sm"
+              }
+            >
+              {message.text}
+            </p>
+          ))}
+        </div>
       </div>
       {strip ? <div className="px-4 pb-2">{strip}</div> : null}
       <form

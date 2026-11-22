@@ -60,4 +60,20 @@ describe("ChatColumn", () => {
     render(<ChatColumn strip={<p>strip here</p>} />);
     expect(screen.getByText("strip here")).toBeInTheDocument();
   });
+
+  it("keeps the welcome outside the live log, so it is not announced on mount", () => {
+    render(<ChatColumn />);
+    const log = screen.getByRole("log", { name: "Conversation with Layover" });
+    expect(log).not.toContainElement(screen.getByRole("heading", { name: "Where to next?" }));
+    expect(log).not.toContainElement(screen.getByRole("group", { name: "Or try one of these" }));
+  });
+
+  it("puts messages inside the log", () => {
+    render(<ChatColumn />);
+    fireEvent.change(screen.getByLabelText("Message to Layover"), { target: { value: "Hello" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send" }));
+    const log = screen.getByRole("log", { name: "Conversation with Layover" });
+    expect(log).toContainElement(screen.getByText("Hello"));
+    expect(log).toContainElement(screen.getByText("The chat isn't connected yet"));
+  });
 });

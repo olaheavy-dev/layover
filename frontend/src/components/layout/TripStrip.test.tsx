@@ -27,4 +27,25 @@ describe("TripStrip", () => {
     fireEvent.click(screen.getByRole("button", { name: "View trip" }));
     expect(onViewTrip).toHaveBeenCalledOnce();
   });
+
+  it("shows the place photo when one is given", () => {
+    render(
+      <TripStrip
+        name="Lisbon, May"
+        photoSrc="/lisbon.jpg"
+        photoAlt="Red roofs in Lisbon"
+        onViewTrip={() => {}}
+      />,
+    );
+    expect(screen.getByRole("img", { name: "Red roofs in Lisbon" })).toHaveAttribute(
+      "src",
+      expect.stringContaining("lisbon.jpg"),
+    );
+  });
+
+  it("falls back to the icon when there is no photo", () => {
+    const { container } = render(<TripStrip name="Lisbon, May" onViewTrip={() => {}} />);
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+  });
 });
