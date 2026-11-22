@@ -16,15 +16,15 @@ exclude-newer-span = "P7D"
 
 [[package]]
 name = "agent-framework-anthropic"
-version = "1.0.0b261106"
+version = "1.0.0b261112"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "agent-framework-core" },
     { name = "anthropic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b4/95/11853d8b90d231fec82342c8a23cabe2fa907a72a5fa1fbb92993503d711/agent_framework_anthropic-1.0.0b261106.tar.gz", hash = "sha256:cb38dfd5a68e5256e0c934a605ccf437fdd5574167273c76b3126b57bfe39d21", size = 29690, upload-time = "2026-11-07T15:41:29.622Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/83/2b/45e65852273e7458feb6e9ff252ad2ed135a6d858f0199727b62532dce5b/agent_framework_anthropic-1.0.0b261112.tar.gz", hash = "sha256:a4c1719d0d852fef210cb22632a297edf0b2866ae5ee9fe8bf2f2aab543058f8", size = 29700, upload-time = "2026-11-12T18:25:01.606Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/41/0f/93b4ec6f45c71dc9d2d99b2220db6c718a67e3a769fb799054fca39c4baf/agent_framework_anthropic-1.0.0b261106-py3-none-any.whl", hash = "sha256:b9b53678334bf6b3c60ba6251abda1b0d69161c5ef98ee671346e566127c4d89", size = 32203, upload-time = "2026-11-07T15:42:27.625Z" },
+    { url = "https://files.pythonhosted.org/packages/cb/91/022925268219872aedbfa0b06465f79257ff72990424ec0847070bf71ab5/agent_framework_anthropic-1.0.0b261112-py3-none-any.whl", hash = "sha256:44403e124ef70b28982ac76ebe34324db41198450d38068aee77fb6a485e2336", size = 32202, upload-time = "2026-11-12T18:25:41.513Z" },
 ]
 
 [[package]]
@@ -253,7 +253,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "agent-framework-anthropic", marker = "extra == 'maf'", specifier = "==1.0.0b261106" },
+    { name = "agent-framework-anthropic", marker = "extra == 'maf'", specifier = "==1.0.0b261112" },
     { name = "agent-framework-core", marker = "extra == 'maf'", specifier = "==1.26.0" },
     { name = "agent-framework-openai", marker = "extra == 'maf'", specifier = "==1.18.2" },
     { name = "alembic", marker = "extra == 'db'", specifier = ">=1.20.1" },
