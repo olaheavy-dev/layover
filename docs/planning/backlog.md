@@ -22,7 +22,6 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 |---|---|---|---|---|
 | 05 | #9 | Create the `task` label used by the Task issue form | Build 1 | `noticed` issue, owner-only (repository settings) |
 | 23 | #40 | Move the Floorplan snapshot exemption into house-template-base | Build 1 | `noticed` in the Design gate audit |
-| 33 | #55 | Build 1 PR E: join the website to the API and add Aspire | Build 1 | Build plan 1, PR E |
 | 34 | #56 | Remove the minimatch override once typescript-eslint uses minimatch 11 | Build 1 | `noticed` in PR A's final review |
 | 39 | #71 | Website major upgrades: OpenTelemetry SDK 3, ESLint 10, TypeScript 7, jsdom 31 | Build 1 | Waits for `@vercel/otel`, the ESLint plugins and typescript-eslint to support them; replaces Dependabot's #60 |
 | 40 | #72 | No check keeps `third-party.md` in step with the lock files | Build 1 | `noticed` while triaging the Dependabot PRs; template candidate |
