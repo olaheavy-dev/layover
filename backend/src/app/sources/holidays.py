@@ -7,6 +7,7 @@ an empty list (decision 0011 rule 4).
 """
 
 import json
+import re
 from datetime import date
 from pathlib import Path
 
@@ -16,6 +17,7 @@ from app.contract.common import SourceLabel
 from app.contract.widgets.public_holidays import Holiday, PublicHolidays
 
 SOURCE = "holidays (Python library)"
+_ALPHA2 = re.compile(r"^[A-Z]{2}$")
 _RELEASE = Path(__file__).resolve().parent.parent / "data" / "holidays_release.json"
 
 
@@ -29,8 +31,18 @@ def national_holidays(
 ) -> PublicHolidays:
     """National public holidays for an ISO 3166-1 alpha-2 `country` in one month."""
     code = country.strip().upper()
-    where = place or code
     release = _release()
+    if not _ALPHA2.fullmatch(code):
+        return PublicHolidays(
+            kind="public_holidays",
+            state="not_known",
+            place=place or "this place",
+            year=year,
+            month=month,
+            missing="No country for this place",
+            sources=[SourceLabel(status="unavailable", source=SOURCE)],
+        )
+    where = place or code
     try:
         calendar = holidays_lib.country_holidays(
             code, years=year, categories=("public",), language="en_US"
@@ -43,7 +55,7 @@ def national_holidays(
             country=code,
             year=year,
             month=month,
-            missing=f"a holiday list for {code}, so Layover cannot say if any fall in the month",
+            missing="No holiday list for this country",
             sources=[SourceLabel(status="unavailable", source=SOURCE)],
         )
     found = [
@@ -52,7 +64,7 @@ def national_holidays(
     label = SourceLabel(
         status="cached",
         source=SOURCE,
-        source_url=release["source"],
+        source_url=release["page"],
         data_date=date.fromisoformat(release["released"]),
     )
     return PublicHolidays(

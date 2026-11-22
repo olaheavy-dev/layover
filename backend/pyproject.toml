@@ -10,6 +10,8 @@ requires-python = ">=3.12"
 dependencies = [
     # FastAPI 0.x minors can break, so stay on one minor and move deliberately.
     "fastapi[standard-no-fastapi-cloud-cli]>=0.162.0,<0.163",
+    # A Dependabot bump must also update src/app/data/holidays_release.json in the same PR (the
+    # release-record test fails until it does).
     "holidays>=0.108",
     "pydantic-settings>=2.16.1",
     "structlog>=26.1.0",

@@ -9,6 +9,8 @@ from datetime import date
 from importlib.metadata import version
 from pathlib import Path
 
+import pytest
+
 from app.sources.holidays import national_holidays
 
 RELEASE = Path(__file__).resolve().parents[2] / "src" / "app" / "data" / "holidays_release.json"
@@ -48,7 +50,8 @@ def test_portugal_may_2027() -> None:
     assert label.status == "cached"
     assert label.source == "holidays (Python library)"
     assert label.data_date == date(2026, 11, 2)  # the release date in holidays_release.json
-    assert str(label.source_url) == "https://pypi.org/pypi/holidays/0.108/json"
+    # the label links the release page a person can read, not the raw JSON that was read
+    assert str(label.source_url) == "https://pypi.org/project/holidays/0.108/"
 
 
 def test_country_without_data() -> None:
@@ -64,6 +67,37 @@ def test_country_without_data() -> None:
     assert result.missing
     assert result.holidays == []
     assert result.sources[0].status == "unavailable"
+
+
+@pytest.mark.parametrize("code", ["", " ", "PRT", "P", "P1", "1234"])
+def test_a_code_that_is_not_two_letters_is_not_known(code: str) -> None:
+    """A code that is not two letters gives "not known" with a plain reason, never the raw code.
+
+    Working: ISO 3166-1 alpha-2 codes are exactly two letters, so "", "P", "PRT", "P1" and
+    "1234" cannot be one. The reason is the brief's wording for this state, "No country for this
+    place".
+    Source: docs/design/brief.md (public_holidays "not known": "No country for this place").
+    """
+    result = national_holidays(code, 2027, 5)
+
+    assert result.state == "not_known"
+    assert result.missing == "No country for this place"
+    assert result.holidays == []
+    assert result.sources[0].status == "unavailable"
+
+
+def test_unsupported_country_reason_does_not_show_the_raw_code() -> None:
+    """A two-letter code the library lacks says so without echoing the code.
+
+    Working: "ZZ" is two letters but not a supported country, so the reason must be the fixed
+    sentence below and must not contain "ZZ".
+    Source: docs/design/brief.md (plain, fixed wording; no raw input shown to travellers).
+    """
+    result = national_holidays("zz", 2027, 5)
+
+    assert result.state == "not_known"
+    assert result.missing == "No holiday list for this country"
+    assert "ZZ" not in (result.missing or "")
 
 
 def test_supported_month_without_holidays_is_empty() -> None:
@@ -84,5 +118,6 @@ def test_release_record_matches_installed() -> None:
     record = json.loads(RELEASE.read_text(encoding="utf-8"))
 
     assert record["version"] == version("holidays")
+    assert record["page"] == f"https://pypi.org/project/holidays/{record['version']}/"
     assert record["source"] == f"https://pypi.org/pypi/holidays/{record['version']}/json"
     assert date.fromisoformat(record["released"]) <= date.fromisoformat(record["checked"])
