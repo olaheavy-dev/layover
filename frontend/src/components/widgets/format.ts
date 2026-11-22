@@ -151,3 +151,40 @@ export function weekdayDate(value: string): string | null {
   const get = (type: string) => parts.find((part) => part.type === type)?.value ?? "";
   return `${get("weekday")} ${get("day")} ${get("month")} ${get("year")}`;
 }
+
+// "2027-05-17" -> "Mon 17 May 2027". The weekday comes from the date itself.
+export function shortWeekdayDate(value: string): string | null {
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(value) ? parseUtc(value) : null;
+  if (!date) return null;
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).formatToParts(date);
+  const get = (type: string) => parts.find((part) => part.type === type)?.value ?? "";
+  return `${get("weekday")} ${get("day")} ${get("month")} ${get("year")}`;
+}
+
+// 90 -> "1 hour 30 minutes". Whole minutes into words: a unit change only, the minutes come from
+// the contract. A negative or fractional number gives null.
+export function durationWords(minutes: number): string | null {
+  if (!Number.isInteger(minutes) || minutes < 0) return null;
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  const parts: string[] = [];
+  if (hours > 0) parts.push(plural(hours, "hour"));
+  if (rest > 0) parts.push(plural(rest, "minute"));
+  return parts.length > 0 ? parts.join(" ") : "0 minutes";
+}
+
+// 60 -> "UTC+1", 330 -> "UTC+5:30", 0 -> "UTC". A unit change only.
+export function utcOffset(minutes: number): string | null {
+  if (!Number.isInteger(minutes)) return null;
+  if (minutes === 0) return "UTC";
+  const abs = Math.abs(minutes);
+  const hours = Math.floor(abs / 60);
+  const rest = abs % 60;
+  return `UTC${minutes < 0 ? "-" : "+"}${hours}${rest > 0 ? `:${String(rest).padStart(2, "0")}` : ""}`;
+}

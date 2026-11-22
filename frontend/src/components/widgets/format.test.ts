@@ -1,5 +1,6 @@
 import {
   clockTime,
+  durationWords,
   currencySymbol,
   dateRange,
   dayMonth,
@@ -11,7 +12,9 @@ import {
   monthYear,
   plural,
   shortDate,
+  shortWeekdayDate,
   shownMoney,
+  utcOffset,
   weekdayDate,
 } from "./format";
 
@@ -134,5 +137,47 @@ describe("weekdayDate", () => {
     // Working: 15 May 2027 is a Saturday (the board's "Day 1, Saturday 15 May 2027").
     expect(weekdayDate("2027-05-15")).toBe("Saturday 15 May 2027");
     expect(weekdayDate("15 May")).toBeNull();
+  });
+});
+
+// Source: the Gregorian calendar. 17 May 2027 is a Monday (1 Jan 2027 was a Friday; 31 + 28 + 31 +
+// 30 = 120 days to 1 May, 120 mod 7 = 1, so 1 May is a Saturday; the 17th is 16 days later, 16 mod 7
+// = 2, so Monday).
+describe("shortWeekdayDate", () => {
+  it("gives the short weekday and the full date", () => {
+    expect(shortWeekdayDate("2027-05-17")).toBe("Mon 17 May 2027");
+    expect(shortWeekdayDate("2027-05-15")).toBe("Sat 15 May 2027");
+  });
+  it("gives null for anything that is not a date", () => {
+    expect(shortWeekdayDate("May")).toBeNull();
+  });
+});
+
+// Whole minutes into words: a unit change only. 60 min = 1 hour; 90 min = 1 hour 30 minutes.
+describe("durationWords", () => {
+  it("says hours and minutes in words, singular and plural", () => {
+    expect(durationWords(60)).toBe("1 hour");
+    expect(durationWords(120)).toBe("2 hours");
+    expect(durationWords(90)).toBe("1 hour 30 minutes");
+    expect(durationWords(45)).toBe("45 minutes");
+    expect(durationWords(330)).toBe("5 hours 30 minutes");
+  });
+  it("gives null for a negative or fractional number", () => {
+    expect(durationWords(-60)).toBeNull();
+    expect(durationWords(1.5)).toBeNull();
+  });
+});
+
+// An offset in minutes as the UTC offset the zone database gives: 60 min = UTC+1; 330 = UTC+5:30.
+describe("utcOffset", () => {
+  it("formats positive, negative and zero offsets", () => {
+    expect(utcOffset(60)).toBe("UTC+1");
+    expect(utcOffset(120)).toBe("UTC+2");
+    expect(utcOffset(330)).toBe("UTC+5:30");
+    expect(utcOffset(-300)).toBe("UTC-5");
+    expect(utcOffset(0)).toBe("UTC");
+  });
+  it("gives null for a fractional number", () => {
+    expect(utcOffset(0.5)).toBeNull();
   });
 });

@@ -10,6 +10,7 @@ import { ComparisonTable } from "./ComparisonTable";
 import { CostEstimate } from "./CostEstimate";
 import { Daylight } from "./Daylight";
 import { FareCard } from "./FareCard";
+import { FareList } from "./FareList";
 import { HotelList } from "./HotelList";
 import { ItineraryDay } from "./ItineraryDay";
 import { MapWidget } from "./MapWidget";
@@ -17,7 +18,10 @@ import { Money } from "./Money";
 import { NotKnown } from "./NotKnown";
 import { NotKnownWidget } from "./NotKnownWidget";
 import { PlaceIntro } from "./PlaceIntro";
+import { PublicHolidays } from "./PublicHolidays";
 import { SeaConditions } from "./SeaConditions";
+import { TimeDifference } from "./TimeDifference";
+import { TransportRoute } from "./TransportRoute";
 import { WebResults } from "./WebResults";
 
 type AnyWidget = SampleWidget["widget"];
@@ -42,6 +46,10 @@ const REGISTRY: Partial<Record<string, ComponentType<{ widget: any }>>> = {
   hotel_list: HotelList,
   web_results: WebResults,
   not_known: NotKnownWidget,
+  public_holidays: PublicHolidays,
+  time_difference: TimeDifference,
+  fare_list: FareList,
+  transport_route: TransportRoute,
 };
 
 export function Widget({ widget }: { widget: AnyWidget }) {
