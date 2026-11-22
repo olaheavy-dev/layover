@@ -70,6 +70,23 @@ test.describe("the sample trip", () => {
     });
   }
 
+  for (const path of ["/trip/sample-lisbon", "/s/sample-lisbon"]) {
+    test(`${path} index follows the scroll on a wide, short canvas`, async ({ page, isMobile }) => {
+      test.skip(isMobile, "sets its own desktop viewport");
+      await page.setViewportSize({ width: 1920, height: 560 });
+      await page.goto(path);
+      const index = page.getByRole("navigation", { name: "Sections of the trip" });
+      // Scroll the "place" section's top to just under the sticky index, as a reader would.
+      await page.evaluate(() => {
+        const canvas = document.querySelector('section[aria-label="Your trip"]') as HTMLElement;
+        const target = document.getElementById("place") as HTMLElement;
+        canvas.scrollTop +=
+          target.getBoundingClientRect().top - canvas.getBoundingClientRect().top - 50;
+      });
+      await expect(index.locator('a[aria-current="true"]')).toHaveText(/Lisbon|Place/);
+    });
+  }
+
   test("the trip name is not clipped on a phone", async ({ page, isMobile }) => {
     test.skip(!isMobile, "the clipping shows on a phone");
     await page.goto("/trip/sample-lisbon");

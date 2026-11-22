@@ -1,6 +1,6 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 
-import { Canvas } from "./Canvas";
+import { Canvas, readingBand } from "./Canvas";
 
 describe("Canvas", () => {
   it("shows its sections and the section index", () => {
@@ -91,5 +91,24 @@ describe("Canvas", () => {
       "/how-it-works",
     );
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+  });
+});
+
+describe("readingBand", () => {
+  // Working: the band runs from 48 px (under the sticky index) to 10% of the canvas height, but is
+  // never thinner than 16 px. The bottom margin is what is left under the band's end.
+  // Source: the IntersectionObserver spec (w3c.github.io/IntersectionObserver, rootMargin): a
+  // percentage is of the root's width, so the height is turned into pixels here instead.
+  it.each([
+    // height 650: 10% = 65 (more than 48 + 16 = 64), bottom = 650 - 65 = 585
+    [650, "-48px 0px -585px 0px"],
+    // height 1000: 10% = 100, bottom = 900
+    [1000, "-48px 0px -900px 0px"],
+    // height 400: 10% = 40, below 64, so the band ends at 64; bottom = 400 - 64 = 336
+    [400, "-48px 0px -336px 0px"],
+    // height 60: shorter than the band's end; bottom 0
+    [60, "-48px 0px 0px 0px"],
+  ])("for a canvas %i px high is %s", (height, margin) => {
+    expect(readingBand(height)).toBe(margin);
   });
 });

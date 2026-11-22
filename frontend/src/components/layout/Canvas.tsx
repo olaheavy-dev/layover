@@ -18,6 +18,16 @@ import { ORDER, SectionIndex, type SectionId } from "./SectionIndex";
 // wrapper and pushes the top bar off screen), marks that section, and keeps it marked until the
 // traveller scrolls away.
 // Docs: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+// The reading band as an IntersectionObserver rootMargin, in pixels. It runs from just under the
+// sticky index (48 px) to 10% of the canvas height, and is never thinner than 16 px. The margin is
+// computed here because the spec resolves a percentage against the root's width, not its height
+// (https://w3c.github.io/IntersectionObserver/#dom-intersectionobserverinit-rootmargin).
+export function readingBand(height: number): string {
+  const end = Math.max(height * 0.1, 48 + 16);
+  const bottom = Math.max(Math.round(height - end), 0);
+  return `-48px 0px ${bottom === 0 ? "0px" : `-${bottom}px`} 0px`;
+}
+
 export function Canvas({
   sections = [],
   place,
@@ -42,27 +52,44 @@ export function Canvas({
     const root = scroller.current;
     if (!root || typeof IntersectionObserver === "undefined") return;
     const ids = key === "" ? [] : (key.split(",") as SectionId[]);
-    const onLine = new Set<SectionId>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const id = ids.find((candidate) => candidate === entry.target.id);
-          if (!id) continue;
-          if (entry.isIntersecting) onLine.add(id);
-          else onLine.delete(id);
-        }
-        // Both on the line at once: the later section is the one the traveller has scrolled to.
-        const latest = ids.filter((id) => onLine.has(id)).at(-1);
-        if (latest) setSeen(latest);
-      },
-      // From just under the sticky index (44 px) to a hand's width below it.
-      { root, rootMargin: "-48px 0px -90% 0px" },
-    );
-    for (const id of ids) {
-      const element = root.querySelector(`#${id}`);
-      if (element) observer.observe(element);
-    }
-    return () => observer.disconnect();
+    let observer: IntersectionObserver | undefined;
+    let height = -1;
+    // Builds the observer for the canvas's current height; a resize builds it again.
+    const build = () => {
+      observer?.disconnect();
+      height = root.clientHeight;
+      const onLine = new Set<SectionId>();
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const id = ids.find((candidate) => candidate === entry.target.id);
+            if (!id) continue;
+            if (entry.isIntersecting) onLine.add(id);
+            else onLine.delete(id);
+          }
+          // Both on the line at once: the later section is the one the traveller has scrolled to.
+          const latest = ids.filter((id) => onLine.has(id)).at(-1);
+          if (latest) setSeen(latest);
+        },
+        { root, rootMargin: readingBand(height) },
+      );
+      for (const id of ids) {
+        const element = root.querySelector(`#${id}`);
+        if (element) observer.observe(element);
+      }
+    };
+    build();
+    const resize =
+      typeof ResizeObserver === "undefined"
+        ? undefined
+        : new ResizeObserver(() => {
+            if (root.clientHeight !== height) build();
+          });
+    resize?.observe(root);
+    return () => {
+      resize?.disconnect();
+      observer?.disconnect();
+    };
   }, [key]);
 
   useEffect(() => {
