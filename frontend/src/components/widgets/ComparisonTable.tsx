@@ -346,7 +346,7 @@ export function ComparisonTable({ widget }: { widget: Table }) {
           Scroll sideways to see the other places.
         </p>
         <ul
-          className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2 @[34rem]:mx-0 @[34rem]:grid @[34rem]:grid-cols-3 @[34rem]:overflow-visible @[34rem]:px-0"
+          className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 @[34rem]:grid @[34rem]:grid-cols-3 @[34rem]:overflow-visible"
           aria-label="The places, scroll sideways on a phone"
         >
           {cards.map((card) => (
