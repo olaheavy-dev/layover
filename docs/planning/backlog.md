@@ -32,10 +32,10 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 | 41 | #73 | PR title check is cancelled when Dependabot rebases and renames a PR at once | Build 1 | `noticed` while triaging the Dependabot PRs; template candidate, owner-only (`.github/`) |
 | 43 | #76 | `backend/pyproject.toml` says Dependabot groups the agent-framework packages for review, but no such group exists | Build 1 | `noticed` in the 0013 review; template candidate, owner-only (`.github/`) |
 | 45 | #79 | The data contract lacks fields the journey and place boards show | Build 1 | `noticed` in PR C's final review |
-| 50 | #85 | Board edge-hours-dates: the heading's weekday doesn't match its text | Build 1 | `noticed` in PR D's reviews; template candidate |
-| 51 | #86 | TfL credit: check whether the Geomni UK Map data line applies to Layover's transport widget | Build 1 | `noticed` in PR D's reviews; template candidate |
+| 50 | #85 | Board edge-hours-dates: the heading's weekday doesn't match its text | Build 1 | `noticed` in PR D's reviews |
+| 51 | #86 | TfL credit: check whether the Geomni UK Map data line applies to Layover's transport widget | Build 1 | `noticed` in PR D's reviews |
 | 52 | #87 | Prefetch requests skip the proxy, so their response has no CSP header | Build 1 | `noticed` in PR D's reviews; template candidate |
-| 54 | #89 | Widget consistency: one link check, one Not known value, and source fallbacks in every widget | Build 1 | `noticed` in PR D's reviews; template candidate |
+| 54 | #89 | Widget consistency: one link check, one Not known value, and source fallbacks in every widget | Build 1 | `noticed` in PR D's reviews |
 | 55 | #90 | A shared trip can still reveal how many people are travelling | Build 1 | `noticed` in PR D's reviews; owner's privacy decision |
 | 56 | #91 | Template drift from PR D: proxy, the API proxy rename and the e2e page list | Build 1 | `noticed` in PR D's reviews; template candidate |
 | 57 | #92 | Website layout drift from the approved boards | Build 1 | `noticed` in PR D's visual review |

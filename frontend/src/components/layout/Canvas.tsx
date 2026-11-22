@@ -10,7 +10,7 @@ import { ORDER, SectionIndex, type SectionId } from "./SectionIndex";
 // board, with the honesty line and the link to How Layover works.
 //
 // The index marks the section in view. A thin reading line sits just under the sticky index; the
-// section that crosses it is the current one (an IntersectionObserver, so no scroll handler runs).
+// section that crosses it is the current one (an IntersectionObserver; a small scroll listener marks the last section at the end of the canvas).
 // Until a section crosses it, the first one is marked. A page can still force one with `current`.
 // Two cases the line cannot see are handled by hand. At the very end of the canvas the last
 // section is marked, because a short last section may never reach the line. And a click on an
