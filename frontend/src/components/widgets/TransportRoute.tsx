@@ -5,7 +5,7 @@ import type { components } from "@/lib/api/schema";
 import { clockTime, shortWeekdayDate } from "./format";
 import { NotKnown } from "./NotKnown";
 import { ErrorNote } from "./PlaceParts";
-import { NotKnownValue, OutLink } from "./ProposedParts";
+import { missingSourceNote, NotKnownValue, OutLink } from "./ProposedParts";
 import { WidgetFrame } from "./WidgetFrame";
 
 type TransportRouteWidget = components["schemas"]["TransportRoute"];
@@ -31,8 +31,9 @@ export function TransportRoute({ widget }: { widget: TransportRouteWidget }) {
   const legs = widget.legs ?? [];
   const day = widget.planned_for ? shortWeekdayDate(widget.planned_for) : null;
   const leaves = widget.leaves_at ? clockTime(widget.leaves_at) : null;
+  const live = widget.sources.length > 0 && widget.sources.every((s) => s.status === "live");
   const plan = day
-    ? `TfL plan for ${day}${widget.dates_set ? "" : ", the middle of the month: your dates are not set yet"}${leaves ? `, leaving ${leaves}` : ""}`
+    ? `${live ? "Live TfL plan" : "TfL plan"} for ${day}${widget.dates_set ? "" : ", the middle of the month: your dates are not set yet"}${leaves ? `, leaving ${leaves}` : ""}`
     : null;
 
   let body: React.ReactNode = null;
@@ -85,7 +86,14 @@ export function TransportRoute({ widget }: { widget: TransportRouteWidget }) {
       title={`To ${widget.destination}`}
       state={widget.state === "loading" ? "loading" : "filled"}
       sources={widget.sources}
-      footerNote={widget.state === "loading" ? undefined : CREDITS}
+      footerNote={
+        widget.state === "loading" ? undefined : (
+          <>
+            {missingSourceNote(widget.sources.length, false)}
+            {CREDITS}
+          </>
+        )
+      }
     >
       {body}
     </WidgetFrame>

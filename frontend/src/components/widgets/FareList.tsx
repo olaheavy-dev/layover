@@ -3,7 +3,7 @@ import type { components } from "@/lib/api/schema";
 import { formatMoney, monthYear } from "./format";
 import { NotKnown } from "./NotKnown";
 import { ErrorNote } from "./PlaceParts";
-import { OutLink } from "./ProposedParts";
+import { missingSourceNote, OutLink } from "./ProposedParts";
 import { SourceLabel } from "./SourceLabel";
 import { WidgetFrame } from "./WidgetFrame";
 import { ActionButton, Actions } from "./WidgetParts";
@@ -110,6 +110,7 @@ export function FareList({ widget }: { widget: FareListWidget }) {
       title={`Lowest cached fares from ${place}`}
       state={widget.state === "loading" ? "loading" : "filled"}
       sources={widget.sources}
+      footerNote={missingSourceNote(widget.sources.length, widget.state === "loading")}
     >
       {body}
     </WidgetFrame>

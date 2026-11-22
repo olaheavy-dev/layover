@@ -112,4 +112,23 @@ describe("PublicHolidays", () => {
       within(container.querySelector("footer") as HTMLElement).getByText("Source: Not known"),
     ).toBeInTheDocument();
   });
+
+  it("empty with no month or year is Not known, never a clean 'none'", async () => {
+    const base = await sampleOf("public_holidays", "empty");
+    const { container } = render(
+      <PublicHolidays widget={{ ...base, month: null, year: null, missing: null }} />,
+    );
+    expect(screen.getByText("Not known")).toBeInTheDocument();
+    expect(screen.getByText("the public holidays for Portugal")).toBeInTheDocument();
+    expect(container.textContent).not.toMatch(/No public holidays/);
+  });
+
+  it("empty with no month uses the contract's missing text", async () => {
+    const base = await sampleOf("public_holidays", "empty");
+    render(
+      <PublicHolidays widget={{ ...base, month: null, year: null, missing: "a trip month" }} />,
+    );
+    expect(screen.getByText("a trip month")).toBeInTheDocument();
+    expect(screen.queryByText(/No public holidays/)).toBeNull();
+  });
 });

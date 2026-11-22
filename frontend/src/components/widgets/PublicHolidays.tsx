@@ -30,7 +30,7 @@ export function PublicHolidays({ widget }: { widget: PublicHolidaysWidget }) {
         />
       </div>
     );
-  } else if (widget.state === "empty") {
+  } else if (widget.state === "empty" && period) {
     body = (
       <div className="flex flex-col gap-2">
         {head}

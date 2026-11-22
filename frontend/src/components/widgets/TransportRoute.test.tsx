@@ -47,7 +47,7 @@ describe("TransportRoute", () => {
     });
     expect(
       screen.getByText(
-        "TfL plan for Sat 15 May 2027, the middle of the month: your dates are not set yet, leaving 09:00",
+        "Live TfL plan for Sat 15 May 2027, the middle of the month: your dates are not set yet, leaving 09:00",
       ),
     ).toBeInTheDocument();
     const footer = container.querySelector("footer") as HTMLElement;
@@ -71,7 +71,9 @@ describe("TransportRoute", () => {
   it("filled with set dates drops the dates-not-set wording", async () => {
     const base = await sampleOf("transport_route", "filled");
     render(<TransportRoute widget={{ ...base, dates_set: true }} />);
-    expect(screen.getByText("TfL plan for Sat 15 May 2027, leaving 09:00")).toBeInTheDocument();
+    expect(
+      screen.getByText("Live TfL plan for Sat 15 May 2027, leaving 09:00"),
+    ).toBeInTheDocument();
   });
 
   it("filled with no total says Not known for the total, never 0", async () => {
@@ -133,5 +135,36 @@ describe("TransportRoute", () => {
     render(<TransportRoute widget={{ ...base, state: "empty", legs: [], total_minutes: null }} />);
     expect(screen.getByText("Not known")).toBeInTheDocument();
     expect(screen.queryAllByRole("listitem")).toHaveLength(0);
+  });
+
+  it("filled with a live source says 'Live TfL plan'", async () => {
+    render(<TransportRoute widget={await sampleOf("transport_route", "filled")} />);
+    expect(
+      screen.getByText(
+        "Live TfL plan for Sat 15 May 2027, the middle of the month: your dates are not set yet, leaving 09:00",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("filled with a source that is not live says 'TfL plan', never 'Live'", async () => {
+    const base = await sampleOf("transport_route", "filled");
+    render(
+      <TransportRoute
+        widget={{
+          ...base,
+          sources: [{ status: "cached", source: "TfL Unified API (Journey Planner)" }],
+        }}
+      />,
+    );
+    expect(screen.getByText(/^TfL plan for Sat 15 May 2027/)).toBeInTheDocument();
+    expect(screen.queryByText(/Live TfL plan/)).toBeNull();
+  });
+
+  it("a non-filled widget with no sources says Source: Not known and keeps the credits", async () => {
+    const base = await sampleOf("transport_route", "not_known");
+    const { container } = render(<TransportRoute widget={{ ...base, sources: [] }} />);
+    const footer = container.querySelector("footer") as HTMLElement;
+    expect(within(footer).getByText("Source: Not known")).toBeInTheDocument();
+    expect(within(footer).getByText(CREDIT)).toBeInTheDocument();
   });
 });

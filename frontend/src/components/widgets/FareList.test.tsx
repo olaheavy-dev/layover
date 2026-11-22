@@ -142,4 +142,12 @@ describe("FareList", () => {
       within(nth(screen.getAllByRole("listitem"), 0)).getByText("Source: Not known"),
     ).toBeInTheDocument();
   });
+
+  it("a non-filled widget with no sources says Source: Not known", async () => {
+    const base = await sampleOf("fare_list", "not_known");
+    const { container } = render(<FareList widget={{ ...base, sources: [] }} />);
+    expect(
+      within(container.querySelector("footer") as HTMLElement).getByText("Source: Not known"),
+    ).toBeInTheDocument();
+  });
 });
