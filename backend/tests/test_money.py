@@ -58,6 +58,49 @@ def test_half_penny_goes_up() -> None:
     assert to_minor(Decimal("39.835"), "GBP").amount_minor == 3984
 
 
+@pytest.mark.parametrize(
+    ("value", "minor"),
+    [
+        ("39.834", 3983),
+        ("39.836", 3984),
+        ("-39.834", -3983),
+        ("-39.835", -3984),
+        ("-39.836", -3984),
+    ],
+)
+def test_to_minor_half_penny_boundaries(value: str, minor: int) -> None:
+    """Half-up rounding to the penny, just below, exactly at and just above half, both signs.
+
+    Working: pence values are 3983.4, 3983.6, -3983.4, -3983.5, -3983.6. Below half rounds towards
+    zero (3983, -3983); above half rounds away from zero (3984, -3984); exactly half rounds away
+    from zero (-3983.5 gives -3984), as the positive 3983.5 gives 3984.
+    Source: the owner's half-up rule (register, 21 Nov 2026); Python decimal ROUND_HALF_UP rounds
+    exact halves away from zero (https://docs.python.org/3/library/decimal.html#rounding-modes).
+    """
+    assert to_minor(Decimal(value), "GBP").amount_minor == minor
+
+
+@pytest.mark.parametrize(
+    ("value", "minor"),
+    [
+        ("415.01", 42000),
+        ("-414.99", -41000),
+        ("-415.00", -42000),
+        ("-415.01", -42000),
+    ],
+)
+def test_round_estimate_ten_pound_boundaries(value: str, minor: int) -> None:
+    """Estimate rounding to the nearest 10 pounds, just below, exactly at and just above half.
+
+    Working: value / 10 is 41.501, -41.499, -41.5, -41.501. Half up gives 42, -41, -42, -42
+    (exact half goes away from zero), times 10 is 420, -410, -420, -420 pounds, so 42000, -41000,
+    -42000, -42000 pence. The positive 414.99 and 415.00 cases are in test_estimate_nearest_ten.
+    Source: owner's estimate rule and half-up rule (21 Nov 2026); Python decimal ROUND_HALF_UP
+    (https://docs.python.org/3/library/decimal.html#rounding-modes).
+    """
+    assert round_estimate(Decimal(value), "GBP") == gbp(minor)
+
+
 def test_total_rounds_once() -> None:
     """Two lines of 0.004 pounds total 0.01 pounds, not 0.00.
 
