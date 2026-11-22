@@ -66,30 +66,30 @@ The owner approved the packages that `house-template-fastapi` v0.11.1 and `house
 | @opentelemetry/sdk-logs 0.223.0 | https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/sdk-logs | OpenTelemetry logs SDK (frontend). Apache-2.0 ([npm](https://www.npmjs.com/package/@opentelemetry/sdk-logs/v/0.223.0)) |
 | @opentelemetry/sdk-metrics 2.12.0 | https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/sdk-metrics | OpenTelemetry metrics SDK (frontend). Apache-2.0 ([npm](https://www.npmjs.com/package/@opentelemetry/sdk-metrics/v/2.12.0)) |
 | @opentelemetry/sdk-trace-base 2.12.0 | https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-sdk-trace-base | OpenTelemetry tracing SDK (frontend). Apache-2.0 ([npm](https://www.npmjs.com/package/@opentelemetry/sdk-trace-base/v/2.12.0)) |
-| @vercel/otel 2.1.3 | https://github.com/vercel/otel#readme | OpenTelemetry set-up for Next.js (frontend). MIT ([npm](https://www.npmjs.com/package/@vercel/otel/v/2.1.3)) |
+| @vercel/otel 2.3.0 | https://github.com/vercel/otel#readme | OpenTelemetry set-up for Next.js (frontend). MIT ([npm](https://www.npmjs.com/package/@vercel/otel/v/2.3.0)) |
 | next 16.4.6 | https://nextjs.org | Frontend framework (frontend). MIT ([npm](https://www.npmjs.com/package/next/v/16.4.6)) |
 | openapi-fetch 0.17.0 | https://openapi-ts.dev | Typed API client generated from the backend's OpenAPI (frontend). MIT ([npm](https://www.npmjs.com/package/openapi-fetch/v/0.17.0)) |
 | react 19.3.1 | https://react.dev/ | UI library (frontend). MIT ([npm](https://www.npmjs.com/package/react/v/19.3.1)) |
 | react-dom 19.3.1 | https://react.dev/ | React for the browser (frontend). MIT ([npm](https://www.npmjs.com/package/react-dom/v/19.3.1)) |
 | server-only 0.0.1 | https://react.dev/reference/rsc/server-components | Keeps server code out of browser bundles (frontend). MIT ([npm](https://www.npmjs.com/package/server-only/v/0.0.1)) |
 | @axe-core/playwright 4.14.0 | https://github.com/dequelabs/axe-core-npm#readme | Accessibility checks in end-to-end tests (frontend dev). MPL-2.0 ([npm](https://www.npmjs.com/package/@axe-core/playwright/v/4.14.0)) |
-| @playwright/test 1.64.1 | https://playwright.dev | End-to-end tests (frontend dev). Apache-2.0 ([npm](https://www.npmjs.com/package/@playwright/test/v/1.64.1)) |
-| @tailwindcss/turbopack 4.3.3 | https://tailwindcss.com | Tailwind support in the Turbopack build (frontend dev). MIT ([npm](https://www.npmjs.com/package/@tailwindcss/turbopack/v/4.3.3)) |
+| @playwright/test 1.65.1 | https://playwright.dev | End-to-end tests (frontend dev). Apache-2.0 ([npm](https://www.npmjs.com/package/@playwright/test/v/1.65.1)) |
+| @tailwindcss/turbopack 4.3.5 | https://tailwindcss.com | Tailwind support in the Turbopack build (frontend dev). MIT ([npm](https://www.npmjs.com/package/@tailwindcss/turbopack/v/4.3.5)) |
 | @testing-library/jest-dom 7.0.1 | https://github.com/testing-library/jest-dom#readme | DOM assertions for unit tests (frontend dev). MIT ([npm](https://www.npmjs.com/package/@testing-library/jest-dom/v/7.0.1)) |
 | @testing-library/react 16.3.3 | https://github.com/testing-library/react-testing-library#readme | React component tests (frontend dev). MIT ([npm](https://www.npmjs.com/package/@testing-library/react/v/16.3.3)) |
-| @types/node 26.6.5 | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node | Node.js types (frontend dev). MIT ([npm](https://www.npmjs.com/package/@types/node/v/26.6.5)) |
+| @types/node 26.6.6 | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node | Node.js types (frontend dev). MIT ([npm](https://www.npmjs.com/package/@types/node/v/26.6.6)) |
 | @types/react 19.3.0 | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react | React types (frontend dev). MIT ([npm](https://www.npmjs.com/package/@types/react/v/19.3.0)) |
 | @types/react-dom 19.3.0 | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom | React DOM types (frontend dev). MIT ([npm](https://www.npmjs.com/package/@types/react-dom/v/19.3.0)) |
-| @vitejs/plugin-react 6.1.2 | https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#readme | React support in Vitest (frontend dev). MIT ([npm](https://www.npmjs.com/package/@vitejs/plugin-react/v/6.1.2)) |
+| @vitejs/plugin-react 6.3.0 | https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#readme | React support in Vitest (frontend dev). MIT ([npm](https://www.npmjs.com/package/@vitejs/plugin-react/v/6.3.0)) |
 | eslint 9.39.5 | https://eslint.org | Linting (frontend dev). MIT ([npm](https://www.npmjs.com/package/eslint/v/9.39.5)) |
 | eslint-config-next 16.4.6 | https://nextjs.org/docs/app/api-reference/config/eslint | Next.js lint rules (frontend dev). MIT ([npm](https://www.npmjs.com/package/eslint-config-next/v/16.4.6)) |
 | jsdom 30.1.3 | https://github.com/jsdom/jsdom#readme | Browser-like DOM for unit tests (frontend dev). MIT ([npm](https://www.npmjs.com/package/jsdom/v/30.1.3)) |
 | openapi-typescript 7.13.0 | https://openapi-ts.dev | Generates API types from the OpenAPI file (frontend dev). MIT ([npm](https://www.npmjs.com/package/openapi-typescript/v/7.13.0)) |
-| prettier 3.9.10 | https://prettier.io | Formatting (frontend dev). MIT ([npm](https://www.npmjs.com/package/prettier/v/3.9.10)) |
+| prettier 3.10.1 | https://prettier.io | Formatting (frontend dev). MIT ([npm](https://www.npmjs.com/package/prettier/v/3.10.1)) |
 | prettier-plugin-tailwindcss 0.8.1 | https://github.com/tailwindlabs/prettier-plugin-tailwindcss#readme | Sorts Tailwind class names (frontend dev). MIT ([npm](https://www.npmjs.com/package/prettier-plugin-tailwindcss/v/0.8.1)) |
-| tailwindcss 4.3.3 | https://tailwindcss.com | CSS utility framework (frontend dev). MIT ([npm](https://www.npmjs.com/package/tailwindcss/v/4.3.3)) |
+| tailwindcss 4.3.5 | https://tailwindcss.com | CSS utility framework (frontend dev). MIT ([npm](https://www.npmjs.com/package/tailwindcss/v/4.3.5)) |
 | typescript 5.9.3 | https://www.typescriptlang.org/ | Type checking (frontend dev). Apache-2.0 ([npm](https://www.npmjs.com/package/typescript/v/5.9.3)) |
-| vitest 5.0.5 | https://vitest.dev | Unit test runner (frontend dev). MIT ([npm](https://www.npmjs.com/package/vitest/v/5.0.5)) |
+| vitest 5.1.0 | https://vitest.dev | Unit test runner (frontend dev). MIT ([npm](https://www.npmjs.com/package/vitest/v/5.1.0)) |
 | next-devtools-mcp 0.4.0 | https://github.com/vercel/next-devtools-mcp ([Next.js MCP guide](https://nextjs.org/docs/app/guides/mcp)) | Coding agents read the Next.js dev server's routes, logs and errors through `.mcp.json`. Runs through `npx` on developer machines only, outside the lockfile; pinned to 0.4.0 and checked in the weekly review of pinned MCP servers. MIT ([npm](https://www.npmjs.com/package/next-devtools-mcp/v/0.4.0)) |
 
 Data sources and their terms are in [data sources](data-sources.md).
