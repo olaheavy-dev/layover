@@ -33,6 +33,32 @@ describe("BookingApproval", () => {
     expect(screen.getByText(SANDBOX)).toBeInTheDocument();
   });
 
+  it("waiting with no sandbox price: no Approve button and no word about pressing it", async () => {
+    const widget = { ...(await sampleOf("booking_approval", "waiting")), sandbox_price: null };
+    render(<BookingApproval widget={widget} />);
+    expect(screen.queryByRole("button", { name: "Approve" })).not.toBeInTheDocument();
+    expect(screen.queryByText(/press Approve/)).not.toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Layover has no sandbox price, so it can't ask you to approve yet. Nothing was ordered.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("declined with no route, dates or travellers: no lone full stop", async () => {
+    const widget = {
+      ...(await sampleOf("booking_approval", "declined")),
+      origin: null,
+      destination: null,
+      depart: null,
+      return_date: null,
+      adults: null,
+    };
+    const { container } = render(<BookingApproval widget={widget} />);
+    expect(screen.getByText("Declined. Nothing was ordered.")).toBeInTheDocument();
+    for (const p of container.querySelectorAll("p")) expect(p.textContent).not.toBe(".");
+  });
+
   it("loading: a busy status and no buttons, so nothing can be approved", async () => {
     render(<BookingApproval widget={await sampleOf("booking_approval", "loading")} />);
     expect(screen.getByRole("status")).toHaveTextContent("Loading Try booking");

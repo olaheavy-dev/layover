@@ -17,7 +17,8 @@ function placeName(origin: string): string {
 }
 
 function FareRow({ row }: { row: Row }) {
-  const fare = row.fare;
+  // A fare whose price cannot be shown is a fare Not known: no price and no age beside nothing.
+  const fare = row.fare && formatMoney(row.fare.price) !== null ? row.fare : null;
   return (
     <li className="border-border-primary flex flex-col gap-1 border-t py-3 first:border-t-0">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">

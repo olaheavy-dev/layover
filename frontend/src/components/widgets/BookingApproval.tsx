@@ -49,8 +49,9 @@ function Summary({ rows }: { rows: { name: string; value: React.ReactNode; missi
 }
 
 function priceText(money: Booking["sandbox_price"], adults: Booking["adults"]): string | null {
-  if (!money) return null;
-  return adults != null ? `${formatMoney(money)} for ${adults}` : formatMoney(money);
+  const text = money ? formatMoney(money) : null;
+  if (!text) return null;
+  return adults != null ? `${text} for ${adults}` : text;
 }
 
 function Status({ tone, children }: { tone: "ok" | "no" | "warn"; children: React.ReactNode }) {
@@ -87,6 +88,7 @@ export function BookingApproval({ widget }: { widget: Booking }) {
   const when =
     widget.depart && widget.return_date ? dateRange(widget.depart, widget.return_date) : null;
   const travellers = widget.adults != null ? plural(widget.adults, "adult") : null;
+  const details = [route, when, travellers].filter(Boolean);
 
   if (widget.state === "error") {
     return frame(
@@ -140,6 +142,7 @@ export function BookingApproval({ widget }: { widget: Booking }) {
   const bookingState = widget.booking_state ?? "waiting";
   const price = priceText(widget.sandbox_price, widget.adults);
   const newPrice = priceText(widget.new_price, widget.adults);
+  const newPriceShort = widget.new_price ? formatMoney(widget.new_price) : null;
   const eyebrow = EYEBROW[bookingState];
 
   const summary = (
@@ -188,9 +191,9 @@ export function BookingApproval({ widget }: { widget: Booking }) {
     body = (
       <>
         <Status tone="no">Declined. Nothing was ordered.</Status>
-        <p className="text-text-secondary text-sm">
-          {[route, when, travellers].filter(Boolean).join(", ")}.
-        </p>
+        {details.length > 0 ? (
+          <p className="text-text-secondary text-sm">{details.join(", ")}.</p>
+        ) : null}
         <Actions>
           <ActionButton variant="link" icon={<Search className="size-4" aria-hidden="true" />}>
             Search again
@@ -219,9 +222,9 @@ export function BookingApproval({ widget }: { widget: Booking }) {
           </p>
         ) : null}
         <Actions>
-          {widget.new_price ? (
+          {newPriceShort ? (
             <ActionButton variant="primary" icon={<Check className="size-4" aria-hidden="true" />}>
-              Approve at {formatMoney(widget.new_price)}
+              Approve at {newPriceShort}
             </ActionButton>
           ) : null}
           {Decline}
@@ -237,8 +240,13 @@ export function BookingApproval({ widget }: { widget: Booking }) {
             <CircleAlert className="size-4" aria-hidden="true" />
             Flights only. Layover cannot add a hotel to the sandbox booking yet.
           </p>
-        ) : (
+        ) : price ? (
           <p className="text-text-secondary text-sm">Nothing is ordered until you press Approve.</p>
+        ) : (
+          <p className="text-text-secondary text-sm">
+            Layover has no sandbox price, so it can&apos;t ask you to approve yet. Nothing was
+            ordered.
+          </p>
         )}
         <Actions>
           {price ? (

@@ -26,8 +26,9 @@ import { WebResults } from "./WebResults";
 
 type AnyWidget = SampleWidget["widget"];
 
-// Widget components by `kind`. Each widget task adds its own entry here. A kind with no entry,
-// or a value that doesn't match the contract, falls through to Not known and never throws.
+// Widget components by `kind`. Each widget task adds its own entry here. A kind with no entry
+// shows Not known. The fields of a widget are not checked here: they are trusted as the contract
+// defines them, except money, where a bad amount or currency shows Not known (see formatMoney).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const REGISTRY: Partial<Record<string, ComponentType<{ widget: any }>>> = {
   brief_summary: BriefSummary,

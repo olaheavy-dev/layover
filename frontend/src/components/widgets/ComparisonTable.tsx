@@ -67,13 +67,14 @@ function costRow(
   line: CostLine | null | undefined,
   sources: Table["sources"],
 ) {
-  if (line?.amount) {
+  const value = line?.amount ? shownMoney(line.amount) : null;
+  if (line?.amount && value) {
     const text = note(part, line);
     return (
       <Row
         key={part}
         name={name}
-        value={shownMoney(line.amount)}
+        value={value}
         estimate={line.amount.is_estimate}
         meta={text ? <span>{text}</span> : undefined}
         source={line.source ? <SourceLabel label={line.source} /> : undefined}
@@ -95,14 +96,15 @@ function costRow(
 function missingParts(card: PlaceCard): string[] {
   const names: string[] = [];
   for (const part of ["flights", "stay", "meals"] as const) {
-    if (!card[part]?.amount) names.push(part);
+    if (!card[part]?.amount || shownMoney(card[part].amount) === null) names.push(part);
   }
   return names;
 }
 
 function Against({ card }: { card: PlaceCard }) {
-  if (card.budget_gap && card.budget_position) {
-    const amount = capitalise(shownMoney(card.budget_gap));
+  const gap = card.budget_gap ? shownMoney(card.budget_gap) : null;
+  if (gap && card.budget_position) {
+    const amount = capitalise(gap);
     const over = card.budget_position === "over";
     const head =
       card.budget_position === "on" ? "On your budget" : `${amount} ${card.budget_position}`;
@@ -124,7 +126,11 @@ function Against({ card }: { card: PlaceCard }) {
   return (
     <Row
       name="Against your budget"
-      meta={<NotKnown missing={gaps.length > 0 ? `the ${gaps[0]} is missing` : "the budget gap"} />}
+      meta={
+        <NotKnown
+          missing={gaps.length > 0 ? `the ${gaps[0]} figure is missing` : "the budget gap"}
+        />
+      }
     />
   );
 }
@@ -148,10 +154,10 @@ function Ready({ card, sources }: { card: PlaceCard; sources: Table["sources"] }
         {costRow("Flights", "flights", card.flights, sources)}
         {costRow("Stay", "stay", card.stay, sources)}
         {costRow("Meals", "meals", card.meals, sources)}
-        {card.known_costs?.amount ? (
+        {card.known_costs?.amount && shownMoney(card.known_costs.amount) ? (
           <Row
             name="Known costs"
-            value={shownMoney(card.known_costs.amount)}
+            value={shownMoney(card.known_costs.amount) ?? undefined}
             estimate={card.known_costs.amount.is_estimate}
             meta={card.is_partial ? <span>Partial: some costs are not known</span> : undefined}
             source={
@@ -340,13 +346,13 @@ export function ComparisonTable({ widget }: { widget: Table }) {
           Scroll sideways to see the other places.
         </p>
         <ul
-          className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2 @[34rem]:grid @[34rem]:grid-cols-3 @[34rem]:overflow-visible"
+          className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2 @[34rem]:mx-0 @[34rem]:grid @[34rem]:grid-cols-3 @[34rem]:overflow-visible @[34rem]:px-0"
           aria-label="The places, scroll sideways on a phone"
         >
           {cards.map((card) => (
             <li
               key={card.place}
-              className="bg-bg-primary border-border-primary flex w-72 shrink-0 snap-start flex-col gap-3 rounded-md border p-3 @[34rem]:w-auto"
+              className="bg-bg-primary border-border-primary relative flex w-72 shrink-0 snap-start flex-col gap-3 rounded-md border p-3 @[34rem]:w-auto"
             >
               <div className="flex items-baseline gap-2">
                 <h4 className="font-display text-base font-semibold">{card.place}</h4>

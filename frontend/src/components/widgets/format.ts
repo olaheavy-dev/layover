@@ -20,7 +20,10 @@ export function currencySymbol(code: string): string {
   }
 }
 
-export function formatMoney(money: MoneyValue): string {
+// Null when the amount is not a whole number of minor units (or too big to be exact) or the
+// currency is not three capital letters: a bad figure is Not known, never a crash or a guess.
+export function formatMoney(money: MoneyValue): string | null {
+  if (!Number.isSafeInteger(money.amount_minor) || !/^[A-Z]{3}$/.test(money.currency)) return null;
   const formatter = new Intl.NumberFormat("en-GB", { style: "currency", currency: money.currency });
   const digits = formatter.resolvedOptions().maximumFractionDigits ?? 2;
   const symbol = currencySymbol(money.currency);
@@ -36,8 +39,10 @@ export function formatMoney(money: MoneyValue): string {
 }
 
 // The value the contract says to show: "about £780" for an estimate, "£192" for a listed price.
-export function shownMoney(estimate: MoneyEstimate): string {
-  return `${estimate.is_estimate ? "about " : ""}${formatMoney(estimate.shown)}`;
+// Null when that value is bad (see formatMoney).
+export function shownMoney(estimate: MoneyEstimate): string | null {
+  const shown = formatMoney(estimate.shown);
+  return shown === null ? null : `${estimate.is_estimate ? "about " : ""}${shown}`;
 }
 
 export function capitalise(text: string): string {

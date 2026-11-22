@@ -71,12 +71,13 @@ function label(part: Part, cost: Cost): string {
 function lineRow(part: Part, cost: Cost) {
   const line = cost[part];
   const name = label(part, cost);
-  if (line?.amount) {
+  const shown = line?.amount ? shownMoney(line.amount) : null;
+  if (line?.amount && shown) {
     return (
       <Row
         key={part}
         name={name}
-        value={<Value text={shownMoney(line.amount)} estimate={line.amount.is_estimate} />}
+        value={<Value text={shown} estimate={line.amount.is_estimate} />}
         meta={<span>{meta(part, line)}</span>}
         source={line.source ? <SourceLabel label={line.source} /> : null}
       />
@@ -118,12 +119,13 @@ function otherRows(cost: Cost) {
     ["activities", "Activities", activities],
   ] as const) {
     if (!line) continue;
+    const shown = line.amount ? shownMoney(line.amount) : null;
     rows.push(
-      line.amount ? (
+      line.amount && shown ? (
         <Row
           key={key}
           name={name}
-          value={<Value text={shownMoney(line.amount)} estimate={line.amount.is_estimate} />}
+          value={<Value text={shown} estimate={line.amount.is_estimate} />}
           source={line.source ? <SourceLabel label={line.source} /> : null}
         />
       ) : (
@@ -166,8 +168,16 @@ function join(items: string[]): string {
 function Verdict({ cost }: { cost: Cost }) {
   if (!cost.budget) return null;
   const budget = formatMoney(cost.budget);
-  if (cost.budget_gap && cost.budget_position) {
-    const amount = capitalise(shownMoney(cost.budget_gap));
+  if (!budget) {
+    return (
+      <p className="text-sm">
+        <NotKnown missing="Your budget figure, so Layover cannot compare this total with it" />
+      </p>
+    );
+  }
+  const gap = cost.budget_gap ? shownMoney(cost.budget_gap) : null;
+  if (gap && cost.budget_position) {
+    const amount = capitalise(gap);
     const headline =
       cost.budget_position === "on"
         ? `On your ${budget} budget on the known costs.`
@@ -217,7 +227,7 @@ export function CostEstimate({ widget }: { widget: Cost }) {
   const hasBody =
     widget.state === "filled" ||
     (widget.state === "not_known" && PARTS.some((part) => widget[part] != null));
-  const total = widget.total?.amount;
+  const total = widget.total?.amount ? shownMoney(widget.total.amount) : null;
   return (
     <WidgetFrame
       title="Cost estimate"
@@ -228,7 +238,7 @@ export function CostEstimate({ widget }: { widget: Cost }) {
       <div className="flex flex-col gap-3">
         {total ? (
           <p className="font-display flex flex-col text-3xl font-semibold">
-            <span>{shownMoney(total)}</span>
+            <span>{total}</span>
             <span className="text-text-secondary font-sans text-sm font-normal">
               {widget.is_partial ? gapsText(widget) : "estimate"}
             </span>

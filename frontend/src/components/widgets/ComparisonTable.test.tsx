@@ -75,7 +75,7 @@ describe("ComparisonTable", () => {
     expect(valencia.getByText("too few priced listings")).toBeInTheDocument();
     expect(valencia.getByText("about £390")).toBeInTheDocument();
     expect(valencia.getByText("Partial: some costs are not known")).toBeInTheDocument();
-    expect(valencia.getByText("the stay is missing")).toBeInTheDocument();
+    expect(valencia.getByText("the stay figure is missing")).toBeInTheDocument();
     expect(valencia.getAllByText("Not known").length).toBeGreaterThanOrEqual(2);
     expect(valencia.queryByText(/local transport|activities/i)).not.toBeInTheDocument();
     expect(valencia.queryByText(/about £\d+ (under|over)/i)).not.toBeInTheDocument();

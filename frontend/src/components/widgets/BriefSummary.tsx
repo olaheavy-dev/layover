@@ -20,7 +20,8 @@ export function chipsOf(brief: Brief): { key: string; text: string }[] {
   ].filter(Boolean);
   if (trip.length > 0) chips.push({ key: "when", text: trip.join(" · ") });
   if (brief.adults != null) chips.push({ key: "adults", text: plural(brief.adults, "adult") });
-  if (brief.budget) chips.push({ key: "budget", text: `${formatMoney(brief.budget)} in total` });
+  const budget = brief.budget ? formatMoney(brief.budget) : null;
+  if (budget) chips.push({ key: "budget", text: `${budget} in total` });
   if (brief.feel) chips.push({ key: "feel", text: brief.feel });
   return chips;
 }
@@ -86,7 +87,7 @@ export function BriefSummary({ widget }: { widget: Brief }) {
                           id="brief-budget"
                           type="text"
                           inputMode="decimal"
-                          defaultValue={widget.budget ? formatMoney(widget.budget) : ""}
+                          defaultValue={(widget.budget && formatMoney(widget.budget)) || ""}
                           className="border-border-control bg-bg-primary text-text-primary min-h-11 w-40 rounded-md border px-3 text-sm"
                         />
                         <ActionButton variant="primary">Save</ActionButton>

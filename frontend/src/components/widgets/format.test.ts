@@ -55,7 +55,34 @@ describe("formatMoney", () => {
   });
 });
 
+describe("formatMoney with a bad amount or currency", () => {
+  it.each([
+    ["a fraction", { amount_minor: 1.5, currency: "GBP" }],
+    ["not a number", { amount_minor: Number.NaN, currency: "GBP" }],
+    ["infinity", { amount_minor: Number.POSITIVE_INFINITY, currency: "GBP" }],
+    ["beyond a safe integer", { amount_minor: 2 ** 53, currency: "GBP" }],
+    ["a lower-case currency", { amount_minor: 100, currency: "gbp" }],
+    ["a currency of two letters", { amount_minor: 100, currency: "GB" }],
+    ["a currency of four letters", { amount_minor: 100, currency: "GBPX" }],
+    ["an empty currency", { amount_minor: 100, currency: "" }],
+  ])("gives null for %s, never a crash or a made-up figure", (_name, money) => {
+    expect(formatMoney(money)).toBeNull();
+  });
+
+  it("still shows the largest safe integer exactly", () => {
+    // Working: 9007199254740991 minor units = 90,071,992,547,409.91 pounds (2^53 - 1, the largest safe integer).
+    expect(formatMoney({ amount_minor: Number.MAX_SAFE_INTEGER, currency: "GBP" })).toBe(
+      "£90,071,992,547,409.91",
+    );
+  });
+});
+
 describe("shownMoney", () => {
+  it("gives null when the shown value is bad", () => {
+    const bad = { is_estimate: true, shown: { amount_minor: 1.5, currency: "GBP" } };
+    expect(shownMoney(bad as never)).toBeNull();
+  });
+
   it("adds 'about' only for an estimate and uses the shown value, never the exact one", () => {
     // Source: cost_estimate/filled.json total: exact 78200, shown 78000, estimate.
     const total = {

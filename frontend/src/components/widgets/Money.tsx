@@ -15,6 +15,8 @@ export function Money({ widget }: { widget: MoneyWidget }) {
       ? `${currencySymbol(widget.from_currency)}1 = ${currencySymbol(widget.to_currency)}${widget.rate}`
       : null;
   const date = widget.rate_date ? shortDate(widget.rate_date) : null;
+  const amount = widget.conversion ? formatMoney(widget.conversion.amount) : null;
+  const converted = widget.conversion ? formatMoney(widget.conversion.converted) : null;
   let body: React.ReactNode = null;
   if (widget.state === "error") {
     body = (
@@ -25,12 +27,12 @@ export function Money({ widget }: { widget: MoneyWidget }) {
       <NotKnown missing={widget.missing ?? "the exchange rate"} />
     ) : (
       <div className="flex flex-col gap-2">
-        {widget.conversion ? (
+        {amount && converted ? (
           <>
             <p className="font-display flex flex-col text-3xl font-semibold">
-              {formatMoney(widget.conversion.amount)}
+              {amount}
               <span className="text-text-secondary font-sans text-sm font-normal">
-                is about {formatMoney(widget.conversion.converted)} at {rate}
+                is about {converted} at {rate}
               </span>
             </p>
             <p className="text-text-secondary text-sm">
@@ -38,7 +40,10 @@ export function Money({ widget }: { widget: MoneyWidget }) {
             </p>
           </>
         ) : (
-          <p className="font-display text-3xl font-semibold">{rate}</p>
+          <>
+            <p className="font-display text-3xl font-semibold">{rate}</p>
+            {widget.conversion ? <NotKnown missing="the converted amount" /> : null}
+          </>
         )}
         {date ? <p className="text-text-secondary text-sm">Rate for {date}</p> : null}
       </div>

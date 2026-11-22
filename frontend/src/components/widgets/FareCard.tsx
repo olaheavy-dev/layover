@@ -44,7 +44,10 @@ export function FareCard({ widget }: { widget: Fare }) {
         </ActionButton>
       </div>
     );
-  } else if (widget.state === "not_known" || (widget.state === "filled" && !widget.fare)) {
+  } else if (
+    widget.state === "not_known" ||
+    (widget.state === "filled" && (!widget.fare || formatMoney(widget.fare.price) === null))
+  ) {
     body = (
       <div className="flex flex-col gap-2">
         <NotKnown missing={widget.missing ?? `the fare to ${widget.destination}`} />
