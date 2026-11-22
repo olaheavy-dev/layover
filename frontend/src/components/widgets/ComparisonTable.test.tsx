@@ -43,9 +43,7 @@ describe("ComparisonTable", () => {
     ).toBeInTheDocument();
     expect(lisbon.getByText("about £240")).toBeInTheDocument();
     expect(lisbon.getByText("about £780")).toBeInTheDocument();
-    expect(
-      lisbon.getByText("Partial: local transport and activities are not known"),
-    ).toBeInTheDocument();
+    expect(lisbon.getByText("Partial: some costs are not known")).toBeInTheDocument();
     expect(lisbon.getByText("About £20 under")).toBeInTheDocument();
     expect(lisbon.getByText(/The costs that are not known could take it over/)).toBeInTheDocument();
     expect(
@@ -78,11 +76,10 @@ describe("ComparisonTable", () => {
     expect(valencia.getByText("£168")).toBeInTheDocument();
     expect(valencia.getByText("too few priced listings")).toBeInTheDocument();
     expect(valencia.getByText("about £390")).toBeInTheDocument();
-    expect(
-      valencia.getByText("Partial: stay, local transport and activities are not known"),
-    ).toBeInTheDocument();
+    expect(valencia.getByText("Partial: some costs are not known")).toBeInTheDocument();
     expect(valencia.getByText("the stay is missing")).toBeInTheDocument();
-    expect(valencia.getAllByText("Not known").length).toBeGreaterThanOrEqual(3);
+    expect(valencia.getAllByText("Not known").length).toBeGreaterThanOrEqual(2);
+    expect(valencia.queryByText(/local transport|activities/i)).not.toBeInTheDocument();
     expect(valencia.queryByText(/about £\d+ (under|over)/i)).not.toBeInTheDocument();
     expect(valencia.queryByText("£0")).not.toBeInTheDocument();
   });

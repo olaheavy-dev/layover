@@ -45,7 +45,7 @@ describe("CostEstimate", () => {
 
     const flights = within(line("Flights"));
     expect(flights.getByText("£192")).toBeInTheDocument();
-    expect(flights.getByText("£96 × 2 adults")).toBeInTheDocument();
+    expect(flights.getByText("£96 each")).toBeInTheDocument();
     expect(flights.getByText("Cached, 3 days old")).toBeInTheDocument();
 
     const stay = within(line("Stay, 5 nights"));
@@ -59,9 +59,7 @@ describe("CostEstimate", () => {
     const meals = within(line("Meals"));
     expect(meals.getByText("about £240")).toBeInTheDocument();
     expect(
-      meals.getByText(
-        "About £12 a meal for 2 people over 5 days, from Wikivoyage (page edited March 2026)",
-      ),
+      meals.getByText("About £12 a meal, from Wikivoyage (page edited March 2026)"),
     ).toBeInTheDocument();
 
     const local = within(line("Local transport and activities"));
@@ -118,7 +116,7 @@ describe("CostEstimate", () => {
     expect(stay.getByText("too few priced listings")).toBeInTheDocument();
     expect(
       within(line("Meals")).getByText(
-        "About £11 a meal for 2 people over 5 days, from 5 Wikivoyage listings (page edited February 2026)",
+        "About £11 a meal, from 5 Wikivoyage listings (page edited February 2026)",
       ),
     ).toBeInTheDocument();
   });
@@ -147,7 +145,9 @@ describe("CostEstimate", () => {
       budget_gap: null,
     };
     const { container } = render(<CostEstimate widget={widget} />);
-    expect(screen.getAllByText("Not known").length).toBeGreaterThan(0);
+    const block = screen.getByText("The total").parentElement as HTMLElement;
+    expect(within(block).getByText("Not known")).toBeInTheDocument();
+    expect(block).not.toHaveTextContent(/£/);
     expect(container.textContent).not.toMatch(/£0\b/);
   });
 });

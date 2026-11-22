@@ -130,8 +130,6 @@ function Against({ card }: { card: PlaceCard }) {
 }
 
 function Ready({ card, sources }: { card: PlaceCard; sources: Table["sources"] }) {
-  const gaps = missingParts(card);
-  const unknown = [...gaps, ...(card.is_partial ? ["local transport", "activities"] : [])];
   const weather = card.weather;
   const readings = weather
     ? [
@@ -155,17 +153,7 @@ function Ready({ card, sources }: { card: PlaceCard; sources: Table["sources"] }
             name="Known costs"
             value={shownMoney(card.known_costs.amount)}
             estimate={card.known_costs.amount.is_estimate}
-            meta={
-              card.is_partial ? (
-                <span>
-                  Partial:{" "}
-                  {unknown.length > 1
-                    ? `${unknown.slice(0, -1).join(", ")} and ${unknown[unknown.length - 1]}`
-                    : unknown.join("")}{" "}
-                  {unknown.length > 1 ? "are" : "is"} not known
-                </span>
-              ) : undefined
-            }
+            meta={card.is_partial ? <span>Partial: some costs are not known</span> : undefined}
             source={
               card.known_costs.source ? <SourceLabel label={card.known_costs.source} /> : undefined
             }
@@ -186,12 +174,6 @@ function Ready({ card, sources }: { card: PlaceCard; sources: Table["sources"] }
         ) : (
           <Row name="Weather" meta={<NotKnown missing="Weather for this place" />} />
         )}
-        {card.is_partial ? (
-          <Row
-            name="Local transport, activities"
-            meta={<NotKnown missing="no source Layover uses has it" />}
-          />
-        ) : null}
       </dl>
       <Actions>
         <ActionButton variant="secondary">Choose {card.place}</ActionButton>

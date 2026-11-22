@@ -47,22 +47,18 @@ function Row({
 }
 
 // What each priced line says about how it was worked out, only from the contract's own fields.
-function meta(part: Part, line: CostLine, cost: Cost): string {
+function meta(part: Part, line: CostLine): string {
   const unit = line.unit ? formatMoney(line.unit) : null;
   if (!unit) return "";
   if (part === "flights") {
-    return cost.people != null ? `${unit} × ${plural(cost.people, "adult")}` : `${unit} each`;
+    return `${unit} each`;
   }
   const edited = pageEdited(line);
   const listings = [listingSource(line), edited ? `(page edited ${edited})` : ""]
     .filter(Boolean)
     .join(" ");
   if (part === "stay") return [`About ${unit} a night`, listings].filter(Boolean).join(", ");
-  const who =
-    cost.people != null && cost.nights != null
-      ? ` for ${plural(cost.people, "person").replace("persons", "people")} over ${plural(cost.nights, "day")}`
-      : "";
-  return [`About ${unit} a meal${who}`, listings].filter(Boolean).join(", ");
+  return [`About ${unit} a meal`, listings].filter(Boolean).join(", ");
 }
 
 function label(part: Part, cost: Cost): string {
@@ -81,7 +77,7 @@ function lineRow(part: Part, cost: Cost) {
         key={part}
         name={name}
         value={<Value text={shownMoney(line.amount)} estimate={line.amount.is_estimate} />}
-        meta={<span>{meta(part, line, cost)}</span>}
+        meta={<span>{meta(part, line)}</span>}
         source={line.source ? <SourceLabel label={line.source} /> : null}
       />
     );
