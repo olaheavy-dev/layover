@@ -48,4 +48,27 @@ describe("SourceLabel", () => {
     expect(screen.getByText(word)).toBeInTheDocument();
     expect(screen.getByText("Frankfurter")).toBeInTheDocument();
   });
+
+  it("never prints NaN or throws for an unparseable captured_at or data_date", () => {
+    const bad: Label = { status: "cached", source: "S", captured_at: "bad", data_date: "bad" };
+    expect(() => render(<SourceLabel label={bad} now={NOW} />)).not.toThrow();
+    expect(screen.getByText("Cached, age not known")).toBeInTheDocument();
+  });
+
+  it("falls back to a valid data_date when captured_at is unparseable", () => {
+    const label: Label = {
+      status: "cached",
+      source: "S",
+      captured_at: "bad",
+      data_date: "2026-11-04",
+    };
+    render(<SourceLabel label={label} now={NOW} />);
+    expect(screen.getByText("Cached, data released 4 Nov 2026")).toBeInTheDocument();
+  });
+
+  it("does not claim freshness for a captured_at in the future", () => {
+    const label: Label = { status: "cached", source: "S", captured_at: "2026-11-19T09:00:00Z" };
+    render(<SourceLabel label={label} now={NOW} />);
+    expect(screen.getByText("Cached, age not known")).toBeInTheDocument();
+  });
 });

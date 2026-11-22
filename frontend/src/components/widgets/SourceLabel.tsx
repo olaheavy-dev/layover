@@ -18,15 +18,16 @@ function formatDate(value: string): string {
 // "Cached, 3 days old" (decision 0011 rule 2). The age is whole days between `captured_at` and
 // `now`. With no capture time, the release date is shown; with neither, no age is invented.
 function cachedText(label: Label, now: Date): string {
-  if (label.captured_at) {
-    const days = Math.max(
-      0,
-      Math.floor((now.getTime() - new Date(label.captured_at).getTime()) / DAY_MS),
-    );
+  // An unparseable or future time is never turned into an age: fall through to the next value.
+  const captured = label.captured_at ? new Date(label.captured_at).getTime() : Number.NaN;
+  if (!Number.isNaN(captured) && captured <= now.getTime()) {
+    const days = Math.floor((now.getTime() - captured) / DAY_MS);
     if (days === 0) return "Cached, less than a day old";
     return `Cached, ${days} ${days === 1 ? "day" : "days"} old`;
   }
-  if (label.data_date) return `Cached, data released ${formatDate(label.data_date)}`;
+  if (label.data_date && !Number.isNaN(new Date(label.data_date).getTime())) {
+    return `Cached, data released ${formatDate(label.data_date)}`;
+  }
   return "Cached, age not known";
 }
 
