@@ -36,7 +36,7 @@ export function TopBar({
         <Logo />
       </Link>
       {tripName ? (
-        <Name className="min-w-0 flex-1 line-clamp-2 text-sm font-medium">{tripName}</Name>
+        <Name className="line-clamp-2 min-w-0 flex-1 text-sm font-medium">{tripName}</Name>
       ) : (
         <span className="flex-1" />
       )}
