@@ -22,6 +22,17 @@ describe("SourceLabel", () => {
     expect(screen.getByText("Cached, 3 days old")).toBeInTheDocument();
   });
 
+  it("lets the source name wrap under the status and keeps the icon its size", () => {
+    const label: Label = {
+      status: "cached",
+      source: "Travelpayouts",
+      captured_at: "2026-11-15T09:00:00Z",
+    };
+    const { container } = render(<SourceLabel label={label} now={NOW} />);
+    expect(container.firstElementChild).toHaveClass("flex-wrap");
+    expect(container.querySelector("svg")).toHaveClass("shrink-0");
+  });
+
   it("says 1 day old, not 1 days old", () => {
     const label: Label = { status: "cached", source: "S", captured_at: "2026-11-17T09:00:00Z" };
     render(<SourceLabel label={label} now={NOW} />);

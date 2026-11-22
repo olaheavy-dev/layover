@@ -47,22 +47,22 @@ export function SourceLabel({ label, now: given }: { label: Label; now?: Date })
   switch (label.status) {
     case "live":
       text = "Live";
-      icon = <Circle className="size-3 fill-current" aria-hidden="true" />;
+      icon = <Circle className="size-3 shrink-0 fill-current" aria-hidden="true" />;
       colour = "text-status-live";
       break;
     case "cached":
       text = cachedText(label, now);
-      icon = <Contrast className="size-3" aria-hidden="true" />;
+      icon = <Contrast className="size-3 shrink-0" aria-hidden="true" />;
       colour = "text-status-cached";
       break;
     case "fallback":
       text = "Fallback";
-      icon = <TriangleAlert className="size-3" aria-hidden="true" />;
+      icon = <TriangleAlert className="size-3 shrink-0" aria-hidden="true" />;
       colour = "text-status-warning";
       break;
     case "unavailable":
       text = "Unavailable";
-      icon = <OctagonAlert className="size-3" aria-hidden="true" />;
+      icon = <OctagonAlert className="size-3 shrink-0" aria-hidden="true" />;
       colour = "text-status-warning";
       break;
   }
@@ -70,7 +70,7 @@ export function SourceLabel({ label, now: given }: { label: Label; now?: Date })
     text = `${text}, as of ${formatDate(now.toISOString())}`;
   }
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs">
+    <span className="inline-flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs">
       <span className={`inline-flex items-center gap-1 ${colour}`}>
         {icon}
         <span>{text}</span>
