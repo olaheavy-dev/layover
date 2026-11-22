@@ -22,7 +22,8 @@ export function Workspace({
   // On the welcome screen the welcome question is the page's h1. On a trip, the top bar owns it.
   welcome?: boolean;
 }) {
-  const [view, setView] = useState<PhoneView>("chat");
+  // A trip link opens on the Trip tab (the board's first screen); the welcome screen has no trip yet.
+  const [view, setView] = useState<PhoneView>(trip ? "trip" : "chat");
   return (
     <div className="relative flex h-dvh flex-col overflow-hidden">
       {top}

@@ -18,6 +18,12 @@ describe("Home", () => {
     expect(screen.queryByText("Sample trip")).not.toBeInTheDocument();
   });
 
+  it("opens on the Chat tab, because there is no trip yet", () => {
+    render(<Home />);
+    expect(screen.getByRole("tab", { name: "Chat" })).toHaveAttribute("aria-selected", "true");
+    expect(document.getElementById("panel-trip")).toHaveClass("hidden");
+  });
+
   it("has no Share trip or trip name on the welcome screen", () => {
     render(<Home />);
     expect(screen.queryByRole("button", { name: "Share trip" })).not.toBeInTheDocument();
