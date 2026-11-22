@@ -18,6 +18,7 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done on 21 
 ## Open pull requests
 
 - **PR D for #54 (this PR):** the website (home, trip, shared trip, How Layover works, link not found), the 20 widgets and the development gallery. Totals at the last run: 432 website unit tests, 89 end-to-end checks (light, dark and a 390 px phone, with axe, page titles, fonts, width and the section index) and 20 `tools/` tests for `check_copy.py`. Screenshots are made in Playwright's Linux image, the gallery one section at a time.
+- **Map choice (owner, 22 Nov 2026):** MapLibre GL JS with OpenFreeMap's free tiles, recorded in the [register](../decisions/README.md#register); the map is drawn in #93 (Build 3), and the widget lists its places with links until then.
 - Dependabot's #58, #61, #62 and #63 merged on 22 Nov 2026. #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then [a comparison of the two published wheels](https://github.com/olaheavy-dev/layover/pull/62#discussion_r4658085468), because MAF's GitHub repository returned 404.
 
 ## The Design gate (#42, merged 20 Nov 2026)
@@ -54,7 +55,6 @@ None. Owner decisions still open, needed later:
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
 - Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked), [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes), [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options) and [#39](https://github.com/olaheavy-dev/agent-workflows/issues/39) (generated files changed by commit hooks; check them in a browser) and [#41](https://github.com/olaheavy-dev/agent-workflows/issues/41) (the alert check before merging missed alerts that a newly turned-on CodeQL language brings in).
-
 - Review the copy in PR D's description (the list of new fixed wording).
 - Confirm the fixed TfL Journey Planner link in the transport widget.
 - Decide which contract fields the boards show but the contract lacks ([#79](https://github.com/olaheavy-dev/layover/issues/79)).
