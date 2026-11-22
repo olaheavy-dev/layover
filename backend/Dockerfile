@@ -33,6 +33,10 @@ WORKDIR /app
 COPY --from=build /app/.venv /app/.venv
 COPY pyproject.toml /app/pyproject.toml
 COPY migrations /app/migrations
+# The shared sample files (schemas/samples), from the named build context `samples` (compose.yaml's
+# additional_contexts, or `docker build --build-context samples=../schemas/samples .`). Layover
+# addition to a template-owned file.
+COPY --from=samples . /app/schemas/samples
 # UVICORN_* set uvicorn's options. On SIGTERM it stops accepting connections and gives requests
 # in flight this long to finish: keep it under the platform's grace period (30 s on Kubernetes).
 # FORWARDED_ALLOW_IPS: the proxies whose X-Forwarded-* headers to trust; set it to the load
@@ -40,6 +44,7 @@ COPY migrations /app/migrations
 ENV PATH="/app/.venv/bin:$PATH" \
     PYTHONUNBUFFERED=1 \
     APP_ENV=production \
+    SAMPLES_DIR=/app/schemas/samples \
     LOG_JSON=true \
     UVICORN_TIMEOUT_GRACEFUL_SHUTDOWN=25 \
     FORWARDED_ALLOW_IPS=127.0.0.1

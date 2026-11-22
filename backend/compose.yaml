@@ -13,7 +13,13 @@ services:
   migrate:
     # Both services build the same Dockerfile (the second build is cached): Compose names the
     # image after the project, so two projects never share one.
-    build: .
+    build: &api-build
+      context: .
+      # The shared sample files (schemas/samples) sit outside this folder: a named extra build
+      # context hands them to the Dockerfile (`COPY --from=samples`). Layover addition to a
+      # template-owned file.
+      additional_contexts:
+        samples: ../schemas/samples
     command: ["alembic", "upgrade", "heads"]
     environment: &api-environment
       APP_ENV: local
@@ -30,7 +36,7 @@ services:
     restart: "no"
 
   api:
-    build: .
+    build: *api-build
     environment: *api-environment
     env_file:
       - path: .env
