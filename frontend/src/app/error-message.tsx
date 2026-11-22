@@ -26,7 +26,7 @@ export function ErrorMessage({ error, retry }: { error: unknown; retry: () => vo
         <button
           type="button"
           onClick={() => retry()}
-          className="bg-accent-primary text-text-inverse hover:bg-accent-primary-hover rounded-md px-4 py-2 font-medium"
+          className="bg-accent-primary text-text-on-accent hover:bg-accent-primary-hover rounded-md px-4 py-2 font-medium"
         >
           Try again
         </button>

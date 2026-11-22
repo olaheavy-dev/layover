@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check that Layover's design tokens meet WCAG 2.2 AA contrast in the light and dark themes.
 
-Reads docs/design/tokens.css: the first `:root {` block holds the light values, and the two dark
+Reads docs/design/tokens.css and frontend/src/styles/tokens.css (or the paths given): in each, the first `:root {` block holds the light values, and the two dark
 blocks (`:root[data-theme="dark"]` and the `prefers-color-scheme: dark` block) override them. The
 two dark blocks must hold the same values. Every --color-text-* and --color-status-* token is tested on
 every page background and needs 4.5:1 (WCAG 1.4.3); control borders and the focus ring need 3:1
@@ -233,17 +233,24 @@ def skipped_tints(path: Path) -> list[str]:
     return split_tints(_block(css, ":root {") or {})[1]
 
 
+DEFAULT_PATHS = [Path("docs/design/tokens.css"), Path("frontend/src/styles/tokens.css")]
+
+
 def main(argv: list[str]) -> int:
-    path = Path(argv[1]) if len(argv) > 1 else Path("docs/design/tokens.css")
-    found = problems(path)
-    for p in found:
-        print(f"contrast: {p}", file=sys.stderr)
-    skipped = skipped_tints(path)
-    if skipped:
-        print("contrast: not checked (glows, lines, borders and transparent surfaces: no backdrop to test against): " + ", ".join(f"--{t}" for t in skipped))
-    if not found:
-        print(f"contrast: {path} meets WCAG 2.2 AA in both themes")
-    return 1 if found else 0
+    """Check every path given, or the design tokens and the frontend's copy of them."""
+    paths = [Path(a) for a in argv[1:]] or DEFAULT_PATHS
+    failed = False
+    for path in paths:
+        found = problems(path)
+        for p in found:
+            print(f"contrast: {p if str(path) in p else f'{path}: {p}'}", file=sys.stderr)
+        skipped = skipped_tints(path)
+        if skipped:
+            print("contrast: not checked (glows, lines, borders and transparent surfaces: no backdrop to test against): " + ", ".join(f"--{t}" for t in skipped))
+        if not found:
+            print(f"contrast: {path} meets WCAG 2.2 AA in both themes")
+        failed = failed or bool(found)
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":
