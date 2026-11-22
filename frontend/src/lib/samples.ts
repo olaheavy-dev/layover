@@ -1,17 +1,14 @@
 import "server-only";
 
-import { readdir, readFile } from "node:fs/promises";
-import path from "node:path";
-
+import { serverApi } from "@/lib/api/server";
 import type { components } from "@/lib/api/schema";
 
 export type Trip = components["schemas"]["Trip"];
 export type SampleWidget = components["schemas"]["SampleWidget"];
 
-// The shared sample files (schemas/samples). They are samples, never real figures. The folder is
-// `SAMPLES_DIR`, or `../schemas/samples` from the frontend folder, as the backend does.
-// Note: the frontend's Docker build context is `frontend/` only, so a container needs the folder
-// copied in and `SAMPLES_DIR` set (see the task report).
+// The shared samples (schemas/samples) are read through the API (GET /v1/sample/trip and
+// /v1/sample/widgets): the backend owns the files. They are samples, never real figures. Reading
+// the API needs the request, so the pages that use these render at request time.
 export { SAMPLE_TRIP_ID } from "@/lib/links";
 
 // The sample's own "today": ages in the samples are measured from here, and a shared sample is "as
@@ -19,35 +16,15 @@ export { SAMPLE_TRIP_ID } from "@/lib/links";
 // is a captured_at of 15 Nov 2026 at 09:00 UTC) and docs/design/boards/sample-data.md.
 export const SAMPLE_TODAY = new Date("2026-11-18T09:00:00Z");
 
-function samplesDir(): string {
-  return process.env.SAMPLES_DIR ?? path.resolve(process.cwd(), "..", "schemas", "samples");
-}
-
 export async function getSampleTrip(): Promise<Trip> {
-  const text = await readFile(path.join(samplesDir(), "trip", "sample-lisbon.json"), "utf8");
-  return JSON.parse(text) as Trip;
+  const { data } = await (await serverApi()).GET("/v1/sample/trip");
+  if (!data) throw new Error("The sample trip could not be read from the API.");
+  return data;
 }
 
-// One entry per file in widgets/<kind>/<state>.json, sorted by kind then state. The file name is the
-// state the sample shows, which can differ from the widget's own `state` field.
+// One entry per kind and state, in kind then state order (the API sorts them).
 export async function getSampleWidgets(): Promise<SampleWidget[]> {
-  const root = path.join(samplesDir(), "widgets");
-  const kinds = (await readdir(root, { withFileTypes: true }))
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort();
-  const samples: SampleWidget[] = [];
-  for (const kind of kinds) {
-    const files = (await readdir(path.join(root, kind))).filter((f) => f.endsWith(".json")).sort();
-    for (const file of files) {
-      const text = await readFile(path.join(root, kind, file), "utf8");
-      samples.push({
-        is_sample: true,
-        kind,
-        state: file.slice(0, -".json".length),
-        widget: JSON.parse(text) as SampleWidget["widget"],
-      });
-    }
-  }
-  return samples;
+  const { data } = await (await serverApi()).GET("/v1/sample/widgets");
+  if (!data) throw new Error("The sample widgets could not be read from the API.");
+  return data;
 }

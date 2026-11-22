@@ -1,6 +1,13 @@
 import { render, screen } from "@testing-library/react";
 
-import SharedPage, { generateMetadata, generateStaticParams } from "./page";
+import { getSampleTrip } from "@/lib/samples";
+
+import SharedPage, { generateMetadata } from "./page";
+
+vi.mock("@/lib/samples", async (original) => ({
+  ...(await original<object>()),
+  getSampleTrip: vi.fn((await original<typeof import("@/lib/samples")>()).getSampleTrip),
+}));
 
 async function open(shareId: string) {
   return render(await SharedPage({ params: Promise.resolve({ shareId }) }));
@@ -73,7 +80,8 @@ describe("/s/{share_id}", () => {
     ).toEqual({ title: "Shared trip: Lisbon, May" });
   });
 
-  it("prerenders the sample id", async () => {
-    expect(await generateStaticParams()).toEqual([{ shareId: "sample-lisbon" }]);
+  it("fails when the API cannot give the sample trip, so the error page shows", async () => {
+    vi.mocked(getSampleTrip).mockRejectedValueOnce(new Error("The sample trip could not be read."));
+    await expect(open("sample-lisbon")).rejects.toThrow("could not be read");
   });
 });
