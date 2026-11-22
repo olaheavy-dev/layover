@@ -7,13 +7,15 @@ These tests make no model calls, so they run in `make check`.
 import importlib.util
 import json
 import re
+import shutil
 import sys
 from pathlib import Path
 
 import pytest
 
 from app.evals.cases import Case, parse_cases
-from app.evals.runner import Outcome, build_step_map, run_case, run_cases
+from app.evals import runner
+from app.evals.runner import Outcome, Result, build_step_map, main, run_case, run_cases
 from app.evals.travellers import ScriptedTraveller, load_traveller
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -81,10 +83,36 @@ def test_widget_schema_check_runs() -> None:
 def test_widget_check_fails_when_a_state_is_missing(tmp_path: Path) -> None:
     from app.evals.checks.widget_schemas import check_widget_samples
 
+    real = REPO_ROOT / "schemas" / "samples" / "widgets" / "money"
     (tmp_path / "widgets" / "money").mkdir(parents=True)
+    for sample in real.glob("*.json"):
+        if sample.stem != "error":
+            shutil.copy(sample, tmp_path / "widgets" / "money" / sample.name)
     ok, detail = check_widget_samples("money", tmp_path)
     assert not ok
-    assert "money" in detail
+    assert "no sample for state error" in detail
+
+
+def test_widget_case_with_no_step_fails_and_never_prints_step_none() -> None:
+    result = run_case(_by_id()["WIDGET-01"], {})
+    assert result.outcome is Outcome.FAIL
+    assert "no build step" in result.detail
+    assert "None" not in result.line()
+
+
+def test_main_exits_1_for_an_unknown_case(capsys: pytest.CaptureFixture[str]) -> None:
+    assert main(["--case", "NOPE-99"]) == 1
+    assert "unknown case: NOPE-99" in capsys.readouterr().out
+
+
+def test_main_exits_1_when_a_case_fails(monkeypatch: pytest.MonkeyPatch) -> None:
+    case = _by_id()["TRIP-01"]
+    monkeypatch.setattr(runner, "run_cases", lambda cases, steps: [Result(case, Outcome.FAIL, "x")])
+    assert main([]) == 1
+
+
+def test_main_exits_0_when_nothing_fails() -> None:
+    assert main(["--case", "WIDGET-01"]) == 0
 
 
 def test_unbuilt_cases_not_run() -> None:

@@ -75,6 +75,9 @@ def build_step_map(path: Path = DIRECTION_MD) -> dict[str, int]:
 def run_case(case: Case, steps: dict[str, int]) -> Result:
     if case.status == "withdrawn":
         return Result(case, Outcome.WITHDRAWN)
+    step = steps.get(case.case_id)
+    if step is None:
+        return Result(case, Outcome.FAIL, "no build step lists this case in 01 section 4")
     if case.area == "Widget" and case.scored_by == "code":
         kind = widget_kind(case.title)
         if kind is None:
@@ -82,10 +85,7 @@ def run_case(case: Case, steps: dict[str, int]) -> Result:
         ok, detail = check_widget_samples(kind)
         if not ok:
             return Result(case, Outcome.FAIL, detail)
-        return Result(case, Outcome.SCHEMA_PASS, detail, steps.get(case.case_id))
-    step = steps.get(case.case_id)
-    if step is None:
-        return Result(case, Outcome.FAIL, "no build step lists this case in 01 section 4")
+        return Result(case, Outcome.SCHEMA_PASS, detail, step)
     return Result(case, Outcome.NOT_RUN, "needs a later build step", step)
 
 
