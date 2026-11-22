@@ -44,6 +44,25 @@ describe("ClimateChart", () => {
     expect(screen.getByText("Open-Meteo")).toBeInTheDocument();
   });
 
+  it("says 1 rainy day, not 1 rainy days", async () => {
+    const widget = await sampleOf("climate_chart", "filled");
+    const months = widget.months?.map((m) => (m.month === 5 ? { ...m, rainy_days: 1 } : m));
+    render(<ClimateChart widget={{ ...widget, months }} />);
+    expect(
+      screen.getByText("May: highs of 22°C, lows of 14°C and 1 rainy day, typically."),
+    ).toBeInTheDocument();
+  });
+
+  it("gives no summary line when every reading for the month is missing", async () => {
+    const widget = await sampleOf("climate_chart", "filled");
+    const months = widget.months?.map((m) =>
+      m.month === 5 ? { ...m, high_c: null, low_c: null, rainy_days: null } : m,
+    );
+    render(<ClimateChart widget={{ ...widget, months }} />);
+    expect(screen.queryByText(/typically\./)).not.toBeInTheDocument();
+    expect(screen.queryByText(/^May:/)).not.toBeInTheDocument();
+  });
+
   it("not_known: temperatures show, the missing rainy days say Not known in their own cells", async () => {
     render(<ClimateChart widget={await sampleOf("climate_chart", "not_known")} />);
     expect(screen.getByText("May: highs of 22°C and lows of 14°C, typically.")).toBeInTheDocument();

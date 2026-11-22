@@ -1,6 +1,6 @@
 import type { components } from "@/lib/api/schema";
 
-import { joinNames, monthName } from "./format";
+import { joinNames, monthName, plural } from "./format";
 import { NotKnown } from "./NotKnown";
 import { ErrorNote, frameState } from "./PlaceParts";
 import { WidgetFrame } from "./WidgetFrame";
@@ -94,12 +94,13 @@ function Legend({ items }: { items: { text: string; className: string }[] }) {
   );
 }
 
-function summary(month: Month, name: string): string {
+// Null when the month has no reading at all: a line with a name and nothing after it says nothing.
+function summary(month: Month, name: string): string | null {
   const parts: string[] = [];
   if (month.high_c != null) parts.push(`highs of ${month.high_c}°C`);
   if (month.low_c != null) parts.push(`lows of ${month.low_c}°C`);
-  if (month.rainy_days != null) parts.push(`${month.rainy_days} rainy days`);
-  return `${name}: ${joinNames(parts)}, typically.`;
+  if (month.rainy_days != null) parts.push(plural(month.rainy_days, "rainy day"));
+  return parts.length > 0 ? `${name}: ${joinNames(parts)}, typically.` : null;
 }
 
 function Cell({ value, unit = "" }: { value: number | null | undefined; unit?: string }) {
@@ -112,6 +113,7 @@ export function ClimateChart({ widget }: { widget: Climate }) {
   const period = widget.averages_period?.replace("-", " to ") ?? null;
   const highlight = months.find((m) => m.month === widget.highlight_month);
   const highlightName = highlight ? monthName(highlight.month) : null;
+  const highlightSummary = highlight && highlightName ? summary(highlight, highlightName) : null;
   const hasRain = months.some((m) => m.rainy_days != null);
 
   let body: React.ReactNode = null;
@@ -124,7 +126,7 @@ export function ClimateChart({ widget }: { widget: Climate }) {
   } else if (widget.state === "filled" || widget.state === "not_known") {
     body = (
       <div className="flex flex-col gap-3">
-        {highlight && highlightName ? <p>{summary(highlight, highlightName)}</p> : null}
+        {highlightSummary ? <p>{highlightSummary}</p> : null}
         <Chart
           months={months}
           label={`Chart of typical weather for ${joinNames(names)}. The table has the same figures.`}
