@@ -36,22 +36,19 @@ describe("/dev/widgets", () => {
     }
   });
 
-  it("shows each sample state under a heading '<kind> · <state>', and the limit notice", async () => {
+  it("labels each sample state '<kind> · <state>' with a paragraph, not a heading, and shows the limit notice", async () => {
     vi.stubEnv("ENABLE_WIDGET_GALLERY", "1");
     vi.stubEnv("SAMPLES_DIR", `${process.cwd()}/../schemas/samples`);
     await open();
     const samples = await getSampleWidgets();
     for (const { kind, state } of samples) {
-      expect(
-        screen.getByRole("heading", { level: 3, name: `${kind} · ${state}` }),
-      ).toBeInTheDocument();
+      expect(screen.getByText(`${kind} · ${state}`).tagName).toBe("P");
     }
-    const states = screen
-      .getAllByRole("heading", { level: 3 })
-      .filter((h) => h.textContent?.includes(" · "));
-    expect(states).toHaveLength(samples.length + 1);
-    const limit = screen.getByRole("heading", { level: 3, name: "limit_reached · shown" });
-    expect(limit).toBeInTheDocument();
+    // The widgets' own titles are the h3s: a label never sits beside them in the outline.
+    expect(
+      screen.getAllByRole("heading", { level: 3 }).filter((h) => h.textContent?.includes(" · ")),
+    ).toEqual([]);
+    expect(screen.getByText("limit_reached · shown").tagName).toBe("P");
     const notices = screen.getByRole("region", { name: "notices" });
     expect(within(notices).getByRole("status")).toHaveTextContent("You have reached the limit");
   });

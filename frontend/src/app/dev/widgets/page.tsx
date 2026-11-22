@@ -61,7 +61,7 @@ function Kind({ name, children }: { name: string; children: React.ReactNode }) {
 function Example({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-2">
-      <h3 className="text-text-secondary text-sm font-medium">{title}</h3>
+      <p className="text-text-secondary text-sm font-medium">{title}</p>
       {children}
     </div>
   );

@@ -8,6 +8,10 @@
  * Docs: https://tailwindcss.com/docs/theme#referencing-other-variables
  */
 @theme inline {
+  /* Each line below names a variable that tokens.css also defines (--color-bg-primary: var(--color-bg-primary)).
+     That reads as a loop, and it works only because tokens.css is imported above, outside any @layer:
+     the browser then resolves the var() to tokens.css's own value. Import it inside a layer, or
+     rename one side, and every colour, radius and font below turns invalid. */
   --color-*: initial;
 
   --color-bg-primary: var(--color-bg-primary);
