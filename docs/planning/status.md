@@ -17,7 +17,7 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done on 21 
 ## Open pull requests
 
 - **PR C for #53 (this PR):** Tasks 8 to 12 of build step 1: money, the commission switch, recorded responses, the holidays adapter and the evaluation runner. The runner's current total is "53: 0 PASS, 20 SCHEMA PASS, 0 FAIL, 33 NOT RUN, 0 WITHDRAWN".
-- **The website's minor and patch updates (#70)**, which take the parts of Dependabot's #59 that pass the peer check. #59 and #60 are closed in its favour; their major upgrades wait in #71.
+- PR D for #54 (website and widgets) is being built in parallel; it opens after this one.
 - Dependabot's #58, #61, #62 and #63 merged on 22 Nov 2026. #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then [a comparison of the two published wheels](https://github.com/olaheavy-dev/layover/pull/62#discussion_r4658085468), because MAF's GitHub repository returned 404.
 
 ## The Design gate (#42, merged 20 Nov 2026)
@@ -31,8 +31,8 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done on 21 
 
 ## Next steps
 
-1. **Merge the decision 0013 PR (#74):** Microsoft Agent Framework replaces LangGraph, in Python. Booking uses graph workflows with an approval step and must be safe to run twice; checkpoints go in Layover's own PostgreSQL store (JSON), built in step 6; traces go to Aspire and LangSmith through OpenTelemetry.
-2. **PRs C (#53, backend foundation) and D (#54, website) in parallel**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
+1. **Done on 22 Nov 2026:** the website's minor and patch updates (#75, closing #70), and decision 0013, Microsoft Agent Framework in Python (#77, closing #74): booking uses graph workflows with an approval step and must be safe to run twice (#78); checkpoints go in Layover's own PostgreSQL store (JSON), built in step 6; traces go to Aspire and LangSmith through OpenTelemetry.
+2. **Merge PR C (#53, backend foundation, this PR) and PR D (#54, website)**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
 3. **Keep the template answer `llm: none` in step 1:** step 2's first PR changes it to `llm: maf` (0013 point 1). (The £5 half-up case that PR B's samples never hit is now covered by `test_estimate_nearest_ten` and `test_round_estimate_ten_pound_boundaries`.)
 4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints answer 503 there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template).
 5. **Watch for upstream support (#71):** OpenTelemetry SDK 3 (waits for `@vercel/otel`), ESLint 10 (waits for the plugins in `eslint-config-next`) and TypeScript 7 (waits for typescript-eslint and openapi-typescript). jsdom 31 isn't blocked; it moves with that batch for one review.

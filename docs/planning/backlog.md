@@ -36,6 +36,7 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 | 20 | #35 | Mood scenes for the welcome and How Layover works pages | Build 2 | Waits for the owner's images |
 | 24 | #41 | How Layover works board leaves out Nuitee Connect | Build 2 | `noticed` in the Design gate audit |
 | 48 | #82 | ScriptedTraveller answers keys are not checked against the brief's fields | Build 2 | `noticed` in PR C's final review |
+| 49 | #83 | Recording secret check: false alarms on prose, a few missing key names, and a slow email pattern | Build 4 | `noticed` in PR C's fix-round re-review; needed before the first real provider recording |
 | 19 | #34 | No chosen source for a place's currency | Build 3 | `noticed` in the boards PR; pick a source before the `money` widget shows a currency line |
 | 35 | #64 | No contract state for the pounds-only money card | Build 3 | `noticed` in PR B |
 | 46 | #80 | Holidays adapter: regional lists, the error state and holiday-name language | Build 3 | `noticed` in PR C's final review |
