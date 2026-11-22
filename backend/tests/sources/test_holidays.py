@@ -22,7 +22,14 @@ def test_portugal_may_2027() -> None:
     1 November, 1, 8 and 25 December. Of these, the fixed-date ones in May are only 1 May (Labour
     Day). Corpus Christi is Easter + 60 days (the Thursday after Trinity Sunday). Easter Sunday
     2027 is 28 March. 28 March + 3 days = 31 March; + 30 days = 30 April (33 days); + 27 days =
-    27 May (60 days). Good Friday (26 March) and Easter (28 March) fall in March, not May.
+    27 May (60 days). Easter was cross-checked with the anonymous Gregorian (Meeus/Jones/Butcher)
+    algorithm, by hand, for Y = 2027: a = 2027 mod 19 = 13; b = 20, c = 27 (2027 div, mod 100);
+    d = 20 div 4 = 5, e = 0; f = (20 + 8) div 25 = 1; g = (20 - 1 + 1) div 3 = 6;
+    h = (19 * 13 + 20 - 5 - 6 + 15) mod 30 = 271 mod 30 = 1; i = 27 div 4 = 6, k = 27 mod 4 = 3;
+    l = (32 + 2 * 0 + 2 * 6 - 1 - 3) mod 7 = 40 mod 7 = 5; m = (13 + 11 * 1 + 22 * 5) div 451
+    = 134 div 451 = 0; month = (1 + 5 - 0 + 114) div 31 = 120 div 31 = 3 (March); day =
+    (120 mod 31) + 1 = 27 + 1 = 28. Easter is 28 March 2027.
+    Good Friday (26 March) and Easter (28 March) fall in March, not May.
     So May 2027 holds exactly 2027-05-01 and 2027-05-27.
 
     Source: Lei n.º 8/2016, 1 April 2016, Diário da República, 1.ª série, n.º 64, p. 1112,
@@ -41,7 +48,7 @@ def test_portugal_may_2027() -> None:
     assert label.status == "cached"
     assert label.source == "holidays (Python library)"
     assert label.data_date == date(2026, 11, 2)  # the release date in holidays_release.json
-    assert str(label.source_url) == "https://pypi.org/project/holidays/0.108/"
+    assert str(label.source_url) == "https://pypi.org/pypi/holidays/0.108/json"
 
 
 def test_country_without_data() -> None:
@@ -77,5 +84,5 @@ def test_release_record_matches_installed() -> None:
     record = json.loads(RELEASE.read_text(encoding="utf-8"))
 
     assert record["version"] == version("holidays")
-    assert record["source"].endswith(f"/holidays/{record['version']}/")
+    assert record["source"] == f"https://pypi.org/pypi/holidays/{record['version']}/json"
     assert date.fromisoformat(record["released"]) <= date.fromisoformat(record["checked"])
