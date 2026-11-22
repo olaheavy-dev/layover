@@ -5,9 +5,10 @@ Official documentation for the tools and services Layover uses. Pinned versions 
 | Tool or service | Official documentation | Used for |
 |---|---|---|
 | Copier | https://copier.readthedocs.io/ | Applying and updating the house templates |
-| LangGraph (Python) | https://docs.langchain.com/oss/python/langgraph/ | Agent graph, interrupts, checkpoints, `Send` |
+| Microsoft Agent Framework (Python) | https://learn.microsoft.com/agent-framework/ | Agents, graph workflows, approval steps, checkpoints, fan-out ([0013](../decisions/0013-microsoft-agent-framework.md)); replaces LangGraph (0005 point 2) |
 | Model Context Protocol | https://modelcontextprotocol.io/ | Tool servers |
-| LangChain MCP adapters | https://github.com/langchain-ai/langchain-mcp-adapters | Connecting MCP servers to LangGraph |
+| Microsoft Agent Framework MCP tools | https://learn.microsoft.com/agent-framework/agents/tools/local-mcp-tools | Connecting MCP servers to agents ([0013](../decisions/0013-microsoft-agent-framework.md)) |
+| LangSmith (traces through OpenTelemetry) | https://docs.langchain.com/langsmith/trace-with-opentelemetry | Receiving MAF's OpenTelemetry traces ([0013](../decisions/0013-microsoft-agent-framework.md) point 5) |
 | FastAPI | https://fastapi.tiangolo.com/ | Backend API |
 | Next.js | https://nextjs.org/docs | Frontend |
 | Claude tool use | https://docs.anthropic.com/en/docs/build-with-claude/tool-use | Tool calling |
