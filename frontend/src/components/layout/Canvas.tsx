@@ -69,7 +69,11 @@ export function Canvas({
     const root = scroller.current;
     if (!root) return;
     const onScroll = () => {
-      setAtEnd(root.scrollTop + root.clientHeight >= root.scrollHeight - 1);
+      // Only when there is something to scroll: a canvas that fits has no end to reach.
+      setAtEnd(
+        root.scrollHeight > root.clientHeight &&
+          root.scrollTop + root.clientHeight >= root.scrollHeight - 1,
+      );
       // A scroll that is not the one our own click made releases the clicked section.
       if (Math.abs(root.scrollTop - pinnedTop.current) > 1) setPinned(null);
     };
