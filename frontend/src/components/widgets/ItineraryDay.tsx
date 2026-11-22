@@ -92,7 +92,9 @@ function StopRow({ stop, number }: { stop: Stop; number: number }) {
               <SourceLabel label={source} />
             </p>
           )
-        ) : null}
+        ) : (
+          <p className="text-text-secondary text-xs">Source: Not known</p>
+        )}
       </div>
     </li>
   );
@@ -110,7 +112,9 @@ export function ItineraryDay({ widget }: { widget: Day }) {
         message={`Layover could not read places for Day ${widget.day_number} from OpenStreetMap or Wikivoyage just now.`}
       />
     );
-  } else if (widget.state === "empty" || (widget.state === "filled" && stops.length === 0)) {
+  } else if (widget.state === "filled" && stops.length === 0) {
+    body = <NotKnown missing={widget.missing ?? "the places for this day"} />;
+  } else if (widget.state === "empty") {
     body = (
       <div className="flex flex-col items-start gap-2 text-sm">
         <p>

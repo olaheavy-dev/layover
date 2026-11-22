@@ -44,10 +44,28 @@ describe("WebResults", () => {
     ).toBeInTheDocument();
     expect(screen.queryByRole("button")).toBeNull();
     expect(container.textContent).not.toMatch(/Add to trip/i);
-    // The source label is the search tool's, with the sample's own status.
-    expect(
-      within(container.querySelector("footer") as HTMLElement).getByText("Tavily web search"),
-    ).toBeInTheDocument();
+    // The footer is the board's own: the retrieval date, then the source. Never Live or Cached.
+    const footer = within(container.querySelector("footer") as HTMLElement);
+    expect(footer.getByText("Retrieved 18 Nov 2026")).toBeInTheDocument();
+    expect(footer.getByText("Source: Tavily web search")).toBeInTheDocument();
+    expect(footer.queryByText(/Live|Cached/)).toBeNull();
+  });
+
+  it("a result with an address that is not http or https is left out", async () => {
+    const base = await sampleOf("web_results", "filled");
+    const widget = {
+      ...base,
+      results: [{ ...nth(base.results!, 0), url: "javascript:alert(1)" }, nth(base.results!, 1)],
+    };
+    render(<WebResults widget={widget} />);
+    expect(screen.getAllByRole("listitem")).toHaveLength(1);
+    expect(screen.queryByText("Trams with a pushchair (sample page one)")).toBeNull();
+    expect(screen.getByRole("link", { name: /sample page two/ })).toBeInTheDocument();
+  });
+
+  it("error: the footer adds no status", async () => {
+    const { container } = render(<WebResults widget={await sampleOf("web_results", "error")} />);
+    expect(container.querySelector("footer")).toBeNull();
   });
 
   it("filled with no retrieval date says Not known, never a made-up date", async () => {
@@ -56,14 +74,6 @@ describe("WebResults", () => {
     expect(screen.queryByText(/Retrieved/)).toBeNull();
     expect(screen.getByText("Not known")).toBeInTheDocument();
     expect(screen.getByText("when these results were retrieved")).toBeInTheDocument();
-  });
-
-  it("a result whose address is not http or https is not made a link", async () => {
-    const base = await sampleOf("web_results", "filled");
-    const widget = { ...base, results: [{ ...nth(base.results!, 0), url: "javascript:alert(1)" }] };
-    render(<WebResults widget={widget} />);
-    expect(screen.queryByRole("link")).toBeNull();
-    expect(screen.getByText("Trams with a pushchair (sample page one)")).toBeInTheDocument();
   });
 
   it("filled with no results says Layover cannot help yet, with no label or invented result", async () => {

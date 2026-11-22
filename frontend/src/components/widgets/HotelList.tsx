@@ -3,6 +3,7 @@ import { Circle, MapPinned, Star } from "lucide-react";
 import type { components } from "@/lib/api/schema";
 
 import { plural } from "./format";
+import { NotKnown } from "./NotKnown";
 import { ErrorNote } from "./PlaceParts";
 import { WidgetFrame } from "./WidgetFrame";
 import { ActionButton, Actions } from "./WidgetParts";
@@ -34,7 +35,7 @@ function NotKnownValue() {
 function website(value: string): React.ReactNode {
   try {
     const url = new URL(value);
-    if (url.protocol !== "http:" && url.protocol !== "https:") return <span>{url.host}</span>;
+    if (url.protocol !== "http:" && url.protocol !== "https:") return <NotKnownValue />;
     return (
       <a
         href={url.href}
@@ -105,10 +106,9 @@ export function HotelList({ widget }: { widget: HotelListWidget }) {
         {SKIP}
       </ErrorNote>
     );
-  } else if (
-    widget.state === "empty" ||
-    (widget.state !== "loading" && hotels.length === 0 && widget.selection !== "skipped")
-  ) {
+  } else if (widget.state !== "empty" && widget.selection !== "skipped" && hotels.length === 0) {
+    body = <NotKnown missing={widget.missing ?? `the hotels near ${widget.place}`} />;
+  } else if (widget.state === "empty") {
     body = (
       <div className="flex flex-col items-start gap-2 text-sm">
         <p>

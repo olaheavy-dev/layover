@@ -67,6 +67,31 @@ describe("ItineraryDay", () => {
     ).toBeInTheDocument();
   });
 
+  it("a stop with no source says Source: Not known", async () => {
+    const base = await sampleOf("itinerary_day", "filled");
+    const widget = { ...base, stops: [{ ...nth(base.stops!, 0), source: null }] };
+    render(<ItineraryDay widget={widget} />);
+    expect(screen.getByText("Source: Not known")).toBeInTheDocument();
+  });
+
+  it("filled with no stops is Not known, not a claim about too few places", async () => {
+    const widget = { ...(await sampleOf("itinerary_day", "filled")), stops: [] };
+    render(<ItineraryDay widget={widget} />);
+    expect(screen.getByText("Not known")).toBeInTheDocument();
+    expect(screen.getByText("the places for this day")).toBeInTheDocument();
+    expect(screen.queryByText(/Too few sourced places/)).toBeNull();
+  });
+
+  it("filled with no stops shows the sample's own reason when it has one", async () => {
+    const widget = {
+      ...(await sampleOf("itinerary_day", "filled")),
+      stops: [],
+      missing: "places for Day 1: the source has none",
+    };
+    render(<ItineraryDay widget={widget} />);
+    expect(screen.getByText("places for Day 1: the source has none")).toBeInTheDocument();
+  });
+
   it("from_centre: a banner says the days start from the centre", async () => {
     render(<ItineraryDay widget={await sampleOf("itinerary_day", "from_centre")} />);
     expect(screen.getByText("Days start from the centre.")).toBeInTheDocument();

@@ -138,9 +138,28 @@ describe("HotelList", () => {
     const base = await sampleOf("hotel_list", "filled");
     const widget = {
       ...base,
-      hotels: [{ ...nth(base.hotels!, 0), website: "javascript:alert(1)" }],
+      hotels: [{ ...nth(base.hotels!, 2), website: "javascript:alert(1)" }],
     };
     render(<HotelList widget={widget} />);
     expect(screen.queryByRole("link")).toBeNull();
+    // The website cell says Not known: it is never left blank.
+    expect(within(nth(screen.getAllByRole("listitem"), 0)).getAllByText("Not known")).toHaveLength(
+      1,
+    );
+    expect(
+      within(nth(screen.getAllByRole("listitem"), 0)).getByText("3 stars"),
+    ).toBeInTheDocument();
+  });
+
+  it("not_known with no hotels shows the contract's missing text, not a claim about tags", async () => {
+    const widget = { ...(await sampleOf("hotel_list", "not_known")), hotels: [] };
+    render(<HotelList widget={widget} />);
+    expect(screen.getByText("Not known")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "stars and website for Sample Guesthouse Baixa: OpenStreetMap does not tag them",
+      ),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/No hotels are tagged/)).toBeNull();
   });
 });

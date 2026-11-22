@@ -25,8 +25,16 @@ function parse(value: string): URL | null {
 // facts, so they carry their own label, and the widget has no "Add to trip" action (decision 0011
 // rules 1 and 2).
 export function WebResults({ widget }: { widget: Web }) {
-  const results = widget.results ?? [];
-  const retrieved = widget.retrieved_at ? shortDate(widget.retrieved_at.slice(0, 10)) : null;
+  // A result with no usable http or https link is left out: each result shown has its link.
+  const results = (widget.results ?? []).flatMap((result) => {
+    const url = parse(result.url);
+    return url ? [{ ...result, url }] : [];
+  });
+  // Parse the time, then format it in UTC, as the other date helpers do.
+  const time = widget.retrieved_at ? new Date(widget.retrieved_at) : null;
+  const retrieved =
+    time && !Number.isNaN(time.getTime()) ? shortDate(time.toISOString().slice(0, 10)) : null;
+  const showFooter = widget.state === "filled" && results.length > 0;
   let body: React.ReactNode = null;
   if (widget.state === "error") {
     body = (
@@ -48,25 +56,21 @@ export function WebResults({ widget }: { widget: Web }) {
         {retrieved ? null : <NotKnown missing="when these results were retrieved" />}
         <ul className="flex flex-col gap-4">
           {results.map((result, index) => {
-            const url = parse(result.url);
-            const meta = [url?.host, retrieved ? `Retrieved ${retrieved}` : null]
+            const url = result.url;
+            const meta = [url.host, retrieved ? `Retrieved ${retrieved}` : null]
               .filter(Boolean)
               .join(" · ");
             return (
-              <li key={`${result.url}-${index}`} className="flex flex-col gap-1 text-sm">
+              <li key={`${result.url.href}-${index}`} className="flex flex-col gap-1 text-sm">
                 <p className="font-medium">
-                  {url ? (
-                    <a
-                      href={url.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-text-link underline"
-                    >
-                      {result.title}
-                    </a>
-                  ) : (
-                    result.title
-                  )}
+                  <a
+                    href={url.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-link underline"
+                  >
+                    {result.title}
+                  </a>
                 </p>
                 <blockquote className="border-border-primary border-l-2 pl-3">
                   “{result.quote}”
@@ -83,10 +87,19 @@ export function WebResults({ widget }: { widget: Web }) {
     <WidgetFrame
       title="Web results"
       state={widget.state === "loading" ? "loading" : "filled"}
-      sources={widget.sources}
+      sources={[]}
       footerNote={
-        widget.state === "filled" && results.length > 0 && retrieved ? (
-          <span className="text-text-secondary text-xs">Retrieved {retrieved}</span>
+        showFooter ? (
+          <>
+            {retrieved ? (
+              <span className="text-text-secondary text-xs">Retrieved {retrieved}</span>
+            ) : null}
+            {widget.sources.map((label, index) => (
+              <span key={`${label.source}-${index}`} className="text-text-secondary text-xs">
+                Source: {label.source}
+              </span>
+            ))}
+          </>
         ) : undefined
       }
     >
