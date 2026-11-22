@@ -32,7 +32,8 @@ export default defineConfig({
   projects: [
     { name: "light", use: { ...devices["Desktop Chrome"], colorScheme: "light" } },
     { name: "dark", use: { ...devices["Desktop Chrome"], colorScheme: "dark" } },
-    { name: "mobile", use: { ...devices["Pixel 7"] } },
+    // 390 px is the narrowest width the product supports (WCAG 1.4.10 reflow starts at 320 CSS px).
+    { name: "mobile", use: { ...devices["Pixel 7"], viewport: { width: 390, height: 844 } } },
   ],
   webServer: {
     // The standalone server serves .next/static only once it is copied in (the image does the same).

@@ -14,11 +14,23 @@ test.describe("the sample trip", () => {
   test("/trip/sample-lisbon opens the Trip tab on a phone", async ({ page, isMobile }) => {
     test.skip(!isMobile, "the tabs are for phones and tablets");
     await page.goto("/trip/sample-lisbon");
-    await expect(page.getByRole("tab", { name: "Chat" })).toHaveAttribute("aria-selected", "true");
-    await page.getByRole("tab", { name: "Trip" }).click();
+    await expect(page.getByRole("tab", { name: "Trip" })).toHaveAttribute("aria-selected", "true");
     await expect(page.getByRole("region", { name: "Your trip" })).toBeVisible();
     await expect(page.getByRole("heading", { level: 2, name: "Lisbon" })).toBeVisible();
   });
+
+  for (const path of ["/trip/sample-lisbon", "/s/sample-lisbon"]) {
+    test(`${path} marks the section in view in the index`, async ({ page }) => {
+      await page.goto(path);
+      const index = page.getByRole("navigation", { name: "Sections of the trip" });
+      const current = index.locator('a[aria-current="true"]');
+      await expect(current).toHaveCount(1);
+      await expect(current).toHaveText("Brief");
+      await page.evaluate(() => document.getElementById("days")?.scrollIntoView());
+      await expect(current).toHaveText("Days");
+      await expect(index.locator('a[aria-current="true"]')).toHaveCount(1);
+    });
+  }
 
   test("/s/sample-lisbon is a read-only copy with the as-of header", async ({ page }) => {
     const response = await page.goto("/s/sample-lisbon");
