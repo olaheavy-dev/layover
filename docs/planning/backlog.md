@@ -22,10 +22,15 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 |---|---|---|---|---|
 | 05 | #9 | Create the `task` label used by the Task issue form | Build 1 | `noticed` issue, owner-only (repository settings) |
 | 23 | #40 | Move the Floorplan snapshot exemption into house-template-base | Build 1 | `noticed` in the Design gate audit |
+| 38 | #70 | Update the website's minor and patch packages | Build 1 | Takes the parts of Dependabot's #59 that pass the peer check, before PRs C and D |
+| 42 | #74 | Switch the agent framework from LangGraph to Microsoft Agent Framework | Build 1 | Owner's choice, 22 Nov 2026; decision 0013 replaces 0005 before PR C |
 | 31 | #53 | Build 1 PR C: backend foundation | Build 1 | Build plan 1, PR C |
 | 32 | #54 | Build 1 PR D: website, widgets and gallery | Build 1 | Build plan 1, PR D |
 | 33 | #55 | Build 1 PR E: join the website to the API and add Aspire | Build 1 | Build plan 1, PR E |
 | 34 | #56 | Remove the minimatch override once typescript-eslint uses minimatch 11 | Build 1 | `noticed` in PR A's final review |
+| 39 | #71 | Website major upgrades: OpenTelemetry SDK 3, ESLint 10, TypeScript 7, jsdom 31 | Build 1 | Waits for `@vercel/otel`, the ESLint plugins and typescript-eslint to support them; replaces Dependabot's #60 |
+| 40 | #72 | No check keeps `third-party.md` in step with the lock files | Build 1 | `noticed` while triaging the Dependabot PRs; template candidate |
+| 41 | #73 | PR title check is cancelled when Dependabot rebases and renames a PR at once | Build 1 | `noticed` while triaging the Dependabot PRs; template candidate, owner-only (`.github/`) |
 | 20 | #35 | Mood scenes for the welcome and How Layover works pages | Build 2 | Waits for the owner's images |
 | 24 | #41 | How Layover works board leaves out Nuitee Connect | Build 2 | `noticed` in the Design gate audit |
 | 19 | #34 | No chosen source for a place's currency | Build 3 | `noticed` in the boards PR; pick a source before the `money` widget shows a currency line |
