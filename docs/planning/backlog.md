@@ -32,11 +32,16 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 | 40 | #72 | No check keeps `third-party.md` in step with the lock files | Build 1 | `noticed` while triaging the Dependabot PRs; template candidate |
 | 41 | #73 | PR title check is cancelled when Dependabot rebases and renames a PR at once | Build 1 | `noticed` while triaging the Dependabot PRs; template candidate, owner-only (`.github/`) |
 | 43 | #76 | `backend/pyproject.toml` says Dependabot groups the agent-framework packages for review, but no such group exists | Build 1 | `noticed` in the 0013 review; template candidate, owner-only (`.github/`) |
+| 45 | #79 | The data contract lacks fields the journey and place boards show | Build 1 | `noticed` in PR C's final review |
 | 20 | #35 | Mood scenes for the welcome and How Layover works pages | Build 2 | Waits for the owner's images |
 | 24 | #41 | How Layover works board leaves out Nuitee Connect | Build 2 | `noticed` in the Design gate audit |
+| 48 | #82 | ScriptedTraveller answers keys are not checked against the brief's fields | Build 2 | `noticed` in PR C's final review |
 | 19 | #34 | No chosen source for a place's currency | Build 3 | `noticed` in the boards PR; pick a source before the `money` widget shows a currency line |
 | 35 | #64 | No contract state for the pounds-only money card | Build 3 | `noticed` in PR B |
+| 46 | #80 | Holidays adapter: regional lists, the error state and holiday-name language | Build 3 | `noticed` in PR C's final review |
+| 47 | #81 | `money.py` has no function that rounds a part to the pound | Build 4 | `noticed` in PR C's final review |
 | 36 | #65 | No contract state for the booking widget asking for dates | Build 6 | `noticed` in PR B |
+| 44 | #78 | Booking idempotency: key the order on Layover's own booking-attempt ID, not MAF's `request_id` | Build 6 | `noticed` in PR C's final review |
 | 27 | #48 | No privacy notice page in the site map | Build 7 | `noticed` in the build step 1 brainstorm |
 | 37 | #66 | Rate limits for the public API routes | Build 7 | `noticed` in PR B's security review |
 
