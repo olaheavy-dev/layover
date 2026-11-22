@@ -1,10 +1,15 @@
 import { isDeadLink } from "./links";
 
 describe("isDeadLink", () => {
-  it.each(["/trip/abc", "/s/abc", "/trip/abc/", "/s/Sample-Lisbon", "/trip/sample-lisbon-2"])(
-    "treats %s as a link that does not work",
-    (path) => expect(isDeadLink(path)).toBe(true),
-  );
+  it.each([
+    "/trip/abc",
+    "/s/abc",
+    "/trip/abc/",
+    "/s/Sample-Lisbon",
+    "/trip/sample-lisbon-2",
+    "/trip/SAMPLE-LISBON",
+    "/trip/sample%2Dlisbon",
+  ])("treats %s as a link that does not work", (path) => expect(isDeadLink(path)).toBe(true));
 
   it.each([
     "/trip/sample-lisbon",

@@ -37,12 +37,15 @@ describe("the proxy", () => {
     expect(first.headers.get("x-middleware-request-content-security-policy")).toBe(policyOf(first));
   });
 
-  it.each(["/trip/abc", "/s/abc"])("answers %s with the not-found page and status 404", (path) => {
-    const response = proxy(new NextRequest(`http://app.test${path}`));
-    expect(response.status).toBe(404);
-    expect(response.headers.get("x-middleware-rewrite")).toBe("http://app.test/link-not-found");
-    expect(policyOf(response)).toContain("frame-ancestors 'none'");
-  });
+  it.each(["/trip/abc", "/s/abc", "/trip/SAMPLE-LISBON", "/trip/sample%2Dlisbon"])(
+    "answers %s with the not-found page and status 404",
+    (path) => {
+      const response = proxy(new NextRequest(`http://app.test${path}`));
+      expect(response.status).toBe(404);
+      expect(response.headers.get("x-middleware-rewrite")).toBe("http://app.test/link-not-found");
+      expect(policyOf(response)).toContain("frame-ancestors 'none'");
+    },
+  );
 
   it.each(["/trip/sample-lisbon", "/s/sample-lisbon"])(
     "lets the sample link %s through",
@@ -54,6 +57,7 @@ describe("the proxy", () => {
   );
 
   it("answers /dev/widgets with 404 and the policy when the gallery setting is unset", () => {
+    vi.stubEnv("ENABLE_WIDGET_GALLERY", "");
     for (const path of ["/dev/widgets", "/dev/widgets/"]) {
       const response = proxy(new NextRequest(`http://app.test${path}`));
       expect(response.status).toBe(404);
@@ -65,7 +69,8 @@ describe("the proxy", () => {
   it("lets /dev/widgets through when the gallery setting is on, and only that path is guarded", () => {
     vi.stubEnv("ENABLE_WIDGET_GALLERY", "1");
     expect(proxy(new NextRequest("http://app.test/dev/widgets")).status).toBe(200);
-    vi.stubEnv("ENABLE_WIDGET_GALLERY", "");
+    vi.stubEnv("ENABLE_WIDGET_GALLERY", "0");
+    expect(proxy(new NextRequest("http://app.test/dev/widgets")).status).toBe(404);
     expect(proxy(new NextRequest("http://app.test/dev/other")).status).toBe(200);
   });
 
