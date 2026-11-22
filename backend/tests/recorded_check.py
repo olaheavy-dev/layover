@@ -11,18 +11,34 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, ConfigDict, HttpUrl
 
 RECORDED_DIR = Path(__file__).parent / "recorded"
 
-# Key names that hold a credential, compared in lower case.
-SECRET_KEYS = frozenset({"token", "api_key", "authorization", "x-access-token", "password"})
-# Values that look like a Duffel key or an email address (personal data).
-SECRET_VALUE = re.compile(r"duffel_(test|live)_|[\w.+-]+@[\w-]+\.[\w.-]+", re.IGNORECASE)
+# A key name that holds a credential: one of these words standing alone or between "-" and "_"
+# (so `access_token`, `x-api-key` and `Api-Key` match, but `tokens_used` does not). Case-insensitive.
+SECRET_KEY = re.compile(
+    r"(^|[-_])((access|refresh|auth)?[-_]?token|api[-_]?key|secret|password|authorization|cookie"
+    r"|session|signature|client[-_]secret)($|[-_])",
+    re.IGNORECASE,
+)
+# Values that look like a credential or personal data: a Duffel key, an email address, a Bearer or
+# Basic header value, a JWT, or a key, token or signature in a URL's query string.
+SECRET_VALUE = re.compile(
+    r"duffel_(test|live)_"
+    r"|[\w.+-]+@[\w-]+\.[\w.-]+"
+    r"|\bBearer\s+\S+"
+    r"|\bBasic\s+\S{8,}"
+    r"|\beyJ[\w-]+\.[\w-]+\."
+    r"|[?&](api[-_]?key|apikey|token|access[-_]?token|key|signature)=",
+    re.IGNORECASE,
+)
 
 
 class Recording(BaseModel):
     """One captured exchange: what was asked, what came back, when, and from where."""
+
+    model_config = ConfigDict(extra="forbid")
 
     provider: str
     captured_at: date
@@ -48,10 +64,14 @@ def find_secrets(data: object, where: str = "$") -> list[str]:
     if isinstance(data, dict):
         for key, value in data.items():
             here = f"{where}.{key}"
-            if str(key).lower() in SECRET_KEYS:
+            if SECRET_KEY.search(str(key)) or SECRET_VALUE.search(str(key)):
                 found.append(here)
             found.extend(find_secrets(value, here))
     elif isinstance(data, list):
+        if (
+            len(data) == 2 and isinstance(data[0], str) and SECRET_KEY.search(data[0])
+        ):  # a [name, value] pair, such as a header
+            found.append(where)
         for index, value in enumerate(data):
             found.extend(find_secrets(value, f"{where}[{index}]"))
     elif isinstance(data, str) and SECRET_VALUE.search(data):

@@ -24,9 +24,17 @@ date or source is missing.
 ## Rules
 
 - A recording never holds a key, a token or personal data. `test_no_secrets_in_recordings` fails
-  on a key named `token`, `api_key`, `authorization`, `x-access-token` or `password` (any case, at
-  any depth), on a value containing `duffel_test_` or `duffel_live_`, and on an email address.
-  Remove or replace the value before committing.
+  on:
+  - a key (or the first item of a `[name, value]` pair, such as a header) whose name is, or has
+    between `-` or `_`, one of `token`, `access_token`, `api_key`, `apikey`, `secret`,
+    `client_secret`, `password`, `authorization`, `cookie`, `session` or `signature`, in any case
+    and at any depth (`tokens_used` is fine);
+  - a key or value that contains `duffel_test_` or `duffel_live_`, an email address, `Bearer` or
+    `Basic` followed by a credential, a JWT (starts `eyJ`), or a query parameter named `token`,
+    `api_key`, `access_token`, `key` or `signature` in a URL.
+
+  Remove or replace the value before committing. The provider name in the file must match its
+  folder, and a file with a field that is not in the format table is rejected.
 - Refresh a recording by running the `live` test that wrote it. The run rewrites the file and its
   `captured_at`. Do this when the provider's API version changes or a `live` run shows its response
   has changed, in a pull request of its own.

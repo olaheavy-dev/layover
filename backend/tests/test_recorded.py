@@ -30,7 +30,8 @@ def test_every_recording_has_date_and_source() -> None:
     files = recording_files()
     assert files, "tests/recorded/ holds at least the sample recording"
     for path in files:
-        Recording.model_validate_json(path.read_text(encoding="utf-8"))
+        recording = Recording.model_validate_json(path.read_text(encoding="utf-8"))
+        assert recording.provider == path.parent.name, f"{path}: provider is not its folder name"
 
 
 def test_no_secrets_in_recordings() -> None:
@@ -50,6 +51,21 @@ def test_load_recording_rejects_a_recording_without_a_source(tmp_path: Path) -> 
     (tmp_path / "p").mkdir()
     bad = {k: v for k, v in VALID.items() if k != "source"}
     (tmp_path / "p" / "n.json").write_text(json.dumps(bad), encoding="utf-8")
+    with pytest.raises(ValidationError):
+        load_recording("p", "n", root=tmp_path)
+
+
+def test_load_recording_rejects_a_recording_without_a_date(tmp_path: Path) -> None:
+    (tmp_path / "p").mkdir()
+    bad = {k: v for k, v in VALID.items() if k != "captured_at"}
+    (tmp_path / "p" / "n.json").write_text(json.dumps(bad), encoding="utf-8")
+    with pytest.raises(ValidationError):
+        load_recording("p", "n", root=tmp_path)
+
+
+def test_load_recording_rejects_an_unknown_field(tmp_path: Path) -> None:
+    (tmp_path / "p").mkdir()
+    (tmp_path / "p" / "n.json").write_text(json.dumps({**VALID, "extra": 1}), encoding="utf-8")
     with pytest.raises(ValidationError):
         load_recording("p", "n", root=tmp_path)
 
@@ -87,3 +103,34 @@ def test_secret_check_covers_every_file_it_is_given(tmp_path: Path) -> None:
     files = recording_files(tmp_path)
     assert len(files) == 1
     assert find_secrets(json.loads(files[0].read_text(encoding="utf-8"))) != []
+
+
+@pytest.mark.parametrize(
+    "data",
+    [
+        {"note": "Bearer sk_abc123"},
+        {"headers": [["Authorization", "Bearer abc"]]},
+        {"headers": [["x-api-key", "k"]]},
+        {"access_token": "x"},
+        {"x-api-key": "x"},
+        {"apikey": "x"},
+        {"Api-Key": "x"},
+        {"client_secret": "x"},
+        {"session_id": "x"},
+        {"duffel_test_abc": 1},
+        {"jo@example.com": 1},
+        {"url": "https://x/?api_key=abc&token=def"},
+        {"url": "https://x/?a=1&token=def"},
+        {"url": "https://x/?access_token=def"},
+        {"note": "Basic dXNlcjpwYXNzd29yZA=="},
+        {"jwt": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.sig"},
+    ],
+    ids=lambda d: next(iter(d)) + "-" + str(len(str(d))),
+)
+def test_secret_variants_are_caught(data: object) -> None:
+    assert find_secrets(data) != []
+
+
+def test_names_that_only_contain_a_secret_word_are_clean() -> None:
+    clean = {"tokens_used": 3, "keyboard": "x", "passwordless": True, "monkey": 1}
+    assert find_secrets(clean) == []
