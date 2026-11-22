@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 22 Nov 2026, during the session that cleared the Dependabot updates (the end-of-session overwrite follows).
+Last updated: 22 Nov 2026, after PR D's final fix wave (the end-of-session overwrite follows).
 
 ## Stage
 
@@ -11,13 +11,13 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done on 21 
 - **PR A (#57):** the FastAPI backend and the Next.js website from the house templates.
 - **#68:** the board checks read pages with `html.parser` (#36), and the CodeQL warnings on `main` are cleared.
 - **PR B (#67):** the data contract, the shared samples and the sample endpoints.
+- **PR C (#53), merged as #84:** the backend foundation: money, recordings, holidays and the evaluation runner. The runner's total is "53: 0 PASS, 20 SCHEMA PASS, 0 FAIL, 33 NOT RUN, 0 WITHDRAWN".
 
 `make repo-settings` was run on 21 Nov 2026, so CodeQL for Python and TypeScript is now a required check. The build order is in [01 §4](../product/01-research-and-direction.md#4-build-order): eight steps, each a milestone.
 
 ## Open pull requests
 
-- **PR C for #53 (this PR):** Tasks 8 to 12 of build step 1: money, the commission switch, recorded responses, the holidays adapter and the evaluation runner. The runner's current total is "53: 0 PASS, 20 SCHEMA PASS, 0 FAIL, 33 NOT RUN, 0 WITHDRAWN".
-- PR D for #54 (website and widgets) is being built in parallel; it opens after this one.
+- **PR D for #54 (this PR):** the website (home, trip, shared trip, How Layover works, link not found), the 20 widgets and the development gallery. Totals at the last run: 432 website unit tests, 89 end-to-end checks (light, dark and a 390 px phone, with axe, page titles, fonts, width and the section index) and 20 `tools/` tests for `check_copy.py`. Screenshots are made in Playwright's Linux image, the gallery one section at a time.
 - Dependabot's #58, #61, #62 and #63 merged on 22 Nov 2026. #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then [a comparison of the two published wheels](https://github.com/olaheavy-dev/layover/pull/62#discussion_r4658085468), because MAF's GitHub repository returned 404.
 
 ## The Design gate (#42, merged 20 Nov 2026)
@@ -32,9 +32,9 @@ Build step 1 is under way ("Build 1: Foundation and data contract"). Done on 21 
 ## Next steps
 
 1. **Done on 22 Nov 2026:** the website's minor and patch updates (#75, closing #70), and decision 0013, Microsoft Agent Framework in Python (#77, closing #74): booking uses graph workflows with an approval step and must be safe to run twice (#78); checkpoints go in Layover's own PostgreSQL store (JSON), built in step 6; traces go to Aspire and LangSmith through OpenTelemetry.
-2. **Merge PR C (#53, backend foundation, this PR) and PR D (#54, website)**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
+2. **Merge PR D (#54, website, this PR)**, then **E (#55, join and Aspire)**, then the step 1 gate. Issues #53 to #55 are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
 3. **Keep the template answer `llm: none` in step 1:** step 2's first PR changes it to `llm: maf` (0013 point 1). (The £5 half-up case that PR B's samples never hit is now covered by `test_estimate_nearest_ten` and `test_round_estimate_ten_pound_boundaries`.)
-4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints answer 503 there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template).
+4. **Carry into PR E (#55):** the backend's Docker image holds no `schemas/` folder, so the sample endpoints answer 503 there until the image ships the samples or `SAMPLES_DIR` points at them (`backend/Dockerfile` belongs to the template). The website's Docker image has the same gap: it can't reach `schemas/samples`, so it needs `SAMPLES_DIR` or a copy of the folder (see the comment on #55). The website's `samples.ts` reads the sample files without validating them until the API does.
 5. **Watch for upstream support (#71):** OpenTelemetry SDK 3 (waits for `@vercel/otel`), ESLint 10 (waits for the plugins in `eslint-config-next`) and TypeScript 7 (waits for typescript-eslint and openapi-typescript). jsdom 31 isn't blocked; it moves with that batch for one review.
 
 ## Blockers
@@ -54,6 +54,11 @@ None. Owner decisions still open, needed later:
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
 - Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked), [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes), [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options) and [#39](https://github.com/olaheavy-dev/agent-workflows/issues/39) (generated files changed by commit hooks; check them in a browser) and [#41](https://github.com/olaheavy-dev/agent-workflows/issues/41) (the alert check before merging missed alerts that a newly turned-on CodeQL language brings in).
+- Decide the map package: MapLibre GL JS with OpenFreeMap tiles (free; the map is a plain list in step 1).
+- Review the copy in PR D's description (the list of new fixed wording).
+- Confirm the fixed TfL Journey Planner link in the transport widget.
+- Decide which contract fields the boards show but the contract lacks ([#79](https://github.com/olaheavy-dev/layover/issues/79)).
+- Follow-ups opened from PR D's reviews: [#89](https://github.com/olaheavy-dev/layover/issues/89) (widget consistency), [#90](https://github.com/olaheavy-dev/layover/issues/90) (a shared trip reveals the party size: your privacy decision), [#91](https://github.com/olaheavy-dev/layover/issues/91) (template drift) and [#92](https://github.com/olaheavy-dev/layover/issues/92) (layout drift from the boards).
 - Copy review of the holiday names' American spelling ("Labor Day", [#80](https://github.com/olaheavy-dev/layover/issues/80)).
 - Watch Portugal's Proposta de Lei 77/XVII/1 (labour reform) in case it changes article 234 of the Labour Code, the list the holidays test relies on.
 - Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
