@@ -12,6 +12,7 @@ import {
   plural,
   shortDate,
   shownMoney,
+  weekdayDate,
 } from "./format";
 
 // Expected values are worked out by hand. Source: the contract's MoneyValue (integer minor units,
@@ -125,5 +126,13 @@ describe("shortDate", () => {
     // Working: 2026-11-12 is day 12, month 11 (Nov), year 2026.
     expect(shortDate("2026-11-12")).toBe("12 Nov 2026");
     expect(shortDate("12 November")).toBeNull();
+  });
+});
+
+describe("weekdayDate", () => {
+  it("shows the weekday, the day, the month and the year", () => {
+    // Working: 15 May 2027 is a Saturday (the board's "Day 1, Saturday 15 May 2027").
+    expect(weekdayDate("2027-05-15")).toBe("Saturday 15 May 2027");
+    expect(weekdayDate("15 May")).toBeNull();
   });
 });

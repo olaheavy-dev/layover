@@ -136,3 +136,18 @@ export function shortDate(value: string): string | null {
     timeZone: "UTC",
   }).format(date);
 }
+
+// "2027-05-15" -> "Saturday 15 May 2027". The weekday comes from the date itself.
+export function weekdayDate(value: string): string | null {
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(value) ? parseUtc(value) : null;
+  if (!date) return null;
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).formatToParts(date);
+  const get = (type: string) => parts.find((part) => part.type === type)?.value ?? "";
+  return `${get("weekday")} ${get("day")} ${get("month")} ${get("year")}`;
+}

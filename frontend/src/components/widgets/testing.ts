@@ -18,3 +18,10 @@ export async function sampleStates(kind: string): Promise<string[]> {
 // "Today" for the tests: the Lisbon fare was captured 15 Nov 2026 (3 days old) and the Wikivoyage
 // page on 14 Nov (4 days old), as the journey board shows.
 export const TEST_NOW = new Date("2026-11-18T09:00:00Z");
+
+// The item at `index`, or a clear failure: keeps indexed access typed in tests.
+export function nth<T>(list: readonly T[], index: number): T {
+  const item = list[index];
+  if (item === undefined) throw new Error(`No item at ${index}`);
+  return item;
+}

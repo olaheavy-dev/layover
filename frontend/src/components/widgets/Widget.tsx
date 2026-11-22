@@ -10,11 +10,15 @@ import { ComparisonTable } from "./ComparisonTable";
 import { CostEstimate } from "./CostEstimate";
 import { Daylight } from "./Daylight";
 import { FareCard } from "./FareCard";
+import { HotelList } from "./HotelList";
+import { ItineraryDay } from "./ItineraryDay";
 import { MapWidget } from "./MapWidget";
 import { Money } from "./Money";
 import { NotKnown } from "./NotKnown";
+import { NotKnownWidget } from "./NotKnownWidget";
 import { PlaceIntro } from "./PlaceIntro";
 import { SeaConditions } from "./SeaConditions";
+import { WebResults } from "./WebResults";
 
 type AnyWidget = SampleWidget["widget"];
 
@@ -34,6 +38,10 @@ const REGISTRY: Partial<Record<string, ComponentType<{ widget: any }>>> = {
   advice_card: AdviceCard,
   place_intro: PlaceIntro,
   map: MapWidget,
+  itinerary_day: ItineraryDay,
+  hotel_list: HotelList,
+  web_results: WebResults,
+  not_known: NotKnownWidget,
 };
 
 export function Widget({ widget }: { widget: AnyWidget }) {
