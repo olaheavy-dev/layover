@@ -1,0 +1,13 @@
+{
+  "description": "Sample evaluation trip: a warm May break for two from Manchester, then Lisbon is picked and the booking is approved. Invented for tests, not a real traveller.",
+  "answers": {
+    "departure_airport": "Manchester (MAN)",
+    "when": "May 2027",
+    "length": "5 nights",
+    "people": "2 adults",
+    "budget": "800 pounds in total",
+    "feel": "Warm, relaxed, good food"
+  },
+  "place_to_pick": "Lisbon",
+  "approve": true
+}
