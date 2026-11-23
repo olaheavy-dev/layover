@@ -2,7 +2,7 @@ import type { components } from "@/lib/api/schema";
 
 import { capitalise, formatMoney, plural, shownMoney } from "./format";
 import { listingSource, pageEdited, unavailableLabel, type CostLine, type Part } from "./costLines";
-import { NOT_KNOWN_TEXT, NotKnown } from "./NotKnown";
+import { NotKnown } from "./NotKnown";
 import { SourceLabel } from "./SourceLabel";
 import { WidgetFrame } from "./WidgetFrame";
 
@@ -90,7 +90,7 @@ function lineRow(part: Part, cost: Cost) {
         key={part}
         name={name}
         value={<span className="text-status-warning text-sm">Unavailable</span>}
-        meta={<span>{line?.missing ?? NOT_KNOWN_TEXT}</span>}
+        meta={line?.missing ? <span>{line.missing}</span> : undefined}
       />
     );
   }

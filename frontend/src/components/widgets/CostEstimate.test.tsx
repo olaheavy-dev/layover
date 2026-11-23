@@ -139,6 +139,17 @@ describe("CostEstimate", () => {
     expect(container.textContent).not.toMatch(/£/);
   });
 
+  it("an Unavailable line with no reason shows one label only: no Not known, no old wording, no zero", async () => {
+    const widget = structuredClone(await sampleOf("cost_estimate", "partial"));
+    widget.flights = {};
+    render(<CostEstimate widget={widget} />);
+    const flights = line("Flights");
+    expect(within(flights).getByText("Unavailable")).toBeInTheDocument();
+    expect(flights).not.toHaveTextContent(/Not known/);
+    expect(flights).not.toHaveTextContent(/no figure for this yet/);
+    expect(flights).not.toHaveTextContent(/£0|\b0\b/);
+  });
+
   it("error: an alert, both sources Unavailable and no figure", async () => {
     const { container } = render(
       <CostEstimate widget={await sampleOf("cost_estimate", "error")} />,
