@@ -19,7 +19,7 @@ The build order is in [01 §4](../product/01-research-and-direction.md#4-build-o
 One PR, with the whole-repository review run last (owner: "A: one PR, review last (Recommended)").
 
 - **Evaluation baseline:** the runner now writes its own report (`--report`), so no figure is retyped: [reports/build-1.md](../evaluations/reports/build-1.md). Later gates compare against it, and a drop blocks a gate.
-- **Floorplan:** a map of the real code, [docs/floorplan/build-1.html](../floorplan/build-1.html), from Floorplan 0.11.0 (the reviewed version), exported without Health. The owner looked at it and answered "Accurate enough (Recommended)". `design.html` stays as the Design-gate snapshot.
+- **Floorplan:** a map of the real code, [docs/floorplan/build-1.html](../floorplan/build-1.html), from Floorplan 0.11.0 (the reviewed version), exported without Health. The owner looked at it and answered "Accurate enough (Recommended)"; it was exported again afterwards to correct labels and wording (gate review G2 and G3). `design.html` stays as the Design-gate snapshot.
 - **Deferred review points:** the 90 points that the build step 1 reviews put off were sorted against the code (owner: "Fix small, file the rest (Recommended)"): 36 already fixed, 27 tracked in issues, 13 accepted earlier with a reason, 9 fixed in the gate, 5 no longer apply. The table is in the PR description.
 - **Traveller text:** three broken lines fixed (owner: "Fix now, you review in PR (Recommended)"); the PR waits for the owner's approval.
 - **Triage:** #85 fixed; the other 16 Build 1 issues moved, each with a reason comment (14 to Build 2, #86 to Build 4, #90 to Build 7). New issues: #107 to #111.

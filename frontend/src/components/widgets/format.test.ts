@@ -161,7 +161,8 @@ describe("shortDate", () => {
 
 describe("weekdayDate", () => {
   it("shows the weekday, the day, the month and the year", () => {
-    // Working: 15 May 2027 is a Saturday, so 14 May 2027 is a Friday.
+    // Working: 15 May 2027 is a Saturday (the board's "Day 1, Saturday 15 May 2027"), so 14 May 2027 is
+    // a Friday. Source: the board, and the Gregorian calendar (see the shortWeekdayDate working below).
     expect(weekdayDate("2027-05-15")).toBe("Saturday 15 May 2027");
     expect(weekdayDate("15 May")).toBeNull();
   });
