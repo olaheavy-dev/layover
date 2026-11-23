@@ -40,6 +40,9 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 | 48 | #82 | ScriptedTraveller answers keys are not checked against the brief's fields | Build 2 | `noticed` in PR C's final review |
 | 62 | #107 | Copy review: widget wording the owner has not reviewed yet | Build 2 | `noticed`, deferred in the build step 1 reviews (gate #106) |
 | 63 | #108 | Widget polish: small consistency and visual points from build step 1 | Build 2 | `noticed`, deferred in the build step 1 reviews (gate #106) |
+| 64 | #109 | Template comments in `backend/pyproject.toml` point at the wrong Layover references | Build 2 | `noticed` in the build step 1 gate review (#106); template candidate |
+| 65 | #110 | `AGENTS.md` has two stale lines (template-owned) | Build 2 | `noticed` in the build step 1 gate review (#106); template candidate |
+| 66 | #111 | The numeric-test check covers only the backend | Build 4 | `noticed` in the build step 1 gate review (#106) |
 | 19 | #34 | No chosen source for a place's currency | Build 3 | `noticed` in the boards PR; pick a source before the `money` widget shows a currency line |
 | 35 | #64 | No contract state for the pounds-only money card | Build 3 | `noticed` in PR B |
 | 46 | #80 | Holidays adapter: regional lists, the error state and holiday-name language | Build 3 | `noticed` in PR C's final review |
