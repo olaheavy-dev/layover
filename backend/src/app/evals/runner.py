@@ -129,10 +129,21 @@ def current_commit() -> str:
             text=True,
             check=True,
             cwd=REPO_ROOT,
+            timeout=10,
         )
     except (OSError, subprocess.SubprocessError):
         return "not known"
     return done.stdout.strip() or "not known"
+
+
+def report_command(report: Path) -> str:
+    """The command line for the report, with the path relative to the repository. A path outside
+    the repository is cut to its file name, so a committed report never holds a local folder."""
+    try:
+        shown = report.resolve().relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        shown = report.name
+    return f"python -m app.evals.runner --report {shown}"
 
 
 def render_report(results: list[Result], info: ReportInfo) -> str:
@@ -190,7 +201,7 @@ def main(argv: list[str] | None = None) -> int:
         info = ReportInfo(
             date=date.today().isoformat(),
             commit=current_commit(),
-            command=f"python -m app.evals.runner --report {args.report}",
+            command=report_command(args.report),
             seconds=seconds,
             # No case runs a trip or a model until build step 2.
             model_calls=0,

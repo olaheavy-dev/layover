@@ -292,3 +292,35 @@ def test_report_speed_is_in_milliseconds_never_rounded_to_zero() -> None:
 
 def test_usage_line_names_report() -> None:
     assert "--report PATH" in (runner.__doc__ or "")
+
+
+def test_report_command_line_never_holds_an_absolute_path() -> None:
+    # Working: an absolute path inside the repo is written relative to the repo root, so the
+    # committed report never names a local folder or user.
+    inside = runner.REPO_ROOT / "docs" / "evaluations" / "reports" / "x.md"
+    assert runner.report_command(inside) == (
+        "python -m app.evals.runner --report docs/evaluations/reports/x.md"
+    )
+    outside = Path("/Users/someone/elsewhere/y.md")
+    assert runner.report_command(outside) == "python -m app.evals.runner --report y.md"
+
+
+def test_main_report_has_no_local_path(tmp_path: Path) -> None:
+    out = tmp_path / "r.md"
+    assert main(["--report", str(out)]) == 0
+    text = out.read_text(encoding="utf-8")
+    assert str(tmp_path) not in text
+    assert "/Users/" not in text
+    assert "/home/" not in text
+
+
+def test_current_commit_not_known_when_git_times_out(monkeypatch: pytest.MonkeyPatch) -> None:
+    seen: dict[str, Any] = {}
+
+    def slow_git(cmd: list[str], **kwargs: Any) -> None:
+        seen.update(kwargs)
+        raise subprocess.TimeoutExpired(cmd, kwargs["timeout"])
+
+    monkeypatch.setattr(subprocess, "run", slow_git)
+    assert runner.current_commit() == "not known"
+    assert seen["timeout"] == 10
