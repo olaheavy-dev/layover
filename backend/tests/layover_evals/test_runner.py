@@ -233,3 +233,35 @@ def test_current_commit_not_known_without_git(monkeypatch: pytest.MonkeyPatch) -
 
     monkeypatch.setattr(subprocess, "run", no_git)
     assert runner.current_commit() == "not known"
+
+
+def test_report_fail_detail_cannot_break_the_table_row() -> None:
+    case = parse_cases(CASES_MD)[0]
+    text = render_report([Result(case, Outcome.FAIL, "a|b\nc")], _info())
+    assert f"| `{case.case_id}` | FAIL | a\\|b c |\n" in text
+
+
+def test_report_tokens_line_when_model_calls_were_made() -> None:
+    text = render_report([], _info(model_calls=3))
+    assert "Tokens: not counted yet (3 model calls)" in text
+    assert "no model calls" not in text
+
+
+def test_report_trip_set_counts_trips_that_ran() -> None:
+    assert "Trip set: 2 trips run" in render_report([], _info(trips_run=2, scripts_on_disk=2))
+
+
+def test_report_hides_scripts_line_when_all_scripts_ran() -> None:
+    text = render_report([], _info(trips_run=1, scripts_on_disk=1))
+    assert "on disk, not run yet" not in text
+
+
+def test_report_detail_is_empty_unless_the_case_failed() -> None:
+    case = parse_cases(CASES_MD)[0]
+    text = render_report([Result(case, Outcome.NOT_RUN, "needs a later build step", 2)], _info())
+    assert f"| `{case.case_id}` | NOT RUN (needs step 2) |  |\n" in text
+
+
+def test_report_labels_the_commit_honestly() -> None:
+    text = render_report([], _info(commit="abc1234"))
+    assert "Generated at commit: abc1234 (the commit before this report was added)" in text

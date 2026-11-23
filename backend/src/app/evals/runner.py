@@ -141,7 +141,7 @@ def render_report(results: list[Result], info: ReportInfo) -> str:
         "# Evaluation report",
         "",
         f"Date: {info.date}",
-        f"Commit: {info.commit}",
+        f"Generated at commit: {info.commit} (the commit before this report was added)",
         f"Command: `{info.command}`",
         "",
         f"Quality: {totals_line(results)}",
@@ -154,7 +154,10 @@ def render_report(results: list[Result], info: ReportInfo) -> str:
         lines.append(f"{info.scripts_on_disk} traveller {noun} on disk, not run yet")
     lines += ["", "| Case | Outcome | Detail |", "|---|---|---|"]
     for r in results:
-        detail = r.detail if r.outcome is Outcome.FAIL else ""
+        detail = ""
+        if r.outcome is Outcome.FAIL:
+            # Keep the detail on one table row: escape pipes, turn line breaks into spaces.
+            detail = " ".join(r.detail.replace("|", "\\|").split())
         lines.append(f"| `{r.case.case_id}` | {r.line()} | {detail} |")
     return "\n".join(lines) + "\n"
 

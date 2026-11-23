@@ -1,7 +1,7 @@
 # Evaluation report
 
 Date: 2026-11-23
-Commit: 2075193
+Generated at commit: e91c26f (the commit before this report was added)
 Command: `python -m app.evals.runner --report ../docs/evaluations/reports/build-1.md`
 
 Quality: total 53: 0 PASS, 20 SCHEMA PASS, 0 FAIL, 33 NOT RUN, 0 WITHDRAWN
