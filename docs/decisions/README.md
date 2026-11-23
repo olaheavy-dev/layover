@@ -19,6 +19,7 @@ Hard-to-reverse decisions get a numbered record in this folder (template: [0001]
 | [0011](0011-product-integrity-rules.md) | Product integrity rules | Accepted |
 | [0012](0012-agent-team.md) | Agent design: a team of agents, measured against a single-agent baseline | Accepted; built with MAF (0013) |
 | [0013](0013-microsoft-agent-framework.md) | Agent framework: Microsoft Agent Framework, in Python | Accepted |
+| [0014](0014-hosting-and-database.md) | Hosting: a shared DigitalOcean server in London, with the database in Neon | Accepted |
 
 ## Register
 

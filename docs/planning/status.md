@@ -48,7 +48,7 @@ None. Owner decisions still open, needed later:
 
 - How long a working trip link and a shared trip link last (before step 7).
 - The cost-cap figures, after step 4 measures a whole trip's cost.
-- The vector database (step 3), and hosting and the database (step 7).
+- The vector database (step 3). Hosting and the database are decided ([0014](../decisions/0014-hosting-and-database.md)); Neon's plan, region and cost, deployment, backups and the trace destination are settled in step 7's plan.
 - Before build step 2 (the first model calls): Anthropic's terms for a public app, its data retention and its prices (spending needs the owner's approval; the prices also feed the cost cap); and LangSmith's region (US or EU), retention and terms, before MAF's sensitive-data setting is turned on, because traces would then hold travellers' messages (UK GDPR; [0013](../decisions/0013-microsoft-agent-framework.md) point 5). Build step 1 makes no model calls, so neither blocks it.
 - Build step 4: Layover's own token figures for the agent team against the single-agent baseline (`TRIP-01`); any outside figure quoted before then cites its source.
 - Build step 7: how to stop scripts from starting trips. ALTCHA (a free, open-source bot check that doesn't track visitors) is one option to weigh alongside the hashed-address limit (spec §5c).
