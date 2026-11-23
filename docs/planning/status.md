@@ -38,6 +38,7 @@ The Design gate (#42, 20 Nov 2026) is recorded in its PR and in [its design](../
 3. **Step 7 (hosting):** an image-publishing workflow must pass `--build-context samples=schemas/samples` to the backend build. A failed trip page answers HTTP 200, so uptime checks should watch the backend's `/health/ready`.
 4. **Template candidates** (labelled `template-candidate`, Build 2): offer them to house-template-base in one batch.
 5. **Watch for upstream support (#71):** OpenTelemetry SDK 3, ESLint 10, TypeScript 7; jsdom 31 moves with that batch.
+6. **Watch: the app host's `vscode-jsonrpc` hold (#100).** The app host moved to TypeScript 7 and Node types 26 on 23 Nov 2026, separately from the website's upgrades in #71. `vscode-jsonrpc` stays on 8.x, and Dependabot ignores its major versions, because Aspire 17's generated transport imports `vscode-jsonrpc/node.js`, which version 10 doesn't export (`aspire run` fails at start-up). Lift the hold when Aspire's generated code supports version 10.
 
 ## Blockers
 

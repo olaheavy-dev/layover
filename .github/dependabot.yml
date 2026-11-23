@@ -84,3 +84,8 @@ updates:
         update-types: [minor, patch]
       apphost-major:
         update-types: [major]
+    # Aspire 17's generated transport imports `vscode-jsonrpc/node.js`, which vscode-jsonrpc 9 and
+    # later do not export; Aspire's own scaffold pins ^8.2.0. Remove when Aspire moves.
+    ignore:
+      - dependency-name: vscode-jsonrpc
+        update-types: ["version-update:semver-major"]
