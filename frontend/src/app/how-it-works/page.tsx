@@ -33,8 +33,8 @@ function Part({ id, title, children }: { id: string; title: string; children: Re
 const LINK = "text-text-link underline";
 
 // "How Layover works": one page for every visitor and for recruiters. The words are the approved
-// board's (docs/design/boards/screens/how-it-works.html). No evaluation has been run yet, so part 5
-// says so and shows no result (AGENTS.md, "Evaluations at each gate").
+// board's (docs/design/boards/screens/how-it-works.html). No trip has been scored yet (the build-1 report
+// has schema checks only), so part 5 says so and shows no result (AGENTS.md, "Evaluations at each gate").
 export default function HowItWorks() {
   return (
     <div className="flex min-h-dvh flex-col">

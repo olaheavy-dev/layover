@@ -70,7 +70,9 @@ export function ChatColumn({
           role="log"
           aria-live="polite"
           aria-label="Conversation with Layover"
-          className="flex flex-col gap-3"
+          // An empty log is still a flex child, so the column's gap would add 12px below the
+          // prompts. A negative top margin cancels that gap until there are messages.
+          className={messages.length === 0 ? "-mt-3 flex flex-col gap-3" : "flex flex-col gap-3"}
         >
           {messages.map((message, index) => (
             <p

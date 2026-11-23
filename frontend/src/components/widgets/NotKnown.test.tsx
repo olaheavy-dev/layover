@@ -18,7 +18,9 @@ describe("NotKnown", () => {
   it("never shows a stand-in for the missing value", () => {
     const { container } = render(<NotKnown missing="Fares" />);
     const text = container.textContent ?? "";
-    for (const banned of ["0", "£0", "N/A", "—"]) {
+    // A bare "0" would also match any digit-bearing copy, so look for a zero as a figure.
+    expect(text).not.toMatch(/(?<![\d.])0(?![\d])/);
+    for (const banned of ["£0", "N/A", "—"]) {
       expect(text).not.toContain(banned);
     }
   });

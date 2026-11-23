@@ -5,7 +5,7 @@
 
 An AI travel planner for UK-based holidaymakers, built as a portfolio project with real travel APIs.
 
-Status: build step 1 (foundation). See [`docs/planning/status.md`](docs/planning/status.md).
+Status: build step 1 finished (gate #106); build step 2 next. See [`docs/planning/status.md`](docs/planning/status.md).
 
 - **What it is and where it's going:** [`docs/README.md`](docs/README.md)
 - **How it's built and decided:** [`docs/decisions/`](docs/decisions/)

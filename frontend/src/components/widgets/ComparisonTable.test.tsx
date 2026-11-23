@@ -62,7 +62,7 @@ describe("ComparisonTable", () => {
     expect(container.textContent).not.toContain("782");
     expect(container.textContent).not.toContain("902");
 
-    const footer = within(screen.getByRole("contentinfo"));
+    const footer = within(container.querySelector("footer")!);
     expect(footer.getByText("Travelpayouts")).toBeInTheDocument();
     expect(footer.getByText("Wikivoyage")).toBeInTheDocument();
     expect(footer.getByText("Open-Meteo")).toBeInTheDocument();
@@ -134,5 +134,18 @@ describe("ComparisonTable", () => {
     fireEvent.click(screen.getByRole("button", { name: "Show again" }));
     expect(screen.getByRole("button", { name: "Choose Lisbon" })).toBeInTheDocument();
     expect(screen.queryByText("Compared 3 places: you chose Lisbon")).not.toBeInTheDocument();
+  });
+
+  it("chosen with one card: Compared 1 place, not 1 places", async () => {
+    const sample = await sampleOf("comparison_table", "chosen");
+    const only = sample.cards?.[0];
+    render(
+      <ComparisonTable
+        widget={{ ...sample, cards: only ? [only] : [], chosen_place: only?.place }}
+      />,
+    );
+    expect(screen.getByText(`Compared 1 place: you chose ${only?.place}`)).toBeInTheDocument();
+    expect(screen.queryByText(/1 places/)).toBeNull();
+    expect(screen.getByRole("list", { name: "The 1 place compared" })).toBeInTheDocument();
   });
 });

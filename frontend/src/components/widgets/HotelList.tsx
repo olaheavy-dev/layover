@@ -138,6 +138,12 @@ export function HotelList({ widget }: { widget: HotelListWidget }) {
               ? `You changed your base to ${chosen.name}. The days are rebuilt from it.`
               : `Days start from ${chosen.name}.`}
           </Banner>
+        ) : decided ? (
+          <p className="text-text-secondary text-sm">
+            {widget.chosen_hotel
+              ? `You chose ${widget.chosen_hotel}, which isn't in this list.`
+              : "A hotel was chosen. Its name is not known."}
+          </p>
         ) : (
           <p className="text-text-secondary text-sm">
             No prices: Layover’s sources have none. Choose one as the base for your days, or skip.
