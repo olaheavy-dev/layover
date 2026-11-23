@@ -297,7 +297,7 @@ def test_usage_line_names_report() -> None:
 def test_report_command_line_never_holds_an_absolute_path() -> None:
     # Working: an absolute path inside the repo is written relative to the repo root, so the
     # committed report never names a local folder or user.
-    inside = runner.REPO_ROOT / "docs" / "evaluations" / "reports" / "x.md"
+    inside = REPO_ROOT / "docs" / "evaluations" / "reports" / "x.md"
     assert runner.report_command(inside) == (
         "python -m app.evals.runner --report docs/evaluations/reports/x.md"
     )
