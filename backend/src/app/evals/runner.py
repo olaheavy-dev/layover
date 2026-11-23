@@ -120,8 +120,9 @@ class ReportInfo:
 
 
 def current_commit() -> str:
-    """`git describe --always --dirty` for HEAD: a short hash, plus "-dirty" when the tree has
-    uncommitted changes. "not known" when git is missing or fails."""
+    """`git describe --always --dirty` for HEAD: a short hash (or a tag-based name once a tag
+    exists), plus "-dirty" when tracked files have uncommitted changes. "not known" when git is
+    missing or fails."""
     try:
         done = subprocess.run(
             ["git", "describe", "--always", "--dirty"],  # noqa: S607

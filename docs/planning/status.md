@@ -12,7 +12,7 @@ The build order is in [01 §4](../product/01-research-and-direction.md#4-build-o
 
 ## Open pull requests
 
-- **The build step 1 gate (#106).** Branch `chore/build-1-gate`. Design: [specs/2026-11-23-build-1-gate-design.md](../superpowers/specs/2026-11-23-build-1-gate-design.md); plan: [plans/2026-11-23-build-1-gate.md](../superpowers/plans/2026-11-23-build-1-gate.md). It merges only after the owner approves the traveller text changes listed in its description.
+- **The build step 1 gate PR** (closes #106 and #85). Branch `chore/build-1-gate`. Design: [specs/2026-11-23-build-1-gate-design.md](../superpowers/specs/2026-11-23-build-1-gate-design.md); plan: [plans/2026-11-23-build-1-gate.md](../superpowers/plans/2026-11-23-build-1-gate.md). It merges only after the owner approves the traveller text changes listed in its description.
 
 ## The build step 1 gate (#106)
 
