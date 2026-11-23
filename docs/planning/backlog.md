@@ -20,36 +20,36 @@ The build order is approved ([01 §4](../product/01-research-and-direction.md#4-
 
 | # | Issue | Item | Milestone | Notes |
 |---|---|---|---|---|
-| 05 | #9 | Create the `task` label used by the Task issue form | Build 1 | `noticed` issue, owner-only (repository settings) |
-| 23 | #40 | Move the Floorplan snapshot exemption into house-template-base | Build 1 | `noticed` in the Design gate audit |
-| 34 | #56 | Remove the minimatch override once typescript-eslint uses minimatch 11 | Build 1 | `noticed` in PR A's final review |
-| 39 | #71 | Website major upgrades: OpenTelemetry SDK 3, ESLint 10, TypeScript 7, jsdom 31 | Build 1 | Waits for `@vercel/otel`, the ESLint plugins and typescript-eslint to support them; replaces Dependabot's #60 |
-| 40 | #72 | No check keeps `third-party.md` in step with the lock files | Build 1 | `noticed` while triaging the Dependabot PRs; template candidate |
-| 41 | #73 | PR title check is cancelled when Dependabot rebases and renames a PR at once | Build 1 | `noticed` while triaging the Dependabot PRs; template candidate, owner-only (`.github/`) |
-| 43 | #76 | `backend/pyproject.toml` says Dependabot groups the agent-framework packages for review, but no such group exists | Build 1 | `noticed` in the 0013 review; template candidate, owner-only (`.github/`) |
-| 45 | #79 | The data contract lacks fields the journey and place boards show | Build 1 | `noticed` in PR C's final review |
-| 50 | #85 | Board edge-hours-dates: the heading's weekday doesn't match its text | Build 1 | `noticed` in PR D's reviews |
-| 51 | #86 | TfL credit: check whether the Geomni UK Map data line applies to Layover's transport widget | Build 1 | `noticed` in PR D's reviews |
-| 52 | #87 | Prefetch requests skip the proxy, so their response has no CSP header | Build 1 | `noticed` in PR D's reviews; template candidate |
-| 54 | #89 | Widget consistency: one link check, one Not known value, and source fallbacks in every widget | Build 1 | `noticed` in PR D's reviews |
-| 55 | #90 | A shared trip can still reveal how many people are travelling | Build 1 | `noticed` in PR D's reviews; owner's privacy decision |
-| 56 | #91 | Template drift from PR D: proxy, the API proxy rename and the e2e page list | Build 1 | `noticed` in PR D's reviews; template candidate |
-| 57 | #92 | Website layout drift from the approved boards | Build 1 | `noticed` in PR D's visual review |
-| 59 | #96 | Aspire hosting packages in apphost/aspire.config.json get no update alerts | Build 1 | `noticed` in PR E's final review |
-| 60 | #97 | Local end-to-end runs can reuse a stale server from another worktree | Build 1 | `noticed` in PR E's final review; template candidate |
+| 50 | #85 | Board edge-hours-dates: the heading's weekday doesn't match its text | Build 1 | `noticed` in PR D's reviews; fixed in the gate PR (#106), closed by it |
+| 05 | #9 | Create the `task` label used by the Task issue form | Build 2 | `noticed` issue, owner-only (repository settings) |
+| 23 | #40 | Move the Floorplan snapshot exemption into house-template-base | Build 2 | `noticed` in the Design gate audit |
+| 34 | #56 | Remove the minimatch override once typescript-eslint uses minimatch 11 | Build 2 | `noticed` in PR A's final review |
+| 39 | #71 | Website major upgrades: OpenTelemetry SDK 3, ESLint 10, TypeScript 7, jsdom 31 | Build 2 | Waits for `@vercel/otel`, the ESLint plugins and typescript-eslint to support them; replaces Dependabot's #60 |
+| 40 | #72 | No check keeps `third-party.md` in step with the lock files | Build 2 | `noticed` while triaging the Dependabot PRs; template candidate |
+| 41 | #73 | PR title check is cancelled when Dependabot rebases and renames a PR at once | Build 2 | `noticed` while triaging the Dependabot PRs; template candidate, owner-only (`.github/`) |
+| 43 | #76 | `backend/pyproject.toml` says Dependabot groups the agent-framework packages for review, but no such group exists | Build 2 | `noticed` in the 0013 review; template candidate, owner-only (`.github/`) |
+| 45 | #79 | The data contract lacks fields the journey and place boards show | Build 2 | `noticed` in PR C's final review |
+| 52 | #87 | Prefetch requests skip the proxy, so their response has no CSP header | Build 2 | `noticed` in PR D's reviews; template candidate |
+| 54 | #89 | Widget consistency: one link check, one Not known value, and source fallbacks in every widget | Build 2 | `noticed` in PR D's reviews |
+| 56 | #91 | Template drift from PR D: proxy, the API proxy rename and the e2e page list | Build 2 | `noticed` in PR D's reviews; template candidate |
+| 57 | #92 | Website layout drift from the approved boards | Build 2 | `noticed` in PR D's visual review |
+| 59 | #96 | Aspire hosting packages in apphost/aspire.config.json get no update alerts | Build 2 | `noticed` in PR E's final review |
+| 60 | #97 | Local end-to-end runs can reuse a stale server from another worktree | Build 2 | `noticed` in PR E's final review; template candidate |
 | 20 | #35 | Mood scenes for the welcome and How Layover works pages | Build 2 | Waits for the owner's images |
 | 24 | #41 | How Layover works board leaves out Nuitee Connect | Build 2 | `noticed` in the Design gate audit |
 | 48 | #82 | ScriptedTraveller answers keys are not checked against the brief's fields | Build 2 | `noticed` in PR C's final review |
 | 62 | #107 | Copy review: widget wording the owner has not reviewed yet | Build 2 | `noticed`, deferred in the build step 1 reviews (gate #106) |
 | 63 | #108 | Widget polish: small consistency and visual points from build step 1 | Build 2 | `noticed`, deferred in the build step 1 reviews (gate #106) |
-| 49 | #83 | Recording secret check: false alarms on prose, a few missing key names, and a slow email pattern | Build 4 | `noticed` in PR C's fix-round re-review; needed before the first real provider recording |
 | 19 | #34 | No chosen source for a place's currency | Build 3 | `noticed` in the boards PR; pick a source before the `money` widget shows a currency line |
 | 35 | #64 | No contract state for the pounds-only money card | Build 3 | `noticed` in PR B |
 | 46 | #80 | Holidays adapter: regional lists, the error state and holiday-name language | Build 3 | `noticed` in PR C's final review |
 | 58 | #93 | Draw the map widget with MapLibre GL JS and OpenFreeMap tiles | Build 3 | Owner's choice, 22 Nov 2026 (register) |
+| 51 | #86 | TfL credit: check whether the Geomni UK Map data line applies to Layover's transport widget | Build 4 | `noticed` in PR D's reviews |
+| 49 | #83 | Recording secret check: false alarms on prose, a few missing key names, and a slow email pattern | Build 4 | `noticed` in PR C's fix-round re-review; needed before the first real provider recording |
 | 47 | #81 | `money.py` has no function that rounds a part to the pound | Build 4 | `noticed` in PR C's final review |
 | 36 | #65 | No contract state for the booking widget asking for dates | Build 6 | `noticed` in PR B |
 | 44 | #78 | Booking idempotency: key the order on Layover's own booking-attempt ID, not MAF's `request_id` | Build 6 | `noticed` in PR C's final review |
+| 55 | #90 | A shared trip can still reveal how many people are travelling | Build 7 | `noticed` in PR D's reviews; owner's privacy decision |
 | 27 | #48 | No privacy notice page in the site map | Build 7 | `noticed` in the build step 1 brainstorm |
 | 37 | #66 | Rate limits for the public API routes | Build 7 | `noticed` in PR B's security review |
 
