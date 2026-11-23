@@ -84,18 +84,17 @@ function lineRow(part: Part, cost: Cost) {
     );
   }
   const unavailable = unavailableLabel(part, cost.sources);
-  const missing = line?.missing ?? NOT_KNOWN_TEXT;
   if (unavailable) {
     return (
       <Row
         key={part}
         name={name}
         value={<span className="text-status-warning text-sm">Unavailable</span>}
-        meta={<span>{missing}</span>}
+        meta={<span>{line?.missing ?? NOT_KNOWN_TEXT}</span>}
       />
     );
   }
-  return <Row key={part} name={name} value={null} meta={<NotKnown missing={missing} />} />;
+  return <Row key={part} name={name} value={null} meta={<NotKnown missing={line?.missing} />} />;
 }
 
 // The local transport and activities lines say the same thing in every sample, so they share a
@@ -129,12 +128,7 @@ function otherRows(cost: Cost) {
           source={line.source ? <SourceLabel label={line.source} /> : null}
         />
       ) : (
-        <Row
-          key={key}
-          name={name}
-          value={null}
-          meta={<NotKnown missing={line.missing ?? NOT_KNOWN_TEXT} />}
-        />
+        <Row key={key} name={name} value={null} meta={<NotKnown missing={line.missing} />} />
       ),
     );
   }

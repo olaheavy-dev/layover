@@ -108,7 +108,8 @@ describe("ComparisonTable", () => {
     lisbon.meals = {};
     render(<ComparisonTable widget={widget} />);
     const lisbonCard = within(card("Lisbon"));
-    expect(lisbonCard.getAllByText("Not known").length).toBeGreaterThanOrEqual(2);
+    const meals = lisbonCard.getByText("Meals").closest("li") as HTMLElement;
+    expect(within(meals).getAllByText("Not known")).toHaveLength(1);
     expect(lisbonCard.queryByText(/no figure for this yet/)).toBeNull();
   });
 

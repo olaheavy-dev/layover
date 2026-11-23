@@ -126,7 +126,7 @@ describe("CostEstimate", () => {
     widget.flights = {};
     render(<CostEstimate widget={widget} />);
     const flights = line("Flights");
-    expect(within(flights).getAllByText("Not known")).toHaveLength(2);
+    expect(within(flights).getAllByText("Not known")).toHaveLength(1);
     expect(flights).not.toHaveTextContent(/no figure for this yet/);
     expect(flights).not.toHaveTextContent(/£0|\b0\b/);
   });

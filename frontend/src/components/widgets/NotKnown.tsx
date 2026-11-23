@@ -10,7 +10,7 @@ export function NotKnown({
   reason,
   instead,
 }: {
-  missing: string;
+  missing?: string | null;
   reason?: string | null;
   instead?: string | null;
 }) {
@@ -20,7 +20,7 @@ export function NotKnown({
         <Circle className="size-3" aria-hidden="true" />
         <span>{NOT_KNOWN_TEXT}</span>
       </p>
-      <p className="text-text-primary">{missing}</p>
+      {missing ? <p className="text-text-primary">{missing}</p> : null}
       {reason ? <p className="text-text-secondary">{reason}</p> : null}
       {instead ? <p className="text-text-secondary">{instead}</p> : null}
     </div>
