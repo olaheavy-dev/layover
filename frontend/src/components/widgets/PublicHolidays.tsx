@@ -34,9 +34,7 @@ export function PublicHolidays({ widget }: { widget: PublicHolidaysWidget }) {
     body = (
       <div className="flex flex-col gap-2">
         {head}
-        <p className="text-sm">
-          {period ? `No public holidays in ${period}.` : "No public holidays."}
-        </p>
+        <p className="text-sm">No public holidays in {period}.</p>
         <p className="text-text-secondary text-sm">{national}</p>
       </div>
     );

@@ -1,9 +1,12 @@
-"""Run the evaluation cases: `python -m app.evals.runner [--case ID]`.
+"""Run the evaluation cases: `python -m app.evals.runner [--case ID | --report PATH]`.
 
 Prints one line per case (`PASS`, `SCHEMA PASS (full case needs step N)`, `FAIL` or
 `NOT RUN (needs step N)`) and a total; exits 1 on any `FAIL`. In step 1 only the schema part of
 WIDGET-01 to WIDGET-20 runs, and it reports `SCHEMA PASS`, never `PASS`: the case's other rules
 (labels, "Not known", never "safe") are not checked yet. There are no model calls.
+
+`--report PATH` also writes a Markdown baseline (quality, speed in milliseconds, tokens, trip set)
+to PATH, for the build gates.
 
 N is the build step that adds the case, read from the "Evaluation cases it adds" column of the
 build-order table in docs/product/01-research-and-direction.md section 4. A case listed in more than
@@ -12,8 +15,11 @@ one step (a WIDGET case also appears in step 1 for its schema) takes the last st
 
 import argparse
 import re
+import subprocess
 import sys
+import time
 from dataclasses import dataclass
+from datetime import date
 from enum import Enum
 from pathlib import Path
 
@@ -93,10 +99,93 @@ def run_cases(cases: list[Case], steps: dict[str, int]) -> list[Result]:
     return [run_case(case, steps) for case in cases]
 
 
+def totals_line(results: list[Result]) -> str:
+    count = {o: sum(r.outcome is o for r in results) for o in Outcome}
+    return (
+        f"total {len(results)}: {count[Outcome.PASS]} PASS, "
+        f"{count[Outcome.SCHEMA_PASS]} SCHEMA PASS, {count[Outcome.FAIL]} FAIL, "
+        f"{count[Outcome.NOT_RUN]} NOT RUN, {count[Outcome.WITHDRAWN]} WITHDRAWN"
+    )
+
+
+@dataclass(frozen=True)
+class ReportInfo:
+    date: str
+    commit: str
+    command: str
+    seconds: float
+    model_calls: int
+    trips_run: int
+    scripts_on_disk: int
+
+
+def current_commit() -> str:
+    """`git describe --always --dirty` for HEAD: a short hash (or a tag-based name once a tag
+    exists), plus "-dirty" when tracked files have uncommitted changes. "not known" when git is
+    missing or fails."""
+    try:
+        done = subprocess.run(
+            ["git", "describe", "--always", "--dirty"],  # noqa: S607
+            capture_output=True,
+            text=True,
+            check=True,
+            cwd=REPO_ROOT,
+            timeout=10,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "not known"
+    return done.stdout.strip() or "not known"
+
+
+def report_command(report: Path) -> str:
+    """The command line for the report, with the path relative to the repository. A path outside
+    the repository is cut to its file name, so a committed report never holds a local folder."""
+    try:
+        shown = report.resolve().relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        shown = report.name
+    return f"python -m app.evals.runner --report {shown}"
+
+
+def render_report(results: list[Result], info: ReportInfo) -> str:
+    if info.model_calls == 0:
+        tokens = "none: this run made no model calls"
+    else:
+        tokens = f"not counted yet ({info.model_calls} model calls)"
+    trip_set = "none yet" if info.trips_run == 0 else f"{info.trips_run} trips run"
+    lines = [
+        "# Evaluation report",
+        "",
+        f"Date: {info.date}",
+        f"HEAD when run: {info.commit}",
+        f"Command: `{info.command}`",
+        "",
+        f"Quality: {totals_line(results)}",
+        f"Speed: {round(info.seconds * 1000)} ms for the whole run",
+        f"Tokens: {tokens}",
+        f"Trip set: {trip_set}",
+    ]
+    if info.scripts_on_disk > info.trips_run:
+        noun = "script" if info.scripts_on_disk == 1 else "scripts"
+        lines.append(f"{info.scripts_on_disk} traveller {noun} on disk, not run yet")
+    lines += ["", "| Case | Outcome | Detail |", "|---|---|---|"]
+    for r in results:
+        detail = ""
+        if r.outcome is Outcome.FAIL:
+            # Keep the detail on one table row: escape pipes, turn line breaks into spaces.
+            detail = " ".join(r.detail.replace("|", "\\|").split())
+        lines.append(f"| `{r.case.case_id}` | {r.line()} | {detail} |")
+    return "\n".join(lines) + "\n"
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="python -m app.evals.runner")
     parser.add_argument("--case", help="run one case by ID, for example WIDGET-03")
+    parser.add_argument("--report", type=Path, help="also write a Markdown report to this path")
     args = parser.parse_args(argv)
+    if args.report and args.case:
+        parser.error("--report writes a whole-set baseline; it can't be used with --case")
+    started = time.perf_counter()
     cases = parse_cases(CASES_MD)
     if args.case:
         cases = [c for c in cases if c.case_id == args.case]
@@ -104,16 +193,25 @@ def main(argv: list[str] | None = None) -> int:
             print(f"unknown case: {args.case}")
             return 1
     results = run_cases(cases, build_step_map())
+    seconds = time.perf_counter() - started
     for r in results:
         extra = f"  {r.detail}" if r.outcome is Outcome.FAIL and r.detail else ""
         print(f"{r.case.case_id:<12} {r.line()}{extra}")
-    count = {o: sum(r.outcome is o for r in results) for o in Outcome}
-    print(
-        f"total {len(results)}: {count[Outcome.PASS]} PASS, "
-        f"{count[Outcome.SCHEMA_PASS]} SCHEMA PASS, {count[Outcome.FAIL]} FAIL, "
-        f"{count[Outcome.NOT_RUN]} NOT RUN, {count[Outcome.WITHDRAWN]} WITHDRAWN"
-    )
-    return 1 if count[Outcome.FAIL] else 0
+    print(totals_line(results))
+    if args.report:
+        info = ReportInfo(
+            date=date.today().isoformat(),
+            commit=current_commit(),
+            command=report_command(args.report),
+            seconds=seconds,
+            # No case runs a trip or a model until build step 2.
+            model_calls=0,
+            trips_run=0,
+            scripts_on_disk=len(list((REPO_ROOT / "evals" / "travellers").glob("*.json"))),
+        )
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        args.report.write_text(render_report(results, info), encoding="utf-8")
+    return 1 if any(r.outcome is Outcome.FAIL for r in results) else 0
 
 
 if __name__ == "__main__":

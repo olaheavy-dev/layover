@@ -77,6 +77,15 @@ describe("ChatColumn", () => {
     expect(log).toContainElement(screen.getByText("The chat isn't connected yet"));
   });
 
+  it("cancels the column's gap while the log is empty, and not once there are messages", () => {
+    render(<ChatColumn />);
+    const log = screen.getByRole("log", { name: "Conversation with Layover" });
+    expect(log).toHaveClass("-mt-3");
+    fireEvent.change(screen.getByLabelText("Message to Layover"), { target: { value: "Hello" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send" }));
+    expect(log).not.toHaveClass("-mt-3");
+  });
+
   it("makes the scrolling chat a focusable region, so the keyboard can scroll it", () => {
     render(<ChatColumn />);
     const region = screen.getByRole("region", { name: "Chat messages and examples" });

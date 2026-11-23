@@ -162,4 +162,31 @@ describe("HotelList", () => {
     ).toBeInTheDocument();
     expect(screen.queryByText(/No hotels are tagged/)).toBeNull();
   });
+
+  it("chosen but not in the list: names the choice and says it is not in the list", async () => {
+    const sample = await sampleOf("hotel_list", "chosen");
+    render(<HotelList widget={{ ...sample, chosen_hotel: "Hotel Not In The List" }} />);
+    expect(
+      screen.getByText("You chose Hotel Not In The List, which isn't in this list."),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/or skip/)).toBeNull();
+    expect(screen.queryByText("Your base")).toBeNull();
+    expect(screen.queryByRole("button", { name: /Skip/ })).toBeNull();
+  });
+
+  it("the unmatched name is shown as text, never as HTML", async () => {
+    const sample = await sampleOf("hotel_list", "chosen");
+    render(<HotelList widget={{ ...sample, chosen_hotel: "<b>Bold</b>" }} />);
+    expect(
+      screen.getByText("You chose <b>Bold</b>, which isn't in this list."),
+    ).toBeInTheDocument();
+  });
+
+  it("chosen with no name: says the name is not known", async () => {
+    const sample = await sampleOf("hotel_list", "chosen");
+    render(<HotelList widget={{ ...sample, chosen_hotel: null }} />);
+    expect(screen.getByText("A hotel was chosen. Its name is not known.")).toBeInTheDocument();
+    expect(screen.queryByText(/which isn't in this list/)).toBeNull();
+    expect(screen.queryByRole("button", { name: /Skip/ })).toBeNull();
+  });
 });

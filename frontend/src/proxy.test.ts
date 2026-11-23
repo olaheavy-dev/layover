@@ -47,6 +47,14 @@ describe("the proxy", () => {
     },
   );
 
+  it("does not see an encoded dot-segment id: the URL parser resolves /trip/%2e%2e to /", () => {
+    // WHATWG URL treats %2e%2e as "..", so the request path is "/" (a real page) before the proxy
+    // runs. isDeadLink still refuses the raw string (lib/links.test.ts) as a second guard.
+    const request = new NextRequest("http://app.test/trip/%2e%2e");
+    expect(request.nextUrl.pathname).toBe("/");
+    expect(proxy(request).status).toBe(200);
+  });
+
   it.each(["/trip/sample-lisbon", "/s/sample-lisbon"])(
     "lets the sample link %s through",
     (path) => {

@@ -9,6 +9,7 @@ describe("isDeadLink", () => {
     "/trip/sample-lisbon-2",
     "/trip/SAMPLE-LISBON",
     "/trip/sample%2Dlisbon",
+    "/trip/%2e%2e",
   ])("treats %s as a link that does not work", (path) => expect(isDeadLink(path)).toBe(true));
 
   it.each([
