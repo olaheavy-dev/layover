@@ -7,7 +7,7 @@ import type { components } from "@/lib/api/schema";
 
 import { listingSource, pageEdited, unavailableLabel, type CostLine, type Part } from "./costLines";
 import { capitalise, formatMoney, plural, shownMoney } from "./format";
-import { NotKnown } from "./NotKnown";
+import { NOT_KNOWN_TEXT, NotKnown } from "./NotKnown";
 import { SourceLabel } from "./SourceLabel";
 import { WidgetFrame } from "./WidgetFrame";
 import { ActionButton, Actions, CHIP, Skeleton } from "./WidgetParts";
@@ -85,11 +85,7 @@ function costRow(
     return <Row key={part} name={name} value="Unavailable" meta={<span>{line?.missing}</span>} />;
   }
   return (
-    <Row
-      key={part}
-      name={name}
-      meta={<NotKnown missing={line?.missing ?? "Layover has no figure for this yet"} />}
-    />
+    <Row key={part} name={name} meta={<NotKnown missing={line?.missing ?? NOT_KNOWN_TEXT} />} />
   );
 }
 

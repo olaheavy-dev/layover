@@ -2,7 +2,7 @@ import type { components } from "@/lib/api/schema";
 
 import { capitalise, formatMoney, plural, shownMoney } from "./format";
 import { listingSource, pageEdited, unavailableLabel, type CostLine, type Part } from "./costLines";
-import { NotKnown } from "./NotKnown";
+import { NOT_KNOWN_TEXT, NotKnown } from "./NotKnown";
 import { SourceLabel } from "./SourceLabel";
 import { WidgetFrame } from "./WidgetFrame";
 
@@ -84,7 +84,7 @@ function lineRow(part: Part, cost: Cost) {
     );
   }
   const unavailable = unavailableLabel(part, cost.sources);
-  const missing = line?.missing ?? "Layover has no figure for this yet";
+  const missing = line?.missing ?? NOT_KNOWN_TEXT;
   if (unavailable) {
     return (
       <Row
@@ -133,7 +133,7 @@ function otherRows(cost: Cost) {
           key={key}
           name={name}
           value={null}
-          meta={<NotKnown missing={line.missing ?? "Layover has no figure for this yet"} />}
+          meta={<NotKnown missing={line.missing ?? NOT_KNOWN_TEXT} />}
         />
       ),
     );

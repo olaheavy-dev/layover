@@ -165,7 +165,7 @@ export function BookingApproval({ widget }: { widget: Booking }) {
           value: price ? (
             <>
               <span className="font-medium">{price}</span>
-              <span className="text-text-secondary"> (Sandbox price, not the fare above)</span>
+              <span className="text-text-secondary"> (Sandbox price, not the real fare)</span>
             </>
           ) : null,
           missing: "The sandbox price",
@@ -218,7 +218,7 @@ export function BookingApproval({ widget }: { widget: Booking }) {
         {newPrice ? (
           <p className="text-text-secondary text-sm">
             Nothing is ordered. Approve only if {newPrice} is fine for you. These are sandbox
-            prices, not the fare above.
+            prices, not real fares.
           </p>
         ) : null}
         <Actions>

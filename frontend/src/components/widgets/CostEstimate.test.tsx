@@ -121,6 +121,16 @@ describe("CostEstimate", () => {
     ).toBeInTheDocument();
   });
 
+  it("a line with no value and no reason says Not known, never the old wording, a zero or blank", async () => {
+    const widget = structuredClone(await sampleOf("cost_estimate", "filled"));
+    widget.flights = {};
+    render(<CostEstimate widget={widget} />);
+    const flights = line("Flights");
+    expect(within(flights).getAllByText("Not known")).toHaveLength(2);
+    expect(flights).not.toHaveTextContent(/no figure for this yet/);
+    expect(flights).not.toHaveTextContent(/£0|\b0\b/);
+  });
+
   it("loading: a busy status and no figures", async () => {
     const { container } = render(
       <CostEstimate widget={await sampleOf("cost_estimate", "loading")} />,
