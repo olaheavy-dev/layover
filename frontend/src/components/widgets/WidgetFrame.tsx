@@ -52,7 +52,7 @@ export function WidgetFrame({
       body = (
         <p className="text-status-warning inline-flex items-center gap-1.5 text-sm" role="alert">
           <CircleAlert className="size-4" aria-hidden="true" />
-          <span>This part of the trip couldn&apos;t load. Try again in a moment.</span>
+          <span>This part of the trip couldn&apos;t load.</span>
         </p>
       );
       break;

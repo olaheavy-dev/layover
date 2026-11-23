@@ -38,7 +38,8 @@ describe("WidgetFrame", () => {
 
   it("shows an error as an alert", () => {
     render(<WidgetFrame title="Money" state="error" sources={[]} />);
-    expect(screen.getByRole("alert")).toHaveTextContent("This part of the trip couldn't load");
+    expect(screen.getByRole("alert")).toHaveTextContent("This part of the trip couldn't load.");
+    expect(screen.queryByText(/Try again in a moment/)).toBeNull();
   });
 
   it("shows Not known with the missing text", () => {

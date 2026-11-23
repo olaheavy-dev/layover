@@ -84,13 +84,7 @@ function costRow(
   if (unavailableLabel(part, sources)) {
     return <Row key={part} name={name} value="Unavailable" meta={<span>{line?.missing}</span>} />;
   }
-  return (
-    <Row
-      key={part}
-      name={name}
-      meta={<NotKnown missing={line?.missing ?? "Layover has no figure for this yet"} />}
-    />
-  );
+  return <Row key={part} name={name} meta={<NotKnown missing={line?.missing} />} />;
 }
 
 function missingParts(card: PlaceCard): string[] {

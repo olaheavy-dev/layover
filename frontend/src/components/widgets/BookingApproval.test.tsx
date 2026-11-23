@@ -75,7 +75,8 @@ describe("BookingApproval", () => {
       expect(screen.getByText("19 May 2027")).toBeInTheDocument();
       expect(screen.getByText("2 adults")).toBeInTheDocument();
       expect(screen.getByText("£192 for 2")).toBeInTheDocument();
-      expect(screen.getByText(/Sandbox price, not the fare above/)).toBeInTheDocument();
+      expect(screen.getByText(/Sandbox price, not the real fare/)).toBeInTheDocument();
+      expect(screen.queryByText(/not the fare above/)).toBeNull();
       expect(screen.getByText("Nothing is ordered until you press Approve.")).toBeInTheDocument();
       expect(screen.getByRole("button", { name: "Approve" })).toBeInTheDocument();
       expect(screen.getByRole("button", { name: "Decline" })).toBeInTheDocument();
@@ -114,7 +115,7 @@ describe("BookingApproval", () => {
     expect(screen.getByText("£204 for 2")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Nothing is ordered. Approve only if £204 for 2 is fine for you. These are sandbox prices, not the fare above.",
+        "Nothing is ordered. Approve only if £204 for 2 is fine for you. These are sandbox prices, not real fares.",
       ),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Approve at £204" })).toBeInTheDocument();

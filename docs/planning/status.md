@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 23 Nov 2026, end-of-session overwrite (after the build step 1 gate, #112, merged).
+Last updated: 23 Nov 2026, end-of-session overwrite (after the gate, #112, and the owner's to-dos: #9, #79 split, #107 copy review).
 
 ## Stage
 
@@ -50,9 +50,8 @@ None. Owner decisions still open, needed later:
 
 ## Owner to-dos
 
-- **Before build step 2 starts:** create the `task` label ([#9](https://github.com/olaheavy-dev/layover/issues/9)), and decide which contract fields the boards show but the contract lacks ([#79](https://github.com/olaheavy-dev/layover/issues/79)).
+- **In build step 2's plan:** settle #79 (the brief's `filled` state). The other missing contract fields are in #114, #115 and #116, one per later step.
 - **Confirm SIX Group's terms in a browser:** the [data sources](../references/data-sources.md) row for the ISO 4217 list summarises an automated read of SIX's [terms of use](https://www.six-group.com/en/services/legal/terms-of-use.html); check the wording matches.
-- Review the widget wording collected in [#107](https://github.com/olaheavy-dev/layover/issues/107).
 - Make the mood scenes in ChatGPT from the prompts in [mood-scene-prompts.md](../design/boards/mood-scene-prompts.md) (welcome and "How Layover works" only), and send them to the agent to register before they are committed ([#35](https://github.com/olaheavy-dev/layover/issues/35)).
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.

@@ -101,6 +101,18 @@ describe("ComparisonTable", () => {
     expect(screen.getByRole("button", { name: "Edit brief" })).toBeInTheDocument();
   });
 
+  it("a cost with no value and no reason says Not known, never the old wording, a zero or blank", async () => {
+    const widget = structuredClone(await sampleOf("comparison_table", "filled"));
+    const lisbon = widget.cards?.find((c) => c.place === "Lisbon");
+    if (!lisbon) throw new Error("No Lisbon card");
+    lisbon.meals = {};
+    render(<ComparisonTable widget={widget} />);
+    const lisbonCard = within(card("Lisbon"));
+    const meals = lisbonCard.getByText("Meals").closest("li") as HTMLElement;
+    expect(within(meals).getAllByText("Not known")).toHaveLength(1);
+    expect(lisbonCard.queryByText(/no figure for this yet/)).toBeNull();
+  });
+
   it("error: the failed card says Unavailable with Try again and no figure; the others stay", async () => {
     render(<ComparisonTable widget={await sampleOf("comparison_table", "error")} />);
     const valletta = within(card("Valletta"));
