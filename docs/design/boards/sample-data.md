@@ -109,7 +109,7 @@ The chosen state uses Sample Hotel Alfama. The skipped state says "Days start fr
 |---|---|
 | Dates step | First state on the Booking board. Layover asks "Which dates would you like to fly?" because the brief only says May 2027, 5 nights, and never picks dates. Choices (samples, not facts): "Fri 14 to Wed 19 May" (14 May 2027 is a Friday; 5 nights later is Wed 19 May), "Fri 21 to Wed 26 May" (21 May is a Friday; 21 + 5 = 26), "Other dates". The later states say the traveller chose "Fri 14 to Wed 19 May" |
 | Flights | MAN to LIS, 14 May 2027, back 19 May 2027, 2 adults (the dates the traveller chose) |
-| Sandbox price | £192 for 2. The sandbox price lines say "Sandbox price, not the fare above" and never show "£96 × 2 adults", so a sandbox price is not read as the cached fare |
+| Sandbox price | £192 for 2. The sandbox price lines say "Sandbox price, not the real fare" and never show "£96 × 2 adults", so a sandbox price is not read as the cached fare |
 | Price-changed state | £204 for 2, and Layover asks again |
 | Approved state | Sandbox order SANDBOX-0001, "Sandbox: no real booking or payment" |
 | Hotel | Flights only on the boards; the Nuitee sandbox hotel is built in step 6 (owner, 21 Nov 2026, #46) |

@@ -62,7 +62,7 @@ describe("ComparisonTable", () => {
     expect(container.textContent).not.toContain("782");
     expect(container.textContent).not.toContain("902");
 
-    const footer = within(screen.getByRole("contentinfo"));
+    const footer = within(container.querySelector("footer")!);
     expect(footer.getByText("Travelpayouts")).toBeInTheDocument();
     expect(footer.getByText("Wikivoyage")).toBeInTheDocument();
     expect(footer.getByText("Open-Meteo")).toBeInTheDocument();
@@ -101,6 +101,18 @@ describe("ComparisonTable", () => {
     expect(screen.getByRole("button", { name: "Edit brief" })).toBeInTheDocument();
   });
 
+  it("a cost with no value and no reason says Not known, never the old wording, a zero or blank", async () => {
+    const widget = structuredClone(await sampleOf("comparison_table", "filled"));
+    const lisbon = widget.cards?.find((c) => c.place === "Lisbon");
+    if (!lisbon) throw new Error("No Lisbon card");
+    lisbon.meals = {};
+    render(<ComparisonTable widget={widget} />);
+    const lisbonCard = within(card("Lisbon"));
+    const meals = lisbonCard.getByText("Meals").closest("li") as HTMLElement;
+    expect(within(meals).getAllByText("Not known")).toHaveLength(1);
+    expect(lisbonCard.queryByText(/no figure for this yet/)).toBeNull();
+  });
+
   it("error: the failed card says Unavailable with Try again and no figure; the others stay", async () => {
     render(<ComparisonTable widget={await sampleOf("comparison_table", "error")} />);
     const valletta = within(card("Valletta"));
@@ -134,5 +146,18 @@ describe("ComparisonTable", () => {
     fireEvent.click(screen.getByRole("button", { name: "Show again" }));
     expect(screen.getByRole("button", { name: "Choose Lisbon" })).toBeInTheDocument();
     expect(screen.queryByText("Compared 3 places: you chose Lisbon")).not.toBeInTheDocument();
+  });
+
+  it("chosen with one card: Compared 1 place, not 1 places", async () => {
+    const sample = await sampleOf("comparison_table", "chosen");
+    const only = sample.cards?.[0];
+    render(
+      <ComparisonTable
+        widget={{ ...sample, cards: only ? [only] : [], chosen_place: only?.place }}
+      />,
+    );
+    expect(screen.getByText(`Compared 1 place: you chose ${only?.place}`)).toBeInTheDocument();
+    expect(screen.queryByText(/1 places/)).toBeNull();
+    expect(screen.getByRole("list", { name: "The 1 place compared" })).toBeInTheDocument();
   });
 });

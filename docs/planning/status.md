@@ -2,47 +2,40 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 22 Nov 2026, after the final review fixes on PR E (#55).
+Last updated: 23 Nov 2026, end-of-session overwrite (after the gate, #112, and the owner's to-dos: #9, #79 split, #107 copy review).
 
 ## Stage
 
-Build step 1 is under way ("Build 1: Foundation and data contract"). Done:
+Build step 1 ("Build 1: Foundation and data contract") is finished: all 20 tasks of build plan 1 merged in PRs A to E (#57, #67, #84, #94, #98). Its gate (#106) merged in #112 on 23 Nov 2026, and the Build 1 milestone is closed. Build step 2 ("Chat, intents and the brief") is next.
 
-- **PR A (#57):** the FastAPI backend and the Next.js website from the house templates.
-- **#68:** the board checks read pages with `html.parser` (#36), and the CodeQL warnings on `main` are cleared.
-- **PR B (#67):** the data contract, the shared samples and the sample endpoints.
-- **22 Nov 2026:**
-  - the Dependabot updates (#58, #61, #62, #63) and the website's minor and patch updates (#75); the major upgrades wait in #71;
-  - decision 0013, Microsoft Agent Framework in Python (#77);
-  - **PR C (#84):** the backend foundation: money, recordings, holidays and the evaluation runner. The runner's total is "53: 0 PASS, 20 SCHEMA PASS, 0 FAIL, 33 NOT RUN, 0 WITHDRAWN";
-  - the owner's map choice: MapLibre GL JS with OpenFreeMap's free tiles, recorded in the [register](../decisions/README.md#register); the map is drawn in #93 (Build 3), and the widget lists its places with links until then;
-  - #62 (`agent-framework-anthropic`, a pre-release) was reviewed as a major update: Codex, then [a comparison of the two published wheels](https://github.com/olaheavy-dev/layover/pull/62#discussion_r4658085468), because MAF's GitHub repository returned 404;
-  - **PR D (#94):** the website (home, trip, shared trip, How Layover works, link not found), the 20 widgets in every state and the development gallery, with axe, page titles, fonts, a 390 px phone width and screenshots in Playwright's Linux image.
-- **PR E (#55), in review:** the website reads the samples through the API, and an Aspire app host shows traces across the stack (Next steps, item 4).
-
-`make repo-settings` was run on 21 Nov 2026, so CodeQL for Python and TypeScript is now a required check. The build order is in [01 §4](../product/01-research-and-direction.md#4-build-order): eight steps, each a milestone.
+The build order is in [01 §4](../product/01-research-and-direction.md#4-build-order): eight steps, each a milestone. `make repo-settings` was run on 21 Nov 2026, so CodeQL for Python and TypeScript is a required check.
 
 ## Open pull requests
 
-- **PR E (#55), in review:** join the website to the API (Task 19) and add the Aspire app host with tracing (Task 20).
+None apart from this handover PR.
 
-## The Design gate (#42, merged 20 Nov 2026)
+## The build step 1 gate (#106, merged in #112)
 
-- **Evaluations:** [docs/evaluations/cases.md](../evaluations/cases.md) holds 53 cases (the first 16 from the spec, 37 new, including `WIDGET-01` to `WIDGET-20`) and a coverage table: every intent, journey step, widget `kind` and decision 0011 rule has at least one case. `tools/check_eval_ids.py` in `make check` fails on a duplicate, badly formed or undefined ID. Score report: **no evaluation set yet** (the first scores come at the build step 1 gate at the earliest).
-- **Build order:** approved by the owner ("Approve, parallel per step (Recommended)"): each step is a vertical slice; its plan fixes the data contract, then backend and frontend are built in parallel and joined. The cost cap's figures now come after step 4, the first step that runs a whole trip ([register](../decisions/README.md#register)).
-- **Floorplan:** version 0.11.0 reviewed (runs locally; its only outside call is an opt-in waitlist, turned off; files match the published checksums), then a blueprint drawn and exported to [docs/floorplan/design.html](../floorplan/design.html) after the owner checked the map ("Accurate enough"). The 2.2 MB file is exempt from the 1 MB large-file check (owner: "Allow it for snapshots (Recommended)") and from the whitespace hooks, so it stays byte-for-byte as exported (Codex found that a trimmed script broke the map; fixed and checked in headless Chrome). `tools/check_floorplan.py` fails on common local-path, `file://` and git-remote forms, and on any inline script that no longer matches the page's Content-Security-Policy. The blueprint's working files stay local in `floorplan/` (git-ignored), so build step 1 can turn it into a map of the real code.
-- **Audit:** a fresh-context whole-repository audit found 20 items (4 P1, 7 P2, 9 P3). Fixed in the PR, except two `noticed` issues (#40, #41) and two left on purpose (accepted records 0003 and 0004 aren't rewritten; the model named in the snapshot comes from 0007 and is confirmed in the step 2 plan).
-- **Triage:** #9, #26, #27, #36 (done in #68) and #40 in Build 1; #35 and #41 in Build 2; #34 in Build 3. No open `review-followup` issue.
-- **Reviews:** the audit, a pre-push review and a security review (Opus, fresh contexts), then Codex: one P1 (the snapshot's blocked script), fixed; the re-review found nothing.
+One PR, with the whole-repository review run last (owner: "A: one PR, review last (Recommended)").
+
+- **Evaluation baseline:** the runner now writes its own report (`--report`), so no figure is retyped: [reports/build-1.md](../evaluations/reports/build-1.md). Later gates compare against it, and a drop blocks a gate.
+- **Floorplan:** a map of the real code, [docs/floorplan/build-1.html](../floorplan/build-1.html), from Floorplan 0.11.0 (the reviewed version), exported without Health. The owner looked at it and answered "Accurate enough (Recommended)"; it was exported again afterwards to correct labels and wording (gate review G2 and G3). `design.html` stays as the Design-gate snapshot.
+- **Deferred review points:** the 90 points that the build step 1 reviews put off were sorted against the code (owner: "Fix small, file the rest (Recommended)"): 36 already fixed, 27 tracked in issues, 13 accepted earlier with a reason, 9 fixed in the gate, 5 no longer apply. The table is in the PR description.
+- **Traveller text:** three broken lines fixed, four strings in all (owner: "Fix now, you review in PR (Recommended)"); the owner approved them before the merge ("Approve and merge (Recommended)").
+- **Triage:** #85 fixed; the other 16 Build 1 issues moved, each with a reason comment (14 to Build 2, #86 to Build 4, #90 to Build 7). New issues: #107 to #111.
+- **Whole-repository review:** 18 findings (1 P1, 6 P2, 11 P3), 15 fixed in the gate and 3 opened as issues (#109, #110, #111). The P1 was a missing data-sources row for SIX Group's ISO 4217 list; the owner chose "Cite SIX, record the risk (Recommended)" (register, 23 Nov 2026).
+- **CodeQL alert #19** (`js/missing-origin-check` in `build-1.html`, the elkjs message handler that Floorplan bundles) blocked the merge. The owner dismissed it as "won't fix", the same decision as #16 for `design.html` (owner: "Dismiss it like #16 (Recommended)"); the reason is recorded on #112. Each gate's new snapshot can raise it again.
+- Codex found no issues; every check passed. No `review-followup` issue is open.
+
+The Design gate (#42, 20 Nov 2026) is recorded in its PR and in [its design](../superpowers/specs/2026-11-20-design-gate-design.md).
 
 ## Next steps
 
-1. **The step 1 gate**, once PR E (#55) has merged (a whole-repository review, a tidy-up PR, `noticed` issues triaged, a Floorplan snapshot, and the first evaluation report). Issues are on the [project board](https://github.com/orgs/olaheavy-dev/projects/5).
-2. **The progress ledger** for build plan 1 is in `.superpowers/sdd/2026-11-21-build-step-1/progress.md` (git-ignored, on the owner's machine): Tasks 8 to 20 are done (PR E is waiting for review). It lists every ruling made and every deferred review item.
-3. **Keep the template answer `llm: none` in step 1:** step 2's first PR changes it to `llm: maf` (0013 point 1). (The £5 half-up case that PR B's samples never hit is now covered by `test_estimate_nearest_ten` and `test_round_estimate_ten_pound_boundaries`.)
-4. **Done in PR E (#55), tasks 19 and 20:** `make dev-all` runs the Aspire app host (`apphost/`): PostgreSQL, the migrations, the backend and the website, with traces from the website through the backend in the Aspire dashboard. Task 19: the website reads the samples through the API (`GET /v1/sample/trip` and `/v1/sample/widgets`) and renders those pages on each request, so `make image-frontend` builds without the sample files. The backend image gets the samples through a named extra build context (`additional_contexts` in `backend/compose.yaml`, `COPY --from=samples` in `backend/Dockerfile`), and `make image` builds. Server-side API calls time out after 10 seconds (owner: "10 seconds (Recommended)"), then the error page shows; because Next.js sends the status and headers first, that page answers HTTP 200. The API checks the samples against the schema; the website no longer reads them from disk. Template-owned files this PR changes (listed in `.github/template-owned/`): `backend/Dockerfile`, `backend/compose.yaml`, `frontend/src/lib/api/server.ts`, `frontend/vitest.setup.ts`, `frontend/playwright.config.ts` and `.github/dependabot.yml`, so the PR is labelled template-candidate. `backend/src/app/main.py` (the lifespan hook) and `backend/src/app/tracing.py` are not template-owned but are generic enough to offer upstream.
-5. **Step 2: check the full trace.** The first step with a database route checks that one Aspire trace runs from the website through the backend to PostgreSQL (register, 22 Nov 2026). Step 1 shows website to backend by hand, and `test_database_queries_create_spans` proves queries create spans.
-6. **Watch for upstream support (#71):** OpenTelemetry SDK 3 (waits for `@vercel/otel`), ESLint 10 (waits for the plugins in `eslint-config-next`) and TypeScript 7 (waits for typescript-eslint and openapi-typescript). jsdom 31 isn't blocked; it moves with that batch for one review.
+1. **Build plan 2** ("Chat, intents and the brief"): brainstorm, then the plan, which fixes the data contract first. Its first PR changes the template answer `llm: none` to `llm: maf` (0013 point 1).
+2. **Step 2: check the full trace.** The first step with a database route checks that one Aspire trace runs from the website through the backend to PostgreSQL (register, 22 Nov 2026).
+3. **Step 7 (hosting):** an image-publishing workflow must pass `--build-context samples=schemas/samples` to the backend build. A failed trip page answers HTTP 200, so uptime checks should watch the backend's `/health/ready`.
+4. **Template candidates** (labelled `template-candidate`, Build 2): offer them to house-template-base in one batch.
+5. **Watch for upstream support (#71):** OpenTelemetry SDK 3, ESLint 10, TypeScript 7; jsdom 31 moves with that batch.
 
 ## Blockers
 
@@ -57,17 +50,18 @@ None. Owner decisions still open, needed later:
 
 ## Owner to-dos
 
+- **In build step 2's plan:** settle #79 (the brief's `filled` state). The other missing contract fields are in #114, #115 and #116, one per later step.
+- **Confirm SIX Group's terms in a browser:** the [data sources](../references/data-sources.md) row for the ISO 4217 list summarises an automated read of SIX's [terms of use](https://www.six-group.com/en/services/legal/terms-of-use.html); check the wording matches.
 - Make the mood scenes in ChatGPT from the prompts in [mood-scene-prompts.md](../design/boards/mood-scene-prompts.md) (welcome and "How Layover works" only), and send them to the agent to register before they are committed ([#35](https://github.com/olaheavy-dev/layover/issues/35)).
 - Before Layover goes public: read OpenAI's sharing and publication policy again by hand, for the mood scenes' labelling.
 - Pin Floorplan in agent-workflows ([agent-workflows#30](https://github.com/olaheavy-dev/agent-workflows/issues/30)); until then the installed plugin follows the author's latest version. Afterwards, uninstall `floorplan@floorplan` from the author's marketplace.
-- Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked), [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes), [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options) and [#39](https://github.com/olaheavy-dev/agent-workflows/issues/39) (generated files changed by commit hooks; check them in a browser) and [#41](https://github.com/olaheavy-dev/agent-workflows/issues/41) (the alert check before merging missed alerts that a newly turned-on CodeQL language brings in); from 22 Nov 2026, [#43](https://github.com/olaheavy-dev/agent-workflows/issues/43) (confirm each required check reported on the head commit) and [#45](https://github.com/olaheavy-dev/agent-workflows/issues/45) (the pre-flight check should search recorded owner answers for the settings a change touches).
+- Review the process issues in the weekly process review: [agent-workflows#31](https://github.com/olaheavy-dev/agent-workflows/issues/31) (brainstorming's open questions bypassed the prompt-window rule), [#32](https://github.com/olaheavy-dev/agent-workflows/issues/32) (research quotes reached docs unchecked), [#33](https://github.com/olaheavy-dev/agent-workflows/issues/33) (design options as whole screens; restrained palettes), [#35](https://github.com/olaheavy-dev/agent-workflows/issues/35) (a readiness review before a phase that builds from approved documents) [#38](https://github.com/olaheavy-dev/agent-workflows/issues/38) (ask for the feel and reference logos before drawing logo options) and [#39](https://github.com/olaheavy-dev/agent-workflows/issues/39) (generated files changed by commit hooks; check them in a browser) and [#41](https://github.com/olaheavy-dev/agent-workflows/issues/41) (the alert check before merging missed alerts that a newly turned-on CodeQL language brings in); from 22 Nov 2026, [#43](https://github.com/olaheavy-dev/agent-workflows/issues/43) (confirm each required check reported on the head commit), [#45](https://github.com/olaheavy-dev/agent-workflows/issues/45) (the pre-flight check should search recorded owner answers for the settings a change touches), [#51](https://github.com/olaheavy-dev/agent-workflows/issues/51) (test a plan's end-to-end checks against what the code can do by then) and [#52](https://github.com/olaheavy-dev/agent-workflows/issues/52) (parallel reviewers in one worktree collide on test server ports); from 23 Nov 2026, [#54](https://github.com/olaheavy-dev/agent-workflows/issues/54) (the push hook's two messages contradict each other), [#55](https://github.com/olaheavy-dev/agent-workflows/issues/55) (register lines put the agent's reasons in the owner's mouth), and a new case on [#41](https://github.com/olaheavy-dev/agent-workflows/issues/41) (the alert check looked at the PR's head, not its merge ref).
 - Review the copy in [PR #94's description](https://github.com/olaheavy-dev/layover/pull/94) (the list of new fixed wording, including the page titles and "This link does not work").
 - Confirm the fixed TfL Journey Planner link in the transport widget, and check TfL's terms for the "Geomni UK Map data" credit ([#86](https://github.com/olaheavy-dev/layover/issues/86)).
-- Decide which contract fields the boards show but the contract lacks ([#79](https://github.com/olaheavy-dev/layover/issues/79)).
 - Follow-ups opened from PR D's reviews: [#89](https://github.com/olaheavy-dev/layover/issues/89) (widget consistency), [#90](https://github.com/olaheavy-dev/layover/issues/90) (a shared trip reveals the party size: your privacy decision), [#91](https://github.com/olaheavy-dev/layover/issues/91) (template drift) and [#92](https://github.com/olaheavy-dev/layover/issues/92) (layout drift from the boards).
+- Review the new fixed wording from PR E: the error page title "Something went wrong · Layover" ([#98](https://github.com/olaheavy-dev/layover/pull/98)).
 - Copy review of the holiday names' American spelling ("Labor Day", [#80](https://github.com/olaheavy-dev/layover/issues/80)).
 - Watch Portugal's Proposta de Lei 77/XVII/1 (labour reform) in case it changes article 234 of the Labour Code, the list the holidays test relies on.
-- Create the `task` label used by the Task issue form ([#9](https://github.com/olaheavy-dev/layover/issues/9)).
 - Travelpayouts: join the Aviasales programme and find the API token (Profile → API token). Keep the token out of chat and out of git.
 - Duffel: create a test-mode account and token (`duffel_test_...`).
 - Tavily: create a free account and API key when the web-search step is built.

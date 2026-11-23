@@ -84,13 +84,7 @@ function costRow(
   if (unavailableLabel(part, sources)) {
     return <Row key={part} name={name} value="Unavailable" meta={<span>{line?.missing}</span>} />;
   }
-  return (
-    <Row
-      key={part}
-      name={name}
-      meta={<NotKnown missing={line?.missing ?? "Layover has no figure for this yet"} />}
-    />
-  );
+  return <Row key={part} name={name} meta={<NotKnown missing={line?.missing} />} />;
 }
 
 function missingParts(card: PlaceCard): string[] {
@@ -317,9 +311,12 @@ export function ComparisonTable({ widget }: { widget: Table }) {
       <WidgetFrame title="Compare places" state="filled" sources={widget.sources}>
         <div className="flex flex-col gap-3">
           <p className="text-sm font-medium">
-            Compared {cards.length} places: you chose {chosen}
+            Compared {plural(cards.length, "place")}: you chose {chosen}
           </p>
-          <ul className="flex flex-col gap-2" aria-label={`The ${cards.length} places compared`}>
+          <ul
+            className="flex flex-col gap-2"
+            aria-label={`The ${plural(cards.length, "place")} compared`}
+          >
             {cards.map((card) => (
               <li key={card.place} className="flex flex-col text-sm">
                 <strong>{card.place}</strong>

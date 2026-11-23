@@ -1,5 +1,7 @@
 # Design gate Implementation Plan
 
+Status: done. Merged in #42. The boxes below were tracked in a git-ignored ledger, so they are left unticked.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Close the Design stage in one PR: evaluation cases with a coverage table, an approved build order with milestones, a Floorplan snapshot, a whole-repository audit with its fixes, and triage of the `noticed` issues.
