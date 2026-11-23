@@ -50,7 +50,7 @@ None. Owner decisions still open, needed later:
 
 ## Owner to-dos
 
-- **Approve the traveller text changes** in the gate PR's description (three lines, before → after). The PR merges only after this.
+- **Approve the traveller text changes** in the gate PR's description (four lines, before → after). The PR merges only after this.
 - **Before build step 2 starts:** create the `task` label ([#9](https://github.com/olaheavy-dev/layover/issues/9)), and decide which contract fields the boards show but the contract lacks ([#79](https://github.com/olaheavy-dev/layover/issues/79)).
 - **Confirm SIX Group's terms in a browser:** the [data sources](../references/data-sources.md) row for the ISO 4217 list summarises an automated read of SIX's [terms of use](https://www.six-group.com/en/services/legal/terms-of-use.html); check the wording matches.
 - **Open Docker Desktop before a push:** `make check` runs one database test in Docker.
