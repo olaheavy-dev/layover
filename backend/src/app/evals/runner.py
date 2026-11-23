@@ -1,9 +1,12 @@
-"""Run the evaluation cases: `python -m app.evals.runner [--case ID]`.
+"""Run the evaluation cases: `python -m app.evals.runner [--case ID | --report PATH]`.
 
 Prints one line per case (`PASS`, `SCHEMA PASS (full case needs step N)`, `FAIL` or
 `NOT RUN (needs step N)`) and a total; exits 1 on any `FAIL`. In step 1 only the schema part of
 WIDGET-01 to WIDGET-20 runs, and it reports `SCHEMA PASS`, never `PASS`: the case's other rules
 (labels, "Not known", never "safe") are not checked yet. There are no model calls.
+
+`--report PATH` also writes a Markdown baseline (quality, speed in milliseconds, tokens, trip set)
+to PATH, for the build gates.
 
 N is the build step that adds the case, read from the "Evaluation cases it adds" column of the
 build-order table in docs/product/01-research-and-direction.md section 4. A case listed in more than
@@ -117,10 +120,11 @@ class ReportInfo:
 
 
 def current_commit() -> str:
-    """Short hash of HEAD, or "not known" when git is missing or fails."""
+    """`git describe --always --dirty` for HEAD: a short hash, plus "-dirty" when the tree has
+    uncommitted changes. "not known" when git is missing or fails."""
     try:
         done = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],  # noqa: S607
+            ["git", "describe", "--always", "--dirty"],  # noqa: S607
             capture_output=True,
             text=True,
             check=True,
@@ -141,11 +145,11 @@ def render_report(results: list[Result], info: ReportInfo) -> str:
         "# Evaluation report",
         "",
         f"Date: {info.date}",
-        f"Generated at commit: {info.commit} (the commit before this report was added)",
+        f"HEAD when run: {info.commit}",
         f"Command: `{info.command}`",
         "",
         f"Quality: {totals_line(results)}",
-        f"Speed: {info.seconds:.1f} s for the whole run",
+        f"Speed: {round(info.seconds * 1000)} ms for the whole run",
         f"Tokens: {tokens}",
         f"Trip set: {trip_set}",
     ]

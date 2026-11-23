@@ -264,4 +264,31 @@ def test_report_detail_is_empty_unless_the_case_failed() -> None:
 
 def test_report_labels_the_commit_honestly() -> None:
     text = render_report([], _info(commit="abc1234"))
-    assert "Generated at commit: abc1234 (the commit before this report was added)" in text
+    assert "HEAD when run: abc1234" in text
+    assert "the commit before this report was added" not in text
+
+
+def test_current_commit_uses_describe_so_a_dirty_tree_shows(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    seen: list[list[str]] = []
+
+    def fake_run(cmd: list[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
+        seen.append(cmd)
+        return subprocess.CompletedProcess(cmd, 0, stdout="abc1234-dirty\n", stderr="")
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    assert runner.current_commit() == "abc1234-dirty"
+    assert seen[0][:2] == ["git", "describe"]
+    assert "--dirty" in seen[0]
+
+
+def test_report_speed_is_in_milliseconds_never_rounded_to_zero() -> None:
+    # Working: 0.042 s * 1000 = 42 ms, so a 42 ms run must read "42 ms", not "0.0 s".
+    text = render_report([], _info(seconds=0.042))
+    assert "Speed: 42 ms for the whole run" in text
+    assert "0.0 s" not in text
+
+
+def test_usage_line_names_report() -> None:
+    assert "--report PATH" in (runner.__doc__ or "")
