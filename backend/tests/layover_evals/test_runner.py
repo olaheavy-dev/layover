@@ -8,14 +8,26 @@ import importlib.util
 import json
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from app.evals import runner
 from app.evals.cases import Case, parse_cases
-from app.evals.runner import Outcome, Result, build_step_map, main, run_case, run_cases
+from app.evals.runner import (
+    Outcome,
+    ReportInfo,
+    Result,
+    build_step_map,
+    main,
+    render_report,
+    run_case,
+    run_cases,
+    totals_line,
+)
 from app.evals.travellers import ScriptedTraveller, load_traveller
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -147,3 +159,77 @@ def test_traveller_missing_field_rejected(tmp_path: Path) -> None:
     path.write_text(json.dumps({"answers": {"budget": "x"}}), encoding="utf-8")
     with pytest.raises(ValueError, match=r"t\.json"):
         load_traveller(path)
+
+
+def _info(**over: Any) -> ReportInfo:
+    base = {
+        "date": "2026-11-23",
+        "commit": "abc1234",
+        "command": "python -m app.evals.runner --report x",
+        "seconds": 1.25,
+        "model_calls": 0,
+        "trips_run": 0,
+        "scripts_on_disk": 1,
+    }
+    return ReportInfo(**{**base, **over})
+
+
+def totals_line_from(stdout: str) -> str:
+    return next(line for line in stdout.splitlines() if line.startswith("total "))
+
+
+def test_report_totals_match_printout() -> None:
+    results = run_cases(parse_cases(CASES_MD), build_step_map())
+    assert totals_line(results) in render_report(results, _info())
+
+
+def test_report_tokens_none_when_no_calls() -> None:
+    text = render_report([], _info(model_calls=0))
+    assert "Tokens: none: this run made no model calls" in text
+    assert not re.search(r"Tokens:\s*0\b", text)
+
+
+def test_report_trip_set_counts_trips_run_not_files() -> None:
+    text = render_report([], _info(trips_run=0, scripts_on_disk=1))
+    assert "Trip set: none yet" in text
+    assert "1 traveller script on disk, not run yet" in text
+
+
+def test_report_shows_fail_detail() -> None:
+    case = parse_cases(CASES_MD)[0]
+    text = render_report([Result(case, Outcome.FAIL, "boom")], _info())
+    assert f"| `{case.case_id}` | FAIL | boom |" in text
+
+
+def test_main_writes_report_and_creates_folder(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    out = tmp_path / "new" / "build-1.md"
+    assert main(["--report", str(out)]) == 0
+    assert totals_line_from(capsys.readouterr().out) in out.read_text(encoding="utf-8")
+
+
+def test_report_with_case_rejected() -> None:
+    with pytest.raises(SystemExit) as exc:
+        main(["--report", "x.md", "--case", "WIDGET-01"])
+    assert exc.value.code == 2
+
+
+def test_main_exit_1_still_writes_report_on_fail(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(
+        runner, "run_case", lambda case, steps: Result(case, Outcome.FAIL, "forced failure")
+    )
+    out = tmp_path / "report.md"
+    assert main(["--report", str(out)]) == 1
+    text = out.read_text(encoding="utf-8")
+    assert "| FAIL | forced failure |" in text
+
+
+def test_current_commit_not_known_without_git(monkeypatch: pytest.MonkeyPatch) -> None:
+    def no_git(*args: Any, **kwargs: Any) -> None:
+        raise FileNotFoundError("git")
+
+    monkeypatch.setattr(subprocess, "run", no_git)
+    assert runner.current_commit() == "not known"

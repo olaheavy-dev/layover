@@ -4,7 +4,7 @@ The master list of Layover's evaluation cases, and the coverage table for the De
 
 Each case has a permanent ID: an area code and a number (`AGENTS.md`). An ID is never reused or renumbered. A case that is no longer needed stays in the table, marked `withdrawn`. `make check` runs `tools/check_eval_ids.py`. It fails when an ID is defined twice, is not in `AREA-NN` form, or is cited under `docs/` without a row here.
 
-**Status.** `planned` means the case is written but not yet run. The build step that adds a case's code also adds the case to the evaluation set ([01 §4](../product/01-research-and-direction.md)). The Design gate has no evaluation set yet, so it reports no scores.
+**Status.** `planned` means the case is written but not yet run. The build step that adds a case's code also adds the case to the evaluation set ([01 §4](../product/01-research-and-direction.md)). The Design gate has no evaluation set yet, so it reports no scores. Build-gate reports are written by the runner (`python -m app.evals.runner --report PATH`) into [`reports/`](reports/); [`build-1.md`](reports/build-1.md) is the first baseline.
 
 **Scored by** (spec §7): *code* for factual checks (sources, budget, approval, labels); *judge* for a model that scores against a written rubric, with the owner spot-checking a sample. Each evaluation trip has a scripted traveller that answers the brief questions, picks a place, and approves or rejects booking.
 
