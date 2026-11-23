@@ -8,7 +8,8 @@
     "skipLibCheck": true,
     "outDir": "./dist/apphost",
     "rootDir": ".",
-    "strict": true
+    "strict": true,
+    "types": ["node"]
   },
   "include": [
     "apphost.mts",
