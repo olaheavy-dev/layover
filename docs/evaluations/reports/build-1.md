@@ -1,11 +1,11 @@
 # Evaluation report
 
 Date: 2026-11-23
-HEAD when run: b42247a
-Command: `python -m app.evals.runner --report ../docs/evaluations/reports/build-1.md`
+HEAD when run: 120282b
+Command: `python -m app.evals.runner --report docs/evaluations/reports/build-1.md`
 
 Quality: total 53: 0 PASS, 20 SCHEMA PASS, 0 FAIL, 33 NOT RUN, 0 WITHDRAWN
-Speed: 41 ms for the whole run
+Speed: 22 ms for the whole run
 Tokens: none: this run made no model calls
 Trip set: none yet
 1 traveller script on disk, not run yet
