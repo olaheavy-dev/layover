@@ -10,6 +10,8 @@ Build step 1 ("Build 1: Foundation and data contract") is finished: all 20 tasks
 
 The build order is in [01 §4](../product/01-research-and-direction.md#4-build-order): eight steps, each a milestone. `make repo-settings` was run on 21 Nov 2026, so CodeQL for Python and TypeScript is a required check.
 
+FastAPI moved to 0.163.1 on 23 Nov 2026 (#105), checked against its release notes from 0.162.0: no breaking change affects the backend (the one breaking change, dropping Python 3.10, doesn't apply; the backend needs 3.12 or newer).
+
 ## Open pull requests
 
 None apart from this handover PR.
