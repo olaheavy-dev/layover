@@ -9,12 +9,12 @@ docs/
 ├── decisions/           one record per decision, plus the register
 ├── assets/              the asset register (every image, font and media file, with its source and terms)
 ├── design/              the design brief, information architecture, design tokens and boards
-├── evaluations/         the evaluation cases and their coverage table
+├── evaluations/         the evaluation cases, their coverage table and the build-gate reports (`reports/`)
 ├── floorplan/           the Floorplan map snapshot from each stage gate
 ├── planning/            the status file, the ordered backlog and working plans
 ├── references/          data sources and official third-party documentation
 ├── reviews/             dated reviews and research
-└── superpowers/         specs and plans written with the Superpowers skills (added when first used)
+└── superpowers/         specs and plans written with the Superpowers skills
 ```
 
 Planned folder, added when its stage starts: `docs/architecture/` for system diagrams. Specs and plans live in `docs/superpowers/`.
@@ -32,6 +32,8 @@ Planned folder, added when its stage starts: `docs/architecture/` for system dia
 | [Design boards](design/boards/index.html) | Every screen and widget state, drawn | Approved (#37) |
 | [Evaluation cases](evaluations/cases.md) | Every evaluation case ID and the coverage table | Current (#39) |
 | [Floorplan snapshot, Design gate](floorplan/design.html) | A blueprint map of the planned code, drawn from the approved design | Snapshot, 20 Nov 2026 |
+| [Evaluation report, build step 1](evaluations/reports/build-1.md) | The first baseline: quality (schema checks only), speed and tokens | Baseline, 23 Nov 2026 |
+| [Floorplan snapshot, build step 1](floorplan/build-1.html) | A map of the real code at the end of build step 1 | Snapshot, 23 Nov 2026 |
 | [Decision register](decisions/README.md) | Every decision's status and record | Current |
 | [Ordered backlog](planning/backlog.md) | Every open issue in order, by stage milestone, and the stage gate | Current |
 | [Status](planning/status.md) | Open pull requests, next steps, blockers and the owner's to-dos; overwritten every session | Current |

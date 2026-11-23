@@ -1,6 +1,6 @@
 # Build step 1 gate: design
 
-Issue: to be opened as `[61]` in the Build 1 milestone. Date: 23 Nov 2026.
+Issue: #106 (`[61]`), in the Build 1 milestone. Date: 23 Nov 2026.
 
 ## Why
 
