@@ -29,7 +29,7 @@ The owner approved the packages that `house-template-fastapi` v0.11.1 and `house
 
 | Package and version | Official documentation | Used for, group and licence |
 |---|---|---|
-| fastapi 0.162.0 | https://fastapi.tiangolo.com/ | Backend web framework (backend). MIT ([PyPI](https://pypi.org/project/fastapi/0.162.0/)) |
+| fastapi 0.163.1 | https://fastapi.tiangolo.com/ | Backend web framework (backend). MIT ([PyPI](https://pypi.org/project/fastapi/0.163.1/)) |
 | holidays 0.108 | https://holidays.readthedocs.io/en/latest/ | National public holidays by country, used offline for the `public_holidays` widget (backend). MIT ([PyPI](https://pypi.org/project/holidays/0.108/); released 2 Nov 2026, recorded in `backend/src/app/data/holidays_release.json`) |
 | pydantic-settings 2.16.3 | https://docs.pydantic.dev/latest/concepts/pydantic_settings/ | Backend settings read from the environment (backend). MIT ([PyPI](https://pypi.org/project/pydantic-settings/2.16.3/)) |
 | structlog 26.1.0 | https://www.structlog.org/ | Structured logging (backend). MIT OR Apache-2.0 ([PyPI](https://pypi.org/project/structlog/26.1.0/)) |
