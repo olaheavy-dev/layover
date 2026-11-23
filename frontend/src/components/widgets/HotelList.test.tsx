@@ -162,4 +162,13 @@ describe("HotelList", () => {
     ).toBeInTheDocument();
     expect(screen.queryByText(/No hotels are tagged/)).toBeNull();
   });
+
+  it("chosen but not in the list: says the name is not known, with no false Skip or base", async () => {
+    const sample = await sampleOf("hotel_list", "chosen");
+    render(<HotelList widget={{ ...sample, chosen_hotel: "Hotel Not In The List" }} />);
+    expect(screen.getByText("A hotel was chosen. Its name is not known.")).toBeInTheDocument();
+    expect(screen.queryByText(/or skip/)).toBeNull();
+    expect(screen.queryByText("Your base")).toBeNull();
+    expect(screen.queryByRole("button", { name: /Skip/ })).toBeNull();
+  });
 });

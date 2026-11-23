@@ -135,4 +135,17 @@ describe("ComparisonTable", () => {
     expect(screen.getByRole("button", { name: "Choose Lisbon" })).toBeInTheDocument();
     expect(screen.queryByText("Compared 3 places: you chose Lisbon")).not.toBeInTheDocument();
   });
+
+  it("chosen with one card: Compared 1 place, not 1 places", async () => {
+    const sample = await sampleOf("comparison_table", "chosen");
+    const only = sample.cards?.[0];
+    render(
+      <ComparisonTable
+        widget={{ ...sample, cards: only ? [only] : [], chosen_place: only?.place }}
+      />,
+    );
+    expect(screen.getByText(`Compared 1 place: you chose ${only?.place}`)).toBeInTheDocument();
+    expect(screen.queryByText(/1 places/)).toBeNull();
+    expect(screen.getByRole("list", { name: "The 1 place compared" })).toBeInTheDocument();
+  });
 });
