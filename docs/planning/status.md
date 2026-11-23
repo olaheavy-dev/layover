@@ -2,7 +2,7 @@
 
 Overwritten at the end of every session by the agent that ran it (AGENTS.md, "How work flows"); git history keeps the earlier ones.
 
-Last updated: 23 Nov 2026, end-of-session overwrite (after the gate, #112, and the owner's to-dos: #9, #79 split, #107 copy review).
+Last updated: 23 Nov 2026, end-of-session overwrite (after the gate, the owner's to-dos and the Dependabot updates).
 
 ## Stage
 
@@ -12,9 +12,11 @@ The build order is in [01 §4](../product/01-research-and-direction.md#4-build-o
 
 FastAPI moved to 0.163.1 on 23 Nov 2026 (#105), checked against its release notes from 0.162.0: no breaking change affects the backend (the one breaking change, dropping Python 3.10, doesn't apply; the backend needs 3.12 or newer).
 
+Other dependency updates on 23 Nov 2026: tsx 4.23.15 (#99); langchain-core 1.8.1 and pytest-recording 0.15.0 (#102); the app host's TypeScript 7 and Node types 26 (#100). #101 and #103 were closed and held for #71, like #60.
+
 ## Open pull requests
 
-None apart from this handover PR.
+- **#119** (Dependabot, the website's npm-major group): kept open as the tracker for #71 (owner, 23 Nov 2026: "Leave it open as the tracker (Recommended)"). Its `make check` fails on `pnpm peers check` until upstream support lands; when it turns green, review it as a major update. Don't merge it while red.
 
 ## The build step 1 gate (#106, merged in #112)
 
