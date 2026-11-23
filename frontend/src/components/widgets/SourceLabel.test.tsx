@@ -44,6 +44,18 @@ describe("SourceLabel", () => {
     expect(container.querySelector("svg")).toHaveClass("shrink-0");
   });
 
+  it("shows a cached data_date given as a full timestamp the same as a plain date", () => {
+    // Working: both forms name 18 Nov 2026 (UTC); the time of day is dropped.
+    const plain: Label = { status: "cached", source: "S", data_date: "2026-11-18" };
+    const full: Label = { status: "cached", source: "S", data_date: "2026-11-18T09:30:00Z" };
+    const first = render(<SourceLabel label={plain} now={NOW} />);
+    const plainText = first.container.textContent;
+    first.unmount();
+    const second = render(<SourceLabel label={full} now={NOW} />);
+    expect(second.container.textContent).toBe(plainText);
+    expect(screen.getByText("Cached, data released 18 Nov 2026")).toBeInTheDocument();
+  });
+
   it("says 1 day old, not 1 days old", () => {
     const label: Label = { status: "cached", source: "S", captured_at: "2026-11-17T09:00:00Z" };
     render(<SourceLabel label={label} now={NOW} />);
