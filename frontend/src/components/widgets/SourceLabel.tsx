@@ -4,20 +4,12 @@ import { Circle, Contrast, OctagonAlert, TriangleAlert } from "lucide-react";
 
 import type { components } from "@/lib/api/schema";
 
+import { shortDate } from "./format";
 import { useTime } from "./TimeContext";
 
 type Label = components["schemas"]["SourceLabel"];
 
 const DAY_MS = 24 * 60 * 60 * 1000;
-
-function formatDate(value: string): string {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(value));
-}
 
 // "Cached, 3 days old" (decision 0011 rule 2). The age is whole days between `captured_at` and
 // `now`. With no capture time, the release date is shown; with neither, no age is invented.
@@ -29,9 +21,8 @@ function cachedText(label: Label, now: Date): string {
     if (days === 0) return "Cached, less than a day old";
     return `Cached, ${days} ${days === 1 ? "day" : "days"} old`;
   }
-  if (label.data_date && !Number.isNaN(new Date(label.data_date).getTime())) {
-    return `Cached, data released ${formatDate(label.data_date)}`;
-  }
+  const released = label.data_date ? shortDate(label.data_date.slice(0, 10)) : null;
+  if (released) return `Cached, data released ${released}`;
   return "Cached, age not known";
 }
 
@@ -67,7 +58,7 @@ export function SourceLabel({ label, now: given }: { label: Label; now?: Date })
       break;
   }
   if (time.asOf && (label.status === "live" || label.status === "cached")) {
-    text = `${text}, as of ${formatDate(now.toISOString())}`;
+    text = `${text}, as of ${shortDate(now.toISOString().slice(0, 10))}`;
   }
   return (
     <span className="inline-flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs">

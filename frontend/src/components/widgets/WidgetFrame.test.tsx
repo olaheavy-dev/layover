@@ -7,7 +7,7 @@ const live = { status: "live" as const, source: "Frankfurter" };
 
 describe("WidgetFrame", () => {
   it("shows the title, the body and the source footer when filled", () => {
-    render(
+    const { container } = render(
       <WidgetFrame title="Money" state="filled" sources={[live]} now={NOW}>
         <p>Body text</p>
       </WidgetFrame>,
@@ -16,12 +16,13 @@ describe("WidgetFrame", () => {
     expect(screen.getByText("Body text")).toBeInTheDocument();
     expect(screen.getByText("Live")).toBeInTheDocument();
     expect(screen.getByText("Frankfurter")).toBeInTheDocument();
-    expect(screen.getByRole("contentinfo")).toBeInTheDocument();
+    // A <footer> inside a <section> has no contentinfo role in browsers, so find it by tag.
+    expect(container.querySelector("footer")).toBeInTheDocument();
   });
 
   it("shows no footer when there are no sources", () => {
-    render(<WidgetFrame title="Money" state="filled" sources={[]} />);
-    expect(screen.queryByRole("contentinfo")).not.toBeInTheDocument();
+    const { container } = render(<WidgetFrame title="Money" state="filled" sources={[]} />);
+    expect(container.querySelector("footer")).toBeNull();
   });
 
   it("shows a loading status and marks the card busy", () => {

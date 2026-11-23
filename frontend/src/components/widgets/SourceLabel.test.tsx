@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import type { components } from "@/lib/api/schema";
 
 import { SourceLabel } from "./SourceLabel";
+import { TimeProvider } from "./TimeContext";
 
 type Label = components["schemas"]["SourceLabel"];
 
@@ -10,6 +11,16 @@ type Label = components["schemas"]["SourceLabel"];
 const NOW = new Date("2026-11-18T09:00:00Z");
 
 describe("SourceLabel", () => {
+  it("adds the as-of date, from a full ISO timestamp, to a live label", () => {
+    // Working: NOW is 2026-11-18T09:00:00Z, so the date part is 18 Nov 2026 (UTC).
+    render(
+      <TimeProvider now={NOW} asOf>
+        <SourceLabel label={{ status: "live", source: "Frankfurter" }} />
+      </TimeProvider>,
+    );
+    expect(screen.getByText("Live, as of 18 Nov 2026")).toBeInTheDocument();
+  });
+
   it("shows the age of a cached label", () => {
     // Working: 18 Nov 2026 09:00 minus 15 Nov 2026 09:00 = 3 whole days.
     // Source: schemas/samples/README.md ("3 days old" is a captured_at of 15 Nov 2026 at 09:00 UTC).

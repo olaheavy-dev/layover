@@ -62,7 +62,7 @@ describe("ComparisonTable", () => {
     expect(container.textContent).not.toContain("782");
     expect(container.textContent).not.toContain("902");
 
-    const footer = within(screen.getByRole("contentinfo"));
+    const footer = within(container.querySelector("footer")!);
     expect(footer.getByText("Travelpayouts")).toBeInTheDocument();
     expect(footer.getByText("Wikivoyage")).toBeInTheDocument();
     expect(footer.getByText("Open-Meteo")).toBeInTheDocument();
